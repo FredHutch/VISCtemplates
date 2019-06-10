@@ -1,5 +1,5 @@
 Package: VISCtemplates
-Title: What the Package Does (One Line, Title Case)
+Title: Tools for writing reproducible reports at VISC
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "First",
@@ -10,3 +10,5 @@ Description: What the package does (one paragraph).
 License: What license it uses
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/FredHutch/VISCtemplates
+BugReports: https://github.com/FredHutch/VISCtemplates/issues
