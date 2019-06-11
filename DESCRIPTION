@@ -2,10 +2,14 @@ Package: VISCtemplates
 Title: Tools for writing reproducible reports at VISC
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Jimmy",
+           family = "Fulp",
            role = c("aut", "cre"),
-           email = "first.last@example.com")
+           email = "wfulp@fredhutch.org")
+    person(given = "Monica",
+           family = "Gerber",
+           role = c("aut", "cre"),
+           email = "mwgerber@gmail.com")
 Description: What the package does (one paragraph).
 License: GPL-3
 Encoding: UTF-8
