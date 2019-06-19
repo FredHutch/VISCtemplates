@@ -1,0 +1,11 @@
+Binding: create_visc_project
+Title: VISC Analysis Project
+OpenFiles: INDEX
+
+Parameter: study_name
+Widget: TextInput
+Label: Study Name (VDCnnn, must match project path)
+
+Parameter: group_names
+Widget: TextInput
+Label: Group names, separated by commas
