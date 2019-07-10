@@ -1,0 +1,51 @@
+---
+title: "{{ study_name }}"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+The data for the {{ study_name }} protocol can be found here: [insert path]. You can install the data package using devtools:
+
+```{r install-example, eval=FALSE}
+# if on github:
+devtools::install_github(
+  repo = "FredHutch/reponame.git",
+  auth_token = Sys.getenv("GITHUB_KEY")
+)
+
+# if on network drives:
+devtools::install_git("path")
+```
+
+## SRAs and Study-Specific Training (SST)
+
+| **SRA**| **STT Completed** | **Date**   |
+|--------|-------------------|------------|
+| Name   | No                | YYYY-MM-DD |
+
+
+## Final Distributed Report Table
+
+| **Assay Directory**| **Version** | **Date**   | **Unblinded** |
+|--------------------|-------------|------------|---------------|
+| [Assay](link)      | [0.0](link) | YYYY-MM-DD | Yes/No        |
+
+
+## Analysis Notes
+
+The protocol presentation can be found [here](link).
+
+The lab study plan can be found [here](link).
+
+
+
+
+
+
+
+

@@ -1,0 +1,48 @@
+#' Create a VISC project
+#'
+#' @param path file path
+#' @param study_name name of study (should match file path)
+#'
+#' @return opens a new RStudio session with template project directory
+#' @export
+create_visc_project <- function(path){
+
+  # top level folder should follow VDCNNNAnalysis format
+  repo_name <- tail(stringr::str_split(path, "/")[[1]], n = 1)
+
+  # get "VDCNNN" if it exists
+  # this is a variable that is inserted into templates
+  if (grepl("Analysis", repo_name, ignore.case = TRUE)) {
+    study_name <- stringr::str_replace(repo_name, pattern = "Analysis", "")
+  } else {
+    study_name <- repo_name
+  }
+
+  # create package
+  usethis::create_package(
+    path = path
+  ) # add check for existing package
+
+  # add .gitignore
+  use_visc_gitignore()
+
+  # use readme template
+  use_visc_readme(study_name = study_name)
+
+  # add protocol directories and templates
+  use_visc_protocol(study_name = study_name)
+
+}
+
+
+
+# Set up project with RStudio GUI ----------------------------------------------
+
+rstudio_visc_project <- function(path, ...) {
+
+  dots <- list(...)
+
+  VISCtemplates::create_visc_project(
+    path = path
+  )
+}

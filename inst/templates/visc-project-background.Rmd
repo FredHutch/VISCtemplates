@@ -1,0 +1,11 @@
+---
+title: "{{ study_name}} Background"
+output: github_document
+---
+
+<!-- background.md is generated from the RMARKDOWN file, background.Rmd. 
+Please edit that file. -->
+
+This document should contain the study background section for {{ study_name }}.
+
+Write project background here. Don't use headers.
