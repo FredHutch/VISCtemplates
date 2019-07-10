@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-The data for this protocol can be found here: [insert path]. You can install the data package using devtools:
+The data for the {{ study_name }} protocol can be found here: [insert path]. You can install the data package using devtools:
 
 ```{r install-example, eval=FALSE}
 # if on github:
