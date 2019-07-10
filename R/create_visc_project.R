@@ -1,12 +1,22 @@
-
 #' Create a VISC project
 #'
 #' @param path file path
-#' @param study_name name of study
+#' @param study_name name of study (should match file path)
 #'
 #' @return opens a new RStudio session with template project directory
 #' @export
-create_visc_project <- function(path, study_name){
+create_visc_project <- function(path){
+
+  # top level folder should follow VDCNNNAnalysis format
+  repo_name <- tail(stringr::str_split(path, "/")[[1]], n = 1)
+
+  # get "VDCNNN" if it exists
+  # this is a variable that is inserted into templates
+  if (grepl("Analysis", repo_name, ignore.case = TRUE)) {
+    study_name <- stringr::str_replace(repo_name, pattern = "Analysis", "")
+  } else {
+    study_name <- repo_name
+  }
 
   # create package
   usethis::create_package(
@@ -19,68 +29,20 @@ create_visc_project <- function(path, study_name){
   # use readme template
   use_visc_readme(study_name = study_name)
 
-  # add protocol directories
-  # use_visc_protocol()
+  # add protocol directories and templates
+  use_visc_protocol(study_name = study_name)
 
 }
 
 
-use_visc_gitignore <- function() {
 
-  # files that we frequently don't want to track
-  usethis::use_git_ignore(
-    ignores = c(
-      "README.html",
-      "~$*.doc*",
-      "~$*.xls*",
-      "~$*.ppt*",
-      "*.xlk",
-      ".DS_Store",
-      ".DS_Store?",
-      "._*",
-      ".Spotlight-V100",
-      ".Trashes",
-      "ehthumbs.db",
-      "Thumbs.db",
-      # files from Latex
-      "*.log",
-      "**/figure-latex/*.pdf"
-      )
-    )
-
-}
-
-use_visc_readme <- function(study_name) {
-
-  usethis::use_template(
-    template = "visc-project-readme.Rmd",
-    save_as = "README.Rmd",
-    data = list(study_name = study_name),
-    package = "VISCtemplates"
-  )
-
-}
-
-use_visc_protocol <- function() {
-
-  usethis::use_directory("protocol")
-  usethis::use_directory("protocol/presentations")
-
-  # use template for background
-
-  # use template for objectives
-
-  # group colors function
-
-  # study schema template
-}
+# Set up project with RStudio GUI ----------------------------------------------
 
 rstudio_visc_project <- function(path, ...) {
 
   dots <- list(...)
 
   VISCtemplates::create_visc_project(
-    path = path,
-    study_name = dots[["study_name"]]
+    path = path
   )
 }

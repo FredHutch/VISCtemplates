@@ -4,12 +4,12 @@
 \alias{create_visc_project}
 \title{Create a VISC project}
 \usage{
-create_visc_project(path, study_name)
+create_visc_project(path)
 }
 \arguments{
 \item{path}{file path}
 
-\item{study_name}{name of study}
+\item{study_name}{name of study (should match file path)}
 }
 \value{
 opens a new RStudio session with template project directory
