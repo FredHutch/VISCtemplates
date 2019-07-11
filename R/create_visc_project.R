@@ -32,6 +32,14 @@ create_visc_project <- function(path){
   # add protocol directories and templates
   use_visc_protocol(study_name = study_name)
 
+  # common scientific words for spell check to remember
+  usethis::use_directory("inst")
+  usethis::use_template(
+    template = "WORDLIST",
+    save_as = "inst/WORDLIST",
+    package = "VISCtemplates"
+  )
+
 }
 
 
