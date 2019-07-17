@@ -30,7 +30,10 @@ create_visc_project <- function(path){
   use_visc_readme(study_name = study_name)
 
   # add protocol directories and templates
-  use_visc_protocol(study_name = study_name)
+  use_visc_docs(study_name = study_name)
+
+  # add pull request template to hidden folder
+  use_visc_pr_template()
 
   # common scientific words for spell check to remember
   usethis::use_directory("inst")

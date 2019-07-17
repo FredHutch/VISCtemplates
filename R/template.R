@@ -18,9 +18,9 @@ use_visc_readme <- function(study_name, save_as = "README.Rmd") {
   )
 }
 
-#' Create a VISC protocol/ directory with template files
+#' Create a VISC docs directory with template files
 #'
-#' Creates the protocol/ directory and presentations/ directory with templates
+#' Creates the docs/ directory and presentations/ directory with templates
 #' for the project background, objectives, group colors, and study schema.
 #'
 #' @param study_name name of study in VDCNNN format
@@ -29,12 +29,12 @@ use_visc_readme <- function(study_name, save_as = "README.Rmd") {
 #'
 #' @examples
 #' \dontrun{
-#' use_visc_readme("Gallo477")
+#' use_visc_docs("Gallo477")
 #' }
-use_visc_protocol <- function(study_name) {
+use_visc_docs <- function(study_name) {
 
-  usethis::use_directory("protocol")
-  usethis::use_directory("protocol/presentations")
+  usethis::use_directory("docs")
+  usethis::use_directory("docs/presentations")
 
   # use template for background
   use_project_background(study_name)
@@ -53,7 +53,7 @@ use_visc_protocol <- function(study_name) {
 use_project_background <- function(study_name) {
   usethis::use_template(
     template = "visc-project-background.Rmd",
-    save_as = "protocol/background.Rmd",
+    save_as = "docs/background.Rmd",
     data = list(study_name = study_name),
     package = "VISCtemplates"
   )
@@ -62,7 +62,7 @@ use_project_background <- function(study_name) {
 use_project_objectives <- function(study_name) {
   usethis::use_template(
     template = "visc-project-objectives.Rmd",
-    save_as = "protocol/objectives.Rmd",
+    save_as = "docs/objectives.Rmd",
     data = list(study_name = study_name),
     package = "VISCtemplates"
   )
@@ -71,7 +71,7 @@ use_project_objectives <- function(study_name) {
 use_group_colors <- function(study_name) {
   usethis::use_template(
     template = "group-colors.R",
-    save_as = "protocol/group-colors.R",
+    save_as = "docs/group-colors.R",
     data = list(study_name = study_name),
     package = "VISCtemplates"
   )
@@ -80,7 +80,7 @@ use_group_colors <- function(study_name) {
 use_study_schema <- function(study_name) {
   usethis::use_template(
     template = "study-schema.R",
-    save_as = "protocol/study-schema.R",
+    save_as = "docs/study-schema.R",
     data = list(study_name = study_name),
     package = "VISCtemplates"
   )
