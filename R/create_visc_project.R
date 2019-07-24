@@ -23,6 +23,9 @@ create_visc_project <- function(path){
     path = path
   ) # add check for existing package
 
+  # must set active project otherwise it is <no active project>
+  usethis::proj_set(path = path)
+
   # add .gitignore
   use_visc_gitignore()
 
