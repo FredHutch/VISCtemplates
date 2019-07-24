@@ -97,8 +97,24 @@ Now you can begin editing the Documentation.
 The above setup steps are done on the `master` branch. When you’re ready
 to begin work on the analysis, create a branch.
 
-\[This will be filled in once we have the report templates in the
-package.\]
+The current version of VISCtemplates does not have the PT report
+template. You can use the template from SCHARPtemplates.
+
+``` r
+# create a top-level directory if >1 report per assay
+usethis::use_directory("BAMA")
+
+rmarkdown::draft(
+  "BAMA/BAMA_IgG_pt_report.Rmd", 
+  template = "visc_report_multi", 
+  package = "scharpTemplates", 
+  edit = FALSE
+  )
+```
+
+Alternatively, you could set this up using the RStudio menus:
+
+New File → R markdown → From Template → Visc Report (PDF & Word Output)
 
 ## Spell Check
 
