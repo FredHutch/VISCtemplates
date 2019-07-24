@@ -8,7 +8,7 @@
 create_visc_project <- function(path){
 
   # top level folder should follow VDCNNNAnalysis format
-  repo_name <- tail(stringr::str_split(path, "/")[[1]], n = 1)
+  repo_name <- basename(path)
 
   # get "VDCNNN" if it exists
   # this is a variable that is inserted into templates
