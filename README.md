@@ -32,6 +32,8 @@ The directory name should match the CAVD name with “Analysis” at the
 end: `VDCnnnAnalysis`. For example:
 
 ``` r
+library(VISCtemplates)
+
 create_visc_project("H:/visc-projects/Gallo477Analysis")
 ```
 
