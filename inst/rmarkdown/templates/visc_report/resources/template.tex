@@ -1,0 +1,253 @@
+\documentclass[11pt]{article}
+\usepackage{etex}
+\reserveinserts{28}
+\usepackage{lastpage}
+\usepackage[hmargin=2cm, top=2.7cm, bottom=3.5cm, footskip=0.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{float}
+\usepackage[maxfloats=50]{morefloats}
+\usepackage{parskip}
+\usepackage[citestyle=authoryear-comp,natbib=true]{biblatex}
+\usepackage{pdflscape}
+\usepackage[absolute]{textpos}
+\usepackage{rotating} %for xtable sideways
+\usepackage{verbatim}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{lipsum}
+%\usepackage[acronym,nomain]{glossaries}
+\usepackage{fancyhdr, graphicx, lastpage, ifthen, lscape}
+\usepackage[table]{xcolor}
+\usepackage{soul}
+\usepackage{booktabs}
+\usepackage{setspace}
+\usepackage{relsize}
+\usepackage{tabularx}
+\usepackage{makecell}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+
+
+\bibliography{$bibliography$}
+
+
+% For knitr
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\B}{\rule[-2ex]{0pt}{0pt}} % bottom strut
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\providecommand{\tightlist}{%
+   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+% End For knitr
+
+\renewcommand{\abstractname}{Overview}
+
+% Add unicode checkmark for DataPackageR support. The green checkmark
+% that DataPackageR prints to the console during package_build() causes
+% an error with latex. This changes the unicode checkmark to a latex one.
+\DeclareUnicodeCharacter{2714}{\checkmark}
+
+% Configure hyperref formatting bookmarks and references
+\hypersetup{
+  colorlinks = true, % color links instead of covering them w/red boxes
+  urlcolor   = blue, % color for external hyperlinks
+  linkcolor  = cyan, % color of internal links
+  citecolor  = gray  % color of citations
+}
+
+
+%this is to adjust header and footer in landscaped pages
+\fancypagestyle{lscape}{%
+    \fancyhf{} % clear all header and footer fields
+    \fancyhead[R]{\begin{footnotesize}
+    \begin{textblock}{1}(0.7,1.5){\color{gray}\rotatebox{90}{$shorttitle$}}\end{textblock}
+    \end{footnotesize} }
+    \fancyfoot[L]{\begin{footnotesize}
+    \begin{textblock}{1}(21,1.75){\color{gray}\rotatebox{90}{Page \thepage{}~of~\pageref{LastPage}}}\end{textblock}
+    \end{footnotesize} }
+    \fancyfoot[R]{\begin{footnotesize}
+%     \begin{textblock}{19.8}[-0.01,{\DynLength}](1.5,23.20){\color{gray}\rotatebox{90}{\Rver}}\end{textblock}
+    \begin{textblock}{19.8}(1.5,23.20){\color{gray}\rotatebox{90}{\Rver}}\end{textblock}
+    \end{footnotesize} }
+    \setlength{\TPHorizModule}{1cm}
+    \setlength{\TPVertModule}{1cm}
+    \renewcommand{\headrulewidth}{0.0pt}
+    \renewcommand{\footrulewidth}{0.0pt}}
+
+%set header and footer for first page
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+\fancyhead[L]{\includegraphics[height=0.8cm]{./logos/scharp.png}}
+\fancyhead[C]{\includegraphics[height=0.8cm]{./logos/new_VISC_logo_color.jpg}}
+\fancyhead[R]{\includegraphics[height=0.8cm]{./logos/FredHutch_h_tag_4col_CMYK_tm.png}}
+\fancyfoot[C]{Page \thepage{}~of~\pageref{LastPage}}
+\setlength{\headheight}{27pt}
+
+%decrease margins for landscape pages
+\newenvironment{changemargin}[2]{%
+\begin{list}{}{%
+\setlength{\topsep}{0pt}%
+\setlength{\leftmargin}{#1}%
+\setlength{\rightmargin}{#2}%
+%\setlength{\listparindent}{\parindent}%
+%\setlength{\itemindent}{\parindent}%
+\setlength{\parsep}{\parskip}%
+}%
+\item[]}{\end{list}}
+
+% being able to set emphasis for entire table row
+\newcommand\setrow[1]{\gdef\rowmac{#1}#1\ignorespaces}
+\newcommand\clearrow{\global\let\rowmac\relax}
+\clearrow
+
+%page settings
+\setlength{\footskip}{56pt}
+\pagestyle{fancy}
+\setlength{\parindent}{0pt}
+%\makeglossaries
+\begin{document}
+
+%get current date into insertdate
+\makeatletter
+\let\insertdate\@date
+\makeatother
+
+% workaround to use landscape environment with pandoc
+\newcommand{\blandscape}{\begin{landscape}}
+\newcommand{\elandscape}{\end{landscape}}
+
+%begin To and From Section
+\makeatletter
+\newcommand\tabfill[1]{%
+  \dimen@\linewidth
+  \advance\dimen@\@totalleftmargin
+  \advance\dimen@-\dimen\@curtab
+  \parbox[t]\dimen@{%
+    \leftskip=2em\hspace*{-2em}#1\ifhmode\strut\fi}%
+}
+\makeatother
+
+\vspace{0.1cm}
+\begin{flushleft}
+\begin{tabbing}
+this line is to\= set up the tab stop \kill
+{\bf Date:} \> \insertdate\\
+{\bf To:} \>  \tabfill{$for(to)$$to.name$$sep$, $endfor$}\\
+{\bf From:} \> \tabfill{$for(from)$$from.name$$sep$, $endfor$}\\
+{\bf RE:} \> \tabfill{$title$}\\
+$if(dropcc)$
+$else$
+{\bf cc:} \> \tabfill{$for(cc)$$cc.name$$sep$, $endfor$}\\
+$endif$
+{\bf Contact:} \> \tabfill{$for(from)$$if(from.contact)$$from.name$, $from.email$$endif$ $endfor$}\\
+\end{tabbing}
+\end{flushleft}
+
+\hrule
+
+\vspace{2cm}
+
+%begin contents section
+$if(toc)$
+\tableofcontents
+$endif$
+
+%change color of header and footer text to gray
+\makeatletter
+\patchcmd{\@fancyhead}{\rlap}{\color{gray}\rlap}{}{}
+\patchcmd{\headrule}{\hrule}{\color{gray}\hrule}{}{}
+\patchcmd{\@fancyfoot}{\rlap}{\color{gray}\rlap}{}{}
+\patchcmd{\footrule}{\hrule}{\color{gray}\hrule}{}{}
+\makeatother
+
+
+$if(includesummary)$
+\begin{abstract}
+$summary$
+\end{abstract}
+$endif$
+
+$if(lof)$
+\listoffigures
+$endif$
+
+$if(lot)$
+\listoftables
+$endif$
+
+\newpage
+\fancyhead[R]{\em $shorttitle$}
+\fancyhead[C]{}
+\fancyhead[L]{\em VISC Report}
+
+%\printglossaries
+
+$body$
+\label{LastPageOfBackMatter}~
+\end{document}
+

@@ -1,0 +1,336 @@
+---
+title: "Title of Your Submission"
+shorttitle: "Short Title"
+from:
+ - name: FirstNameA LastNameA
+   email: foo@bar.com
+   contact: true
+ - name: FirstNameB LastNameB
+to:
+ - name: FirstNameA LastNameA
+ - name: FirstNameB LastNameB
+ - name: FirstNameC LastNameC
+ - name: FirstNameD LastNameD
+ - name: FirstNameE LastNameE
+ - name: FirstNameF LastNameF
+dropcc: false
+cc:
+ - name: FirstNameA LastNameA
+ - name: FirstNameB LastNameB
+ - name: FirstNameC LastNameC
+ - name: FirstNameD LastNameD
+ - name: FirstNameE LastNameE
+includesummary: true
+summary: 
+  A short summary about your report. 
+bibliography: bibliography.bib
+lof: true
+lot: true
+toc: true
+output: 
+  VISCtemplates::visc_report: default
+  bookdown::word_document2:
+    toc: true
+    fig_caption: true
+    fig_height: 7
+    fig_width: 6
+    reference_docx: word-styles-reference.docx
+    keep_md: true
+---
+
+<!---
+Program Name:
+Creation Date:
+Full name of author:
+Project or Protocol:
+Purpose or description of program:
+Location of program:
+Location of input data:
+--->
+
+```{r package-loading-and-options, warning=FALSE, include=FALSE}
+
+### Add additional packages needed here 
+### Only works for CRAN packages (manually write library statement for Bioconductor or GitHub packages)
+packages = c('conflicted',"tidyverse","knitr","kableExtra","VISCfunctions")
+#if a package is installed, it will be loaded
+#if any are not, the missing package(s) will be installed and loaded
+package.check <- lapply(packages, FUN = function(x) {
+  if (!require(x, character.only = TRUE)) {
+    # VISCfunctions must be installed in seperately (not in CRAN)
+    if (x == 'VISCfunctions')
+      stop('The package "VISCfunctions" must be installed through GitHub: https://github.com/FredHutch/VISCfunctions.git')
+    
+    install.packages(x, dependencies = TRUE,repos = "http://cran.us.r-project.org")
+  }
+  library(x, character.only = TRUE)
+})
+
+# Enforcing specific version of pandoc
+if (numeric_version(rmarkdown::pandoc_version()) < numeric_version('2.0'))
+  stop('pandoc must be at least version "2.0')
+
+
+# Set some knitr options
+# This will always generate two figures (pdf and png, which can be handy for presentations)
+opts_chunk$set(tidy = TRUE, cache = FALSE, messages = TRUE, warning = TRUE, echo = FALSE, 
+               dev = c("png", "pdf"), dpi = 200, out.width = '100%', out.extra = '', 
+               fig.align = "center", fig.pos = "H", fig.height = 7, fig.width = 7)
+
+# Setting some options
+options(knitr.kable.NA = '', xtable.comment = FALSE)
+
+# Create a theme
+# This can be overloaded with other options
+visc_theme <- theme_bw() + 
+  theme(legend.position = "bottom", legend.margin = margin(unit = "cm"),
+        panel.grid.minor = element_blank())
+# Setting theme for report
+theme_set(visc_theme)
+
+# VTN Color Palette
+cbPalette <- c("#787873","#D92321","#1749FF","#0AB7C9","#FF6F1B","#810094","#FF5EBF","#8F8F8F")
+
+ 
+```
+
+
+
+```{r setting-conflicted-preferences, message=FALSE}
+
+# Set the conflict preference for any used functions here 
+# filter() is used in both dplyr and stats, so need to set the preference to dplyr
+conflict_prefer("filter", "dplyr")
+# Add any other conflict  preferences here
+
+```
+
+
+
+```{r word-pdf-functions}
+
+# Need to see if PDF or Word Output
+current_output_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
+# If interactive setting to pandoc for easier visualization
+output_type <- ifelse(!is.null(current_output_type) && current_output_type == 'latex', 'latex', 'pandoc')
+kable_warnings <- ifelse(output_type == 'latex', TRUE, FALSE)
+pandoc_markup <- ifelse(output_type == 'pandoc', TRUE, FALSE)
+
+
+# Setting up references depending on Word or PDf output
+visc_ref <- function(ref_in) {
+  ifelse(knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex', 
+          paste0('\\ref{', ref_in, '}'), 
+          paste0('\\@ref(', ref_in, ')')) 
+}
+
+visc_clearpage <- function() {
+  ifelse(knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex', 
+          '\\clearpage', 
+         '#####')
+} 
+ 
+```
+
+
+
+```{r data-loading, eval=FALSE}
+# Data Need to be loaded
+# Here is an example of loading data using SSH key from github.com/FredHutch
+my_cred = git2r::cred_ssh_key(publickey = "PATH_TO_SSH_KEY/.ssh/id_rsa.pub", privatekey = "PATH_TO_SSH_KEY/.ssh/id_rsa")
+remotes::install_git("git@github.com:FredHutch/McElrath762.git", credentials = my_cred)
+```
+
+```{r data-processing}
+# For this template use VISCfunction example data
+data(exampleData_ICS)
+
+ICS_adata <- exampleData_ICS %>% 
+  filter(Population == 'IFNg' & Group != 3)
+  
+```
+
+
+```{r group-testing, warning=FALSE}
+
+## Response Results
+response_results <- ICS_adata %>% 
+  group_by(Stim, Visit) %>%
+  group_modify(~ as.data.frame(
+    pairwise_test_bin(x = .$response, group = .$Group,
+                      method = 'barnard', alternative = 'less',
+                      num_needed_for_test = 3, digits = 1,
+                      latex_output = TRUE, verbose = FALSE))) %>%  
+  ungroup() %>% 
+  # Getting fancy p values
+  mutate(ResponseTest = pretty_pvalues(ResponseTest, output_type = output_type, 
+                                       sig_alpha = .1, background = 'yellow',
+                                       bold = if_else(pandoc_markup , TRUE, FALSE),
+                                       italic = if_else(pandoc_markup , TRUE, FALSE)))
+
+mag_results <- ICS_adata %>%
+  group_by(Stim, Visit, Population) %>%
+  group_modify(~ as.data.frame(
+    pairwise_test_cont(x = .$PercentCellNet, group = .$Group,
+                      method = 'wilcox', paired = FALSE, alternative = 'greater', 
+                      num_needed_for_test = 3, digits = 3, verbose = FALSE))) %>% 
+   ungroup() %>% 
+  # Getting fancy p values
+  mutate(MagnitudeTest = pretty_pvalues(MagnitudeTest, output_type = output_type, 
+                                       sig_alpha = .1, background = 'yellow',
+                                       bold = if_else(pandoc_markup , TRUE, FALSE),
+                                       italic = if_else(pandoc_markup , TRUE, FALSE))) %>% 
+  rename("Median (Range)" = Median_Min_Max, 'Mean (SD)' = Mean_SD)
+
+```
+
+
+
+`r visc_clearpage()` 
+
+
+# Summary of Main Results
+
+Summarize the findings of the report. Include specific comparisons and references to corresponding figures and tables.
+
+
+# Background
+
+Outline the study schema/schedule, study groups, time points, etc. Background information can be found on ATLAS or in the study protocol, and the background section is also included in the statistical analysis plan (SAP) and QC report.
+
+Add Study Schedule Table and Specimen Schedule Table in this section
+
+# Objectives
+
+List primary and secondary (if applicable) objectives. Objectives can be found on ATLAS, in the study protocol, or in the SAP, and should be adjusted if necessary to accommodate available data.
+
+# Endpoints
+
+## Biological endpoints
+
+Describe the lab measures of interest and the antigens/isolates tested. Information for this section can be found in the SAP, but the tense should be changed from future tense to past tense for PT reports. Most citations used are included in the bibliography.bib file populated with this template. Testing Reference: @Huang:2013fl.
+
+## Statistical endpoints
+
+Describe the statistical measures of interest (response, response magnitude, etc.) including response call methodology and truncation, if applicable. Assay-specific statistical endpoint information can be found at https://github.fhcrc.org/VIDD-VISC/Assay_Data_Specs.
+
+# Lab Methods
+
+Describe the lab methods and sample inclusion criteria. Assay-specific information can be found on Github at https://github.fhcrc.org/VIDD-VISC/Assay_Data_Specs/tree/master/Lab_Methods. This section may also be already included in the SAP, but verbs should be changed from future to past tense.
+
+# Statistical Methods
+
+## Graphical analysis
+
+Update the following section as appropriate for your data.
+
+Response rates were plotted, with accompanying Wilson score confidence intervals, for each group, antigen, and study time point. Distributions of response magnitude were plotted on the log scale for each group, antigen, and study time point with box plots superimposed on the distribution of responders. The mid-line of the box denotes the median and the ends of the box denote the $25^{th}$ and $75^{th}$ percentiles. The whiskers denote the most extreme data points that were no more than 1.5 times the interquartile range (i.e., height of the box). To show response trend over time, line plots of response magnitude were plotted on the log scale by study group and antigen across time points.
+
+## Statistical tests
+
+Update the following section as appropriate for your data. Assay-specific testing inclusion criteria can be found at https://github.fhcrc.org/VIDD-VISC/Assay_Data_Specs.  
+
+To assess if two groups have different response rates, pairwise group comparisons were conducted using Fisher’s exact test for each time point and antigen. For comparisons across time, McNemar's test were used to account for paired data. Response magnitude comparisons between experimental groups were compared using the Wilcoxon rank-sum test among responders only. Response magnitude comparisons between time points were performed using the Wilcoxon signed-rank test to account for paired data. To be included in the time point comparisons, a participant must be a responder in at least one of the time points. 
+
+The Wilcoxon tests are rank-based tests used to account for non-normality in the magnitude measurements. Because response magnitude comparisons were performed on responders only, each group must have at least 3 responders for the comparison to be conducted. 
+
+# Participant Cohort
+
+Summarize the data by antigen/isolate, time point, and study group. Discuss expected vs. observed sample size. Consider including a summary table.
+
+# Results
+
+Summarize the statistical analyses performed.
+
+## Section 1
+
+Consider breaking up the results section by objective or by statistical endpoint.
+
+## Section 2
+
+Make sure to include p-values and references to relevant tables and figures. See Figure `r visc_ref('fig:example-plot')` and Table `r visc_ref('tab:example-tab')`. 
+
+# Figures and Tables
+
+
+```{r example-plot, fig.scap = "Shorter caption for table of contents.", fig.cap= "Longer caption that shows under the figure. Explain everything needed to understand the figure here."}
+
+
+  ggplot(ICS_adata, 
+         aes(x = factor(Group), y = pmax(PercentCellNet, 0.005))) +
+    geom_point(data = ICS_adata %>% filter(response == 0), 
+                size = 1, position = position_jitter(width = .25, height = 0, seed = 3241), col = cbPalette[1], 
+                aes(shape = factor(response)), show.legend = F) +
+    geom_point(data = ICS_adata %>% filter(response == 1), 
+                size = 1, position = position_jitter(width = .25, seed = 3241), 
+                aes(shape = factor(response), col = factor(Group))) +
+    geom_boxplot(data = ICS_adata %>% filter(response == 1), 
+                 fill = NA, lwd = .5, outlier.colour = NA, 
+                 aes(col = factor(Group))) +  
+    scale_color_manual(name = "Group ", values = cbPalette[2:4]) +
+    scale_shape_manual(name = "", breaks = c(0,1), labels = c("Non-responder", "Responder"), 
+                       values = c(2, 19)) +
+    scale_x_discrete("") +
+    scale_y_log10(expression("Background-Adjusted % Activation Marker+"), 
+                breaks = c(.005,.01,.05,.25,1,2, 4, 10), 
+                labels = c(expression("" <= "0.005%"), '0.01', '0.05', '0.25%', 
+                           "1%", "2%", "4%", "10%")) +
+    facet_grid(Stim ~ Visit)
+
+
+
+```
+
+`r visc_clearpage()` 
+
+
+```{r example-tab, results="asis", warning=kable_warnings}
+
+mag_tab <- mag_results %>% 
+  select(-Population, -PerfectSeperation) 
+
+mag_tab %>%
+  kable(
+    format = output_type, longtable = FALSE, booktabs = TRUE,
+    linesep = "", escape = FALSE,
+    caption.short = "Short caption to show in List of Tables",
+    caption = "Long caption to show above table. Explain everything needed to understand the table here."
+  ) %>%
+  kable_styling(
+    font_size = 8,
+    # Note scale_down will overwrite font_size specifications
+    latex_options = c("hold_position", "scale_down", "repeat_header")
+  ) %>% 
+  collapse_rows(columns = 1:2, row_group_label_position = 'identity', latex_hline = 'full') %>% 
+  footnote("BAMA Magnitude with testing", threeparttable = TRUE)
+
+```
+
+`r visc_clearpage()`  
+
+
+
+
+```{r Software-Session-Information, results = 'asis', message = FALSE, warning=kable_warnings}
+### Chunk to create reproducibility tables
+# loading in rmarkdown and scharpTemplates so we can capture verison number
+if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmarkdown))
+if (any(installed.packages()[,1] == 'scharpTemplates')) suppressWarnings(library(VISCtemplates))
+
+my_session_info <- VISCfunctions::get_session_info()
+kable(my_session_info$platform_table, format = output_type, booktabs = TRUE, 
+      linesep = '', caption = "Reproducibility software session information") %>% 
+      kable_styling(font_size = 7)
+```
+
+```{r Software-Package-Version-Information, results = 'asis', warning=kable_warnings}
+kable(my_session_info$packages_table, format = output_type, booktabs = TRUE, 
+      linesep = '', caption = "Reproducibility software package version information") %>% 
+      kable_styling(font_size = 7)
+```
+
+
+
+`r visc_clearpage()` 
+
+# References

@@ -85,3 +85,26 @@ use_study_schema <- function(study_name) {
     package = "VISCtemplates"
   )
 }
+
+
+#' Runs VISC Report (PDF Output)
+#'
+#' Runs the VISC Report for PDF output based on the template.tex file.
+#'
+#' @param latex_engine latex engine to use
+#' @param keep_tex keep the .tex file
+#'
+#' @details
+#'
+#' Normally used through `output:VISCtemplates::visc_report` in the .rmd YAML
+#'
+#' @export
+#'
+visc_report <- function(latex_engine = "pdflatex", keep_tex = TRUE) {
+  template <- find_resource("visc_report", "template.tex")
+
+  rmarkdown::pdf_document(
+    template = template, keep_tex = keep_tex, fig_caption = TRUE, latex_engine = latex_engine)
+
+}
+
