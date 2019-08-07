@@ -253,7 +253,7 @@ Make sure to include p-values and references to relevant tables and figures. See
 # Figures and Tables
 
 
-```{r example-plot, fig.scap = "Shorter caption for table of contents.", fig.cap= "Longer caption that shows under the figure. Explain everything needed to understand the figure here."}
+```{r example-plot, fig.scap = "Shorter caption for List of Figures.", fig.cap= "Longer caption that shows under the figure. Explain everything needed to understand the figure here."}
 
 
   ggplot(ICS_adata, 
