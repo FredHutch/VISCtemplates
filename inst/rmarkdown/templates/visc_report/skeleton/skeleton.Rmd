@@ -73,7 +73,7 @@ if (numeric_version(rmarkdown::pandoc_version()) < numeric_version('2.0'))
 
 # Set some knitr options
 # This will always generate two figures (pdf and png, which can be handy for presentations)
-opts_chunk$set(tidy = TRUE, cache = FALSE, messages = TRUE, warning = TRUE, echo = FALSE, 
+opts_chunk$set(tidy = TRUE, cache = FALSE, message = TRUE, warning = TRUE, echo = FALSE, 
                dev = c("png", "pdf"), dpi = 200, out.width = '100%', out.extra = '', 
                fig.align = "center", fig.pos = "H", fig.height = 7, fig.width = 7)
 
