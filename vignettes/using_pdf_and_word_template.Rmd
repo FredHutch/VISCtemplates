@@ -1,5 +1,7 @@
 ---
 title: "Using the PDF and Word Output Template"
+author: Jimmy Fulp and Monica Gerber
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Using the PDF and Word Output Template}
@@ -9,7 +11,14 @@ vignette: >
 
 The VISC report Rmarkdown template knits to either a PDF or Word document. 
 
-* To create a new report, create a new Rmarkdown from the "VISC Report (PDF & Word Output)" template.
+* To create a new report, create a new Rmarkdown from the "VISC Report (PDF & Word Output)" template
+  * The new report can also be programatically created using:
+    ```
+    rmarkdown::draft("my_report_name.Rmd", 
+                    template = "visc_report", 
+                    package = "VISCtemplates", 
+                    edit = FALSE)
+    ```
 * Use the Knit button select either the PDF (visc_report) or Word (word_document2) output.
 * Note the shortcut Ctrl-Shift-K will run the first output in the YAML, will be the last output run (starts off as PDF first)
 * If you want to run both reports in one command, either use `rmarkdown::render()` with `output_format = 'all'`, or install the loom package and create a RStudio Addin (<https://github.com/thebioengineer/loom>).
@@ -34,8 +43,8 @@ There are some new functions and coding conventions that help with knitting the 
 **Sections** 
 
 * For referencing sections, use `[Section header text]` in the text.
-    + `[Background]` gives: [Background].
-    + `[Biological endpoints]` gives: [Biological endpoints].
+    + `[Referencing]` gives: [Referencing].
+    + `[Page breaks]` gives: [Page breaks].
 
 **References/Bibliography**
 
