@@ -1,7 +1,6 @@
 #' Create a VISC project
 #'
 #' @param path file path
-#' @param study_name name of study (should match file path)
 #'
 #' @return opens a new RStudio session with template project directory
 #' @export

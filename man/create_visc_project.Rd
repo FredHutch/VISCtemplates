@@ -8,8 +8,6 @@ create_visc_project(path)
 }
 \arguments{
 \item{path}{file path}
-
-\item{study_name}{name of study (should match file path)}
 }
 \value{
 opens a new RStudio session with template project directory
