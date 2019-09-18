@@ -313,9 +313,9 @@ mag_tab %>%
 
 ```{r Software-Session-Information, results = 'asis', message = FALSE, warning=kable_warnings}
 ### Chunk to create reproducibility tables
-# loading in rmarkdown and scharpTemplates so we can capture verison number
+# loading in rmarkdown and VISCtemplates so we can capture verison number
 if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmarkdown))
-if (any(installed.packages()[,1] == 'scharpTemplates')) suppressWarnings(library(VISCtemplates))
+if (any(installed.packages()[,1] == 'VISCtemplates')) suppressWarnings(library(VISCtemplates))
 
 my_session_info <- VISCfunctions::get_session_info()
 kable(my_session_info$platform_table, format = output_type, booktabs = TRUE, 
