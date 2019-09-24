@@ -4,12 +4,14 @@
 \alias{visc_pdf_document}
 \title{Convert to a VISC Report PDF/LaTeX document}
 \usage{
-visc_pdf_document(latex_engine = "pdflatex", keep_tex = TRUE)
+visc_pdf_document(latex_engine = "pdflatex", keep_tex = TRUE, ...)
 }
 \arguments{
 \item{latex_engine}{latex engine to use}
 
 \item{keep_tex}{keep the .tex file}
+
+\item{...}{other options to pass to \code{pdf_document()}}
 }
 \description{
 Runs the VISC Report for PDF output based on the template.tex file.
