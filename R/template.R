@@ -93,7 +93,7 @@ use_study_schema <- function(study_name) {
 #'
 #' @param latex_engine latex engine to use
 #' @param keep_tex keep the .tex file
-#' @param ... other options to pass to \code{pdf_document()}
+#' @param ... other options to pass to \code{rmarkdown::pdf_document()}
 #'
 #' @details
 #'
@@ -120,6 +120,37 @@ visc_pdf_document <- function(latex_engine = "pdflatex",
       "-V", paste0("logo_path_fh=", logo_path_fh),
       "-V", paste0("logo_path_visc=", logo_path_visc)
     ),
+    ...)
+}
+
+
+#' Convert to a VISC Report Word document
+#'
+#' Runs the VISC Report for PDF output based on the template.tex file.
+#'
+#' @param toc include table of contents
+#' @param fig_caption all figure captions
+#' @param keep_md keep the .tex file
+#' @param ... other options to pass to \code{bookdown::word_document2()}
+#'
+#' @details
+#'
+#' Normally used through `output:VISCtemplates::visc_word_document` in the .rmd YAML
+#'
+#' @export
+#'
+visc_word_document <- function(toc = TRUE,
+                               fig_caption = TRUE,
+                               keep_md = TRUE,
+                              ...) {
+
+  word_style_path <- find_resource("visc_report", "word-styles-reference.docx")
+
+  bookdown::word_document2(
+    toc = toc,
+    fig_caption = fig_caption,
+    keep_md = keep_md,
+    reference_docx = word_style_path,
     ...)
 }
 
