@@ -93,6 +93,7 @@ use_study_schema <- function(study_name) {
 #'
 #' @param latex_engine latex engine to use
 #' @param keep_tex keep the .tex file
+#' @param ... other options to pass to \code{rmarkdown::pdf_document()}
 #'
 #' @details
 #'
@@ -100,13 +101,56 @@ use_study_schema <- function(study_name) {
 #'
 #' @export
 #'
-visc_pdf_document <- function(latex_engine = "pdflatex", keep_tex = TRUE) {
+visc_pdf_document <- function(latex_engine = "pdflatex",
+                              keep_tex = TRUE,
+                              ...) {
   template <- find_resource("visc_report", "template.tex")
+
+  logo_path_scharp <- find_resource("visc_report", "SCHARP_logo.png")
+  logo_path_fh <- find_resource("visc_report", "FredHutch_logo.png")
+  logo_path_visc <- find_resource("visc_report", "VISC_logo.jpg")
 
   rmarkdown::pdf_document(
     template = template,
     keep_tex = keep_tex,
     fig_caption = TRUE,
-    latex_engine = latex_engine)
+    latex_engine = latex_engine,
+    pandoc_args = c(
+      "-V", paste0("logo_path_scharp=", logo_path_scharp),
+      "-V", paste0("logo_path_fh=", logo_path_fh),
+      "-V", paste0("logo_path_visc=", logo_path_visc)
+    ),
+    ...)
+}
+
+
+#' Convert to a VISC Report Word document
+#'
+#' Runs the VISC Report for PDF output based on the template.tex file.
+#'
+#' @param toc include table of contents
+#' @param fig_caption all figure captions
+#' @param keep_md keep the .tex file
+#' @param ... other options to pass to \code{bookdown::word_document2()}
+#'
+#' @details
+#'
+#' Normally used through `output:VISCtemplates::visc_word_document` in the .rmd YAML
+#'
+#' @export
+#'
+visc_word_document <- function(toc = TRUE,
+                               fig_caption = TRUE,
+                               keep_md = TRUE,
+                              ...) {
+
+  word_style_path <- find_resource("visc_report", "word-styles-reference.docx")
+
+  bookdown::word_document2(
+    toc = toc,
+    fig_caption = fig_caption,
+    keep_md = keep_md,
+    reference_docx = word_style_path,
+    ...)
 }
 

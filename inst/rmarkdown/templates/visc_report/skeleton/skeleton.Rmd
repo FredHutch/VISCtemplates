@@ -29,13 +29,7 @@ lot: true
 toc: true
 output: 
   VISCtemplates::visc_pdf_document: default
-  bookdown::word_document2:
-    toc: true
-    fig_caption: true
-    fig_height: 7
-    fig_width: 6
-    reference_docx: word-styles-reference.docx
-    keep_md: true
+  VISCtemplates::visc_word_document: default
 ---
 
 <!---

@@ -1,13 +1,9 @@
-find_file <- function(template, file) {
-  template <- system.file("rmarkdown", "templates", template, file,
-                          package = "VISCtemplates")
-  if (template == "") {
-    stop("Couldn't find template file ", template, "/", file, call. = FALSE)
-  }
-
-  template
-}
-
-find_resource <- function(template, file) {
-  find_file(template, file.path("resources", file))
+find_resource <- function(template, file = 'template.tex', package = "VISCtemplates") {
+  res <- system.file(
+    "rmarkdown", "templates", template, "resources", file, package = "VISCtemplates"
+  )
+  if (res == "") stop(
+    "Couldn't find template file ", template, "/resources/", file, call. = FALSE
+  )
+  res
 }
