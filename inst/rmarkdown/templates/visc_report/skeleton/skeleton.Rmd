@@ -301,10 +301,10 @@ ICS_adata %>%
 
 ```{r example-tab, results="asis", warning=kable_warnings}
 
-mag_tab <- mag_results %>% 
+magnitude_tab <- magnitude_results %>% 
   select(-Population, -PerfectSeperation) 
 
-mag_tab %>%
+magnitude_tab %>%
   kable(
     format = output_type, longtable = FALSE, booktabs = TRUE,
     linesep = "", escape = FALSE,
