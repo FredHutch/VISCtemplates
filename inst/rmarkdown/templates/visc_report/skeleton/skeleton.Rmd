@@ -44,11 +44,12 @@ Location of input data:
 
 ```{r package-loading-and-options, warning=FALSE, include=FALSE}
 
-### Add additional packages needed here 
-### Only works for CRAN packages (manually write library statement for Bioconductor or GitHub packages)
-packages = c('conflicted',"tidyverse","knitr","kableExtra","VISCfunctions")
-#if a package is installed, it will be loaded
-#if any are not, the missing package(s) will be installed and loaded
+# Add additional packages needed here 
+# Only works for CRAN packages, use library() for packages on Bioconductor or GiHub
+packages <- c("conflicted", "tidyverse", "knitr", "kableExtra", "VISCfunctions")
+
+# If a package is installed, it will be loaded
+# If any are not, the missing package(s) will be installed and loaded
 package.check <- lapply(packages, FUN = function(x) {
   if (!require(x, character.only = TRUE)) {
     # VISCfunctions must be installed in seperately (not in CRAN)
@@ -64,52 +65,56 @@ package.check <- lapply(packages, FUN = function(x) {
 if (numeric_version(rmarkdown::pandoc_version()) < numeric_version('2.0'))
   stop('pandoc must be at least version "2.0')
 
-
 # Set some knitr options
 # This will always generate two figures (pdf and png, which can be handy for presentations)
-opts_chunk$set(tidy = TRUE, cache = FALSE, message = TRUE, warning = TRUE, echo = FALSE, 
-               dev = c("png", "pdf"), dpi = 200, out.width = '100%', out.extra = '', 
-               fig.align = "center", fig.pos = "H", fig.height = 7, fig.width = 7)
+opts_chunk$set(tidy = TRUE, cache = FALSE, message = TRUE, warning = TRUE, 
+               echo = FALSE, dev = c("png", "pdf"), dpi = 200, 
+               out.width = '100%', out.extra = '', fig.align = "center", 
+               fig.pos = "H", fig.height = 7, fig.width = 7)
 
-# Setting some options
-options(knitr.kable.NA = '', xtable.comment = FALSE)
+# NA's will be blank in tables
+options(knitr.kable.NA = '')
 
-# Create a theme
-# This can be overloaded with other options
+# Create a theme 
 visc_theme <- theme_bw() + 
-  theme(legend.position = "bottom", legend.margin = margin(unit = "cm"),
-        panel.grid.minor = element_blank())
-# Setting theme for report
+  theme(
+    legend.position = "bottom", 
+    legend.margin = margin(unit = "cm"),
+    panel.grid.minor = element_blank()
+    )
+
 theme_set(visc_theme)
 
-# VTN Color Palette
-cbPalette <- c("#787873","#D92321","#1749FF","#0AB7C9","#FF6F1B","#810094","#FF5EBF","#8F8F8F")
+# set group colors
+group_colors <- c(
+  `1` = "#D92321",
+  `2` = "#1749FF",
+  `4` = "#0AB7C9"
+)
 
- 
+# If you have group colors already in your project:
+# source(here::here("docs", "group-colors.R"))
 ```
 
+```{r conflicted-preferences, message=FALSE}
 
-
-```{r setting-conflicted-preferences, message=FALSE}
-
-# Set the conflict preference for any used functions here 
 # filter() is used in both dplyr and stats, so need to set the preference to dplyr
 conflict_prefer("filter", "dplyr")
-# Add any other conflict  preferences here
-
 ```
-
-
 
 ```{r word-pdf-functions}
 
 # Need to see if PDF or Word Output
 current_output_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
+
 # If interactive setting to pandoc for easier visualization
-output_type <- ifelse(!is.null(current_output_type) && current_output_type == 'latex', 'latex', 'pandoc')
+output_type <- ifelse(
+  !is.null(current_output_type) && current_output_type == 'latex', 
+  'latex', 
+  'pandoc'
+  )
 kable_warnings <- ifelse(output_type == 'latex', TRUE, FALSE)
 pandoc_markup <- ifelse(output_type == 'pandoc', TRUE, FALSE)
-
 
 # Setting up references depending on Word or PDf output
 visc_ref <- function(ref_in) {
@@ -123,16 +128,16 @@ visc_clearpage <- function() {
           '\\clearpage', 
          '#####')
 } 
- 
 ```
 
-
-
 ```{r data-loading, eval=FALSE}
-# Data Need to be loaded
+
 # Here is an example of loading data using SSH key from github.com/FredHutch
-my_cred = git2r::cred_ssh_key(publickey = "PATH_TO_SSH_KEY/.ssh/id_rsa.pub", privatekey = "PATH_TO_SSH_KEY/.ssh/id_rsa")
-remotes::install_git("git@github.com:FredHutch/McElrath762.git", credentials = my_cred)
+my_cred = git2r::cred_ssh_key(publickey = "PATH_TO_SSH_KEY/.ssh/id_rsa.pub", 
+                              privatekey = "PATH_TO_SSH_KEY/.ssh/id_rsa")
+
+remotes::install_git("git@github.com:FredHutch/McElrath762.git", 
+                     credentials = my_cred)
 ```
 
 ```{r data-processing}
@@ -141,52 +146,13 @@ data(exampleData_ICS)
 
 ICS_adata <- exampleData_ICS %>% 
   filter(Population == 'IFNg' & Group != 3)
-  
 ```
-
-
-```{r group-testing, warning=FALSE}
-
-## Response Results
-response_results <- ICS_adata %>% 
-  group_by(Stim, Visit) %>%
-  group_modify(~ as.data.frame(
-    pairwise_test_bin(x = .$response, group = .$Group,
-                      method = 'barnard', alternative = 'less',
-                      num_needed_for_test = 3, digits = 1,
-                      latex_output = TRUE, verbose = FALSE))) %>%  
-  ungroup() %>% 
-  # Getting fancy p values
-  mutate(ResponseTest = pretty_pvalues(ResponseTest, output_type = output_type, 
-                                       sig_alpha = .1, background = 'yellow',
-                                       bold = if_else(pandoc_markup , TRUE, FALSE),
-                                       italic = if_else(pandoc_markup , TRUE, FALSE)))
-
-mag_results <- ICS_adata %>%
-  group_by(Stim, Visit, Population) %>%
-  group_modify(~ as.data.frame(
-    pairwise_test_cont(x = .$PercentCellNet, group = .$Group,
-                      method = 'wilcox', paired = FALSE, alternative = 'greater', 
-                      num_needed_for_test = 3, digits = 3, verbose = FALSE))) %>% 
-   ungroup() %>% 
-  # Getting fancy p values
-  mutate(MagnitudeTest = pretty_pvalues(MagnitudeTest, output_type = output_type, 
-                                       sig_alpha = .1, background = 'yellow',
-                                       bold = if_else(pandoc_markup , TRUE, FALSE),
-                                       italic = if_else(pandoc_markup , TRUE, FALSE))) %>% 
-  rename("Median (Range)" = Median_Min_Max, 'Mean (SD)' = Mean_SD)
-
-```
-
-
 
 `r visc_clearpage()` 
-
 
 # Summary of Main Results
 
 Summarize the findings of the report. Include specific comparisons and references to corresponding figures and tables.
-
 
 # Background
 
@@ -226,7 +192,54 @@ Update the following section as appropriate for your data. Assay-specific testin
 
 To assess if two groups have different response rates, pairwise group comparisons were conducted using Fisher’s exact test for each time point and antigen. For comparisons across time, McNemar's test were used to account for paired data. Response magnitude comparisons between experimental groups were compared using the Wilcoxon rank-sum test among responders only. Response magnitude comparisons between time points were performed using the Wilcoxon signed-rank test to account for paired data. To be included in the time point comparisons, a participant must be a responder in at least one of the time points. 
 
+```{r response-testing, warning=FALSE}
+
+# example of using VISCfunctions::pairwise_test_bin for analysis
+response_results <- ICS_adata %>% 
+  group_by(Stim, Visit) %>%
+  group_modify(
+      ~pairwise_test_bin(
+        x = .$response, group = .$Group, method = 'barnard', 
+        alternative = 'less', num_needed_for_test = 3, digits = 1,
+        latex_output = TRUE, verbose = FALSE
+        )
+    ) %>%  
+  ungroup() %>% 
+  mutate(
+    ResponseTest = pretty_pvalues(
+      ResponseTest, output_type = output_type, sig_alpha = .1, 
+      background = 'yellow',
+      bold = if_else(pandoc_markup , TRUE, FALSE),
+      italic = if_else(pandoc_markup , TRUE, FALSE)
+      )
+    )
+```
+
 The Wilcoxon tests are rank-based tests used to account for non-normality in the magnitude measurements. Because response magnitude comparisons were performed on responders only, each group must have at least 3 responders for the comparison to be conducted. 
+
+```{r magnitude-testing, warning=FALSE}
+
+# example of using VISCfunctions::pairwise_test_cont for analysis
+magnitude_results <- ICS_adata %>%
+  group_by(Stim, Visit, Population) %>%
+  group_modify(
+    ~pairwise_test_cont(
+      x = .$PercentCellNet, group = .$Group, method = 'wilcox', paired = FALSE, 
+      alternative = 'greater', num_needed_for_test = 3, digits = 3, 
+      verbose = FALSE
+      )
+    ) %>% 
+   ungroup() %>% 
+  mutate(
+    MagnitudeTest = pretty_pvalues(
+      MagnitudeTest, output_type = output_type, sig_alpha = .1,
+      background = 'yellow',
+      bold = if_else(pandoc_markup , TRUE, FALSE),
+      italic = if_else(pandoc_markup , TRUE, FALSE)
+      )
+    ) %>% 
+  rename("Median (Range)" = Median_Min_Max, 'Mean (SD)' = Mean_SD)
+```
 
 # Participant Cohort
 
@@ -244,46 +257,54 @@ Consider breaking up the results section by objective or by statistical endpoint
 
 Make sure to include p-values and references to relevant tables and figures. See Figure `r visc_ref('fig:example-plot')` and Table `r visc_ref('tab:example-tab')`. 
 
-# Figures and Tables
+`r visc_clearpage()` 
 
+# Figures and Tables
 
 ```{r example-plot, fig.scap = "Shorter caption for List of Figures.", fig.cap= "Longer caption that shows under the figure. Explain everything needed to understand the figure here."}
 
-
-  ggplot(ICS_adata, 
-         aes(x = factor(Group), y = pmax(PercentCellNet, 0.005))) +
-    geom_point(data = ICS_adata %>% filter(response == 0), 
-                size = 1, position = position_jitter(width = .25, height = 0, seed = 3241), col = cbPalette[1], 
-                aes(shape = factor(response)), show.legend = F) +
-    geom_point(data = ICS_adata %>% filter(response == 1), 
-                size = 1, position = position_jitter(width = .25, seed = 3241), 
-                aes(shape = factor(response), col = factor(Group))) +
-    geom_boxplot(data = ICS_adata %>% filter(response == 1), 
-                 fill = NA, lwd = .5, outlier.colour = NA, 
-                 aes(col = factor(Group))) +  
-    scale_color_manual(name = "Group ", values = cbPalette[2:4]) +
-    scale_shape_manual(name = "", breaks = c(0,1), labels = c("Non-responder", "Responder"), 
-                       values = c(2, 19)) +
+ICS_adata %>%
+  ggplot(aes(x = factor(Group), y = pmax(PercentCellNet, 0.005))) +
+  geom_point(
+    data = ICS_adata %>% filter(response == 0),
+    aes(shape = factor(response)),
+    position = position_jitter(width = .25, height = 0, seed = 3241),
+    color = "#787873", size = 1, show.legend = FALSE
+    ) +
+  geom_point(
+    data = ICS_adata %>% filter(response == 1), 
+    aes(shape = factor(response), color = factor(Group)),
+    position = position_jitter(width = .25, seed = 3241), size = 1
+    ) +
+    geom_boxplot(
+      data = ICS_adata %>% filter(response == 1),
+      aes(col = factor(Group)),
+      fill = NA, lwd = .5, outlier.colour = NA
+      ) +  
+    scale_color_manual(name = "Group ", values = group_colors) +
+    scale_shape_manual(
+      name = "", breaks = c(0,1), 
+      labels = c("Non-responder", "Responder"), 
+      values = c(2, 19)
+      ) +
     scale_x_discrete("") +
-    scale_y_log10(expression("Background-Adjusted % Activation Marker+"), 
-                breaks = c(.005,.01,.05,.25,1,2, 4, 10), 
-                labels = c(expression("" <= "0.005%"), '0.01', '0.05', '0.25%', 
-                           "1%", "2%", "4%", "10%")) +
+    scale_y_log10(
+      expression("Background-Adjusted % Activation Marker+"),
+      breaks = c(.005,.01,.05,.25,1,2, 4, 10),
+      labels = c(expression("" <= "0.005%"), 
+                 '0.01', '0.05', '0.25%', "1%", "2%", "4%", "10%")
+      ) +
     facet_grid(Stim ~ Visit)
-
-
-
 ```
 
 `r visc_clearpage()` 
 
-
 ```{r example-tab, results="asis", warning=kable_warnings}
 
-mag_tab <- mag_results %>% 
+magnitude_tab <- magnitude_results %>% 
   select(-Population, -PerfectSeperation) 
 
-mag_tab %>%
+magnitude_tab %>%
   kable(
     format = output_type, longtable = FALSE, booktabs = TRUE,
     linesep = "", escape = FALSE,
@@ -302,28 +323,32 @@ mag_tab %>%
 
 `r visc_clearpage()`  
 
-
-
-
-```{r Software-Session-Information, results = 'asis', message = FALSE, warning=kable_warnings}
+```{r Software-Session-Information, results='asis', message=FALSE, warning=kable_warnings}
 ### Chunk to create reproducibility tables
 # loading in rmarkdown and VISCtemplates so we can capture verison number
 if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmarkdown))
 if (any(installed.packages()[,1] == 'VISCtemplates')) suppressWarnings(library(VISCtemplates))
 
 my_session_info <- VISCfunctions::get_session_info()
-kable(my_session_info$platform_table, format = output_type, booktabs = TRUE, 
-      linesep = '', caption = "Reproducibility software session information") %>% 
-      kable_styling(font_size = 7)
+kable(
+  my_session_info$platform_table, 
+  format = output_type, 
+  booktabs = TRUE, 
+  linesep = '', 
+  caption = "Reproducibility software session information"
+  ) %>% 
+  kable_styling(font_size = 7)
 ```
 
-```{r Software-Package-Version-Information, results = 'asis', warning=kable_warnings}
-kable(my_session_info$packages_table, format = output_type, booktabs = TRUE, 
-      linesep = '', caption = "Reproducibility software package version information") %>% 
-      kable_styling(font_size = 7)
+```{r Software-Package-Version-Information, results='asis', warning=kable_warnings}
+kable(
+  my_session_info$packages_table, 
+  format = output_type, booktabs = TRUE, 
+  linesep = '', 
+  caption = "Reproducibility software package version information"
+  ) %>% 
+  kable_styling(font_size = 7)
 ```
-
-
 
 `r visc_clearpage()` 
 
