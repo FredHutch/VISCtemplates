@@ -7,18 +7,34 @@ The goal of VISCtemplates is to:
 
   - automate project setup
   - provide a common, easy-to-understand directory structure across
-    analyses that follows the WI
+    analyses
   - provide consistency across reports in the same project/protocol
   - provide consistency across reports analyzing data from the same
     assay
+
+There are two main features of VISCtemplates:
+
+1.  A function to automate directory/project set-up.
+2.  A Rmarkdown template and functions to write Protocol Team (PT)
+    reports.
 
 ## Installation
 
 ``` r
 library(devtools)
 
-install_github("FredHutch/VISCtemplates", auth_token = Sys.getenv("GITHUB_KEY"))
+install_github("FredHutch/VISCtemplates")
 ```
+
+## Requirements
+
+  - R (version \>= 3.0)
+  - RStudio (version \>= 1.2)
+      - Includes Pandoc (version \>= 2.0), which is needed for Word
+        reports.
+  - TinyTeX (or MiKTeX), which is needed for PDF reports.
+      - `install.packages(“tinytex”)`
+      - `tinytex::install_tinytex()`
 
 ## Setting up a VISC Analysis Project
 
@@ -76,10 +92,13 @@ library(usethis)
 
 use_git()
 
-# this will create a project on GitHub, push your work, and open the webpage! 
-use_github(organisation = "FredHutch", private = TRUE, protocol = "ssh",
-           auth_token = Sys.getenv("GITHUB_KEY"))
+# this will create a project on GitHub, push your work, and open the webpage!
+Sys.getenv("GITHUB_PAT")
+use_github(organisation = "FredHutch", private = TRUE, protocol = "https")
 ```
+
+Note that you must have a [personal access token
+(PAT)](https://happygitwithr.com/github-pat.html) set up to do this.
 
 You still need to set the permissions to the project to vidd-visc:
 
@@ -99,8 +118,8 @@ Now you can begin editing the Documentation.
 The above setup steps are done on the `master` branch. When you’re ready
 to begin work on the analysis, create a branch.
 
-The current version of VISCtemplates does not have the PT report
-template. You can use the template from SCHARPtemplates.
+Then start working from the PT report template. You can use the template
+from this package:
 
 ``` r
 # create a top-level directory if >1 report per assay
@@ -108,8 +127,8 @@ usethis::use_directory("BAMA")
 
 rmarkdown::draft(
   "BAMA/BAMA_IgG_pt_report.Rmd", 
-  template = "visc_report_multi", 
-  package = "scharpTemplates", 
+  template = "visc_report", 
+  package = "VISCtemplates", 
   edit = FALSE
   )
 ```
@@ -117,6 +136,12 @@ rmarkdown::draft(
 Alternatively, you could set this up using the RStudio menus:
 
 New File → R markdown → From Template → Visc Report (PDF & Word Output)
+
+To knit the report, click the small down arrow to the right of the
+“Knit” button:
+
+  - For PDF, select “visc\_pdf\_document”.
+  - For Word (.docx), select “visc\_word\_document”.
 
 ## Spell Check
 
