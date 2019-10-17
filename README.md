@@ -18,12 +18,10 @@ There are two main features of VISCtemplates:
 2.  A Rmarkdown template and functions to write Protocol Team (PT)
     reports.
 
-## Installation of VISC Templates
+## Installation
 
 ``` r
-library(devtools)
-
-install_github("FredHutch/VISCtemplates")
+remotes::install_github("FredHutch/VISCtemplates")
 ```
 
 ## Requirements
@@ -38,24 +36,20 @@ install_github("FredHutch/VISCtemplates")
 
 ## Setting up a VISC Analysis Project
 
-### Step one: Create a new project in a 'local' or 'working' directory
+### Step one: Create project locally
 
 Use `create_visc_project()` to specify where to save your analysis
 project. The function will set up a basic directory structure for your
-analysis. This directory structure is outlined in WI-xxxx.
+analysis that follow the directory structure WI (WI-xxxx).
 
 The directory name should match the CAVD name with “Analysis” at the
 end: `VDCnnnAnalysis`. For example:
 
 ``` r
-library(VISCtemplates)
-
-#example project
 create_visc_project("H:/visc-projects/Gallo477Analysis")
 ```
 
-This function will produce the following folder structure, text files
-and templates:
+This function will produce the following structure and templates:
 
     [VDCnnn]Analysis
     |- .github/
@@ -84,44 +78,44 @@ and templates:
     |
     |- .VDCnnnAnalysis.Rproj          # R project file
 
-### Step Two: Set Up GitHub with the New Repository
+### Step Two: GitHub
 
 Once you’ve created the project locally, initialize Git and push to
 github.com/FredHutch:
 
 ``` r
-library(usethis)
+usethis::use_git()
 
-use_git()
-
-# this will create a project on GitHub, push your work, and open the webpage
+# this will create a project on GitHub, push your work, and open the webpage!
 Sys.getenv("GITHUB_PAT")
-use_github(organisation = "FredHutch", private = TRUE, protocol = "https")
+usethis::use_github(organisation = "FredHutch", private = TRUE, protocol = "https")
 ```
 
-Note that you must have a [personal access token(PAT)](https://happygitwithr.com/github-pat.html) 
-set up to do this.
+Note that you must have a [personal access token
+(PAT)](https://happygitwithr.com/github-pat.html) set up to do this. You
+can load in your PAT in every R session by editing your .Rprofile file
+(`usethis::edit_r_profile()`) and adding the line `Sys.setenv(GITHUB_PAT
+= "MY_PAT_HERE")` in the file.
 
-Set the permissions to the project to vidd-visc:
+You still need to set the permissions to the project to vidd-visc:
 
 Settings → Collaborators & Teams → Add a team → vidd-visc
 
 ### Step Three: Documentation
 
-Now you can begin editing the documentation with study-specific information.  These changes
-should be pushed to the 'master' branch.
+Now you can begin editing the Documentation.
 
-1.  README.Rmd: Open README template. Add study details, such as documentation
-    of any study-specific training.
-2.  in the 'docs' folder: Begin filling in group colors, background, and objectives.
-3.  in the 'sap' folder: Add the statistical analysis plan.
+1.  README.Rmd: Open README template and add things like documentation
+    of SST.
+2.  docs/: Begin filling in group colors, background, and objectives.
+3.  sap/: Add statistical analysis plan.
 
-### Step Four: Analysis Process
+### Step Four: Start Analysis Work
 
 The above setup steps are done on the `master` branch. When you’re ready
-to begin work on the analysis, create a new branch.
+to begin work on the analysis, create a branch.
 
-Start working from the PT Report template. You can use the template
+Then start working from the PT report template. You can use the template
 from this package:
 
 ``` r
@@ -149,7 +143,7 @@ To knit the report, click the small down arrow to the right of the
 ## Spell Check
 
 When the template is generated, it creates a list of custom words that
-are frequently ignored by spell check in VISC reports. This is saved in
+are frequently ignored in VISC reports. This is saved in
 `inst/WORDLIST`. You can check spelling of files and update `WORDLIST`
 using the [`spelling` package](https://docs.ropensci.org/spelling/). The
 `spelling` package only spell checks text blocks, not code chunks.
