@@ -14,7 +14,7 @@ Thanks for your interest in contributing to VISCtemplates! There are several way
 
 * **Improve documentation.** Noticed a typo? Think a function could use a better example? Improvements to the documentation is very welcome!
 
-* **Contribute code.** If you'd like to fix a bug or implement a new feature, have a look at the issue list and leave a comment on things you want to work on. Also see the development guidelines below.
+* **Contribute code.** If you'd like to fix a bug or implement a new feature, have a look at the issue list and leave a comment on things you want to work on. If you have a new idea, first file an issue and make sure someone from the our team agrees that it’s a problem, and is happy with your basic proposal for fixing it. Also see the development guidelines below.
 
 
 # Development guidelines
@@ -27,8 +27,8 @@ We follow the [Gitflow](https://nvie.com/posts/a-successful-git-branching-model/
     * Restart R Session Cmd+Shift+F10 (Ctrl+Shift+F10 for Windows)
     * Build and Reload Cmd+Shift+B (Ctrl+Shift+B for Windows)
     * Test Package Cmd+Shift+T (Ctrl+Shift+T for Windows)
-    * Check Package Cmd+Shift+E (Ctrl+Shift+E for Windows)
     * Document Package Cmd+Shift+D (Ctrl+Shift+D for Windows)
+    * Check Package Cmd+Shift+E (Ctrl+Shift+E for Windows)
 <br><br>
 
 2. Push branch to github and issue a pull request (PR).
@@ -52,9 +52,7 @@ Before you commit, run the following commands one more time to make sure you did
 Your pull request should follow these guidelines:
 
 1. **Motivation for changes.** Your pull request should clearly and concisely motivate the need for change.
-2. **Only related changes.** Before you submit your pull request, please check to make sure that you haven't accidentally included any unrelated changes. These make it harder to see exactly what's changed, and to evaluate any unexpected side effects.
-
-    Each PR corresponds to a git branch, so if you expect to submit multiple changes make sure to create multiple branches. If you have multiple changes that depend on each other, start with the first one and don't submit any others until the first one has been processed.
+2. **Only related changes.** Before you submit your pull request, please check to make sure that you haven't accidentally included any unrelated changes. These make it harder to see exactly what's changed, and to evaluate any unexpected side effects. Each PR corresponds to a git branch, so if you expect to submit multiple changes make sure to create multiple branches.
 
 3. **Coding style.** Please follow the official [tidyverse style](https://style.tidyverse.org/). Maintaining a consistent style across the whole code base makes it much easier to jump into the code. If you're modifying existing VISCtemplates code that doesn't follow the style guide, a separate pull request to fix the style would be greatly appreciated.
 
