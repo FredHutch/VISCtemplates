@@ -1,11 +1,15 @@
 Package: VISCtemplates
 Title: Tools for writing reproducible reports at VISC
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R: 
     person(given = "Jimmy",
            family = "Fulp",
            role = c("aut", "cre"),
            email = "wfulp@fredhutch.org")
+    person(given = "Marie",
+           family = "Vendettuoli",
+           role = c("aut"),
+           email = "mvendett@fredhutch.org")
     person(given = "Monica",
            family = "Gerber",
            role = c("aut", "cre"),
