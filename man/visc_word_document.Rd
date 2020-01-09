@@ -4,8 +4,7 @@
 \alias{visc_word_document}
 \title{Convert to a VISC Report Word document}
 \usage{
-visc_word_document(toc = TRUE, fig_caption = TRUE, keep_md = TRUE,
-  ...)
+visc_word_document(toc = TRUE, fig_caption = TRUE, keep_md = TRUE, ...)
 }
 \arguments{
 \item{toc}{include table of contents}

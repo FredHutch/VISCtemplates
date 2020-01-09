@@ -14,7 +14,7 @@ Authors@R:
            family = "Gerber",
            role = c("aut", "cre"),
            email = "mwgerber@gmail.com")
-Description: What the package does (one paragraph).
+Description: The goal of VISCtemplates is to automate project setup provide a common easy-to-understand directory structure across analyses, provide consistency across reports in the same project/protocol, and provide consistency across reports analyzing data from the same assay.
 License: GPL-3 + file LICENSE
 Depends: R (>= 3.0)
 Imports:
@@ -26,7 +26,7 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/FredHutch/VISCtemplates
 BugReports: https://github.com/FredHutch/VISCtemplates/issues
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Suggests: 
     knitr
 VignetteBuilder: knitr
