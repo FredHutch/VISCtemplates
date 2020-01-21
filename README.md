@@ -20,8 +20,13 @@ There are two main features of VISCtemplates:
 
 ## Installation
 
+The package is available on the Fred Hutch organization GitHub page.
+
 ``` r
 remotes::install_github("FredHutch/VISCtemplates")
+
+# to access the vignette, use devtools:
+devtools::install_github("FredHutch/VISCtemplates", build_vignettes = TRUE)
 ```
 
 ## Requirements
