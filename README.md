@@ -20,10 +20,13 @@ There are two main features of VISCtemplates:
 
 ## Installation
 
-``` r
-library(devtools)
+The package is available on the Fred Hutch organization GitHub page.
 
-install_github("FredHutch/VISCtemplates")
+``` r
+remotes::install_github("FredHutch/VISCtemplates")
+
+# to access the vignette, use devtools:
+devtools::install_github("FredHutch/VISCtemplates", build_vignettes = TRUE)
 ```
 
 ## Requirements
@@ -86,13 +89,11 @@ Once you’ve created the project locally, initialize Git and push to
 github.com/FredHutch:
 
 ``` r
-library(usethis)
-
-use_git()
+usethis::use_git()
 
 # this will create a project on GitHub, push your work, and open the webpage!
 Sys.getenv("GITHUB_PAT")
-use_github(organisation = "FredHutch", private = TRUE, protocol = "https")
+usethis::use_github(organisation = "FredHutch", private = TRUE, protocol = "https")
 ```
 
 Note that you must have a [personal access token
