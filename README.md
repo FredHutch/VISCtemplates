@@ -97,10 +97,7 @@ usethis::use_github(organisation = "FredHutch", private = TRUE, protocol = "http
 ```
 
 Note that you must have a [personal access token
-(PAT)](https://happygitwithr.com/github-pat.html) set up to do this. You
-can load in your PAT in every R session by editing your .Rprofile file
-(`usethis::edit_r_profile()`) and adding the line `Sys.setenv(GITHUB_PAT
-= "MY_PAT_HERE")` in the file.
+(PAT)](https://happygitwithr.com/github-pat.html) set up to do this.
 
 You still need to set the permissions to the project to vidd-visc:
 
