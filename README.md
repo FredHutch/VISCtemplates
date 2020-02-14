@@ -102,7 +102,7 @@ Note that you must have a [personal access token
 
 You still need to set the permissions to the project to vidd-visc:
 
-Settings → Collaborators & Teams → Add a team → vidd-visc
+Settings → Manage access → Invite teams or people (button) → vidd-visc (shows up as FredHutch/vidd-visc)
 
 ### Step Three: Documentation
 
