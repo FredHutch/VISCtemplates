@@ -27,6 +27,7 @@ bibliography: bibliography.bib
 lof: true
 lot: true
 toc: true
+dropVISClogo: false
 output: 
   VISCtemplates::visc_pdf_document: default
   VISCtemplates::visc_word_document: default

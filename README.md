@@ -20,10 +20,13 @@ There are two main features of VISCtemplates:
 
 ## Installation
 
-``` r
-library(devtools)
+The package is available on the Fred Hutch organization GitHub page.
 
-install_github("FredHutch/VISCtemplates")
+``` r
+remotes::install_github("FredHutch/VISCtemplates")
+
+# to access the vignette, use devtools:
+devtools::install_github("FredHutch/VISCtemplates", build_vignettes = TRUE)
 ```
 
 ## Requirements
@@ -48,8 +51,6 @@ The directory name should match the CAVD name with “Analysis” at the
 end: `VDCnnnAnalysis`. For example:
 
 ``` r
-library(VISCtemplates)
-
 create_visc_project("H:/visc-projects/Gallo477Analysis")
 ```
 
@@ -88,13 +89,11 @@ Once you’ve created the project locally, initialize Git and push to
 github.com/FredHutch:
 
 ``` r
-library(usethis)
-
-use_git()
+usethis::use_git()
 
 # this will create a project on GitHub, push your work, and open the webpage!
 Sys.getenv("GITHUB_PAT")
-use_github(organisation = "FredHutch", private = TRUE, protocol = "https")
+usethis::use_github(organisation = "FredHutch", private = TRUE, protocol = "https")
 ```
 
 Note that you must have a [personal access token
@@ -102,7 +101,8 @@ Note that you must have a [personal access token
 
 You still need to set the permissions to the project to vidd-visc:
 
-Settings → Collaborators & Teams → Add a team → vidd-visc
+Settings → Manage access → Invite teams or people (button) → vidd-visc
+(shows up as FredHutch/vidd-visc)
 
 ### Step Three: Documentation
 
