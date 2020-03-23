@@ -69,15 +69,14 @@ visc_theme <- theme_bw() +
 
 theme_set(visc_theme)
 
-# set group colors
+# Set group colors for this example.
+# If you have group colors already in your project:
+# source(here::here("docs", "group-colors.R"))
 group_colors <- c(
   `1` = "#D92321",
   `2` = "#1749FF",
   `4` = "#0AB7C9"
 )
-
-# If you have group colors already in your project:
-# source(here::here("docs", "group-colors.R"))
 ```
 
 ```{r conflicted-preferences, message=FALSE}
