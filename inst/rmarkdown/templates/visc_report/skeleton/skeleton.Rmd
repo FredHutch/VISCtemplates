@@ -43,24 +43,13 @@ Location of program:
 Location of input data:
 --->
 
-```{r package-loading-and-options, warning=FALSE, include=FALSE}
+```{r package-loading-and-options, include=FALSE}
+library(VISCtemplates)
 
-# Add additional packages needed here 
-# Only works for CRAN packages, use library() for packages on Bioconductor or GiHub
-packages <- c("conflicted", "tidyverse", "knitr", "kableExtra", "VISCfunctions")
+packages_needed <- c("conflicted", "tidyverse", "knitr", "kableExtra", 
+                      "VISCfunctions")
 
-# If a package is installed, it will be loaded
-# If any are not, the missing package(s) will be installed and loaded
-package.check <- lapply(packages, FUN = function(x) {
-  if (!require(x, character.only = TRUE)) {
-    # VISCfunctions must be installed in seperately (not in CRAN)
-    if (x == 'VISCfunctions')
-      stop('The package "VISCfunctions" must be installed through GitHub: https://github.com/FredHutch/VISCfunctions.git')
-    
-    install.packages(x, dependencies = TRUE,repos = "http://cran.us.r-project.org")
-  }
-  library(x, character.only = TRUE)
-})
+load_install_cran_packages(packages_needed)
 
 # Enforcing specific version of pandoc
 if (numeric_version(rmarkdown::pandoc_version()) < numeric_version('2.0'))
