@@ -51,10 +51,6 @@ packages_needed <- c("conflicted", "tidyverse", "knitr", "kableExtra",
 
 load_install_cran_packages(packages_needed)
 
-# Enforcing specific version of pandoc
-if (numeric_version(rmarkdown::pandoc_version()) < numeric_version('2.0'))
-  stop('pandoc must be at least version "2.0')
-
 # Set some knitr options
 # This will always generate two figures (pdf and png, which can be handy for presentations)
 opts_chunk$set(tidy = TRUE, cache = FALSE, message = TRUE, warning = TRUE, 
