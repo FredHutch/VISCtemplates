@@ -85,32 +85,12 @@ group_colors <- c(
 conflict_prefer("filter", "dplyr")
 ```
 
-```{r word-pdf-functions}
+```{r word-pdf-options}
 
-# Need to see if PDF or Word Output
-current_output_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
+output_type <- get_output_type()
 
-# If interactive setting to pandoc for easier visualization
-output_type <- ifelse(
-  !is.null(current_output_type) && current_output_type == 'latex', 
-  'latex', 
-  'pandoc'
-  )
-kable_warnings <- ifelse(output_type == 'latex', TRUE, FALSE)
-pandoc_markup <- ifelse(output_type == 'pandoc', TRUE, FALSE)
-
-# Setting up references depending on Word or PDf output
-visc_ref <- function(ref_in) {
-  ifelse(knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex', 
-          paste0('\\ref{', ref_in, '}'), 
-          paste0('\\@ref(', ref_in, ')')) 
-}
-
-visc_clearpage <- function() {
-  ifelse(knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex', 
-          '\\clearpage', 
-         '#####')
-} 
+kable_warnings <- set_kable_warnings(output_type)
+pandoc_markup <- set_pandoc_markup(output_type)
 ```
 
 ```{r data-loading, eval=FALSE}
