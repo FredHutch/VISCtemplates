@@ -106,7 +106,7 @@ ICS_adata <- exampleData_ICS %>%
   filter(Population == 'IFNg' & Group != 3)
 ```
 
-`r clearpage()` 
+`r visc_clearpage()` 
 
 # Summary of Main Results
 
@@ -223,9 +223,9 @@ Consider breaking up the results section by objective or by statistical endpoint
 
 ## Section 2
 
-Make sure to include p-values and references to relevant tables and figures. See Figure `r insert_ref("fig:example-plot")` and Table `r insert_ref("tab:example-tab")`. 
+Make sure to include p-values and references to relevant tables and figures. See Figure `r visc_ref("fig:example-plot")` and Table `r visc_ref("tab:example-tab")`. 
 
-`r clearpage()` 
+`r visc_clearpage()` 
 
 # Figures and Tables
 
@@ -265,7 +265,7 @@ ICS_adata %>%
   facet_grid(Stim ~ Visit) 
 ```
 
-`r clearpage()` 
+`r visc_clearpage()` 
 
 ```{r example-tab, results="asis", warning=kable_warnings}
 
@@ -289,7 +289,7 @@ magnitude_tab %>%
   footnote("BAMA Magnitude with testing", threeparttable = TRUE)
 ```
 
-`r clearpage()`  
+`r visc_clearpage()`  
 
 ```{r Software-Session-Information, results="asis", message=FALSE, warning=kable_warnings}
 # load in rmarkdown to capture verison number
@@ -317,6 +317,6 @@ kable(
   kable_styling(font_size = 10)
 ```
 
-`r clearpage()` 
+`r visc_clearpage()` 
 
 # References

@@ -30,9 +30,9 @@ install_load_cran_packages <- function(packages) {
 #'
 #' @examples
 #'
-#' \dontrun{insert_ref("tab:my-results")}
-#' \dontrun{insert_ref("fig:box-plots")}
-insert_ref <- function(ref) {
+#' \dontrun{visc_ref("tab:my-results")}
+#' \dontrun{visc_ref("fig:box-plots")}
+visc_ref <- function(ref) {
   ifelse(knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex',
          paste0('\\ref{', ref, '}'),
          paste0('\\@ref(', ref, ')'))
@@ -47,8 +47,8 @@ insert_ref <- function(ref) {
 #' @export
 #'
 #' @examples
-#' \dontrun{clearpage()}
-clearpage <- function() {
+#' \dontrun{visc_clearpage()}
+visc_clearpage <- function() {
   ifelse(knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex',
          '\\clearpage',
          '#####')

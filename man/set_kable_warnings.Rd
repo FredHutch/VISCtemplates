@@ -13,7 +13,8 @@ set_kable_warnings(output_type)
 logical
 }
 \description{
-This can be used to set the `warning` option in R Markdown code chunks
+This can be used to set the `warning` option in R Markdown code chunks to
+remove warnings created by knitr::kable() when knitting to a Word document.
 }
 \examples{
 \dontrun{
