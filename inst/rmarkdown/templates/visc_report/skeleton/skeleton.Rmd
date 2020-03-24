@@ -93,14 +93,9 @@ kable_warnings <- set_kable_warnings(output_type)
 pandoc_markup <- set_pandoc_markup(output_type)
 ```
 
-```{r data-loading, eval=FALSE}
+```{r data-package, eval=FALSE}
 
-# Here is an example of loading data using SSH key from github.com/FredHutch
-my_cred = git2r::cred_ssh_key(publickey = "PATH_TO_SSH_KEY/.ssh/id_rsa.pub", 
-                              privatekey = "PATH_TO_SSH_KEY/.ssh/id_rsa")
-
-remotes::install_git("git@github.com:FredHutch/McElrath762.git", 
-                     credentials = my_cred)
+remotes::install_github("https://github.com/FredHutch/McElrath762.git")
 ```
 
 ```{r data-processing}
