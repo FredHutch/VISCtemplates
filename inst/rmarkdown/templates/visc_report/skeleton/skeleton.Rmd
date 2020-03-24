@@ -49,7 +49,7 @@ library(VISCtemplates)
 packages_needed <- c("conflicted", "tidyverse", "knitr", "kableExtra", 
                       "VISCfunctions")
 
-load_install_cran_packages(packages_needed)
+install_load_cran_packages(packages_needed)
 
 # knitr options
 opts_chunk$set(cache = FALSE, message = TRUE, warning = TRUE, echo = FALSE, 
@@ -106,21 +106,31 @@ ICS_adata <- exampleData_ICS %>%
   filter(Population == 'IFNg' & Group != 3)
 ```
 
-`r visc_clearpage()` 
+`r clearpage()` 
 
 # Summary of Main Results
 
-Summarize the findings of the report. Include specific comparisons and references to corresponding figures and tables.
+Summarize the main highlights from the Results section. This can be in bullet format. Any significant results mentioned should include p-values and references to appropriate figures and tables. There should be no information in the Summary section that is not contained in the Results section.
 
 # Background
 
-Outline the study schema/schedule, study groups, time points, etc. Background information can be found on ATLAS or in the study protocol, and the background section is also included in the statistical analysis plan (SAP) and QC report.
+[StudyName] is a [enter protocol description, typically the protocol title is sufficient if available]. You can include additional information on the study from Atlas or the study protocol. This report presents data [blinded/unblinded] to treatment arm, as of [enter date of data file creation].
 
-Add Study Schedule Table and Specimen Schedule Table in this section
+Samples were collected at [list study time points and corresponding relationship to vaccination, e.g. week 0 (1st vaccination), week 6 (2 weeks post-2nd vaccination), week 10 (2 weeks post-3rd vaccination, and week 26 (2 weeks post-4th (final) vaccination))] for [# groups; list vaccine doses or group descriptions].
+
+The background section can be saved as a child R Markdown file in the docs/ folder so that the same text can be used across PT reports for the protocol.
+
+Also include the study schema here. This information can be found on Atlas or in the protocol. You can save the study schema code (as a .R file or image) in the docs/ folder along with the background section.
+
+## Report Amendments 
+
+If previous reports were provided, note if this report supplements or supersedes the previous reports. For example, "the previous PT report (distributed on DDMonthYYYY) presented peak data. This report summarizes additional durability data."
+
+If this is an updated report, also briefly describe additional data included and/or analysis done since the previous report (e.g. additional visits, participants (include ptids), antigens, comparisons, new/changed tables, figures etc).
 
 # Objectives
 
-List primary and secondary (if applicable) objectives. Objectives can be found on ATLAS, in the study protocol, or in the SAP, and should be adjusted if necessary to accommodate available data.
+List primary and secondary (if applicable) objectives. Objectives can be found on ATLAS, in the study protocol, or in the SAP.
 
 # Endpoints
 
@@ -130,23 +140,23 @@ Describe the lab measures of interest and the antigens/isolates tested. Informat
 
 ## Statistical endpoints
 
-Describe the statistical measures of interest (response, response magnitude, etc.) including response call methodology and truncation, if applicable. Assay-specific statistical endpoint information can be found at https://github.fhcrc.org/VIDD-VISC/Assay_Data_Specs.
+Describe the statistical measures of interest (response, response magnitude, etc.) including response call methodology and truncation, if applicable. Assay-specific statistical endpoint information can be found at https://github.com/FredHutch/VISC-Assay-Methods/blob/master/Assay_Memo_Templates.
 
 # Lab Methods
 
-Describe the lab methods and sample inclusion criteria. Assay-specific information can be found on Github at https://github.fhcrc.org/VIDD-VISC/Assay_Data_Specs/tree/master/Lab_Methods. This section may also be already included in the SAP, but verbs should be changed from future to past tense.
+Describe the lab methods and sample inclusion criteria. Assay-specific information can be found on Github at https://github.com/FredHutch/VISC-Assay-Methods/tree/master/Lab_Methods. This section may also be already included in the SAP, but verbs should be changed from future to past tense.
 
 # Statistical Methods
 
 ## Graphical analysis
 
-Update the following section as appropriate for your data.
+Update the following section as appropriate for your data. Assay-specific templates can be found at https://github.com/FredHutch/VISC-Assay-Methods/blob/master/Assay_Memo_Templates.
 
 Response rates were plotted, with accompanying Wilson score confidence intervals, for each group, antigen, and study time point. Distributions of response magnitude were plotted on the log scale for each group, antigen, and study time point with box plots superimposed on the distribution of responders. The mid-line of the box denotes the median and the ends of the box denote the $25^{th}$ and $75^{th}$ percentiles. The whiskers denote the most extreme data points that were no more than 1.5 times the interquartile range (i.e., height of the box). To show response trend over time, line plots of response magnitude were plotted on the log scale by study group and antigen across time points.
 
 ## Statistical tests
 
-Update the following section as appropriate for your data. Assay-specific testing inclusion criteria can be found at https://github.fhcrc.org/VIDD-VISC/Assay_Data_Specs.  
+Update the following section as appropriate for your data. Assay-specific testing inclusion criteria can be found at https://github.com/FredHutch/VISC-Assay-Methods/blob/master/Assay_Memo_Templates.  
 
 To assess if two groups have different response rates, pairwise group comparisons were conducted using Fisher’s exact test for each time point and antigen. For comparisons across time, McNemar's test were used to account for paired data. Response magnitude comparisons between experimental groups were compared using the Wilcoxon rank-sum test among responders only. Response magnitude comparisons between time points were performed using the Wilcoxon signed-rank test to account for paired data. To be included in the time point comparisons, a participant must be a responder in at least one of the time points. 
 
@@ -201,11 +211,11 @@ magnitude_results <- ICS_adata %>%
 
 # Participant Cohort
 
-Summarize the data by antigen/isolate, time point, and study group. Discuss expected vs. observed sample size. Consider including a summary table.
+The study enrolled [describe the total number enrolled to date and, if unblinded, the number in each treatment arm]. Include a table with data availability by key variables and red highlights for counts that are less than expected. Refer to the table and comment on reasons for missing data if known.
 
 # Results
 
-Summarize the statistical analyses performed.
+The results section addresses how each endpoint supports the main objectives. Include summary statistics and significant results as applicable, including p-values and table and figure references. The results section should provide supporting evidence for all statements made in the summary section.
 
 ## Section 1
 
@@ -213,13 +223,13 @@ Consider breaking up the results section by objective or by statistical endpoint
 
 ## Section 2
 
-Make sure to include p-values and references to relevant tables and figures. See Figure `r visc_ref('fig:example-plot')` and Table `r visc_ref('tab:example-tab')`. 
+Make sure to include p-values and references to relevant tables and figures. See Figure `r insert_ref("fig:example-plot")` and Table `r insert_ref("tab:example-tab")`. 
 
-`r visc_clearpage()` 
+`r clearpage()` 
 
 # Figures and Tables
 
-```{r example-plot, fig.scap = "Shorter caption for List of Figures.", fig.cap= "Longer caption that shows under the figure. Explain everything needed to understand the figure here."}
+```{r example-plot, fig.scap="Shorter caption for List of Figures.", fig.cap= "Longer caption that shows under the figure. Explain everything needed to understand the figure here."}
 
 ICS_adata %>%
   ggplot(aes(x = factor(Group), y = pmax(PercentCellNet, 0.005))) +
@@ -234,28 +244,28 @@ ICS_adata %>%
     aes(shape = factor(response), color = factor(Group)),
     position = position_jitter(width = .25, seed = 3241), size = 1
     ) +
-    geom_boxplot(
-      data = ICS_adata %>% filter(response == 1),
-      aes(col = factor(Group)),
-      fill = NA, lwd = .5, outlier.colour = NA
-      ) +  
-    scale_color_manual(name = "Group ", values = group_colors) +
-    scale_shape_manual(
-      name = "", breaks = c(0,1), 
-      labels = c("Non-responder", "Responder"), 
-      values = c(2, 19)
-      ) +
-    scale_x_discrete("") +
-    scale_y_log10(
-      expression("Background-Adjusted % Activation Marker+"),
-      breaks = c(.005,.01,.05,.25,1,2, 4, 10),
-      labels = c(expression("" <= "0.005%"), 
-                 '0.01', '0.05', '0.25%', "1%", "2%", "4%", "10%")
-      ) +
-    facet_grid(Stim ~ Visit)
+  geom_boxplot(
+    data = ICS_adata %>% filter(response == 1),
+    aes(col = factor(Group)),
+    fill = NA, lwd = .5, outlier.colour = NA
+    ) +  
+  scale_color_manual(name = "Group ", values = group_colors) +
+  scale_shape_manual(
+    name = "", breaks = c(0,1), 
+    labels = c("Non-responder", "Responder"), 
+    values = c(2, 19)
+    ) +
+  scale_x_discrete("") +
+  scale_y_log10(
+    expression("Background-Adjusted % Activation Marker+"),
+    breaks = c(.005,.01,.05,.25,1,2, 4, 10),
+    labels = c(expression("" <= "0.005%"), 
+               '0.01', '0.05', '0.25%', "1%", "2%", "4%", "10%")
+    ) +
+  facet_grid(Stim ~ Visit) 
 ```
 
-`r visc_clearpage()` 
+`r clearpage()` 
 
 ```{r example-tab, results="asis", warning=kable_warnings}
 
@@ -274,40 +284,39 @@ magnitude_tab %>%
     # Note scale_down will overwrite font_size specifications
     latex_options = c("hold_position", "scale_down", "repeat_header")
   ) %>% 
-  collapse_rows(columns = 1:2, row_group_label_position = 'identity', latex_hline = 'full') %>% 
+  collapse_rows(columns = 1:2, row_group_label_position = 'identity', 
+                latex_hline = 'full') %>% 
   footnote("BAMA Magnitude with testing", threeparttable = TRUE)
-
 ```
 
-`r visc_clearpage()`  
+`r clearpage()`  
 
-```{r Software-Session-Information, results='asis', message=FALSE, warning=kable_warnings}
-### Chunk to create reproducibility tables
-# loading in rmarkdown and VISCtemplates so we can capture verison number
+```{r Software-Session-Information, results="asis", message=FALSE, warning=kable_warnings}
+# load in rmarkdown to capture verison number
 if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmarkdown))
-if (any(installed.packages()[,1] == 'VISCtemplates')) suppressWarnings(library(VISCtemplates))
 
 my_session_info <- VISCfunctions::get_session_info()
+
 kable(
   my_session_info$platform_table, 
   format = output_type, 
   booktabs = TRUE, 
-  linesep = '', 
+  linesep = "", 
   caption = "Reproducibility software session information"
   ) %>% 
-  kable_styling(font_size = 7)
+  kable_styling(font_size = 10)
 ```
 
-```{r Software-Package-Version-Information, results='asis', warning=kable_warnings}
+```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
 kable(
   my_session_info$packages_table, 
   format = output_type, booktabs = TRUE, 
-  linesep = '', 
+  linesep = "", 
   caption = "Reproducibility software package version information"
   ) %>% 
-  kable_styling(font_size = 7)
+  kable_styling(font_size = 10)
 ```
 
-`r visc_clearpage()` 
+`r clearpage()` 
 
 # References
