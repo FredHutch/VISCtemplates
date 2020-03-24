@@ -21,6 +21,17 @@ install_load_cran_packages <- function(packages) {
   })
 }
 
+#' Check pandoc version
+#'
+#' @return stops R Markdown report from running if <2.0
+#' @export
+#'
+#' @examples
+check_pandoc_version <- function() {
+  if (numeric_version(rmarkdown::pandoc_version()) < numeric_version('2.0'))
+    stop('pandoc must be at least version "2.0')
+}
+
 #' Cross-reference a figure or table
 #'
 #' @param ref character string with the reference type and chunk label

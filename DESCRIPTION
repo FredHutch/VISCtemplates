@@ -28,5 +28,6 @@ URL: https://github.com/FredHutch/VISCtemplates
 BugReports: https://github.com/FredHutch/VISCtemplates/issues
 RoxygenNote: 7.0.2
 Suggests: 
-    knitr
+    knitr,
+    testthat (>= 2.1.0)
 VignetteBuilder: knitr
