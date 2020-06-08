@@ -41,9 +41,9 @@ check_pandoc_version <- function() {
 #'
 #' @examples
 #'
-#' \dontrun{visc_ref("tab:my-results")}
-#' \dontrun{visc_ref("fig:box-plots")}
-visc_ref <- function(ref) {
+#' \dontrun{insert_ref("tab:my-results")}
+#' \dontrun{insert_ref("fig:box-plots")}
+insert_ref <- function(ref) {
   ifelse(knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex',
          paste0('\\ref{', ref, '}'),
          paste0('\\@ref(', ref, ')'))
@@ -58,8 +58,8 @@ visc_ref <- function(ref) {
 #' @export
 #'
 #' @examples
-#' \dontrun{visc_clearpage()}
-visc_clearpage <- function() {
+#' \dontrun{visc_break()}
+insert_break <- function() {
   ifelse(knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex',
          '\\clearpage',
          '#####')
