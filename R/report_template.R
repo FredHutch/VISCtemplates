@@ -113,7 +113,7 @@ set_kable_warnings <- function(output_type) {
 #' Use this for conditionally formatting output when knitting both
 #' PDF (Latex) and Word document reports.
 #'
-#' @param output_type
+#' @param output_type character string of document output type 
 #'
 #' @return logical
 #' @export
