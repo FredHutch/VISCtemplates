@@ -1,6 +1,7 @@
 ---
 title: "Title of Your Submission"
 shorttitle: "Short Title"
+leftheader: "VISC Report"
 from:
  - name: FirstNameA LastNameA
    email: foo@bar.com
