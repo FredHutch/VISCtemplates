@@ -63,7 +63,7 @@ This function will produce the following structure and templates:
 ```
 [VDCnnn]Analysis
 |- .github/
-|  +- pull_request_template.txt   # template for GitHub PRs
+|  +- pull_request_template.md   # template for GitHub PRs
 |
 |- .gitignore                     # File types that VISC ignores
 |- .Rbuildignore                  # Auto-generated for package development (ignore)
