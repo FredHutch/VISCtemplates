@@ -120,6 +120,16 @@
   citecolor  = gray  % color of citations
 }
 
+% pandoc now requires a cslreferences environment to be defined in the latex template
+$if(csl-refs)$
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newenvironment{cslreferences}%
+  {$if(csl-hanging-indent)$\setlength{\parindent}{0pt}%
+  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces$endif$}%
+  {\par}
+$endif$
+
 
 %this is to adjust header and footer in landscaped pages
 \fancypagestyle{lscape}{%
