@@ -7,7 +7,7 @@
 set_kable_warnings(output_type)
 }
 \arguments{
-\item{output_type}{}
+\item{output_type}{character string of document output type}
 }
 \value{
 logical

@@ -7,7 +7,7 @@
 set_pandoc_markup(output_type)
 }
 \arguments{
-\item{output_type}{}
+\item{output_type}{character string of document output type}
 }
 \value{
 logical
