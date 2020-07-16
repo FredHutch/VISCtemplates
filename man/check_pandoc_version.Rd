@@ -12,3 +12,7 @@ stops R Markdown report from running if <2.0
 \description{
 Check pandoc version
 }
+\examples{
+\dontrun{check_pandoc_version}
+
+}

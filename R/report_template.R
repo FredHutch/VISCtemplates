@@ -14,7 +14,7 @@ install_load_cran_packages <- function(packages) {
         stop(paste0("The package ", package, " must be installed through GitHub:
                   https://github.com/FredHutch/", package, ".git"))
       } else {
-        install.packages(package, repos = "http://cran.us.r-project.org")
+        utils::install.packages(package, repos = "http://cran.us.r-project.org")
       }
     }
     library(package, character.only = TRUE)
@@ -27,6 +27,8 @@ install_load_cran_packages <- function(packages) {
 #' @export
 #'
 #' @examples
+#' \dontrun{check_pandoc_version}
+#'
 check_pandoc_version <- function() {
   if (numeric_version(rmarkdown::pandoc_version()) < numeric_version('2.0'))
     stop('pandoc must be at least version "2.0')
@@ -74,6 +76,8 @@ insert_break <- function() {
 #' @export
 #'
 #' @examples
+#' \dontrun{get_output_type()}
+#'
 get_output_type <- function() {
 
   current_output_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
@@ -89,7 +93,7 @@ get_output_type <- function() {
 #' This can be used to set the `warning` option in R Markdown code chunks to
 #' remove warnings created by knitr::kable() when knitting to a Word document.
 #'
-#' @param output_type character string of document output type 
+#' @param output_type character string of document output type
 #'
 #' @return logical
 #' @export
@@ -113,7 +117,7 @@ set_kable_warnings <- function(output_type) {
 #' Use this for conditionally formatting output when knitting both
 #' PDF (Latex) and Word document reports.
 #'
-#' @param output_type character string of document output type 
+#' @param output_type character string of document output type
 #'
 #' @return logical
 #' @export
