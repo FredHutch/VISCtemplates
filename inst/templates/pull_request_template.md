@@ -41,4 +41,5 @@ doing. -->
 - [ ] If any iterative changes were made to plots/figures/included data/grammar, search relevant terms in the text to make sure changes were reflected throughout the report. **Reviewer Comments Here**
 - [ ] Post revisions: have you updated your captions? **Reviewer Comments Here**
 - [ ] Use git diff on the .tex file to confirm differences between original and new revision. **Reviewer Comments Here**
+- [ ] Checked the "Files changed" section of the PR to confirm all appropriate files are included and no unexpected files are there? **Reviewer Comments Here**
 
