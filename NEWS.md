@@ -1,4 +1,4 @@
-# VISCtemplates 0.1.3
+# VISCtemplates 0.2.0
 
 * Changes to VISC Report (PDF & Word Output) template.
     + Example text updated.
