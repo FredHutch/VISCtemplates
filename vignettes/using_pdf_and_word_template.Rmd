@@ -28,15 +28,15 @@ There are some new functions and coding conventions that help with knitting the 
 
 ## Page breaks
 
-* For page breaks use the `visc_clearpage()` function. You can use this as a simple inline code: `` `r knitr::inline_expr("visc_clearpage()")` ``.
+* For page breaks use the `insert_break()` function. You can use this as a simple inline code: `` `r knitr::inline_expr("insert_break()")` ``.
     + `\clearpage` (from previous template) will not work on Word output.
     
 ## Referencing
 `
 **Figure and table references**
 
-* For figure and table references use `visc_ref()` function.
-    + For example: `` `r knitr::inline_expr("visc_ref('fig:response-rate-plot')")` ``.
+* For figure and table references use `insert_ref()` function.
+    + For example: `` `r knitr::inline_expr("insert_ref('fig:response-rate-plot')")` ``.
 * Make sure chunk names only use dashes or referring will not work (no spaces or underscores).
 * Do not use figure or table labels in chunk headings or kable code (e.g., don't use `fig.cap = "My Figure Caption \\label{my_figure_label}"`. Rmarkdown will automatically assign the chunk name as the figure/table reference label.
 

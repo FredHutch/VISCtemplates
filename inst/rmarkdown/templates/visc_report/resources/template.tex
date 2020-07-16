@@ -256,8 +256,11 @@ $endif$
 \newpage
 \fancyhead[R]{\em $shorttitle$}
 \fancyhead[C]{}
+$if(leftheader)$
+\fancyhead[L]{\em $leftheader$}
+$else$
 \fancyhead[L]{\em VISC Report}
-
+$endif$
 %\printglossaries
 
 $body$

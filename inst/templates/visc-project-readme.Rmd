@@ -13,10 +13,7 @@ The data for the {{ study_name }} protocol can be found here: [insert path]. You
 
 ```{r install-example, eval=FALSE}
 # if on github:
-devtools::install_github(
-  repo = "FredHutch/reponame.git",
-  auth_token = Sys.getenv("GITHUB_KEY")
-)
+devtools::install_github(repo = "FredHutch/reponame.git")
 
 # if on network drives:
 devtools::install_git("path")
