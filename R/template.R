@@ -21,7 +21,8 @@ use_visc_readme <- function(study_name, save_as = "README.Rmd") {
 #' Create a VISC docs directory with template files
 #'
 #' Creates the docs/ directory and presentations/ directory with templates
-#' for the project background, objectives, group colors, and study schema.
+#' for the project background, objectives, group colors, study schema, and
+#' project-level bib file.
 #'
 #' @param study_name name of study in VDCNNN format
 #'
@@ -47,6 +48,14 @@ use_visc_docs <- function(study_name) {
 
   # study schema template
   use_study_schema(study_name)
+
+  bib_work <- file.copy(from = system.file("templates", 'bibliography.bib',
+                                           package = "VISCtemplates"),
+                        to = "docs/bibliography.bib",
+                        overwrite = FALSE)
+  if (bib_work)
+    message('docs/bibliography.bib file successfully created')
+
 }
 
 
@@ -110,6 +119,17 @@ visc_pdf_document <- function(latex_engine = "pdflatex",
   logo_path_fh <- find_resource("visc_report", "FredHutch_logo.png")
   logo_path_visc <- find_resource("visc_report", "VISC_logo.jpg")
 
+  # If no project-level bib file creating report specific bib
+  if (!file.exists(here::here('docs', 'bibliography.bib')))
+    file.copy(from = system.file("templates", 'bibliography.bib',
+                                 package = "VISCtemplates"),
+            to = "bibliography.bib",
+            overwrite = FALSE)
+
+  file.copy(from = find_resource("visc_report", "README_PT_Report.md"),
+            to = "README.md",
+            overwrite = FALSE)
+
   rmarkdown::pdf_document(
     template = template,
     keep_tex = keep_tex,
@@ -145,6 +165,17 @@ visc_word_document <- function(toc = TRUE,
                               ...) {
 
   word_style_path <- find_resource("visc_report", "word-styles-reference.docx")
+
+  # If no project-level bib file creating report specific bib
+  if (!file.exists(here::here('docs', 'bibliography.bib')))
+    file.copy(from = system.file("templates", 'bibliography.bib',
+                                 package = "VISCtemplates"),
+              to = "bibliography.bib",
+              overwrite = FALSE)
+
+  file.copy(from = find_resource("visc_report", "README_PT_Report.md"),
+            to = "README.md",
+            overwrite = FALSE)
 
   bookdown::word_document2(
     toc = toc,
