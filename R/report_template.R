@@ -14,7 +14,7 @@ install_load_cran_packages <- function(packages) {
         stop(paste0("The package ", package, " must be installed through GitHub:
                   https://github.com/FredHutch/", package, ".git"))
       } else {
-        install.packages(package, repos = "http://cran.us.r-project.org")
+        utils::install.packages(package, repos = "http://cran.us.r-project.org")
       }
     }
     library(package, character.only = TRUE)
