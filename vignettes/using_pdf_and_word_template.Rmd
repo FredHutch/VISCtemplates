@@ -42,7 +42,7 @@ There are some new functions and coding conventions that help with knitting the 
 
 **Sections** 
 
-* For referencing sections, use `insert_ref()` but you must both the section label and desired section name
+* For referencing sections, use `insert_ref()` but you must list both the section label and the desired section name
     + For example: `` `r knitr::inline_expr("insert_ref('referencing', 'Referencing')")` `` gives `r VISCtemplates::insert_ref('referencing', 'Referencing')`.
     + For example: `` `r knitr::inline_expr("insert_ref('page-breaks', 'Page breaks')")` `` gives `r VISCtemplates::insert_ref('page-breaks', 'Page breaks')`.
 * For PDF output the matching section number is display regardless of the section name listed.
