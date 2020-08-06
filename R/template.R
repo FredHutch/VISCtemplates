@@ -49,13 +49,8 @@ use_visc_docs <- function(study_name) {
   # study schema template
   use_study_schema(study_name)
 
-  bib_work <- file.copy(from = system.file("templates", 'bibliography.bib',
-                                           package = "VISCtemplates"),
-                        to = "docs/bibliography.bib",
-                        overwrite = FALSE)
-  if (bib_work)
-    message('docs/bibliography.bib file successfully created')
-
+  # project-level bib file
+  use_bib(study_name)
 }
 
 
@@ -90,6 +85,15 @@ use_study_schema <- function(study_name) {
   usethis::use_template(
     template = "study-schema.R",
     save_as = "docs/study-schema.R",
+    data = list(study_name = study_name),
+    package = "VISCtemplates"
+  )
+}
+
+use_bib <- function(study_name) {
+  usethis::use_template(
+    template = "bibliography.bib",
+    save_as = "docs/bibliography.bib",
     data = list(study_name = study_name),
     package = "VISCtemplates"
   )
