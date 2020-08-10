@@ -11,7 +11,8 @@ use_visc_docs(study_name)
 }
 \description{
 Creates the docs/ directory and presentations/ directory with templates
-for the project background, objectives, group colors, and study schema.
+for the project background, objectives, group colors, study schema, and
+project-level bib file.
 }
 \examples{
 \dontrun{

@@ -24,7 +24,7 @@ cc:
 includesummary: true
 summary: 
   A short summary about your report. 
-bibliography: bibliography.bib
+bibliography: "`r ifelse(file.exists('bibliography.bib'), 'bibliography.bib', here::here('doc', 'bibliography.bib'))`"
 lof: true
 lot: true
 toc: true
