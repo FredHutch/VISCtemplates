@@ -2,21 +2,31 @@
 % Please edit documentation in R/report_template.R
 \name{insert_ref}
 \alias{insert_ref}
-\title{Cross-reference a figure or table}
+\title{Cross-reference a figure, table, or section}
 \usage{
-insert_ref(ref)
+insert_ref(ref, section_name = NA)
 }
 \arguments{
 \item{ref}{character string with the reference type and chunk label}
+
+\item{section_name}{character string with the section name to
+display for Word output (default is NA)}
 }
 \value{
-inserts a link to a table or figure in a PDF or Word report
+inserts a link to a table, figure, or section in a PDF or Word report
 }
 \description{
-Cross-reference a figure or table
+Cross-reference a figure, table, or section
+}
+\details{
+\code{section_name} only used for Word output (pandoc).
+For Word output, if \code{section_name} is not NA a section reference
+is created, otherwise a figure or table reference is created.
 }
 \examples{
 
 \dontrun{insert_ref("tab:my-results")}
 \dontrun{insert_ref("fig:box-plots")}
+\dontrun{insert_ref("stats-methods")}
+\dontrun{insert_ref("stats-methods", "Stats Methods")}
 }

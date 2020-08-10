@@ -14,7 +14,7 @@ install_load_cran_packages <- function(packages) {
         stop(paste0("The package ", package, " must be installed through GitHub:
                   https://github.com/FredHutch/", package, ".git"))
       } else {
-        install.packages(package, repos = "http://cran.us.r-project.org")
+        utils::install.packages(package, repos = "http://cran.us.r-project.org")
       }
     }
     library(package, character.only = TRUE)
@@ -32,22 +32,41 @@ check_pandoc_version <- function() {
     stop('pandoc must be at least version "2.0')
 }
 
-#' Cross-reference a figure or table
+#' Cross-reference a figure, table, or section
 #'
 #' @param ref character string with the reference type and chunk label
+#' @param section_name character string with the section name to
+#' display for Word output (default is NA)
 #'
-#' @return inserts a link to a table or figure in a PDF or Word report
+#' @return inserts a link to a table, figure, or section in a PDF or Word report
+#'
+#' @details \code{section_name} only used for Word output (pandoc).
+#' For Word output, if \code{section_name} is not NA a section reference
+#' is created, otherwise a figure or table reference is created.
+#'
 #' @export
 #'
 #' @examples
 #'
 #' \dontrun{insert_ref("tab:my-results")}
 #' \dontrun{insert_ref("fig:box-plots")}
-insert_ref <- function(ref) {
-  ifelse(knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex',
-         paste0('\\ref{', ref, '}'),
-         paste0('\\@ref(', ref, ')'))
+#' \dontrun{insert_ref("stats-methods")}
+#' \dontrun{insert_ref("stats-methods", "Stats Methods")}
+insert_ref <- function(ref, section_name = NA) {
+  output_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
+  if (is.null(output_type))
+    return(NULL)
+
+  if (output_type == 'latex') {
+    paste0('\\ref{', ref, '}')
+  } else {
+    if (is.na(section_name))
+      paste0('\\@ref(', ref, ')')
+    else
+      paste0('[', section_name, '](#', ref, ')')
+  }
 }
+
 
 #' Insert a page break
 #'
@@ -89,7 +108,7 @@ get_output_type <- function() {
 #' This can be used to set the `warning` option in R Markdown code chunks to
 #' remove warnings created by knitr::kable() when knitting to a Word document.
 #'
-#' @param output_type character string of document output type 
+#' @param output_type character string of document output type
 #'
 #' @return logical
 #' @export
@@ -113,7 +132,7 @@ set_kable_warnings <- function(output_type) {
 #' Use this for conditionally formatting output when knitting both
 #' PDF (Latex) and Word document reports.
 #'
-#' @param output_type character string of document output type 
+#' @param output_type character string of document output type
 #'
 #' @return logical
 #' @export
