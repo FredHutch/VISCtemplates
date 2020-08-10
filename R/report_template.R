@@ -27,7 +27,7 @@ install_load_cran_packages <- function(packages) {
 #' @export
 #'
 #' @examples
-#' \dontrun{check_pandoc_version}
+#' \dontrun{check_pandoc_version()}
 #'
 check_pandoc_version <- function() {
   if (numeric_version(rmarkdown::pandoc_version()) < numeric_version('2.0'))

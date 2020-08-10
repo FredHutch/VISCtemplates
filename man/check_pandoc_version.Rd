@@ -13,6 +13,6 @@ stops R Markdown report from running if <2.0
 Check pandoc version
 }
 \examples{
-\dontrun{check_pandoc_version}
+\dontrun{check_pandoc_version()}
 
 }
