@@ -1,0 +1,141 @@
+---
+title: "Title of Your Submission"
+shorttitle: "Short Title"
+leftheader: "VISC Report"
+from:
+ - name: FirstNameA LastNameA
+   email: foo@bar.com
+   contact: true
+ - name: FirstNameB LastNameB
+to:
+ - name: FirstNameA LastNameA
+ - name: FirstNameB LastNameB
+ - name: FirstNameC LastNameC
+ - name: FirstNameD LastNameD
+ - name: FirstNameE LastNameE
+ - name: FirstNameF LastNameF
+dropcc: false
+cc:
+ - name: FirstNameA LastNameA
+ - name: FirstNameB LastNameB
+ - name: FirstNameC LastNameC
+ - name: FirstNameD LastNameD
+ - name: FirstNameE LastNameE
+includesummary: true
+summary: 
+  A short summary about your report. 
+bibliography: "`r ifelse(file.exists('bibliography.bib'), 'bibliography.bib', here::here('docs', 'bibliography.bib'))`"
+lof: true
+lot: true
+toc: true
+dropVISClogo: false
+output: 
+  VISCtemplates::visc_pdf_document: default
+  VISCtemplates::visc_word_document: default
+---
+
+<!---
+Program Name:
+Creation Date:
+Full name of author:
+Project or Protocol:
+Purpose or description of program:
+Location of program:
+Location of input data:
+--->
+
+```{r package-loading-and-options, include=FALSE}
+library(VISCtemplates)
+
+check_pandoc_version()
+
+packages_needed <- c("conflicted", "tidyverse", "knitr", "kableExtra", 
+                      "VISCfunctions")
+
+install_load_cran_packages(packages_needed)
+
+# knitr options
+opts_chunk$set(cache = FALSE, message = TRUE, warning = TRUE, echo = FALSE, 
+               dev = c("png", "pdf"), dpi = 200, out.width = '100%', 
+               out.extra = '', fig.align = "center", fig.pos = "H")
+
+# NA's will be blank in tables
+options(knitr.kable.NA = '')
+
+# Create a theme 
+visc_theme <- theme_bw() + 
+  theme(
+    legend.position = "bottom", 
+    legend.margin = margin(unit = "cm"),
+    panel.grid.minor = element_blank()
+    )
+
+theme_set(visc_theme)
+
+# Set group colors for this example.
+# If you have group colors already in your project:
+# source(here::here("docs", "group-colors.R"))
+group_colors <- c(
+  `1` = "#D92321",
+  `2` = "#1749FF",
+  `4` = "#0AB7C9"
+)
+```
+
+```{r conflicted-preferences, message=FALSE}
+
+# filter() is used in both dplyr and stats, so need to set the preference to dplyr
+conflict_prefer("filter", "dplyr")
+```
+
+```{r word-pdf-options}
+
+output_type <- get_output_type()
+
+kable_warnings <- set_kable_warnings(output_type)
+pandoc_markup <- set_pandoc_markup(output_type)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+`r insert_break()` 
+
+
+```{r Software-Session-Information, results="asis", message=FALSE, warning=kable_warnings}
+# load in rmarkdown to capture verison number
+if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmarkdown))
+
+my_session_info <- VISCfunctions::get_session_info()
+
+kable(
+  my_session_info$platform_table, 
+  format = output_type, 
+  booktabs = TRUE, 
+  linesep = "", 
+  caption = "Reproducibility software session information"
+  ) %>% 
+  kable_styling(font_size = 10)
+```
+
+```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
+kable(
+  my_session_info$packages_table, 
+  format = output_type, booktabs = TRUE, 
+  linesep = "", 
+  caption = "Reproducibility software package version information"
+  ) %>% 
+  kable_styling(font_size = 10)
+```
+
