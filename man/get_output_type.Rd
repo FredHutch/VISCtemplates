@@ -13,3 +13,7 @@ either 'latex' or 'pandoc'
 Use this to set options for warnings or markup when knitting both
 PDF (Latex) and Word document reports.
 }
+\examples{
+\dontrun{get_output_type()}
+
+}

@@ -27,6 +27,8 @@ install_load_cran_packages <- function(packages) {
 #' @export
 #'
 #' @examples
+#' \dontrun{check_pandoc_version}
+#'
 check_pandoc_version <- function() {
   if (numeric_version(rmarkdown::pandoc_version()) < numeric_version('2.0'))
     stop('pandoc must be at least version "2.0')
@@ -93,6 +95,8 @@ insert_break <- function() {
 #' @export
 #'
 #' @examples
+#' \dontrun{get_output_type()}
+#'
 get_output_type <- function() {
 
   current_output_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
