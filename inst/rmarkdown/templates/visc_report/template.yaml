@@ -1,5 +1,5 @@
-name: VISC PT Report (Generic)
+name: VISC Report (PDF & Word Output)
 description: >
- VISC PT Report (Generic)
+ VISC report (PDF and Word Output)
 create_dir: true
 

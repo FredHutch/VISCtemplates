@@ -172,11 +172,12 @@ visc_word_document <- function(toc = TRUE,
   word_style_path <- find_resource("visc_report", "word-styles-reference.docx")
 
   # If no project-level bib file creating report specific bib
-  if (!file.exists(here::here('docs', 'bibliography.bib')))
+  if (!file.exists(here::here('docs', 'bibliography.bib'))) {
     file.copy(from = system.file("templates", 'bibliography.bib',
                                  package = "VISCtemplates"),
               to = "bibliography.bib",
               overwrite = FALSE)
+  }
 
   file.copy(from = find_resource("visc_report", "README_PT_Report.md"),
             to = "README.md",
