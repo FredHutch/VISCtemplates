@@ -16,6 +16,12 @@ use_visc_gitignore <- function(directory = ".") {
   # files that we frequently don't want to track
   usethis::use_git_ignore(
     ignores = c(
+      # Default RStudio entries
+      ".Rproj.user",
+      ".Rhistory",
+      ".RData",
+      ".Ruserdata",
+      # VISCtemplates specific entries
       "README.html",
       "~$*.doc*",
       "~$*.xls*",
@@ -30,7 +36,8 @@ use_visc_gitignore <- function(directory = ".") {
       "Thumbs.db",
       # files from Latex
       "*.log",
-      "**/figure-latex/*.pdf"
+      "**/figure-latex/*.pdf",
+      "**/figure-docx/*.pdf"
     ),
     directory = directory
   )
