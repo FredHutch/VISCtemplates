@@ -8,8 +8,8 @@ use_visc_pr_template <- function() {
   usethis::use_directory(".github")
 
   usethis::use_template(
-    template = "pull_request_template.txt",
-    save_as = ".github/pull_request_template.txt",
+    template = "pull_request_template.md",
+    save_as = ".github/pull_request_template.md",
     data = list(),
     package = "VISCtemplates"
   )
