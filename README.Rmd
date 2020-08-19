@@ -35,7 +35,8 @@ The package is available on the Fred Hutch organization GitHub page.
 remotes::install_github("FredHutch/VISCtemplates")
 
 # to access the vignette, use devtools:
-devtools::install_github("FredHutch/VISCtemplates", build_vignettes = TRUE)
+devtools::install_github("FredHutch/VISCtemplates",
+                         build_opts = c("--no-resave-data", "--no-manual"))
 ```
 
 ## Requirements
