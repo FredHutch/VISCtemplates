@@ -106,7 +106,7 @@ use_bib <- function(study_name) {
 #'
 #' @param latex_engine latex engine to use
 #' @param keep_tex keep the .tex file
-#' @param ... other options to pass to \code{rmarkdown::pdf_document()}
+#' @param ... other options to pass to \code{bookdown::pdf_document2()}
 #'
 #' @details
 #'

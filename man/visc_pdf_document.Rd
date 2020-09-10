@@ -11,7 +11,7 @@ visc_pdf_document(latex_engine = "pdflatex", keep_tex = TRUE, ...)
 
 \item{keep_tex}{keep the .tex file}
 
-\item{...}{other options to pass to \code{rmarkdown::pdf_document()}}
+\item{...}{other options to pass to \code{bookdown::pdf_document2()}}
 }
 \description{
 Runs the VISC Report for PDF output based on the template.tex file.
