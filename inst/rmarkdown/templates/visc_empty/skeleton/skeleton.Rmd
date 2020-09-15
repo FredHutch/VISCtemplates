@@ -9,18 +9,9 @@ from:
  - name: FirstNameB LastNameB
 to:
  - name: FirstNameA LastNameA
- - name: FirstNameB LastNameB
- - name: FirstNameC LastNameC
- - name: FirstNameD LastNameD
- - name: FirstNameE LastNameE
- - name: FirstNameF LastNameF
 dropcc: false
 cc:
  - name: FirstNameA LastNameA
- - name: FirstNameB LastNameB
- - name: FirstNameC LastNameC
- - name: FirstNameD LastNameD
- - name: FirstNameE LastNameE
 includesummary: true
 summary: 
   A short summary about your report. 
@@ -96,22 +87,12 @@ kable_warnings <- set_kable_warnings(output_type)
 pandoc_markup <- set_pandoc_markup(output_type)
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
+# Section Header
 
 
 `r insert_break()` 
 
+# Reproducibility Software Information
 
 ```{r Software-Session-Information, results="asis", message=FALSE, warning=kable_warnings}
 # load in rmarkdown to capture verison number
@@ -139,3 +120,6 @@ kable(
   kable_styling(font_size = 10)
 ```
 
+`r insert_break()` 
+
+# References
