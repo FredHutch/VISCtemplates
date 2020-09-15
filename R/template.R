@@ -106,7 +106,7 @@ use_bib <- function(study_name) {
 #'
 #' @param latex_engine latex engine to use
 #' @param keep_tex keep the .tex file
-#' @param ... other options to pass to \code{rmarkdown::pdf_document()}
+#' @param ... other options to pass to \code{bookdown::pdf_document2()}
 #'
 #' @details
 #'
@@ -135,11 +135,12 @@ visc_pdf_document <- function(latex_engine = "pdflatex",
             to = "README.md",
             overwrite = FALSE)
 
-  rmarkdown::pdf_document(
+  bookdown::pdf_document2(
     template = template,
     keep_tex = keep_tex,
     fig_caption = TRUE,
     latex_engine = latex_engine,
+    bib_engine = 'biber',
     pandoc_args = c(
       "-V", paste0("logo_path_scharp=", logo_path_scharp),
       "-V", paste0("logo_path_fh=", logo_path_fh),
