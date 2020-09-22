@@ -106,7 +106,11 @@ Note that you must have a [personal access token (PAT)](https://happygitwithr.co
 
 You still need to set the permissions to the project to vidd-visc:
 
-Settings &rarr; Manage access &rarr; Invite teams or people (button) &rarr; vidd-visc (shows up as FredHutch/vidd-visc)
+* Settings &rarr; Manage access &rarr; Invite teams or people (button) &rarr; vidd-visc (shows up as FredHutch/vidd-visc)
+
+Set up branch protections:
+
+* Settings &rarr; Branches &rarr; Branch protection rule &rarr; Branch name pattern: master (or some other branch you want to protect) &rarr; Require pull request reviews before merging. 
 
 ### Step Three: Documentation
 
