@@ -1,6 +1,6 @@
 # VISCtemplates 0.3.0
 
-* New "empty" report template without the broilerplate PT report text.
+* New "empty" report template without the boilerplate PT report text.
     + Go to `File > New File > Rmarkdown... > From Template` and select the "Empty Report" template.
     + Or use `template = "empty_report"` argument in `rmarkdown::draft()`.
     + See the updated vignette for more info.
