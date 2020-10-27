@@ -2,7 +2,7 @@
 
 * New "empty" report template without the boilerplate PT report text.
     + Go to `File > New File > Rmarkdown... > From Template` and select the "Empty Report" template.
-    + Or use `template = "empty_report"` argument in `rmarkdown::draft()`.
+    + Or use `template = "visc_empty"` argument in `rmarkdown::draft()`.
     + See the updated vignette for more info.
 * Changes to `bibliography.bib` file.
     + Shortened file contains only citations used in VISC reports.
