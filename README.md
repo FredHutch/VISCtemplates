@@ -102,8 +102,14 @@ Note that you must have a [personal access token
 
 You still need to set the permissions to the project to vidd-visc:
 
-Settings → Manage access → Invite teams or people (button) → vidd-visc
-(shows up as FredHutch/vidd-visc)
+  - Settings → Manage access → Invite teams or people (button) →
+    vidd-visc (shows up as FredHutch/vidd-visc)
+
+Set up branch protections:
+
+  - Settings → Branches → Branch protection rule → Branch name pattern:
+    master (or some other branch you want to protect) → Require pull
+    request reviews before merging.
 
 ### Step Three: Documentation
 

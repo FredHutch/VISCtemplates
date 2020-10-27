@@ -1,3 +1,16 @@
+# VISCtemplates 0.3.0
+
+* New "empty" report template without the boilerplate PT report text.
+    + Go to `File > New File > Rmarkdown... > From Template` and select the "Empty Report" template.
+    + Or use `template = "visc_empty"` argument in `rmarkdown::draft()`.
+    + See the updated vignette for more info.
+* Changes to `bibliography.bib` file.
+    + Shortened file contains only citations used in VISC reports.
+    + A project-level `bibliography.bib` file is written to the `docs/` directory. Previously there was one file generated for each report.
+* New Github PR text links to the documentation for writing and code review.
+* Bug fixes:
+    + Footnote hyperlinks fixed: `Footnote text (^[MY_FOOTNOTE])`.
+
 # VISCtemplates 0.2.0
 
 * Changes to VISC Report (PDF & Word Output) template.

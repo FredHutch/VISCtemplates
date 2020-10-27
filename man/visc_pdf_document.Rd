@@ -17,5 +17,5 @@ visc_pdf_document(latex_engine = "pdflatex", keep_tex = TRUE, ...)
 Runs the VISC Report for PDF output based on the template.tex file.
 }
 \details{
-Normally used through `output:VISCtemplates::visc_pdf_document` in the .rmd YAML
+Normally used through \code{output:VISCtemplates::visc_pdf_document} in the .rmd YAML
 }

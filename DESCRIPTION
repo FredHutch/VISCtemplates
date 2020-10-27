@@ -1,6 +1,6 @@
 Package: VISCtemplates
 Title: Tools for writing reproducible reports at VISC
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: 
     person(given = "Jimmy",
            family = "Fulp",
@@ -28,6 +28,7 @@ LazyData: true
 URL: https://github.com/FredHutch/VISCtemplates
 BugReports: https://github.com/FredHutch/VISCtemplates/issues
 RoxygenNote: 7.1.1
+Roxygen: list(markdown = TRUE)
 Suggests: 
     knitr,
     testthat (>= 2.1.0)
