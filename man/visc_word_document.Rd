@@ -19,5 +19,5 @@ visc_word_document(toc = TRUE, fig_caption = TRUE, keep_md = TRUE, ...)
 Runs the VISC Report for PDF output based on the template.tex file.
 }
 \details{
-Normally used through `output:VISCtemplates::visc_word_document` in the .rmd YAML
+Normally used through \code{output:VISCtemplates::visc_word_document} in the .rmd YAML
 }

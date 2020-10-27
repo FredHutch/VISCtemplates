@@ -21,7 +21,8 @@ use_visc_readme <- function(study_name, save_as = "README.Rmd") {
 #' Create a VISC docs directory with template files
 #'
 #' Creates the docs/ directory and presentations/ directory with templates
-#' for the project background, objectives, group colors, and study schema.
+#' for the project background, objectives, group colors, study schema, and
+#' project-level bib file.
 #'
 #' @param study_name name of study in VDCNNN format
 #'
@@ -47,6 +48,9 @@ use_visc_docs <- function(study_name) {
 
   # study schema template
   use_study_schema(study_name)
+
+  # project-level bib file
+  use_bib(study_name)
 }
 
 
@@ -86,6 +90,15 @@ use_study_schema <- function(study_name) {
   )
 }
 
+use_bib <- function(study_name) {
+  usethis::use_template(
+    template = "bibliography.bib",
+    save_as = "docs/bibliography.bib",
+    data = list(study_name = study_name),
+    package = "VISCtemplates"
+  )
+}
+
 
 #' Convert to a VISC Report PDF/LaTeX document
 #'
@@ -93,7 +106,7 @@ use_study_schema <- function(study_name) {
 #'
 #' @param latex_engine latex engine to use
 #' @param keep_tex keep the .tex file
-#' @param ... other options to pass to \code{rmarkdown::pdf_document()}
+#' @param ... other options to pass to \code{bookdown::pdf_document2()}
 #'
 #' @details
 #'
@@ -110,11 +123,24 @@ visc_pdf_document <- function(latex_engine = "pdflatex",
   logo_path_fh <- find_resource("visc_report", "FredHutch_logo.png")
   logo_path_visc <- find_resource("visc_report", "VISC_logo.jpg")
 
-  rmarkdown::pdf_document(
+  # If no project-level bib file creating report specific bib
+  if (!file.exists(here::here('docs', 'bibliography.bib'))) {
+    file.copy(from = system.file("templates", 'bibliography.bib',
+                                 package = "VISCtemplates"),
+            to = "bibliography.bib",
+            overwrite = FALSE)
+   }
+
+  file.copy(from = find_resource("visc_report", "README_PT_Report.md"),
+            to = "README.md",
+            overwrite = FALSE)
+
+  bookdown::pdf_document2(
     template = template,
     keep_tex = keep_tex,
     fig_caption = TRUE,
     latex_engine = latex_engine,
+    bib_engine = 'biber',
     pandoc_args = c(
       "-V", paste0("logo_path_scharp=", logo_path_scharp),
       "-V", paste0("logo_path_fh=", logo_path_fh),
@@ -146,6 +172,18 @@ visc_word_document <- function(toc = TRUE,
 
   word_style_path <- find_resource("visc_report", "word-styles-reference.docx")
 
+  # If no project-level bib file creating report specific bib
+  if (!file.exists(here::here('docs', 'bibliography.bib'))) {
+    file.copy(from = system.file("templates", 'bibliography.bib',
+                                 package = "VISCtemplates"),
+              to = "bibliography.bib",
+              overwrite = FALSE)
+  }
+
+  file.copy(from = find_resource("visc_report", "README_PT_Report.md"),
+            to = "README.md",
+            overwrite = FALSE)
+
   bookdown::word_document2(
     toc = toc,
     fig_caption = fig_caption,
@@ -153,4 +191,3 @@ visc_word_document <- function(toc = TRUE,
     reference_docx = word_style_path,
     ...)
 }
-

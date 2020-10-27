@@ -24,7 +24,7 @@ cc:
 includesummary: true
 summary: 
   A short summary about your report. 
-bibliography: bibliography.bib
+bibliography: "`r ifelse(file.exists('bibliography.bib'), 'bibliography.bib', here::here('docs', 'bibliography.bib'))`"
 lof: true
 lot: true
 toc: true
@@ -113,7 +113,7 @@ ICS_adata <- exampleData_ICS %>%
 
 # Summary of Main Results
 
-Summarize the main highlights from the Results section. This can be in bullet format. Any significant results mentioned should include p-values and references to appropriate figures and tables. There should be no information in the Summary section that is not contained in the Results section.
+Summarize the main highlights from the Results section. This can be in bullet format. Any significant results mentioned should include p-values and references to appropriate figures and tables. There should be no information in the Summary section that is not contained in the Results section (see `r insert_ref("results", "Results")`).
 
 # Background
 

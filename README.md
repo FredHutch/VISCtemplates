@@ -25,8 +25,9 @@ The package is available on the Fred Hutch organization GitHub page.
 ``` r
 remotes::install_github("FredHutch/VISCtemplates")
 
-# to access the vignette, use devtools:
-devtools::install_github("FredHutch/VISCtemplates", build_vignettes = TRUE)
+# Use the build_vignettes parameter to access the vignette:
+remotes::install_github("FredHutch/VISCtemplates", build_vignettes = TRUE)
+vignette("using_pdf_and_word_template")
 ```
 
 ## Requirements
@@ -58,7 +59,7 @@ This function will produce the following structure and templates:
 
     [VDCnnn]Analysis
     |- .github/
-    |  +- pull_request_template.txt   # template for GitHub PRs
+    |  +- pull_request_template.md   # template for GitHub PRs
     |
     |- .gitignore                     # File types that VISC ignores
     |- .Rbuildignore                  # Auto-generated for package development (ignore)
@@ -101,8 +102,14 @@ Note that you must have a [personal access token
 
 You still need to set the permissions to the project to vidd-visc:
 
-Settings → Manage access → Invite teams or people (button) → vidd-visc
-(shows up as FredHutch/vidd-visc)
+  - Settings → Manage access → Invite teams or people (button) →
+    vidd-visc (shows up as FredHutch/vidd-visc)
+
+Set up branch protections:
+
+  - Settings → Branches → Branch protection rule → Branch name pattern:
+    master (or some other branch you want to protect) → Require pull
+    request reviews before merging.
 
 ### Step Three: Documentation
 
