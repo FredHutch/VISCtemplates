@@ -140,7 +140,6 @@ visc_pdf_document <- function(latex_engine = "pdflatex",
     keep_tex = keep_tex,
     fig_caption = TRUE,
     latex_engine = latex_engine,
-    bib_engine = 'biber',
     pandoc_args = c(
       "-V", paste0("logo_path_scharp=", logo_path_scharp),
       "-V", paste0("logo_path_fh=", logo_path_fh),

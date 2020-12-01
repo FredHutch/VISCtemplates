@@ -1,3 +1,8 @@
+# VISCtemplates 0.3.1
+
+* Bug fix:
+    + Fixed biber/bibtex issue with pdf output.
+
 # VISCtemplates 0.3.0
 
 * New "empty" report template without the boilerplate PT report text.
