@@ -121,6 +121,7 @@
   citecolor  = gray  % color of citations
 }
 
+$if(csl-refs)$
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{1.5em}
 \newlength{\csllabelwidth}
@@ -141,7 +142,7 @@
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
-
+$endif$
 
 %this is to adjust header and footer in landscaped pages
 \fancypagestyle{lscape}{%
