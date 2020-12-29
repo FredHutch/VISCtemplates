@@ -1,3 +1,7 @@
+# VISCtemplates 0.3.2
+
+* Bug fix: fixed pandoc error that complains about cslreferences.
+
 # VISCtemplates 0.3.1
 
 * Bug fix:
