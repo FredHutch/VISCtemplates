@@ -1,3 +1,7 @@
+# VISCtemplates 0.3.3
+
+* Bug fix: updated `bibliography.bib` file to fix issue with Mac using bib files.
+
 # VISCtemplates 0.3.2
 
 * Bug fix: fixed pandoc error that complains about cslreferences.
