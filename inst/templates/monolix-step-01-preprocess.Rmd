@@ -38,7 +38,7 @@ pk_data <- Ho785_covance_elisa_pk
 glimpse(pk_data)
 ```
 
-<!-- The STP should create a table of missing concentrations in the QC report. You may want to further investigate patterns of missingness here. -->
+<!-- The STP should create a table of missing concentrations in the QC report. You may want to further investigate patterns of missingness here. In many of our human studies, NA implies BLOQ, so this needs to be checked for each protocol. -->
 
 ```{r check-for-missing-concentrations}
 
@@ -80,7 +80,7 @@ pk_data %>% distinct(weight_unit, height_unit)
 
 # check for concentrations > LLOQ at pre-infusion time points
 pk_data %>% 
-  filter(visit_type == "1.00 A") %>% 
+  filter(visit_type == "Check the study schema to see which visit_type corresponds to baseline.") %>% 
   filter(concentration > lloq) %>% 
   select(pubid, arm, group, concentration, concentration_units) %>% 
   kable() %>% 
@@ -105,7 +105,10 @@ Data specs for these CSV files: https://github.com/FredHutch/VISC-Assay-Methods/
 cvdxxx_elisa_preprocess <- pk_data %>%
   filter(analyte != "Placebo") %>% 
   mutate(
-    dose_amount = dose*weight,
+    dose_amount = case_when(
+      dose_units == "mg/kg" ~ dose*weight, # weight-dependent dose
+      dose_units == "mg" ~ dose # fixed dose
+    ),
     bmi = weight/((height/100)**2),
     censored = if_else(concentration_ug <= lloq_ug, 1, 0),
     ) %>% 
@@ -129,7 +132,7 @@ usethis::use_data(cvdxxx_elisa_preprocess, overwrite = TRUE)
 
 monolix_data <- cvdxxx_elisa_preprocess %>% 
   filter(day >= 0) %>% # we don't use pre-infusion time points in the PK analysis
-  group_by(pubid, infusion_no) %>% 
+  group_by(analyte, pubid, infusion_no) %>% 
   mutate(
     AMT = if_else(day == 0, dose_amount, 0),
     ADM = case_when(
