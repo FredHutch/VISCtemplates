@@ -273,7 +273,7 @@ ICS_adata %>%
 ```{r example-tab, results="asis", warning=kable_warnings}
 
 magnitude_tab <- magnitude_results %>% 
-  select(-Population, -PerfectSeperation) 
+  select(-Population, -contains('Perfect')) 
 
 magnitude_tab %>%
   kable(

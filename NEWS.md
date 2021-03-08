@@ -1,3 +1,8 @@
+# VISCtemplates 0.3.3
+
+* Bug fix: updated `bibliography.bib` file to fix issue with Mac using bib files.
+* Updated `visc_report/skeleton.Rmd` file in preparation of bug fix being addressed in VISCfunctions
+
 # VISCtemplates 0.3.2
 
 * Bug fix: fixed pandoc error that complains about cslreferences.
