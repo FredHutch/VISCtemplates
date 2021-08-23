@@ -1,3 +1,8 @@
+
+# VISCtemplates 0.3.4
+
+* Bug fix: updated `bibliography.bib` file to fix citation format for R Core Team citation.
+
 # VISCtemplates 0.3.3
 
 * Bug fix: updated `bibliography.bib` file to fix issue with Mac using bib files.
