@@ -6,6 +6,8 @@
 #' @export
 create_visc_project <- function(path){
 
+  challenge_directory(path)
+
   # top level folder should follow VDCNNNAnalysis format
   repo_name <- basename(path)
 
@@ -20,7 +22,7 @@ create_visc_project <- function(path){
   # create package
   usethis::create_package(
     path = path
-  ) # add check for existing package
+  )
 
   # must set active project otherwise it is <no active project>
   usethis::proj_set(path = path)
@@ -47,6 +49,28 @@ create_visc_project <- function(path){
 
 }
 
+
+challenge_directory <- function(path) {
+
+  path <- fs::path_expand(path)
+
+  dir_exists <- dir.exists(path)
+
+  if (dir_exists) {
+
+    continue <- usethis::ui_yeah("
+      The directory {path} already exists.
+      Would you like to continue?")
+
+    if (!continue) {
+      usethis::ui_stop("Stopping `create_visc_project()`")
+    } else if (continue) {
+      usethis::ui_warn("
+        Creating new VISC project in {path}, which already exists.
+        Be sure to check the directory for unexpected files.")
+    }
+  }
+}
 
 
 # Set up project with RStudio GUI ----------------------------------------------
