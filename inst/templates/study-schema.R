@@ -1,12 +1,28 @@
-## Study Schema for {{ study_name }}
+#' Study Schema for {{ study_name }}
+#'
+#' To source the study schema in a chunk in your Rmarkdown report:
+#' source("R/study-schema.R")
+#'
+#' @return a kable table with the study schema
+#' @export
+#'
+#' @examples
+study_schema <- function() {
 
-# Edit the code below to set up a shared study schema across PT reports.
+  caption <- "{{ study_name }} study schema."
 
-study_schema <- tibble::tribble(
-  ~Group, ~`Sample Size`, ~`Week 10`, ~`Week 20`,
-  "Group A", 10, "Dose A", "Dose A",
-  "Group B", 10, "Dose B", "Dose B"
-)
+  schema_table <- tibble::tribble(
+    ~Group, ~`Sample Size`, ~`Week 10`, ~`Week 20`,
+    "Group A", 10, "Dose A", "Dose A",
+    "Group B", 10, "Dose B", "Dose B"
+    )
 
-# To source the study schema in a chunk in your Rmarkdown report:
-#  knitr::read_chunk("protocol/study-schema.R")
+  schema_table %>%
+    knitr::kable(
+      format = output_type,
+      caption = caption,
+      booktabs = TRUE,
+      linesep = ""
+    ) %>%
+    kableExtra::kable_styling(latex_options = c("hold_position"))
+  }
