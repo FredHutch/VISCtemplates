@@ -37,7 +37,8 @@ use_visc_gitignore <- function(directory = ".") {
       # files from Latex
       "*.log",
       "**/figure-latex/*.pdf",
-      "**/figure-docx/*.pdf"
+      "**/figure-docx/*.pdf",
+      "*.zip"
     ),
     directory = directory
   )
