@@ -1,7 +1,7 @@
 #' Study Schema for {{ study_name }}
 #'
 #' To source the study schema in a chunk in your Rmarkdown report:
-#' source("R/study-schema.R")
+#' source("R/study_schema.R")
 #'
 #' @return a kable table with the study schema
 #' @export
