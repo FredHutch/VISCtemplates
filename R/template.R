@@ -99,6 +99,47 @@ use_bib <- function(study_name) {
   )
 }
 
+#' Use template files for methods sections in PT reports
+#'
+#' Creates three "child" R Markdown documents used in PT reports:
+#'  statistical-methods.Rmd, lab-methods.Rmd, and biological-endpoints.Rmd
+#'
+#' @param assay "bama" or "generic"
+#' @param directory folder to save files
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' #' \dontrun{
+#' use_visc_methods(assay = "bama", directory = "BAMA/BAMA_PT_Report")
+#' }
+use_visc_methods <- function(assay = c("generic", "bama"), directory = ".") {
+
+  pkg_ver <- packageVersion("VISCtemplates")
+
+  usethis::use_template(
+    template = paste0("methods-", assay, "/", assay, "-statistical-methods.Rmd"),
+    data = list(pkg_ver = pkg_ver),
+    save_as = paste0(directory, "/statistical-methods.Rmd"),
+    package = "VISCtemplates"
+  )
+
+  usethis::use_template(
+    template = paste0("methods-", assay, "/", assay, "-lab-methods.Rmd"),
+    data = list(pkg_ver = pkg_ver),
+    save_as = paste0(directory, "/lab-methods.Rmd"),
+    package = "VISCtemplates"
+  )
+
+  usethis::use_template(
+    template = paste0("methods-", assay, "/", assay, "-biological-endpoints.Rmd"),
+    data = list(pkg_ver = pkg_ver),
+    save_as = paste0(directory, "/biological-endpoints.Rmd"),
+    package = "VISCtemplates"
+  )
+
+}
 
 #' Convert to a VISC Report PDF/LaTeX document
 #'
