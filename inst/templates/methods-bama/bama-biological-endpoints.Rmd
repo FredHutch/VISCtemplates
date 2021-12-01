@@ -1,0 +1,13 @@
+---
+title: "{{ study_name}} Biological Endpoints"
+output: github_document
+---
+
+<!-- background.md is generated from the RMARKDOWN file, background.Rmd.
+Please edit that file. -->
+
+<!-- this file was adapted from VISCtemplates {{pkg_ver}}. -->
+
+Serum [IgG/IgA] responses were measured against [# antigens; list antigens] using the binding antibody multiplex assay (BAMA). Antibody levels were measured as median fluorescent intensity (MFI) from two wells and then averaged using the mean. Background adjustment was applied using MFI measured from wells with beads that include buffer instead of sample. Additionally, a blank or reference bead was included to estimate non-specific antibody binding. Results were obtained for [a single dilution at 1:80 for animal data, 1:50 for human data; can vary]. Samples with blank MFI > 5000 were excluded from the analysis.
+
+<!-- Either in an antigen summary table or in the biological endpoints section, include information on antigen clade, any relevant panel information (e.g., antigen reagent project [ARP], see https://pubmed.ncbi.nlm.nih.gov/29386288/), sample size by antigen, and whether a blank or a reference bead was used. -->

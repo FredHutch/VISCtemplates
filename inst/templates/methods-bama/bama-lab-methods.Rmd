@@ -1,0 +1,11 @@
+---
+title: "{{ study_name}} Lab Methods"
+output: github_document
+---
+
+<!-- background.md is generated from the RMARKDOWN file, background.Rmd.
+Please edit that file. -->
+
+<!-- this file was adapted from VISCtemplates {{pkg_ver}}. -->
+
+Serum HIV-1 [IgG/IgA] responses against [# antigens] were measured on a Bio-Plex instrument (Bio-Rad) using a standardized custom HIV-1 Luminex assay (@tomaras2008). The readout is background-subtracted median fluorescent intensity (MFI), where background refers to the antigen-specific plate-level control (i.e., a blank well containing antigen-conjugated beads run on each plate). The positive controls were [get this info from the lab]. Blank beads and blank wells (antigen-coupled beads + detection antibody) served as negative controls for non-specific binding. If the blank bead negative control exceeded 5,000 MFI, the sample was repeated. If the repeated value exceeded 5,000 MFI, the sample was excluded from analysis due to high background.
