@@ -1,0 +1,12 @@
+---
+title: "{{ study_name}} Biological Endpoints"
+output: github_document
+---
+
+<!-- background.md is generated from the RMARKDOWN file, background.Rmd.
+Please edit that file. -->
+
+<!-- this file was adapted from VISCtemplates {{pkg_ver}}. -->
+
+Describe the lab measures of interest and the antigens/isolates tested. Information for this section can be found in the SAP, but the tense should be changed from future tense to past tense for PT reports. 
+
