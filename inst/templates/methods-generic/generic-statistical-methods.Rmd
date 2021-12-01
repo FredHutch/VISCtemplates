@@ -10,14 +10,39 @@ Please edit that file. -->
 
 ## Statistical Endpoints
 
-Describe the statistical measures of interest (response, response magnitude, etc.) including response call methodology and truncation, if applicable.
+Describe the statistical measures of interest (response, response magnitude, etc.) 
+including response call methodology and truncation, if applicable.
 
 ## Graphical Analysis
 
-Update the following section as appropriate for your data. Response rates were plotted, with accompanying Wilson score confidence intervals, for each group, antigen, and study time point. Distributions of response magnitude were plotted on the log scale for each group, antigen, and study time point with box plots superimposed on the distribution of responders. The mid-line of the box denotes the median and the ends of the box denote the $25^{th}$ and $75^{th}$ percentiles. The whiskers denote the most extreme data points that were no more than 1.5 times the interquartile range (i.e., height of the box). To show response trend over time, line plots of response magnitude were plotted on the log scale by study group and antigen across time points.
+Update the following section as appropriate for your data. 
+Response rates were plotted, with accompanying Wilson score confidence intervals, 
+for each group, antigen, and study time point. 
+Distributions of response magnitude were plotted on the log scale for each 
+group, antigen, and study time point with box plots superimposed on the 
+distribution of responders. 
+The mid-line of the box denotes the median and the ends of the box denote 
+the $25^{th}$ and $75^{th}$ percentiles. 
+The whiskers denote the most extreme data points that were no more than 1.5 
+times the interquartile range (i.e., height of the box). 
+To show response trend over time, line plots of response magnitude were plotted 
+on the log scale by study group and antigen across time points.
 
 ## Statistical Tests
 
-Update the following section as appropriate for your data. To assess if two groups have different response rates, pairwise group comparisons were conducted using Fisher’s exact test for each time point and antigen. For comparisons across time, McNemar's test were used to account for paired data. Response magnitude comparisons between experimental groups were compared using the Wilcoxon rank-sum test among responders only. Response magnitude comparisons between time points were performed using the Wilcoxon signed-rank test to account for paired data. To be included in the time point comparisons, a participant must be a responder in at least one of the time points. 
+Update the following section as appropriate for your data. 
+To assess if two groups have different response rates, pairwise group 
+comparisons were conducted using Fisher’s exact test for each time point and 
+antigen. 
+For comparisons across time, McNemar's test were used to account for paired data. 
+Response magnitude comparisons between experimental groups were compared using 
+the Wilcoxon rank-sum test among responders only. 
+Response magnitude comparisons between time points were performed using the 
+Wilcoxon signed-rank test to account for paired data. 
+To be included in the time point comparisons, a participant must be a responder 
+in at least one of the time points. 
 
-The Wilcoxon tests are rank-based tests used to account for non-normality in the magnitude measurements. Because response magnitude comparisons were performed on responders only, each group must have at least 3 responders for the comparison to be conducted. 
+The Wilcoxon tests are rank-based tests used to account for non-normality in the 
+magnitude measurements. Because response magnitude comparisons were performed on 
+responders only, each group must have at least 3 responders for the comparison 
+to be conducted. 

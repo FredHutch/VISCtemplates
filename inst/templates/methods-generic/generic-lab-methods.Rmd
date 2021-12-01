@@ -8,4 +8,7 @@ Please edit that file. -->
 
 <!-- this file was adapted from VISCtemplates {{pkg_ver}}. -->
 
-Describe the lab methods and sample inclusion criteria. Assay-specific information can be found on Github at https://github.com/FredHutch/VISC-Assay-Methods/tree/master/Lab_Methods. This section may also be already included in the SAP, but verbs should be changed from future to past tense.
+Describe the lab methods and sample inclusion criteria. 
+The lab methods may be in the SAP, or you may need to contact the lab for 
+detailed methods. This may be done at the lab review stage.
+Make sure to this section is written in the past tense.
