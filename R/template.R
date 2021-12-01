@@ -75,7 +75,7 @@ use_project_objectives <- function(study_name) {
 use_group_colors <- function(study_name) {
   usethis::use_template(
     template = "group-colors.R",
-    save_as = "docs/group-colors.R",
+    save_as = "R/group-colors.R",
     data = list(study_name = study_name),
     package = "VISCtemplates"
   )
