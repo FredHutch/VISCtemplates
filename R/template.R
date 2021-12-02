@@ -99,24 +99,69 @@ use_bib <- function(study_name) {
   )
 }
 
-#' Use template files for methods sections in PT reports
+#' Use a VISC Report Template
 #'
-#' Creates three "child" R Markdown documents used in PT reports:
-#'  statistical-methods.Rmd, lab-methods.Rmd, and biological-endpoints.Rmd
-#'
-#' @param assay "bama" or "generic"
-#' @param directory folder to save files
+#' @param report_name name of the file (character)
+#' @param path path of the file within the active project
+#' @param report_type "empty", "generic", or "bama"
 #'
 #' @return
 #' @export
 #'
 #' @examples
-#' #' \dontrun{
-#' use_visc_methods(assay = "bama", directory = "BAMA/BAMA_PT_Report")
-#' }
-use_visc_methods <- function(assay = c("generic", "bama"), directory = here::here()) {
+use_visc_report <- function(report_name = "PT-Report",
+                            path = ".",
+                            report_type = c("empty", "generic", "bama")) {
 
-  pkg_ver <- packageVersion("VISCtemplates")
+  stopifnot(report_type %in% c("empty", "generic", "bama"))
+
+  if (report_type == "empty") {
+    rmarkdown::draft(
+      file = file.path(path, report_name),
+      template = "visc_empty",
+      package = "VISCtemplates",
+      create_dir = TRUE,
+      edit = FALSE
+      )
+    usethis::ui_done(
+      glue::glue("Creating an empty VISC report at '{{file.path(path, report_name)}}'")
+      )
+
+  } else {
+    rmarkdown::draft(
+      file = file.path(path, report_name),
+      template = "visc_report",
+      package = "VISCtemplates",
+      create_dir = TRUE,
+      edit = FALSE
+    )
+    usethis::ui_done(
+      glue::glue("Creating a VISC report at '{{file.path(path, report_name)}}'")
+    )
+    use_visc_methods(path = file.path(path, report_name), assay = report_type)
+  }
+
+
+}
+
+#' Use template files for methods sections in PT reports
+#'
+#' Creates a "methods" directory that contains 3 "child" R Markdown documents
+#'  used in PT reports: statistical-methods.Rmd, lab-methods.Rmd,
+#'  and biological-endpoints.Rmd
+#'
+#' @param assay "bama" or "generic"
+#' @param path path within the active project
+#'
+#' @return
+#' @export
+#'
+#' @examples
+use_visc_methods <- function(path = ".", assay = c("generic", "bama")) {
+
+  pkg_ver <- utils::packageVersion("VISCtemplates")
+
+  usethis::use_directory(file.path(path, "methods"))
 
   usethis::use_template(
     template = file.path(
@@ -124,7 +169,7 @@ use_visc_methods <- function(assay = c("generic", "bama"), directory = here::her
       paste0(assay, "-statistical-methods.Rmd")
       ),
     data = list(pkg_ver = pkg_ver),
-    save_as = file.path(directory, "statistical-methods.Rmd"),
+    save_as = file.path(path, "methods", "statistical-methods.Rmd"),
     package = "VISCtemplates"
   )
 
@@ -134,7 +179,7 @@ use_visc_methods <- function(assay = c("generic", "bama"), directory = here::her
       paste0(assay, "-lab-methods.Rmd")
       ),
     data = list(pkg_ver = pkg_ver),
-    save_as = file.path(directory, "lab-methods.Rmd"),
+    save_as = file.path(path, "methods", "lab-methods.Rmd"),
     package = "VISCtemplates"
   )
 
@@ -144,7 +189,7 @@ use_visc_methods <- function(assay = c("generic", "bama"), directory = here::her
       paste0(assay, "-biological-endpoints.Rmd")
       ),
     data = list(pkg_ver = pkg_ver),
-    save_as = file.path(directory, "biological-endpoints.Rmd"),
+    save_as = file.path(path, "methods", "biological-endpoints.Rmd"),
     package = "VISCtemplates"
   )
 

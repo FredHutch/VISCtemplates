@@ -4,22 +4,18 @@
 \alias{use_visc_methods}
 \title{Use template files for methods sections in PT reports}
 \usage{
-use_visc_methods(assay = c("generic", "bama"), directory = ".")
+use_visc_methods(path = ".", assay = c("generic", "bama"))
 }
 \arguments{
-\item{assay}{"bama" or "generic"}
+\item{path}{path within the active project}
 
-\item{directory}{folder to save files}
+\item{assay}{"bama" or "generic"}
 }
 \value{
 
 }
 \description{
-Creates three "child" R Markdown documents used in PT reports:
-statistical-methods.Rmd, lab-methods.Rmd, and biological-endpoints.Rmd
-}
-\examples{
-#' \dontrun{
-use_visc_methods(assay = "bama", directory = "BAMA/BAMA_PT_Report")
-}
+Creates a "methods" directory that contains 3 "child" R Markdown documents
+used in PT reports: statistical-methods.Rmd, lab-methods.Rmd,
+and biological-endpoints.Rmd
 }
