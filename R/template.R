@@ -105,10 +105,12 @@ use_bib <- function(study_name) {
 #' @param path path of the file within the active project
 #' @param report_type "empty", "generic", or "bama"
 #'
-#' @return
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' use_visc_report(report_name = "BAMA-PT-Report", path = "bama", report_type = "bama")
+#' }
 use_visc_report <- function(report_name = "PT-Report",
                             path = ".",
                             report_type = c("empty", "generic", "bama")) {
@@ -153,12 +155,14 @@ use_visc_report <- function(report_name = "PT-Report",
 #' @param assay "bama" or "generic"
 #' @param path path within the active project
 #'
-#' @return
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' use_visc_methods(path = "bama/BAMA-PT-Report", assay = "bama")
+#' }
 use_visc_methods <- function(path = ".", assay = c("generic", "bama")) {
-
+#
   pkg_ver <- utils::packageVersion("VISCtemplates")
 
   usethis::use_directory(file.path(path, "methods"))

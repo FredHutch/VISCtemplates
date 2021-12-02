@@ -11,11 +11,13 @@ use_visc_methods(path = ".", assay = c("generic", "bama"))
 
 \item{assay}{"bama" or "generic"}
 }
-\value{
-
-}
 \description{
 Creates a "methods" directory that contains 3 "child" R Markdown documents
 used in PT reports: statistical-methods.Rmd, lab-methods.Rmd,
 and biological-endpoints.Rmd
+}
+\examples{
+\dontrun{
+use_visc_methods(path = "bama/BAMA-PT-Report", assay = "bama")
+}
 }

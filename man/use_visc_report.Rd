@@ -17,9 +17,11 @@ use_visc_report(
 
 \item{report_type}{"empty", "generic", or "bama"}
 }
-\value{
-
-}
 \description{
 Use a VISC Report Template
+}
+\examples{
+\dontrun{
+use_visc_report(report_name = "BAMA-PT-Report", path = "bama", report_type = "bama")
+}
 }
