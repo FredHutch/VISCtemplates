@@ -114,28 +114,37 @@ use_bib <- function(study_name) {
 #' #' \dontrun{
 #' use_visc_methods(assay = "bama", directory = "BAMA/BAMA_PT_Report")
 #' }
-use_visc_methods <- function(assay = c("generic", "bama"), directory = ".") {
+use_visc_methods <- function(assay = c("generic", "bama"), directory = here::here()) {
 
   pkg_ver <- packageVersion("VISCtemplates")
 
   usethis::use_template(
-    template = paste0("methods-", assay, "/", assay, "-statistical-methods.Rmd"),
+    template = file.path(
+      paste0("methods-", assay),
+      paste0(assay, "-statistical-methods.Rmd")
+      ),
     data = list(pkg_ver = pkg_ver),
-    save_as = paste0(directory, "/statistical-methods.Rmd"),
+    save_as = file.path(directory, "statistical-methods.Rmd"),
     package = "VISCtemplates"
   )
 
   usethis::use_template(
-    template = paste0("methods-", assay, "/", assay, "-lab-methods.Rmd"),
+    template = file.path(
+      paste0("methods-", assay),
+      paste0(assay, "-lab-methods.Rmd")
+      ),
     data = list(pkg_ver = pkg_ver),
-    save_as = paste0(directory, "/lab-methods.Rmd"),
+    save_as = file.path(directory, "lab-methods.Rmd"),
     package = "VISCtemplates"
   )
 
   usethis::use_template(
-    template = paste0("methods-", assay, "/", assay, "-biological-endpoints.Rmd"),
+    template = file.path(
+      paste0("methods-", assay),
+      paste0(assay, "-biological-endpoints.Rmd")
+      ),
     data = list(pkg_ver = pkg_ver),
-    save_as = paste0(directory, "/biological-endpoints.Rmd"),
+    save_as = file.path(directory, "biological-endpoints.Rmd"),
     package = "VISCtemplates"
   )
 
