@@ -84,7 +84,7 @@ use_group_colors <- function(study_name) {
 use_study_schema <- function(study_name) {
   usethis::use_template(
     template = "study-schema.R",
-    save_as = "docs/study-schema.R",
+    save_as = "R/study-schema.R",
     data = list(study_name = study_name),
     package = "VISCtemplates"
   )
