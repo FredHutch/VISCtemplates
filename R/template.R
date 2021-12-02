@@ -162,7 +162,7 @@ use_visc_report <- function(report_name = "PT-Report",
 #' use_visc_methods(path = "bama/BAMA-PT-Report", assay = "bama")
 #' }
 use_visc_methods <- function(path = ".", assay = c("generic", "bama")) {
-#
+
   pkg_ver <- utils::packageVersion("VISCtemplates")
 
   usethis::use_directory(file.path(path, "methods"))
