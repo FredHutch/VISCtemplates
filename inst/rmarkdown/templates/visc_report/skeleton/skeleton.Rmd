@@ -58,8 +58,8 @@ install_load_cran_packages(packages_needed)
 
 # knitr options
 opts_chunk$set(cache = FALSE, message = TRUE, warning = TRUE, echo = FALSE, 
-               dev = c("png", "pdf"), dpi = 200, out.width = '100%', 
-               out.extra = '', fig.align = "center", fig.pos = "H")
+               dev = c("png", "pdf"), dpi = 200, out.width = "100%", 
+               out.extra = "", fig.align = "center", fig.pos = "H")
 
 # NA's will be blank in tables
 options(knitr.kable.NA = '')
@@ -108,7 +108,7 @@ remotes::install_github("https://github.com/FredHutch/VDCNNNAnalysis.git")
 data(exampleData_ICS)
 
 ICS_adata <- exampleData_ICS %>% 
-  filter(Population == 'IFNg' & Group != 3)
+  filter(Population == "IFNg" & Group != 3)
 ```
 
 `r insert_break()` 
@@ -145,7 +145,7 @@ for [# groups; list vaccine doses or group descriptions]
 
 <!-- Also include the study schema here. -->
 
-```{r study-schema, results='asis', warning=kable_warnings}
+```{r study-schema, results="asis", warning=kable_warnings}
 source(here("R", "study_schema.R"))
 study_schema()
 ```
@@ -166,7 +166,7 @@ participants (include pubIDs), antigens, comparisons, new/changed tables, figure
 List primary and secondary (if applicable) objectives. 
 Objectives can be found on ATLAS, in the study protocol, or in the SAP.
 
-<!-- For the following sections, use `VISCtemplates::use_visc_methods()` to set up child Rmd files. -->
+<!-- Use `VISCtemplates::use_visc_methods()` to create child Rmd files if needed. -->
 
 # Biological Endpoints
 
@@ -192,8 +192,8 @@ response_results <- ICS_adata %>%
       ~pairwise_test_bin(
         x = .$response, 
         group = .$Group, 
-        method = 'barnard', 
-        alternative = 'less', 
+        method = "barnard", 
+        alternative = "less", 
         num_needed_for_test = 3, 
         digits = 1,
         latex_output = TRUE, 
@@ -220,9 +220,9 @@ magnitude_results <- ICS_adata %>%
     ~pairwise_test_cont(
       x = .$PercentCellNet, 
       group = .$Group, 
-      method = 'wilcox', 
+      method = "wilcox", 
       paired = FALSE, 
-      alternative = 'greater', 
+      alternative = "greater", 
       num_needed_for_test = 3, 
       digits = 3, 
       verbose = FALSE
@@ -232,7 +232,7 @@ magnitude_results <- ICS_adata %>%
   mutate(
     MagnitudeTest = pretty_pvalues(
       MagnitudeTest, output_type = output_type, sig_alpha = .1,
-      background = 'yellow',
+      background = "yellow",
       bold = if_else(pandoc_markup , TRUE, FALSE),
       italic = if_else(pandoc_markup , TRUE, FALSE)
       )
@@ -289,20 +289,26 @@ ICS_adata %>%
     aes(col = factor(Group)),
     fill = NA, lwd = .5, outlier.colour = NA
     ) +  
-  scale_color_manual(name = "Group ", values = group_colors) +
+  scale_color_manual(values = group_colors) +
   scale_shape_manual(
-    name = "", breaks = c(0,1), 
+    breaks = c(0,1), 
     labels = c("Non-responder", "Responder"), 
     values = c(2, 19)
     ) +
-  scale_x_discrete("") +
   scale_y_log10(
-    expression("Background-Adjusted % Activation Marker+"),
     breaks = c(.005,.01,.05,.25,1,2, 4, 10),
     labels = c(expression("" <= "0.005%"), 
-               '0.01', '0.05', '0.25%', "1%", "2%", "4%", "10%")
+               "0.01", "0.05", '0.25%', "1%", "2%", "4%", "10%")
     ) +
-  facet_grid(Stim ~ Visit) 
+  facet_grid(Stim ~ Visit) +
+  theme(
+    axis.title.x = element_blank()
+  ) +
+  labs(
+    y = expression("Background-Adjusted % Activation Marker+"),
+    shape = "",
+    color = "Group"
+  )
 ```
 
 `r insert_break()` 
@@ -310,22 +316,32 @@ ICS_adata %>%
 ```{r example-tab, results="asis", warning=kable_warnings}
 
 magnitude_tab <- magnitude_results %>% 
-  select(-Population, -contains('Perfect')) 
+  select(-Population, -contains("Perfect")) 
+
+caption_short <- "Short caption to show in List of Tables."
+
+caption <- "Long caption to show above table. Explain everything needed to understand the table here."
 
 magnitude_tab %>%
   kable(
-    format = output_type, longtable = FALSE, booktabs = TRUE,
-    linesep = "", escape = FALSE,
-    caption.short = "Short caption to show in List of Tables",
-    caption = "Long caption to show above table. Explain everything needed to understand the table here."
+    format = output_type, 
+    longtable = FALSE, 
+    booktabs = TRUE,
+    linesep = "", 
+    escape = FALSE,
+    caption.short = caption_short,
+    caption = caption
   ) %>%
   kable_styling(
     font_size = 8,
     # Note scale_down will overwrite font_size specifications
     latex_options = c("hold_position", "scale_down", "repeat_header")
   ) %>% 
-  collapse_rows(columns = 1:2, row_group_label_position = 'identity', 
-                latex_hline = 'full') %>% 
+  collapse_rows(
+    columns = 1:2, 
+    row_group_label_position = "identity",
+    latex_hline = "full"
+    ) %>% 
   footnote("BAMA Magnitude with testing", threeparttable = TRUE)
 ```
 
