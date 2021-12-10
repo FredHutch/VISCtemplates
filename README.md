@@ -34,7 +34,9 @@ remotes::install_github("FredHutch/VISCtemplates", build_vignettes = TRUE)
 ## Vignettes
 
 The package vignettes will guide you through setting up an analysis
-project with VISCtemplates and usethis and using a VISC report template.
+project with VISCtemplates and
+[usethis](https://github.com/r-lib/usethis) and using a VISC report
+template.
 
 ``` r
 vignette("using_pdf_and_word_template")
