@@ -14,19 +14,16 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(VISCtemplates)
-```
-
-
-```{r eval=FALSE}
-create_visc_project("H:/visc-projects/VDC###Analysis")
-```
-
 ## Step one: Create project locally
 
 Use `create_visc_project()` to specify where to save your analysis project. 
 The function will set up an R project for your analysis that follows VISC's standard directory structure.
+
+```{r eval=FALSE}
+library(VISCtemplates)
+
+create_visc_project("H:/visc-projects/VDC###Analysis")
+```
 
 The directory name should match the CAVD name with "Analysis" at the end: `VDC###Analysis`. For example: `Gallo477Analysis`. 
 Some studies have other names for the trial protocol, but be sure to use the CAVD name.
@@ -94,7 +91,11 @@ Now you can begin editing the documentation.
 
 ### Step Four: Start Analysis Work
 
-The above setup steps are done on the `master` branch. When you're ready to begin work on the analysis, create a branch. 
+The above setup steps are done on the `main` branch. When you're ready to begin work on the analysis, create a branch for the report.
+
+```{git eval=FALSE}
+git checkout -b bama-analysis
+```
 
 Then start working from the PT report template. You can use the template from this package:
 
@@ -108,7 +109,7 @@ use_visc_report(
 
 See the "Using a VISC Report Template" vignette for more details on how to use a report template.
 
-```{r}
+```{r eval=FALSE}
 vignette("using_pdf_and_word_template")
 ```
 
