@@ -31,7 +31,9 @@ on the log scale by study group and antigen across time points.
 
 ## Statistical Tests
 
-Update the following section as appropriate for your data. 
+Update the following section as appropriate for your data. If available, use 
+language from the statistical analysis plan. Ensure that this section includes 
+all statistical methodology used in the report.
 
 To assess if two groups have different response rates, pairwise group 
 comparisons were conducted using Fisher’s exact test for each time point and 

@@ -9,7 +9,7 @@ Please edit that file. -->
 <!-- this file was adapted from VISCtemplates {{pkg_ver}}. -->
 
 Serum [IgG/IgA] responses were measured against 
-[# antigens; list antigens] 
+[# antigens; list antigens or reference antigen summary table at end of sentence]
 using the binding antibody multiplex assay (BAMA). 
 Antibody levels were measured as median fluorescent intensity (MFI) from two 
 wells and then averaged using the mean. 
@@ -19,6 +19,22 @@ Additionally, a blank or reference bead was included to estimate non-specific
 antibody binding. 
 Results were obtained for 
 [a single dilution at 1:80 for animal data, 1:50 for human data; can vary]. 
-Samples with blank MFI > 5000 were excluded from the analysis.
 
-<!-- Either in an antigen summary table or in the biological endpoints section, include information on antigen clade, any relevant panel information (e.g., antigen reagent project [ARP], see https://pubmed.ncbi.nlm.nih.gov/29386288/), sample size by antigen, and whether a blank or a reference bead was used. -->
+<!-- For differential binding antigens only -->
+
+The set includes antigens which highlight regions of differential binding to 
+[insert target, e.g., the CD4 binding site of the HIV-1 envelope]. 
+The differential binding set is comprised of [#] experimental 
+[if applicable, (including the vaccine-matched antigen [insert vaccine-matched antigen])] and 
+[#] matched reference antigens, where the reference antigens lack accessible 
+target binding sites (knockout sites) present in the experimental antigens [reference tables]. 
+[If applicable] An abbreviated name is used to simplify figures and tables 
+included in this report and is proposed for each antigen [reference table].
+
+<!-- Either in an antigen summary table or in the biological endpoints section, 
+include information on antigen clade, any relevant panel information 
+(e.g., antigen reagent project [ARP], see https://pubmed.ncbi.nlm.nih.gov/29386288/),
+sample size by antigen, positivity threshold, and whether a blank or a reference 
+bead was used. For differential binding antigens, include a table of the 
+experimental and paired reference antigens, abbreviated antigen names if used, 
+and the target site for antibody binding. -->

@@ -13,7 +13,7 @@ Please edit that file. -->
 ### Definition of a Positive Response
 
 Positive responses were defined based on background-adjusted MFI values 
-at the screening dilution level. 
+at the screening dilution level ([1:50]). 
 Antigen-specific positivity thresholds were computed as the 95th percentile 
 of the baseline background-adjusted MFI minus background-adjusted blank (baseline net MFI) 
 by antigen. 
@@ -27,25 +27,39 @@ minus baseline background-adjusted blank values.
 * Background-adjusted MFI values were greater than three times the baseline 
 background-adjusted MFI values.
 
-Samples were excluded if the blank MFI for the corresponding negative control 
-was greater than 5,000. 
-Records were excluded at all visits if any of the following occurred at baseline:
+<!-- If you have differential binding antigens: -->
+For antigens used to examine differential binding [to the VRC01 or CD4 binding site (CD4bs)], 
+the following ratio-based positivity definition was used:
 
-* Missing values for MFI, blank MFI, or net MFI
-* High background, i.e., blank MFI for negative control > 5,000
-* High baseline MFI or net MFI > 6,500
+$\mathrm{net MFI} \ge \text{antigen specific threshold}$, which was set at 100.
 
-<!-- Either in an antigen summary table or in this section, include information on antigen-specific positivity thresholds. -->
+$\mathrm{net MFI} / \mathrm{net MFI}_\mathrm{reference\ antigen} \ge 2.5$
+
+$\mathrm{MFI} / \mathrm{MFI}_\mathrm{reference\ antigen} \ge 2.5$
+
+$\mathrm{net MFI} > 3 \times \mathrm{net MFI}_\mathrm{baseline}$
+
+$\mathrm{MFI} > 3 \times \mathrm{MFI}_\mathrm{baseline}$
+
+<!-- Either in an antigen summary table or in this section, include information 
+on antigen-specific positivity thresholds. -->
 
 ### Response Magnitude
 
-#### MFI*
+#### Net MFI
 
 Log$_{10}$ background- and blank-subtracted MFI (net MFI) was used to evaluate
 response magnitudes for each antigen and group. 
 Values less than 1 were truncated at 1 before the log transformation was applied. 
 Response magnitudes above 22,000 were considered saturated and were truncated 
 at 22,000 for statistical analysis.
+
+### AUTC
+
+The area under the titration curve (AUTC) was calculated over the dilution series 
+for each individual by visit and antigen using the trapezoidal integration with 
+truncation at one in the case of negative net MFI values, or truncation at 22,000 
+for net MFI values greater than 22,000.
 
 #### Durability
 
@@ -60,7 +74,7 @@ defined as:
 $\mathrm{log}{10}\text{(fold-change)} = \mathrm{log}{10}\mathrm{(X}{durability}{)} - \mathrm{log}{10}\mathrm{(X}{peak}{)}$, 
 where X represents the response magnitude described above. 
 For non-responders at durability with response magnitudes below the linear range 
-of the assay (MFI* < 100), the value was set to $X{\text{durability}} = 100$ 
+of the assay (net MFI < 100), the value was set to $X{\text{durability}} = 100$ 
 for plots and tables.
 
 <!--if you have multiple durability time points--> 
@@ -78,19 +92,34 @@ Net MFI values were truncated at 1 for AUC calculations.
 Individual-specific and group-averaged magnitude-breadth (MB) curves (@Huang2009-ao) 
 characterized the 
 magnitude (binding antibody MFI\*) and 
-breadth (number of antigens with positive response at a given value of MFI* that is greater than 100) 
+breadth (number of antigens with positive response at a given value of net MFI that is greater than 100) 
 of each individual plasma sample assayed against a panel of antigens. 
 These curves were used to display the breadth of binding antibody activity in 
 terms of the percentage of antigens with 
-log$_{10}$ MFI* $>$ x for the range of $\mathrm{MFI}^{*}$ values, x. 
+log$_{10}$ net MFI $>$ x for the range of $\mathrm{MFI}^{*}$ values, x. 
 The antigen-specific net MFI value of each non-responder was set to 100.
 
 The area under the MB curve (AUC-MB) was used to summarize the magnitude and 
 breadth for each individual at a given time point across a set of antigens. 
 $\mathrm{MFI}^{*}$ values were truncated at 100. 
 The AUC-MB was calculated as the area under the MB-curves over the entire range 
-without truncation, which is equivalent to the average of the log$_{10}$ MFI* 
+without truncation, which is equivalent to the average of the log$_{10}$ net MFI 
 over the panel of antigens.
+
+<!-- If participants have filtered antigens in the panel, make sure to specify 
+how missingness was handled. -->
+
+## Exclusion Criteria
+
+Samples were excluded if the blank MFI for the corresponding negative control 
+was greater than 5,000. 
+Records were excluded at all visits if any of the following occurred at baseline:
+
+* Missing values for MFI, blank MFI, or net MFI
+* High background, i.e., blank MFI for negative control > 5,000
+* High baseline MFI or net MFI > 6,500
+
+AUTC records were excluded if any of the dilutions were excluded.
 
 ## Graphical Analysis
 
@@ -135,24 +164,24 @@ If there were any significant differences from control,
 pairwise treatment group tests were performed using Barnard’s exact test 
 (two-sided, alpha = 0.05).
 
-Pairwise comparisons of response magnitude ([AUTC, MFI*]) between study groups 
+Pairwise comparisons of response magnitude ([AUTC, net MFI]) between study groups 
 were performed using the Wilcoxon rank-sum test (two-sided, alpha = 0.05) on 
 positive responders only. Tests between study groups required at least [three] 
 positive responders in each treatment group.
 
-Pairwise comparisons of MFI* durability (fold-change) between peak and 
+Pairwise comparisons of net MFI durability (fold-change) between peak and 
 durability were performed between treatment groups using the log-rank test 
 (two-sided, alpha = 0.05) with Wilcoxon-Mann-Whitney scores and interval 
 censoring for each antigen (@Fay2012). 
 The method outlined by @Fay2012 maintains the type I error rate under 
 assessment-treatment dependence. 
-A fold-change was considered censored when the MFI* value at the durability 
+A fold-change was considered censored when the net MFI value at the durability 
 time point was below the linear range of the assay. 
 For censored values, the lower bound of the interval was set to 
 $\mathrm{log_{10}}$$\mathrm{(1/X_{\text{week [peak]}})}$ and 
 the upper bound of the interval was set to 
 $\mathrm{log_{10}}$$\mathrm{(100/X_{\text{week [peak]}})}$, 
-where X represents MFI*, and 100 is the value of the lower bound of the linear 
+where X represents net MFI, and 100 is the value of the lower bound of the linear 
 range of the assay. 
 Tests were only performed for pairs of groups where both groups had at least 3 
 positive responders at peak, and the median fold-change for at least one group 
@@ -164,7 +193,8 @@ Comparisons of durability AUC (area under the response magnitude curve from
 peak, week [xx], through week [durability time point]) were made between
 vaccine groups using the Wilcoxon rank-sum test (two-sided, alpha = 0.05). 
 Durability AUC tests included responders and non-responders 
-(with truncated MFI* measurements).
+(with truncated net MFI measurements).
 
 Corrections for multiple testing were not done for this analysis. 
-<!-- If there were p-value adjustments, specify the method (i.e. FDR) and what grouping variables the adjustment will be made over (i.e. adjusting over antigens) -->
+<!-- If there were p-value adjustments, specify the method (i.e. FDR) and what 
+grouping variables the adjustment will be made over (i.e. adjusting over antigens) -->
