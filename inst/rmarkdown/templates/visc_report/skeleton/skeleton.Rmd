@@ -35,6 +35,7 @@ output:
 ---
 
 <!---
+This section is required according to WI-0010.
 Program Name:
 Creation Date:
 Full name of author:
@@ -49,15 +50,16 @@ library(VISCtemplates)
 
 check_pandoc_version()
 
-packages_needed <- c("conflicted", "tidyverse", "knitr", "kableExtra", 
-                      "VISCfunctions")
+packages_needed <- c(
+  "conflicted", "tidyverse", "knitr", "kableExtra", "VISCfunctions"
+  )
 
 install_load_cran_packages(packages_needed)
 
 # knitr options
 opts_chunk$set(cache = FALSE, message = TRUE, warning = TRUE, echo = FALSE, 
-               dev = c("png", "pdf"), dpi = 200, out.width = '100%', 
-               out.extra = '', fig.align = "center", fig.pos = "H")
+               dev = c("png", "pdf"), dpi = 200, out.width = "100%", 
+               out.extra = "", fig.align = "center", fig.pos = "H")
 
 # NA's will be blank in tables
 options(knitr.kable.NA = '')
@@ -98,7 +100,7 @@ pandoc_markup <- set_pandoc_markup(output_type)
 
 ```{r data-package, eval=FALSE}
 
-remotes::install_github("https://github.com/FredHutch/McElrath762.git")
+remotes::install_github("https://github.com/FredHutch/VDCNNNAnalysis.git")
 ```
 
 ```{r data-processing}
@@ -106,62 +108,80 @@ remotes::install_github("https://github.com/FredHutch/McElrath762.git")
 data(exampleData_ICS)
 
 ICS_adata <- exampleData_ICS %>% 
-  filter(Population == 'IFNg' & Group != 3)
+  filter(Population == "IFNg" & Group != 3)
 ```
 
 `r insert_break()` 
 
 # Summary of Main Results
 
-Summarize the main highlights from the Results section. This can be in bullet format. Any significant results mentioned should include p-values and references to appropriate figures and tables. There should be no information in the Summary section that is not contained in the Results section (see `r insert_ref("results", "Results")`).
+Summarize the main highlights from the Results section. 
+This can be in bullet format. 
+Any significant results mentioned should include p-values and references to 
+appropriate figures and tables. 
+There should be no information in the Summary section that is not contained in 
+the Results section (see `r insert_ref("results", "Results")`).
 
 # Background
 
-[StudyName] is a [enter protocol description, typically the protocol title is sufficient if available]. You can include additional information on the study from Atlas or the study protocol. This report presents data [blinded/unblinded] to treatment arm, as of [enter date of data file creation].
+<!-- The background section can be saved as a child R Markdown file in the docs/ folder so that the same text can be used across PT reports for the protocol. -->
 
-Samples were collected at [list study time points and corresponding relationship to vaccination, e.g. week 0 (1st vaccination), week 6 (2 weeks post-2nd vaccination), week 10 (2 weeks post-3rd vaccination, and week 26 (2 weeks post-4th (final) vaccination))] for [# groups; list vaccine doses or group descriptions].
+```{r background, child=here::here("docs", "background.Rmd") }
+```
 
-The background section can be saved as a child R Markdown file in the docs/ folder so that the same text can be used across PT reports for the protocol.
+This report presents data [blinded/unblinded] to treatment arm, 
+as of [enter date of data file creation].
 
-Also include the study schema here. This information can be found on Atlas or in the protocol. You can save the study schema code (as a .R file or image) in the docs/ folder along with the background section.
+Samples were collected at: 
+[list study time points and corresponding relationship to vaccination, 
+e.g., week 0 (1st vaccination), 
+week 6 (2 weeks post-2nd vaccination), 
+week 10 (2 weeks post-3rd vaccination, 
+and week 26 (2 weeks post-4th (final) vaccination))] 
+for [# groups; list vaccine doses or group descriptions] 
+(reference test: @Huang:2013fl).
+
+<!-- Frequently used citations are included in the `docs/bibliography.bib` file created with `VISCtemplates::create_visc_project()`. If `docs/bibliography.bib` doesn't exist, it will be created when you knit this document. -->
+
+<!-- Also include the study schema here. -->
+
+```{r study-schema, results="asis", warning=kable_warnings}
+source(here("R", "study_schema.R"))
+study_schema()
+```
 
 ## Report Amendments 
 
-If previous reports were provided, note if this report supplements or supersedes the previous reports. For example, "the previous PT report (distributed on DDMonthYYYY) presented peak data. This report summarizes additional durability data."
+If previous reports were provided, note if this report supplements or supersedes 
+the previous reports. 
+For example, "the previous PT report (distributed on DDMonthYYYY) presented 
+peak data. This report summarizes additional durability data."
 
-If this is an updated report, also briefly describe additional data included and/or analysis done since the previous report (e.g. additional visits, participants (include ptids), antigens, comparisons, new/changed tables, figures etc).
+If this is an updated report, also briefly describe additional data included 
+and/or analysis done since the previous report (e.g., additional visits, 
+participants (include pubIDs), antigens, comparisons, new/changed tables, figures).
 
 # Objectives
 
-List primary and secondary (if applicable) objectives. Objectives can be found on ATLAS, in the study protocol, or in the SAP.
+List primary and secondary (if applicable) objectives. 
+Objectives can be found on ATLAS, in the study protocol, or in the SAP.
 
-# Endpoints
+<!-- Use `VISCtemplates::use_visc_methods()` to create child Rmd files if needed. -->
 
-## Biological endpoints
+# Biological Endpoints
 
-Describe the lab measures of interest and the antigens/isolates tested. Information for this section can be found in the SAP, but the tense should be changed from future tense to past tense for PT reports. Most citations used are included in the bibliography.bib file populated with this template. Testing Reference: @Huang:2013fl.
-
-## Statistical endpoints
-
-Describe the statistical measures of interest (response, response magnitude, etc.) including response call methodology and truncation, if applicable. Assay-specific statistical endpoint information can be found at https://github.com/FredHutch/VISC-Assay-Methods/blob/master/Assay_Memo_Templates.
+```{r biological-endpoints, child="methods/biological-endpoints.Rmd"}
+```
 
 # Lab Methods
 
-Describe the lab methods and sample inclusion criteria. Assay-specific information can be found on Github at https://github.com/FredHutch/VISC-Assay-Methods/tree/master/Lab_Methods. This section may also be already included in the SAP, but verbs should be changed from future to past tense.
+```{r lab-methods, child="methods/lab-methods.Rmd"}
+```
 
 # Statistical Methods
 
-## Graphical analysis
-
-Update the following section as appropriate for your data. Assay-specific templates can be found at https://github.com/FredHutch/VISC-Assay-Methods/blob/master/Assay_Memo_Templates.
-
-Response rates were plotted, with accompanying Wilson score confidence intervals, for each group, antigen, and study time point. Distributions of response magnitude were plotted on the log scale for each group, antigen, and study time point with box plots superimposed on the distribution of responders. The mid-line of the box denotes the median and the ends of the box denote the $25^{th}$ and $75^{th}$ percentiles. The whiskers denote the most extreme data points that were no more than 1.5 times the interquartile range (i.e., height of the box). To show response trend over time, line plots of response magnitude were plotted on the log scale by study group and antigen across time points.
-
-## Statistical tests
-
-Update the following section as appropriate for your data. Assay-specific testing inclusion criteria can be found at https://github.com/FredHutch/VISC-Assay-Methods/blob/master/Assay_Memo_Templates.  
-
-To assess if two groups have different response rates, pairwise group comparisons were conducted using Fisher’s exact test for each time point and antigen. For comparisons across time, McNemar's test were used to account for paired data. Response magnitude comparisons between experimental groups were compared using the Wilcoxon rank-sum test among responders only. Response magnitude comparisons between time points were performed using the Wilcoxon signed-rank test to account for paired data. To be included in the time point comparisons, a participant must be a responder in at least one of the time points. 
+```{r statistical-methods, child="methods/statistical-methods.Rmd"}
+```
 
 ```{r response-testing, warning=FALSE}
 
@@ -170,14 +190,19 @@ response_results <- ICS_adata %>%
   group_by(Stim, Visit) %>%
   group_modify(
       ~pairwise_test_bin(
-        x = .$response, group = .$Group, method = 'barnard', 
-        alternative = 'less', num_needed_for_test = 3, digits = 1,
-        latex_output = TRUE, verbose = FALSE
+        x = .$response, 
+        group = .$Group, 
+        method = "barnard", 
+        alternative = "less", 
+        num_needed_for_test = 3, 
+        digits = 1,
+        latex_output = TRUE, 
+        verbose = FALSE
         )
     ) %>%  
   ungroup() %>% 
   mutate(
-    ResponseTest = pretty_pvalues(
+    ResponseTest = pretty_pvalues( 
       ResponseTest, output_type = output_type, sig_alpha = .1, 
       background = 'yellow',
       bold = if_else(pandoc_markup , TRUE, FALSE),
@@ -186,8 +211,6 @@ response_results <- ICS_adata %>%
     )
 ```
 
-The Wilcoxon tests are rank-based tests used to account for non-normality in the magnitude measurements. Because response magnitude comparisons were performed on responders only, each group must have at least 3 responders for the comparison to be conducted. 
-
 ```{r magnitude-testing, warning=FALSE}
 
 # example of using VISCfunctions::pairwise_test_cont for analysis
@@ -195,8 +218,13 @@ magnitude_results <- ICS_adata %>%
   group_by(Stim, Visit, Population) %>%
   group_modify(
     ~pairwise_test_cont(
-      x = .$PercentCellNet, group = .$Group, method = 'wilcox', paired = FALSE, 
-      alternative = 'greater', num_needed_for_test = 3, digits = 3, 
+      x = .$PercentCellNet, 
+      group = .$Group, 
+      method = "wilcox", 
+      paired = FALSE, 
+      alternative = "greater", 
+      num_needed_for_test = 3, 
+      digits = 3, 
       verbose = FALSE
       )
     ) %>% 
@@ -204,7 +232,7 @@ magnitude_results <- ICS_adata %>%
   mutate(
     MagnitudeTest = pretty_pvalues(
       MagnitudeTest, output_type = output_type, sig_alpha = .1,
-      background = 'yellow',
+      background = "yellow",
       bold = if_else(pandoc_markup , TRUE, FALSE),
       italic = if_else(pandoc_markup , TRUE, FALSE)
       )
@@ -214,11 +242,19 @@ magnitude_results <- ICS_adata %>%
 
 # Participant Cohort
 
-The study enrolled [describe the total number enrolled to date and, if unblinded, the number in each treatment arm]. Include a table with data availability by key variables and red highlights for counts that are less than expected. Refer to the table and comment on reasons for missing data if known.
+The study enrolled [describe the total number enrolled to date and, if unblinded, 
+the number in each treatment arm]. 
+Include a table with data availability by key variables and red highlights for 
+counts that are less than expected. 
+Refer to the table and comment on reasons for missing data if known.
 
 # Results
 
-The results section addresses how each endpoint supports the main objectives. Include summary statistics and significant results as applicable, including p-values and table and figure references. The results section should provide supporting evidence for all statements made in the summary section.
+The results section addresses how each endpoint supports the main objectives. 
+Include summary statistics and significant results as applicable, 
+including p-values and table and figure references. 
+The results section should provide supporting evidence for all statements made 
+in the summary section.
 
 ## Section 1
 
@@ -226,7 +262,8 @@ Consider breaking up the results section by objective or by statistical endpoint
 
 ## Section 2
 
-Make sure to include p-values and references to relevant tables and figures. See Figure `r insert_ref("fig:example-plot")` and Table `r insert_ref("tab:example-tab")`. 
+Make sure to include p-values and references to relevant tables and figures. 
+See Figure `r insert_ref("fig:example-plot")` and Table `r insert_ref("tab:example-tab")`. 
 
 `r insert_break()` 
 
@@ -252,20 +289,26 @@ ICS_adata %>%
     aes(col = factor(Group)),
     fill = NA, lwd = .5, outlier.colour = NA
     ) +  
-  scale_color_manual(name = "Group ", values = group_colors) +
+  scale_color_manual(values = group_colors) +
   scale_shape_manual(
-    name = "", breaks = c(0,1), 
+    breaks = c(0,1), 
     labels = c("Non-responder", "Responder"), 
     values = c(2, 19)
     ) +
-  scale_x_discrete("") +
   scale_y_log10(
-    expression("Background-Adjusted % Activation Marker+"),
     breaks = c(.005,.01,.05,.25,1,2, 4, 10),
     labels = c(expression("" <= "0.005%"), 
-               '0.01', '0.05', '0.25%', "1%", "2%", "4%", "10%")
+               "0.01", "0.05", '0.25%', "1%", "2%", "4%", "10%")
     ) +
-  facet_grid(Stim ~ Visit) 
+  facet_grid(Stim ~ Visit) +
+  theme(
+    axis.title.x = element_blank()
+  ) +
+  labs(
+    y = expression("Background-Adjusted % Activation Marker+"),
+    shape = "",
+    color = "Group"
+  )
 ```
 
 `r insert_break()` 
@@ -273,22 +316,32 @@ ICS_adata %>%
 ```{r example-tab, results="asis", warning=kable_warnings}
 
 magnitude_tab <- magnitude_results %>% 
-  select(-Population, -contains('Perfect')) 
+  select(-Population, -contains("Perfect")) 
+
+caption_short <- "Short caption to show in List of Tables."
+
+caption <- "Long caption to show above table. Explain everything needed to understand the table here."
 
 magnitude_tab %>%
   kable(
-    format = output_type, longtable = FALSE, booktabs = TRUE,
-    linesep = "", escape = FALSE,
-    caption.short = "Short caption to show in List of Tables",
-    caption = "Long caption to show above table. Explain everything needed to understand the table here."
+    format = output_type, 
+    longtable = FALSE, 
+    booktabs = TRUE,
+    linesep = "", 
+    escape = FALSE,
+    caption.short = caption_short,
+    caption = caption
   ) %>%
   kable_styling(
     font_size = 8,
     # Note scale_down will overwrite font_size specifications
     latex_options = c("hold_position", "scale_down", "repeat_header")
   ) %>% 
-  collapse_rows(columns = 1:2, row_group_label_position = 'identity', 
-                latex_hline = 'full') %>% 
+  collapse_rows(
+    columns = 1:2, 
+    row_group_label_position = "identity",
+    latex_hline = "full"
+    ) %>% 
   footnote("BAMA Magnitude with testing", threeparttable = TRUE)
 ```
 

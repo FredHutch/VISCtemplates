@@ -1,0 +1,47 @@
+---
+title: "Statistical Methods"
+output: github_document
+---
+
+<!-- background.md is generated from the RMARKDOWN file, background.Rmd.
+Please edit that file. -->
+
+<!-- this file was adapted from VISCtemplates {{pkg_ver}}. -->
+
+## Statistical Endpoints
+
+Describe the statistical measures of interest (response, response magnitude, etc.) 
+including response call methodology and truncation, if applicable.
+
+## Graphical Analysis
+
+Update the following section as appropriate for your data. 
+
+Response rates were plotted, with accompanying Wilson score confidence intervals, 
+for each group, antigen, and study time point. 
+Distributions of response magnitude were plotted on the log scale for each 
+group, antigen, and study time point with box plots superimposed on the 
+distribution of responders. 
+The mid-line of the box denotes the median and the ends of the box denote 
+the $25^{th}$ and $75^{th}$ percentiles. 
+The whiskers denote the most extreme data points that were no more than 1.5 
+times the interquartile range (i.e., height of the box). 
+To show response trend over time, line plots of response magnitude were plotted 
+on the log scale by study group and antigen across time points.
+
+## Statistical Tests
+
+Update the following section as appropriate for your data. If available, use 
+language from the statistical analysis plan. Ensure that this section includes 
+all statistical methodology used in the report.
+
+To assess if two groups have different response rates, pairwise group 
+comparisons were conducted using Fisher’s exact test for each time point and 
+antigen. 
+
+For comparisons across time, McNemar's test were used to account for paired data. 
+Response magnitude comparisons between experimental groups were compared using 
+the Wilcoxon rank-sum test [among responders only]. 
+Response magnitude comparisons between time points were performed using the 
+Wilcoxon signed-rank test to account for paired data. 
+
