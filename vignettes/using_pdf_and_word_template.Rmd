@@ -106,7 +106,7 @@ You can use this as a simple inline code: `` `r knitr::inline_expr("insert_break
 
 * Only output one figure per code chunk.
 * Figure name will be chunk name plus "fig:".
-    + i.e. if chunk name is "-stats" then the table label will be "fig:descriptive-stats".
+    + i.e. if chunk name is "my-boxplot" then the table label will be "fig:my-boxplot".
     
 ### P values
 
