@@ -76,7 +76,7 @@ theme_set(visc_theme)
 
 # Set group colors for this example.
 # If you have group colors already in your project:
-# source(here::here("docs", "group-colors.R"))
+# source(here::here("R", "group_colors.R"))
 group_colors <- c(
   `1` = "#D92321",
   `2` = "#1749FF",
@@ -342,7 +342,7 @@ magnitude_tab %>%
     row_group_label_position = "identity",
     latex_hline = "full"
     ) %>% 
-  footnote("BAMA Magnitude with testing", threeparttable = TRUE)
+  footnote("SD: standard deviation.", threeparttable = TRUE)
 ```
 
 `r insert_break()`  
