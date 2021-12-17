@@ -1,4 +1,19 @@
 
+# VISCtemplates 1.0.0
+
+The new release number is bumped to 1.0.0 because this version implements the structure needed for assay-specific templates.
+
+* New feature: `use_visc_report()` creates a VISC report template with assay-specific R Markdown files.
+* New vignette: a new vignette outlines how to set up a VISC analysis project (`vignette("create_a_visc_analysis_project")`).
+* Changes to the PT report README to make it easier to use.
+* Minor changes:
+    + "*.zip" added to the .gitignore template
+    + *.R template files created with `create_visc_project()` are saved to R/ in the analysis project template. 
+    + The study schema template is an R function.
+    + New prompt with `create_visc_project()` asks about the project name.
+    + Added \sloppy to .tex template to help with antigen name formatting.
+* Minor edits to template language and documentation throughout. 
+
 # VISCtemplates 0.3.4
 
 * Bug fix: updated `bibliography.bib` file to fix citation format for R Core Team citation.
