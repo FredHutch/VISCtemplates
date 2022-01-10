@@ -1,38 +1,76 @@
 ---
-title: "Using the PDF and Word Output Template"
+title: "Using a VISC Report Template"
 author: Jimmy Fulp and Monica Gerber
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Using the PDF and Word Output Template}
+  %\VignetteIndexEntry{Using a VISC Report Template}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-The VISC report Rmarkdown template knits to either a PDF or Word document. 
+## Getting started with a template
 
-* To generate a new PT report template, go to `File > New File > Rmarkdown... > From Template` and select the "VISC Report (Generic)" template.
-  * The new report can also be programatically created using:
-    ```
-    rmarkdown::draft("my_report_name.Rmd", 
-                    template = "visc_report", 
-                    package = "VISCtemplates", 
-                    edit = FALSE)
-    ```
-* Use the Knit button select either the PDF (visc_report) or Word (word_document2) output.
-* Note the shortcut Ctrl-Shift-K will run the first output in the YAML, will be the last output run (starts off as PDF first)
+There are a few different types of reports available:
+
+* **empty**: A blank report template that includes the VISC header, but no other text.
+* **generic**: A PT report template that includes generic text that can be adapted to your statistical analysis.
+* **bama**: A PT report template for the BAMA assay.
+
+To use a VISC report template, run:
+
+```{r eval=FALSE}
+use_visc_report(
+  report_name = "BAMA-PT-Report", # the name of the report file
+  path = "BAMA", # the path within the active directory, usually the name of the assay
+  report_type = "bama" # "empty", "generic", or "bama" 
+)
+```
+
+If you choose `report_type = "generic"` or `report_type = "bama"`, this will set 
+up the following structure in the existing `BAMA/` directory:
+
+```
+|- BAMA/
+|  +- BAMA-PT-Report/              
+|     +- BAMA-PT-Report.Rmd             # VISC report template
+|     +- methods/                       # folder with "child" .Rmd documents
+|       +- biological-endpoints.Rmd
+|       +- lab-methods.Rmd
+|       +- statistical-methods.Rmd
+```
+
+The "child" R Markdown documents contain standardized language for the methods
+sections of PT reports. 
+Edit these as needed for the specifics of your analysis.
+
+You can use a VISC report template through the RStudio GUI 
+(`File > New File > Rmarkdown... > From Template`), 
+or with `rmarkdown::draft()`,
+but this does not automatically generate the "child" R Markdown documents, 
+so you will have to do that manually or with `use_visc_methods()` if you choose this option.
+
+## Knit to PDF or Word
+
+The VISC report R Markdown template knits to either a PDF or Word document. 
+
+* Use the Knit button select either the PDF (visc_pdf_document) or 
+Word (visc_word_document) output.
+* Note the shortcut Ctrl-Shift-K will run the first output in the YAML, will be the last output run (starts off as PDF first).
 * If you want to run both reports in one command, either use `rmarkdown::render()` with `output_format = 'all'`, or install the loom package and create a RStudio Addin (<https://github.com/thebioengineer/loom>).
 
-* To generate a blank VISC Report without the broilerplate text, use the "Empty Report" template (`template = "visc_empty"`).
+
+## Using the template 
 
 There are some new functions and coding conventions that help with knitting the report to both outputs.
 
-## Page breaks
+### Page breaks
 
-* For page breaks use the `insert_break()` function. You can use this as a simple inline code: `` `r knitr::inline_expr("insert_break()")` ``.
+* For page breaks use the `insert_break()` function. 
+You can use this as a simple inline code: `` `r knitr::inline_expr("insert_break()")` ``.
     + `\clearpage` (from previous template) will not work on Word output.
     
-## Referencing
+### Referencing
 `
 **Figure and table references**
 
@@ -54,7 +92,7 @@ There are some new functions and coding conventions that help with knitting the 
 *  For referencing papers, simply use the @ symbol before bib file reference (i.e. `@Huang:2013fl`).
 
 
-## Tables
+### Tables
 
 * Only output one table per code chunk.
 * Make sure to have `format = output_type` in the `kableExtra::kable()` call 
@@ -64,13 +102,13 @@ There are some new functions and coding conventions that help with knitting the 
 * Note that Word output cannot support many kableExtra features, such as `kableExtra::kable_styling()`.
    + Set `warning=kable_warnings` chunk option, otherwise Word output will have unwanted warnings.
 
-## Figures
+### Figures
 
 * Only output one figure per code chunk.
 * Figure name will be chunk name plus "fig:".
-    + i.e. if chunk name is "-stats" then the table label will be "fig:descriptive-stats".
+    + i.e. if chunk name is "my-boxplot" then the table label will be "fig:my-boxplot".
     
-## P values
+### P values
 
-* When using `VISCfunctions::pretty_pvalues()` make sure to use `output_type = output_type`,  `bold  = pandoc_markup`, and ,  `italic = pandoc_markup`. This will give the appropriate markup depending on PDF or Word output.
+* When using `VISCfunctions::pretty_pvalues()` make sure to use `output_type = output_type`,  `bold  = pandoc_markup`, and `italic = pandoc_markup`. This will give the appropriate markup depending on PDF or Word output.
 

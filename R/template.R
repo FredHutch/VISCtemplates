@@ -74,8 +74,8 @@ use_project_objectives <- function(study_name) {
 
 use_group_colors <- function(study_name) {
   usethis::use_template(
-    template = "group-colors.R",
-    save_as = "docs/group-colors.R",
+    template = "group_colors.R",
+    save_as = "R/group_colors.R",
     data = list(study_name = study_name),
     package = "VISCtemplates"
   )
@@ -83,8 +83,8 @@ use_group_colors <- function(study_name) {
 
 use_study_schema <- function(study_name) {
   usethis::use_template(
-    template = "study-schema.R",
-    save_as = "docs/study-schema.R",
+    template = "study_schema.R",
+    save_as = "R/study_schema.R",
     data = list(study_name = study_name),
     package = "VISCtemplates"
   )
@@ -99,6 +99,105 @@ use_bib <- function(study_name) {
   )
 }
 
+#' Use a VISC Report Template
+#'
+#' @param report_name name of the file (character)
+#' @param path path of the file within the active project
+#' @param report_type "empty", "generic", or "bama"
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' use_visc_report(report_name = "BAMA-PT-Report", path = "bama", report_type = "bama")
+#' }
+use_visc_report <- function(report_name = "PT-Report",
+                            path = ".",
+                            report_type = c("empty", "generic", "bama")) {
+
+  stopifnot(report_type %in% c("empty", "generic", "bama"))
+
+  if (report_type == "empty") {
+    rmarkdown::draft(
+      file = file.path(path, report_name),
+      template = "visc_empty",
+      package = "VISCtemplates",
+      create_dir = TRUE,
+      edit = FALSE
+      )
+    usethis::ui_done(
+      glue::glue("Creating an empty VISC report at '{{file.path(path, report_name)}}'")
+      )
+
+  } else {
+    rmarkdown::draft(
+      file = file.path(path, report_name),
+      template = "visc_report",
+      package = "VISCtemplates",
+      create_dir = TRUE,
+      edit = FALSE
+    )
+    usethis::ui_done(
+      glue::glue("Creating a VISC report at '{{file.path(path, report_name)}}'")
+    )
+    use_visc_methods(path = file.path(path, report_name), assay = report_type)
+  }
+
+
+}
+
+#' Use template files for methods sections in PT reports
+#'
+#' Creates a "methods" directory that contains 3 "child" R Markdown documents
+#'  used in PT reports: statistical-methods.Rmd, lab-methods.Rmd,
+#'  and biological-endpoints.Rmd
+#'
+#' @param assay "bama" or "generic"
+#' @param path path within the active project
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' use_visc_methods(path = "bama/BAMA-PT-Report", assay = "bama")
+#' }
+use_visc_methods <- function(path = ".", assay = c("generic", "bama")) {
+
+  pkg_ver <- utils::packageVersion("VISCtemplates")
+
+  usethis::use_directory(file.path(path, "methods"))
+
+  usethis::use_template(
+    template = file.path(
+      paste0("methods-", assay),
+      paste0(assay, "-statistical-methods.Rmd")
+      ),
+    data = list(pkg_ver = pkg_ver),
+    save_as = file.path(path, "methods", "statistical-methods.Rmd"),
+    package = "VISCtemplates"
+  )
+
+  usethis::use_template(
+    template = file.path(
+      paste0("methods-", assay),
+      paste0(assay, "-lab-methods.Rmd")
+      ),
+    data = list(pkg_ver = pkg_ver),
+    save_as = file.path(path, "methods", "lab-methods.Rmd"),
+    package = "VISCtemplates"
+  )
+
+  usethis::use_template(
+    template = file.path(
+      paste0("methods-", assay),
+      paste0(assay, "-biological-endpoints.Rmd")
+      ),
+    data = list(pkg_ver = pkg_ver),
+    save_as = file.path(path, "methods", "biological-endpoints.Rmd"),
+    package = "VISCtemplates"
+  )
+
+}
 
 #' Convert to a VISC Report PDF/LaTeX document
 #'

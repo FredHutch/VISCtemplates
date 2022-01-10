@@ -1,0 +1,14 @@
+---
+title: "{{ study_name}} Lab Methods"
+output: github_document
+---
+
+<!-- background.md is generated from the RMARKDOWN file, background.Rmd.
+Please edit that file. -->
+
+<!-- this file was adapted from VISCtemplates {{pkg_ver}}. -->
+
+Describe the lab methods. 
+The lab methods section is written by the lab. 
+Use template language prior to lab review, and then the lab can make changes to 
+this section during their review.
