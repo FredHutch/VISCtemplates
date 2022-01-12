@@ -7,7 +7,7 @@
 use_visc_report(
   report_name = "PT-Report",
   path = ".",
-  report_type = c("empty", "generic", "bama")
+  report_type = c("empty", "generic", "bama", "nab")
 )
 }
 \arguments{
