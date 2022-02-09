@@ -5,8 +5,11 @@ output: github_document
 
 <!-- This file was adapted from VISCtemplates {{pkg_ver}}. -->
 
-<!--- Refer to the protocol-specific lab study plan for the specific tiers, 
-cell types, and pseudoviruses. --->
+<!-- Refer to the protocol-specific lab study plan for the specific tiers, 
+cell types, and pseudoviruses. 
+CATNAP may be a helpful resource:
+https://www.hiv.lanl.gov/components/sequence/HIV/neutralization/
+-->
 
 Neutralizing antibodies against HIV-1 pseudoviruses were measured as a function 
 of reduction in Tat-regulated luciferase (Luc) reporter gene expression in 
