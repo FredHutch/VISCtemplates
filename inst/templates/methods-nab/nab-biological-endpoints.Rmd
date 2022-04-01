@@ -1,0 +1,16 @@
+---
+title: "{{ study_name}} Biological Endpoints"
+output: github_document
+---
+
+<!-- This file was adapted from VISCtemplates {{pkg_ver}}. -->
+
+<!--- Note ID80 is also often included, along with ID50. Check lab study plan. --->
+
+Neutralization ID~50~ <!--- and/or ID80 ---> titers were measured by a HIV 
+neutralizing antibody (NAb) assay from specimens obtained at weeks 
+<!--- list weeks ---> 
+corresponding to <!--- specify the timing in relationship to vaccinations e.g., 
+corresponding to 2 weeks after the 1st vaccination and 2 weeks after the 2nd 
+vaccination --->. 
+

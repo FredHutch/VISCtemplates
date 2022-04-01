@@ -1,6 +1,6 @@
 Package: VISCtemplates
 Title: Tools for writing reproducible reports at VISC
-Version: 1.0.0
+Version: 1.1.0
 Authors@R: 
     person(given = "Jimmy",
            family = "Fulp",
@@ -29,7 +29,7 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/FredHutch/VISCtemplates
 BugReports: https://github.com/FredHutch/VISCtemplates/issues
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 Suggests: 
     knitr,

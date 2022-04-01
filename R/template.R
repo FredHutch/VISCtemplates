@@ -101,21 +101,27 @@ use_bib <- function(study_name) {
 
 #' Use a VISC Report Template
 #'
+#' This function creates a template R Markdown file for a VISC report.
+#'
 #' @param report_name name of the file (character)
 #' @param path path of the file within the active project
-#' @param report_type "empty", "generic", or "bama"
+#' @param report_type "empty", "generic", "bama", or "nab"
 #'
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' use_visc_report(report_name = "BAMA-PT-Report", path = "bama", report_type = "bama")
+#' use_visc_report(
+#'   report_name = "McElrath708_BAMA_PT_Report_blinded",
+#'   path = "BAMA",
+#'   report_type = "bama"
+#'   )
 #' }
 use_visc_report <- function(report_name = "PT-Report",
                             path = ".",
-                            report_type = c("empty", "generic", "bama")) {
+                            report_type = c("empty", "generic", "bama", "nab")) {
 
-  stopifnot(report_type %in% c("empty", "generic", "bama"))
+  stopifnot(report_type %in% c("empty", "generic", "bama", "nab"))
 
   if (report_type == "empty") {
     rmarkdown::draft(
@@ -130,6 +136,9 @@ use_visc_report <- function(report_name = "PT-Report",
       )
 
   } else {
+
+    challenge_visc_report(report_name)
+
     rmarkdown::draft(
       file = file.path(path, report_name),
       template = "visc_report",
@@ -144,6 +153,23 @@ use_visc_report <- function(report_name = "PT-Report",
   }
 
 
+}
+
+challenge_visc_report <- function(report_name) {
+
+  continue <- usethis::ui_yeah("
+    Creating a new VISC PT Report called {report_name}.
+    At VISC, we use a naming convention for PT reports:
+    'VDCnnn_assay_PT_Report_statusifapplicable'
+    where 'statusifapplicable' distinguishes blinded reports,
+    HIV status, or something that distinguishes a type/subset
+    of a report.
+    'VDC' is the PI name and 'nnn' is the study number.
+    Would you like to continue?")
+
+  if (!continue) {
+    usethis::ui_stop("Stopping `use_visc_report()`")
+  }
 }
 
 #' Use template files for methods sections in PT reports
@@ -161,7 +187,7 @@ use_visc_report <- function(report_name = "PT-Report",
 #' \dontrun{
 #' use_visc_methods(path = "bama/BAMA-PT-Report", assay = "bama")
 #' }
-use_visc_methods <- function(path = ".", assay = c("generic", "bama")) {
+use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab")) {
 
   pkg_ver <- utils::packageVersion("VISCtemplates")
 
