@@ -22,6 +22,10 @@ Use a VISC Report Template
 }
 \examples{
 \dontrun{
-use_visc_report(report_name = "BAMA-PT-Report", path = "bama", report_type = "bama")
+use_visc_report(
+  report_name = "McElrath708_BAMA_PT_Report_blinded",
+  path = "BAMA",
+  report_type = "bama"
+  )
 }
 }

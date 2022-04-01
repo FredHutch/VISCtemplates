@@ -109,7 +109,11 @@ use_bib <- function(study_name) {
 #'
 #' @examples
 #' \dontrun{
-#' use_visc_report(report_name = "BAMA-PT-Report", path = "bama", report_type = "bama")
+#' use_visc_report(
+#'   report_name = "McElrath708_BAMA_PT_Report_blinded",
+#'   path = "BAMA",
+#'   report_type = "bama"
+#'   )
 #' }
 use_visc_report <- function(report_name = "PT-Report",
                             path = ".",
@@ -130,6 +134,9 @@ use_visc_report <- function(report_name = "PT-Report",
       )
 
   } else {
+
+    challenge_visc_report(report_name)
+
     rmarkdown::draft(
       file = file.path(path, report_name),
       template = "visc_report",
@@ -144,6 +151,23 @@ use_visc_report <- function(report_name = "PT-Report",
   }
 
 
+}
+
+challenge_visc_report <- function(report_name) {
+
+  continue <- usethis::ui_yeah("
+    Creating a new VISC PT Report called {report_name}.
+    At VISC, we use a naming convention for PT reports:
+    'VDCnnn_assay_PT_Report_statusifapplicable'
+    where 'statusifapplicable' distinguishes blinded reports,
+    HIV status, or something that distinguishes a type/subset
+    of a report.
+    'VDC' is the PI name and 'nnn' is the study number.
+    Would you like to continue?")
+
+  if (!continue) {
+    usethis::ui_stop("Stopping `use_visc_report()`")
+  }
 }
 
 #' Use template files for methods sections in PT reports
