@@ -4,7 +4,7 @@
 \alias{use_visc_methods}
 \title{Use template files for methods sections in PT reports}
 \usage{
-use_visc_methods(path = ".", assay = c("generic", "bama"))
+use_visc_methods(path = ".", assay = c("generic", "bama", "nab"))
 }
 \arguments{
 \item{path}{path within the active project}
