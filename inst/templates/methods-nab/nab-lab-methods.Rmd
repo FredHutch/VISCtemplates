@@ -1,0 +1,29 @@
+---
+title: "{{ study_name}} Lab Methods"
+output: github_document
+---
+
+<!-- This file was adapted from VISCtemplates {{pkg_ver}}. -->
+
+<!-- Refer to the protocol-specific lab study plan for the specific tiers, 
+cell types, and pseudoviruses. 
+CATNAP may be a helpful resource:
+https://www.hiv.lanl.gov/components/sequence/HIV/neutralization/
+-->
+
+Neutralizing antibodies against HIV-1 pseudoviruses were measured as a function 
+of reduction in Tat-regulated luciferase (Luc) reporter gene expression in 
+TZM-bl cells [@Montefiori2009], [@Sarzotti-Kelsoe2014]. 
+Neutralization titer was defined as the serum dilution at which relative 
+luminescence units (RLUs) were reduced by 50% (ID~50~) relative to the RLUs in 
+virus control wells (cell + virus only) after subtraction of background RLUs 
+(wells with cells only). 
+The assay performed in TZM-bl cells measured neutralization titers against a 
+panel of <!--- autologous and ---> heterologous Env-pseudotyped viruses.
+[x] pseudoviruses were tested, consisting of [fill in virus, clade, tier], 
+<!-- Check protocol and lab study plan for panel and negative control info. -->
+as well as the global pseudovirus panel and a negative control (SVA-MLV)
+[@deCamp2014]. 
+
+<!-- Consider adding a table to list pseudovirus tier, subtype, 
+vaccine strain (yes/no), and isolate name (e.g., MW965.26) -->

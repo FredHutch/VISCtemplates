@@ -113,9 +113,9 @@ use_bib <- function(study_name) {
 #' }
 use_visc_report <- function(report_name = "PT-Report",
                             path = ".",
-                            report_type = c("empty", "generic", "bama")) {
+                            report_type = c("empty", "generic", "bama", "nab")) {
 
-  stopifnot(report_type %in% c("empty", "generic", "bama"))
+  stopifnot(report_type %in% c("empty", "generic", "bama", "nab"))
 
   if (report_type == "empty") {
     rmarkdown::draft(

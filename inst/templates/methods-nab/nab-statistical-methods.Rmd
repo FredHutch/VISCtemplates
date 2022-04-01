@@ -1,0 +1,127 @@
+---
+title: "Statistical Methods"
+output: github_document
+---
+
+<!-- This file was adapted from VISCtemplates {{pkg_ver}}. -->
+
+## Statistical Endpoints
+
+<!-- 
+Animal studies usually use SLA-MLV-subtracted values. 
+Check with the lab and lead statistician. 
+If using SLA-MLV-subtracted values, replace "ID~50~ titer" with 
+"net ID~50~ titer" or "MLV-subtracted titer" (use one, be consistent).
+-->
+
+Response to a pseudovirus was considered to be positive if the [net] ID~50~ titer 
+was greater than or equal to 20.
+<!-- if using SLA-MLV-subtracted values: 
+The net ID~50~ titer (the SLA-MLV-subtracted neutralization titer) is the 
+pseudovirus ID~50~ titer value minus the SLA-MLV ID~50~ titer value, calculated 
+for each animal and timepoint.
+SLA-MLV ID~50~ titer values less than 20 were truncated at 10 before subtraction.  
+-->
+Response rates were calculated for each group and time point with corresponding 
+95% two-sided Wilson score confidence intervals.
+
+The response magnitude was defined as the log~10~ ID~50~ titer.
+
+To measure durability, the fold-change in response magnitude (log~10~ net ID~50~ 
+titer) between week [peak] (peak time point) and week [post-peak] was calculated. 
+The fold-change was only calculated for pseudoviruses with samples at both time 
+points and for animals with positive responses at 
+week [peak], <!--usually first sample taken after last vaccination --> 
+defined as:
+
+$$\mathrm{Fold\mbox{-}change} = \frac{X_{\text{week [peak]}}}{X_{\text{week [post-peak]}}}$$
+
+where X represents the response magnitude.
+
+## Graphical Analysis
+
+Response rates were plotted, with accompanying Wilson score confidence 
+intervals, for each group and pseudovirus at each time point.
+
+Distributions of ID~50~ titers on log~10~ scale and durability (fold-change 
+in response magnitude from peak to each durability time point) were plotted by 
+group and pseudovirus with superimposed box plots. 
+In plots of ID~50~ titers, box plots were superimposed on the distribution 
+of responders. 
+The mid-line of the box denotes the median and the ends of the box denote the 
+25^th^ and 75^th^ percentiles. 
+The whiskers denote the most extreme data points that were no more than 1.5 
+times the interquartile range (i.e., height of the box). 
+Response proportions at week [peak] <!-- peak time point --> are displayed above
+fold-change box plots for each group and pseudovirus with 
+responders at week [peak] <!-- peak time point -->.
+
+<!--- If MB curves plotted, include the following. ---> 
+Magnitude-breadth (MB) curves characterize the magnitude (ID~50~ titer) and 
+breadth (number of isolates neutralized at a given titer) of each individual 
+plasma sample assayed against a panel of isolates [@Huang2009].  
+The x-axis represents the neutralization titer (t) and the y-axis represents 
+the fraction of isolates with neutralization titers greater than t.  
+In addition to the individual sample-specific curves, the group-specific curve 
+displays the average MB across all subjects in that group. 
+<!--- If AUC-MB calculated, include the following. ---> 
+The AUC-MB was calculated as the average of the log~10~ ID~50~ titers over 
+the panel of isolates, where titers that were below the limit-of-detection were 
+set to 10. AUC-MB values calculated from the MB curves were displayed as box 
+plots for each group.
+
+To show response trends over time, line plots of log~10~ ID~50~ titer 
+by pseudovirus and group were plotted for each pseudovirus with
+samples at multiple time points.
+
+## Statistical Tests
+
+<!-- The following is only a guide. Please refer to the SAP for specific 
+information on statistical tests. --> 
+
+Statistical tests were performed as pairwise tests between the groups at weeks 
+<!-- Refer to the SAP for timepoints tested -->. 
+
+Pairwise comparisons of response rates between groups for each 
+pseudovirus were conducted using Barnard's exact test (two-sided, alpha = 0.05) 
+[@Lyderson2009], [@Suissa1985]. 
+
+Pairwise comparisons of response magnitudes (log~10~ ID~50~ titers) were 
+made between groups for each pseudovirus using the Wilcoxon 
+rank-sum test (two-sided, alpha = 0.05).
+<!-- Check the SAP for details on inclusion criteria. -->
+Response magnitude tests included responders and non-responders (with truncated 
+ID~50~ titer measurements). 
+All magnitude tests required at least 3 responders in at least one of the groups 
+being compared.
+
+Pairwise comparisons of AUC-MB were made between groups for the 
+global pseudovirus panel at week <!-- Add time point. --> using the Wilcoxon 
+rank-sum test (two-sided, alpha = 0.05). 
+AUC-MB tests included responders and non-responders (with truncated net ID~50~ 
+titer measurements). 
+
+Pairwise comparisons of the durability (fold-change) between 
+week <!-- peak time point --> and week <!-- durability time point -->
+were performed between groups using the log-rank test 
+(two-sided, alpha = 0.05) with Wilcoxon-Mann-Whitney scores and interval 
+censoring for each pseudovirus (@Fay). 
+The method outlined by @Fay2012 maintains the type I error rate under 
+assessment-treatment dependence. 
+A fold-change was considered censored when the ID~50~ titer value at the 
+durability time point was below the limit of detection. 
+The lower bound of the interval was set to 
+$\mathrm{log_{10}}$$\mathrm{(1/X_{\text{week [peak]}})}$ 
+and the upper bound of the interval was set to 
+$\mathrm{log_{10}}$$\mathrm{(20/X_{\text{week [peak]}})}$ 
+for censored values, where X represents ID~50~ titer and 20 is the limit
+of detection for the NAb assay.
+Tests were only performed for pairs of groups where both groups had at least 3 
+positive responders at week <!-- peak time point -->, and the median fold-change 
+for at least one group was observed (i.e., there were at least as many 
+uncensored values as censored values for at least one group).
+
+Corrections for multiple testing were not done for this analysis. 
+<!-- If there were p-value adjustments, specify the method (i.e. FDR) and what 
+grouping variables the adjustment will be made over (i.e. adjusting over 
+isolates). -->
