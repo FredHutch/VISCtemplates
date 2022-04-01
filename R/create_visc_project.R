@@ -1,5 +1,7 @@
 #' Create a VISC project
 #'
+#' Creates a new R project with a VISC analysis project structure.
+#'
 #' @param path file path
 #'
 #' @return opens a new RStudio session with template project directory

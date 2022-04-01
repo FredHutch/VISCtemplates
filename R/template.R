@@ -101,9 +101,11 @@ use_bib <- function(study_name) {
 
 #' Use a VISC Report Template
 #'
+#' This function creates a template R Markdown file for a VISC report.
+#'
 #' @param report_name name of the file (character)
 #' @param path path of the file within the active project
-#' @param report_type "empty", "generic", or "bama"
+#' @param report_type "empty", "generic", "bama", or "nab"
 #'
 #' @export
 #'

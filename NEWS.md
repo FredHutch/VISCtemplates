@@ -1,4 +1,10 @@
 
+# VISCtemplates 1.1.0
+
+* Improvements to `use_visc_report()`:
+    + A new NAb assay template. 
+    + This function reminds the user to use VISC's report naming convention.
+
 # VISCtemplates 1.0.0
 
 The new release number is bumped to 1.0.0 because this version implements the structure needed for assay-specific templates.

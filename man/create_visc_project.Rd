@@ -13,5 +13,5 @@ create_visc_project(path)
 opens a new RStudio session with template project directory
 }
 \description{
-Create a VISC project
+Creates a new R project with a VISC analysis project structure.
 }
