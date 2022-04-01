@@ -185,7 +185,7 @@ challenge_visc_report <- function(report_name) {
 #' \dontrun{
 #' use_visc_methods(path = "bama/BAMA-PT-Report", assay = "bama")
 #' }
-use_visc_methods <- function(path = ".", assay = c("generic", "bama")) {
+use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab")) {
 
   pkg_ver <- utils::packageVersion("VISCtemplates")
 
