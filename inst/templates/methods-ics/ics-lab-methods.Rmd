@@ -1,0 +1,14 @@
+---
+title: "{{ study_name}} Lab Methods"
+output: github_document
+---
+
+<!-- This file was adapted from VISCtemplates {{pkg_ver}}. -->
+
+<!-- These lab methods are for VRC-specific studies -->
+
+HIV-specific $\mathrm{CD4}^+$ and $\mathrm{CD8}^+$ T-cell responses were examined using ICS and flow cytometry. Cryopreserved PBMCs were stimulated with <INSERT PEPTIDE POOLS>. 
+
+Cytokine markers were measured in three T-cell subsets (total memory $\mathrm{CD4}^+$, total memory $\mathrm{CD8}^+$, and central memory $\mathrm{CD4}^+$ $\mathrm{CXCR5}^+$) (see Figure \ref{subsets}). Seven cytokines ($\mathrm{IFN-}\gamma$, IL-2, IL-4, IL-5, IL-13, IL-17A, and IL-21) were measured in memory $\mathrm{CD4}^+$ T cells. $\mathrm{IFN-}\gamma$ and IL-2 were measured in memory $\mathrm{CD8}^+$ T cells and IL-21 was measured in central memory $\mathrm{CXCR5}^+$ T cells (a subset of $\mathrm{CD4}^+$ T cells). As a negative control, the mock was DMSO and costimulatory antibodies (anti-CD28 and anti-CD49d). In general, samples were excluded from analysis if the cell viability was less than 35% or if the total events acquired was less than 35,000.
+
+<!-- INSERT figure for ICS cell subsets and cytokine markers -  Need reference for where to find this figure -->

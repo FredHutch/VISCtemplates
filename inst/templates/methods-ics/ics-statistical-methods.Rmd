@@ -1,0 +1,26 @@
+---
+title: "Statistical Methods"
+output: github_document
+---
+
+<!-- This file was adapted from VISCtemplates {{pkg_ver}}. -->
+
+## Statistical Endpoints
+
+## Polyfunctionality analysis
+
+Combinatorial Polyfunctionality Analysis of Single Cells (COMPASS) software has been used to analyze functional response. COMPASS is a statistical framework that enables unbiased analysis of antigen-specific T-cell subsets. COMPASS uses a Bayesian hierarchical framework to estimate posterior probabilities of T-cell response for each cytokine combination for each T-cell subset, time point, and antigen. Heatmaps are plotted of COMPASS posterior probabilities for $\mathrm{CD4}^+$ memory T cells stimulated with gp120 and gp41 peptide pools. Columns correspond to the different cell subsets modeled by COMPASS (shown are the subsets with detectable antigen-specific responses that had over five cells in more than two animals), color-coded by the markers they express (white = "off", shaded = "on", grouped by color = "degree of functionality"), and ordered by degree of functionality from one function on the left to five functions on the right (blue to green to pink). Subsets with maximum posterior probabilities <0.005 were removed from the heatmap. Rows correspond to animals, which are ordered by their treatment, and by functionality score (FS) within each group. Each cell of the heatmap shows the probability that the corresponding cell-subset (column) exhibits an antigen-specific response in the corresponding animal (row), where the probability is color-coded from white (zero) to purple (one).
+
+COMPASS also defines two scores that summarize an antigen-specific polyfunctional profile. The functionality score (FS) is defined as the proportion of antigen-specific subsets detected among all possible ones. The polyfunctionality score (PFS) is similar, but it weighs the different subsets by their degree of functionality, naturally favoring subsets with higher degrees of functionality, motivated by the observations that a higher-degree function has been correlated with good outcomes in certain vaccine studies (@COMPASS2014).
+
+## Statistical Tests 
+
+To assess if two groups have different response rates, group comparisons (as outlined in Section \ref{primary-objectives}) were conducted using Fisher's exact test for each peptide pool, T-cell subset and cytokine at each time point.
+Using the Wilcoxon rank-sum test, objective-based group comparisons of response magnitude (background-adjusted percent positive T cells) were performed for responders only for each peptide pool, T-cell subset and cytokine at each time point. Tests were performed if there are at least 3 responders in each group.
+Using the Wilcoxon rank-sum test, objective-based group comparisons of functionality and polyfunctionality scores were performed for the complete group of 7 cytokine markers.
+Spearman correlations between response magnitude (background-adjusted percent positive T cells, functionality score, and polyfunctionality score) and subsequent number of challenges received were calculated for each population, time point, and group. Spearman correlation testing was only done within groups with at least 3 positive responders. Spearman test significance was determined using an approximate method by a conditional Monte Carlo procedure with 10,000 resamples when there were ties (@hothorn_hornik_wiel_zeileis_2008) and an exact method otherwise.
+
+## Graphical Analysis
+
+Response rates were plotted with 95% Wilson score confidence intervals for each experimental group, time point and antigen. Accompanying tables of response rates with sample sizes and confidence intervals are also provided.
+Distributions of background-adjusted percent positive T cells were plotted for each experimental group, time point, T-cell subset, peptide pool and cytokine with box plots superimposed on the distribution of responders. The mid-line of the box denotes the median and the ends of the box denote the $25^{th}$ and $75^{th}$ percentiles. The whiskers denote the most extreme data points that are no more than 1.5 times the interquartile range (i.e., height of the box). Accompanying tables of the descriptive statistics are also provided.

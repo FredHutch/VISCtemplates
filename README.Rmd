@@ -89,3 +89,16 @@ The R package structure is used for analysis projects because it provides an eas
 1. Ben Marwick, Carl Boettiger, and Lincoln Mullen. Paper: [Packaging data analytical work reproducibily using R (and friends)](https://peerj.com/preprints/3192/)
 2. Karthik Ram. Rstudio::conf 2019 talk: [How To Make Your Data Analysis Notebooks More Reproducible](https://github.com/karthik/rstudio2019)
 3. rOpenSci Community Call: [Reproducible Research with R](https://ropensci.org/commcalls/2019-07-30/)
+
+## Notes on how to create a new template
+
+* To make new template, in R folder call template_R and function use_visc_report, so then add new report type. Function creates rmd and looks for methods files. Same thing for use_visc_methods. Saves stat methods, lab methods, biological endpoints files.
+
+* Add template language in inst/templates. Create methods-ics and make the 3 methods rmds (copy bama into new folder called methods-ics) and this is new template.
+
+* Modify each rmd to include template language. Html comments are not printed. Look at comments to try to follow the style and organization. E.g., enter information by [], helpful comments in html comments.
+
+* Made line breaks so the line doesn't go off the screen, has some guidance as to how and why. Every sentence gets a new line, and if it's more than 80 char width you break it down further. Make breaks where there are commas or where sentence broken in natural way.
+
+* Package maintainer guidelines describes creating a release.
+Workflow is based on Gitflow. Main branch always has reviewed and current release of package. Create devel branch, which is working branch for package. Anytime you want a new feature, you branch off devel and then merge into devel. This helps manage multiple development features. Once devel is ready for next release, then release branch gets created from devel and last minute changes or changes happen on release branch. Once that's finished, release branch gets merged to main branch and then back to devel. Release branch - write news.md, test everything, update vignettes or README

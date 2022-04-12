@@ -1,0 +1,19 @@
+---
+title: "{{ study_name}} Biological Endpoints"
+output: github_document
+---
+
+<!-- This file was adapted from VISCtemplates {{pkg_ver}}. -->
+
+Response rate and the magnitude of HIV-specific $\mathrm{CD4}^+$ and $\mathrm{CD8}^+$ T-cell responses as measured by the Intracellular Cytokine Staining (ICS) assay for $\mathrm{IFN-}\gamma$, IL-2, IL-4, IL-5, IL-13, IL-17A, and IL-21 markers. Values are reported as the frequency of memory $\mathrm{CD4}^+$ and $\mathrm{CD8}^+$ T cells; whereas peripheral T-follicular helper cell (pTfh) responses are reported as the frequency of central memory $\mathrm{CD4}^+$ $\mathrm{CXCR5}^+$ T cells that produce IL-21. 
+Any Th1 cytokine is defined as IFN-$\gamma$ or IL-2 and any Th2 cytokine is defined as IL-4, IL-5, or IL-13.
+
+<Celia, a note that in some reports we have a section called statistical endpoints, which contains “definition of a positive response” and “response magnitude” sections below. My first thought is to incorporate response magnitude language into the biological endpoints section somehow, and put the definition of a positive response in stat methods. Would be interested in your thoughts here.
+
+## Definition of a Positive Response
+
+The MIMOSA (Mixture Models for Single-Cell Assays) (@MIMOSA2014) model incorporates cell count and cell proportion information to define a positive response by ICS by comparing peptides stimulated cells and unstimulated negative controls. This method assumes a common distribution for cytokine positive cells in stimulated and unstimulated samples in non-responders, resulting in paired differences that are zero on average. In contrast, for responders, the distribution of the proportion of cytokine positive cells for stimulated samples is assumed to be greater than for unstimulated samples, resulting in paired differences that are greater than zero on average. The MIMOSA method models this structure through a Bayesian hierarchical mixture model framework. One component (or distribution) of the model represents the responders, and the other component models the non-responders. The parameters defining these distributions, as well as the probabilities that each ICS response is either a responder or non-responder, are estimated from the observed data. This sharing of information across vaccine responders and non-responders increases the sensitivity and specificity to make positivity calls. Once the probabilities of peptide-stimulated responses being responders are estimated from MIMOSA models, a false-discovery rate multiplicity adjustment procedure is applied (@Newton2004). Responses with false-discovery rate q-values < 0.01 are considered positive.
+
+## Response Magnitude
+
+Background-adjusted percent positive T cells for each cytokine across peptide pools was compared. The percent positive measurement was background adjusted by subtracting the percent positive cells from the negative controls.
