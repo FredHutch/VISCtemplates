@@ -67,7 +67,7 @@ Once you've created the project locally, initialize Git and push to github.com/F
 usethis::use_git()
 
 # Create a remote repo GitHub, push your work, and open the webpage
-usethis::use_github(organisation = "FredHutch", private = TRUE, protocol = "https")
+usethis::use_github(organisation = "FredHutch", private = TRUE, protocol = "ssh")
 # Make sure your repo is private.
 ```
 
