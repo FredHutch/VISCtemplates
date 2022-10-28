@@ -1,0 +1,18 @@
+---
+title: "statistical-methods"
+output: html_document
+date: '2022-10-28'
+---
+
+<!-- This file was adapted from VISCtemplates {{pkg_ver}}. -->
+
+# Statistical Methods
+
+## Statistical tests
+
+Two-sided 95% confidence intervals ($\alpha$ = 0.05) for binomial proportions of positive responders were calculated using Wilson's method [@agresti_approximate_1998], which is preferred when there is a small sample size.  
+
+## Graphical analysis
+
+Response rates were plotted, with accompanying Wilson score confidence intervals, for each group, IMC, and study time point. Distributions of response magnitude were plotted for each group, IMC, and study time point with boxplots superimposed on the distribution of responders. The mid-line of the box denotes the median of the distribution and the ends of the box denote the $25^{th}$ and $75^{th}$ percentiles. The whiskers denote the most extreme data points that were no more than 1.5 times the interquartile range (i.e., height of the box). To show response trend over time, line plots of response magnitude were plotted by study group and IMC across time points. Boxplots were superimposed on the distributions of durability AUC. 
+

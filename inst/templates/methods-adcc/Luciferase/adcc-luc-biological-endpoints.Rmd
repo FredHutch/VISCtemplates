@@ -1,0 +1,15 @@
+---
+title: "biological-endpoints"
+output: html_document
+date: '2022-10-27'
+---
+
+<!-- This file was adapted from VISCtemplates {{pkg_ver}}. -->
+
+
+# Biological endpoints
+
+ADCC-mediated antibody responses were measured using the ADCC luciferase assay from serum specimens obtained at weeks [insert timepoint] corresponding to [insert timepoint] weeks after the late-boost vaccination.
+
+The ADCC luciferase assay tests the reactivity of antibodies induced from the participant's serum against Infectious Molecular Clone (IMC)-infected target cells ([insert IMCs]) by measuring percent reduction in Relative 
+Luminescence Units (RLUs) over a series of dilutions of the serum.
