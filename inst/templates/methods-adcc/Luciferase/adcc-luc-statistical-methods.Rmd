@@ -14,4 +14,4 @@ Response rates were plotted, with accompanying Wilson score confidence intervals
 
 ## Statistical tests
 
-Two-sided 95% confidence intervals ($\alpha$ = 0.05) of positive responders were calculated using Wilson's method [@agresti_approximate_1998], which is preferred when there is a small sample size.  
+Two-sided 95% confidence intervals ($\alpha$ = 0.05) of positive responders were calculated using Wilson's method [@agresti_approximate_1998], which is preferred when there is a small sample size. Response magnitudes were summarized with median, minimum, and maximum.  

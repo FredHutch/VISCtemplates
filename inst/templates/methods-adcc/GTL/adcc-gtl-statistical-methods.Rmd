@@ -21,4 +21,4 @@ Distributions of durability (area under the durability curve) were plotted with 
 
 ## Statistical tests
 
-Response rates were calculated with Wilson's confidence intervals. Response magnitude analyses included responders and non-responders. Durability, as defined by change in response magnitude, was measured using area under the AUTC curve from peak to the final durability time point ([insert final time point, e.g., week 24]). 
+Response rates were calculated with Wilson's confidence intervals. Response magnitudes were summarized with median, minimum, and maximum. Durability, as defined by change in response magnitude, was measured using area under the AUTC curve from peak to the final durability time point ([insert final time point, e.g., week 24]). 
