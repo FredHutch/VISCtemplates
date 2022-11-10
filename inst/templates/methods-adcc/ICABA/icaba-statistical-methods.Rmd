@@ -10,4 +10,4 @@ date: '2022-11-02'
 Distributions of response magnitudes were plotted for each time point and antigen with box plots superimposed on the distributions. The mid-line of the box denoted the median and the ends of the box denote the $25^{th}$ and $75^{th}$ percentiles. The whiskers denoted the most extreme data points that are no more than 1.5 times the interquartile range (i.e., height of the box). 
 
 ## Statistical tests
-Two-sided 95% confidence intervals ($\alpha$ = 0.05) of positive responders were calculated using Wilson's method [@agresti_approximate_1998].  Response magnitudes were summarized with median, minimum, and maximum.
+
