@@ -144,8 +144,7 @@ object_compare <-
       load(file = dataFile)
       dataObject_2 <- pdataObject
       
-      # below is a test to make sure checkouts are occurring
-      repo_info$SHA1_date <- git2r::repository_head(".")$author$when
+      
       
     } else if (!is.null(SHA2)) {
       ## if SHA2 isn't null then assign SHA1 object as object1 and SHA2 object as object2
@@ -153,19 +152,12 @@ object_compare <-
       load(file = dataFile)
       dataObject_1 <- get(gsub(".rda", "", pdataObject))
       
-      # below is a test to make sure checkouts are occurring
-      repo_info$SHA1_date <- git2r::repository_head(".")$author$when
       
       git2r::checkout(".", SHA2)
       load(file = dataFile)
       dataObject_2 <- get(gsub(".rda", "", pdataObject))
       
       
-      ## confirm checkout
-      # below is a test to make sure checkouts are occurring
-      repo_info$SHA2_date <- git2r::repository_head(".")$author$when
-    }
-    
     
     ## checkout to HEAD to go back to current branch state
     
