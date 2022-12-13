@@ -1,0 +1,192 @@
+
+### The goal of the function is to compare 2 data objects from different commits. 
+# dataObject can either be selected from choices, typed in as text, or rda object can be used as well
+# SHA1 corresponds to commit of data object that will be compared. SHA1 can either be SHA or commit short form or long form. SHA1 can be null (useful for situations where pdata has just been updated and comparison is being done with previous version)
+# SHA2 can be NULL or have another commit. NULL is useful when you have a current pdata object loaded in workspace. non-null SHA2 is useful for when comparing 2 objects from different commits.
+# objects are compared through package {diffdf}. 
+
+object_compare <-
+  function(dataObject = NULL,
+           SHA1 = NULL,
+           SHA2 = NULL) {
+    repo_info <- list(
+      "repo" = NULL,
+      "branch" = NULL,
+      "SHA1" = NULL,
+      "SHA2" = NULL,
+      "object_name" = NULL,
+      "differences" = NULL #ideally I'd like the function to output the warning message, but will save here for now
+    )
+    
+    ## get branch name
+    
+    gitBranch <- git2r::repository_head(".")$name
+    
+    repo_info$branch <- gitBranch
+    
+    ## get all rda objects
+    objectNames <-
+      sort(unique(subset(
+        git2r::odb_blobs(), grepl(".rda", name)
+      )$name))
+    
+    
+    
+    ### Give choice to select object name
+    if (is.null(dataObject)) {
+      for (i in 1:length(objectNames)) {
+        cat(sprintf("%d. %s\n", i, objectNames[i]))
+      }
+      
+      object.selection <- readline("Enter # for pdata: ")
+      object.selection <-
+        tryCatch(
+          as.integer(object.selection),
+          warning = function(c)
+            "integer typed incorrectly."
+        )
+      
+      ## if branch selection out of bounds then return selection menu
+      while (!any(object.selection == 1:length(objectNames))) {
+        object.selection <- readline("Enter # for pdata: ")
+      }
+      
+      pdataObject <- objectNames[object.selection]
+    } else if (class(dataObject) == "character") {
+      ## if user types in object name then filter to that selection
+      pdataObject <- grep(dataObject, objectNames, value = TRUE)
+      
+      
+      
+    } #if user inserts object then don't ask for selection input
+    else if (class(dataObject) == "data.frame") {
+      dataObject_1 <- dataObject
+      pdataObject1 <- deparse(substitute(dataObject))
+      pdataObject <- paste0(pdataObject1, ".rda")
+    }
+    
+    if (length(pdataObject) < 1) {
+      stop("Object not found. Input should contain text found in pdata object name.")
+    }
+    
+    # store object name in list
+    repo_info$object_name <- pdataObject
+    
+    
+    # get commit information on the object
+    files <- subset(git2r::odb_blobs(), name == pdataObject)
+    ## get SHAs to compare
+    ### IF SHA1 NULL then grab most recent pdata commit
+    if (is.null(SHA1)) {
+      get_first <- sort(files$when, decreasing = TRUE)[1]
+      
+      SHA1 <- unique(subset(files, when == get_first)$commit)
+      
+    } else if (!is.null(SHA1)) {
+      ## if SHA1 isn't null then grab full SHA text
+      SHA1 <-
+        unique(subset(git2r::odb_blobs(), grepl(SHA1, sha) |
+                        grepl(SHA1, commit))$commit)
+      
+      if (length(SHA1) < 1) {
+        stop("Commit not found. Input should be a commit or SHA.")
+      }
+      
+    }
+    
+    ## store SHA1 in list
+    repo_info$SHA1 <- SHA1
+    
+    ## if comparing object from two different commits, insert SHA2
+    if (!is.null(SHA2)) {
+      SHA2 <-
+        unique(subset(git2r::odb_blobs(), grepl(SHA2, sha) |
+                        grepl(SHA2, commit))$commit)
+      
+    } else if (is.null(SHA2)) {
+      #if not comparing SHA2 then make blank
+      SHA2 <- ""
+      
+    }
+    # store SHA2 in list
+    repo_info$SHA2 <- SHA2
+    
+    
+    ## Get repository remote url
+    
+    repo <-
+      ifelse(length(git2r::remote_url()) == 1, git2r::remote_url(), "")
+    
+    # store repository remote url in list
+    repo_info$repo <- repo
+    
+    
+    ### checkout to SHA1 and store pdata object to compare
+    #TODO: stash files if needed
+    
+    if (length(git2r::status(".")$unstaged) > 0) {
+      stash.selection <- readline("Stash changes? [Y/N]: ")
+      
+      if (stash.selection == 'Y') {
+        git2r::stash(".")
+      } else if (stash.selection == 'N') {
+        stop("Need to save or remove changes before checking out.")
+      }
+    }
+    
+    
+    
+    dataFile <- paste('data/', pdataObject, sep = "")
+    # if SHA2 is null then assign checked-out object as object2
+    if (is.null(SHA2)) {
+      git2r::checkout(".", SHA1)
+      
+      load(file = dataFile)
+      dataObject_2 <- pdataObject
+      
+      # below is a test to make sure checkouts are occurring
+      repo_info$SHA1_date <- git2r::repository_head(".")$author$when
+      
+    } else if (!is.null(SHA2)) {
+      ## if SHA2 isn't null then assign SHA1 object as object1 and SHA2 object as object2
+      git2r::checkout(".", SHA1)
+      load(file = dataFile)
+      dataObject_1 <- get(gsub(".rda", "", pdataObject))
+      
+      # below is a test to make sure checkouts are occurring
+      repo_info$SHA1_date <- git2r::repository_head(".")$author$when
+      
+      git2r::checkout(".", SHA2)
+      load(file = dataFile)
+      dataObject_2 <- get(gsub(".rda", "", pdataObject))
+      
+      
+      ## confirm checkout
+      # below is a test to make sure checkouts are occurring
+      repo_info$SHA2_date <- git2r::repository_head(".")$author$when
+    }
+    
+    
+    ## checkout to HEAD to go back to current branch state
+    
+    git2r::checkout(".", gitBranch)
+    
+    ###TODO: check differences of data objects
+    differences <- diffdf::diffdf(dataObject_1, dataObject_2)
+    
+    ##TODO: fix below
+    withCallingHandlers(
+      diffdf::diffdf(dataObject_1, dataObject_2),
+      warning = function(w)
+        print(w$message)
+    )
+    
+    repo_info$differences <- differences
+    return(repo_info)
+    
+  }
+
+
+
+## Test on Lusso847
+repoList <- object_compare(dataObject = "nab", SHA1 = "f199ca8" , SHA2 = "30aa5d5")
