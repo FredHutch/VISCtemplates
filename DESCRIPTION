@@ -10,6 +10,10 @@ Authors@R:
            family = "Vendettuoli",
            role = c("aut"),
            email = "mvendett@fredhutch.org")
+    person(given = "Valeria",
+           family = "Duran",
+           role = c("aut"),
+           email = "vduran@fredhutch.org")    
     person(given = "Monica",
            family = "Gerber",
            role = c("aut", "cre"),
@@ -24,12 +28,14 @@ Imports:
     rmarkdown,
     stringr,
     usethis,
-    glue
+    glue,
+    diffdf,
+    git2r
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/FredHutch/VISCtemplates
 BugReports: https://github.com/FredHutch/VISCtemplates/issues
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.2
 Roxygen: list(markdown = TRUE)
 Suggests: 
     knitr,
