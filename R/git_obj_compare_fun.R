@@ -6,7 +6,7 @@
 # objects are compared through package {diffdf}.
 
 #' Compare data objects from two different commits.
-#' @param dataobject the data object name
+#' @param data_object the data object name
 #' @param SHA1 first commit id
 #' @param SHA2 second commit id
 #' @return a list of:
@@ -18,7 +18,7 @@
 #' @details working directory must be pointed to repo clone
 #' @examples
 #' # Lusso847
-#' repoList <- object_compare(dataObject = "nab", SHA1 = "f199ca8" , SHA2 = "30aa5d5")
+#' repoList <- object_compare(data_object = "nab", SHA1 = "f199ca8" , SHA2 = "30aa5d5")
 #' @export
 object_compare <-
   function(data_object = NULL,
