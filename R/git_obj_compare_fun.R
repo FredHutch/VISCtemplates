@@ -21,7 +21,7 @@
 #' repoList <- object_compare(dataObject = "nab", SHA1 = "f199ca8" , SHA2 = "30aa5d5")
 #' @export
 object_compare <-
-  function(dataObject = NULL,
+  function(data_object = NULL,
            SHA1 = NULL,
            SHA2 = NULL) {
 
@@ -36,12 +36,12 @@ object_compare <-
 
     ## get branch name
 
-    gitBranch <- repository_head(".")$name
+    git_branch <- repository_head(".")$name
 
-    repo_info$branch <- gitBranch
+    repo_info$branch <- git_branch
 
     ## get all rda objects
-    objectNames <-
+    object_names <-
       sort(unique(subset(
         odb_blobs(), grepl(".rda", name)
       )$name))
@@ -49,48 +49,48 @@ object_compare <-
 
 
     ### Give choice to select object name
-    if (is.null(dataObject)) {
-      for (i in 1:length(objectNames)) {
-        cat(sprintf("%d. %s\n", i, objectNames[i]))
+    if (is.null(data_object)) {
+      for (i in 1:length(object_names)) {
+        cat(sprintf("%d. %s\n", i, object_names[i]))
       }
 
-      object.selection <- readline("Enter # for pdata: ")
-      object.selection <-
+      object_selection <- readline("Enter # for pdata: ")
+      object_selection <-
         tryCatch(
-          as.integer(object.selection),
+          as.integer(object_selection),
           warning = function(c)
             "integer typed incorrectly."
         )
 
       ## if branch selection out of bounds then return selection menu
-      while (!any(object.selection == 1:length(objectNames))) {
-        object.selection <- readline("Enter # for pdata: ")
+      while (!any(object_selection == 1:length(object_names))) {
+        object_selection <- readline("Enter # for pdata: ")
       }
 
-      pdataObject <- objectNames[object.selection]
-    } else if (class(dataObject) == "character") {
+      pdata_object <- object_names[object_selection]
+    } else if (class(data_object) == "character") {
       ## if user types in object name then filter to that selection
-      pdataObject <- grep(dataObject, objectNames, value = TRUE)
+      pdata_object <- grep(data_object, object_names, value = TRUE)
 
 
 
-    } else if (class(dataObject) == "data.frame") {
+    } else if (class(data_object) == "data.frame") {
     #if user inserts object then don't ask for selection input
-      dataObject_1 <- dataObject
-      pdataObject1 <- deparse(substitute(dataObject))
-      pdataObject <- paste0(pdataObject1, ".rda")
+      data_object_1 <- data_object
+      pdata_object_1 <- deparse(substitute(data_object))
+      pdata_object <- paste0(pdata_object_1, ".rda")
     }
 
-    if (length(pdataObject) < 1) {
+    if (length(pdata_object) < 1) {
       stop("Object not found. Input should contain text found in pdata object name.")
     }
 
     # store object name in list
-    repo_info$object_name <- pdataObject
+    repo_info$object_name <- pdata_object
 
 
     # get commit information on the object
-    files <- subset(odb_blobs(), name == pdataObject)
+    files <- subset(odb_blobs(), name == pdata_object)
     ## get SHAs to compare
     ### IF SHA1 NULL then grab most recent pdata commit
     if (is.null(SHA1)) {
@@ -141,50 +141,50 @@ object_compare <-
     #TODO: stash files if needed
 
     if (length(status(".")$unstaged) > 0) {
-      stash.selection <- readline("Stash changes? [Y/N]: ")
+      stash_selection <- readline("Stash changes? [Y/N]: ")
 
-      if (stash.selection == 'Y') {
+      if (stash_selection == 'Y') {
         stash(".")
-      } else if (stash.selection == 'N') {
+      } else if (stash_selection == 'N') {
         stop("Need to save or remove changes before checking out.")
       }
     }
 
 
 
-    dataFile <- paste('data/', pdataObject, sep = "")
+    data_file <- paste('data/', pdata_object, sep = "")
     # if SHA2 is null then assign checked-out object as object2
     if (is.null(SHA2)) {
       checkout(".", SHA1)
 
       load(file = dataFile)
-      dataObject_2 <- pdataObject
+      data_object_2 <- pdata_object
 
 
 
     } else if (!is.null(SHA2)) {
       ## if SHA2 isn't null then assign SHA1 object as object1 and SHA2 object as object2
       checkout(".", SHA1)
-      load(file = dataFile)
-      dataObject_1 <- get(gsub(".rda", "", pdataObject))
+      load(file = data_file)
+      data_object_1 <- get(gsub(".rda", "", pdata_object))
 
 
       checkout(".", SHA2)
-      load(file = dataFile)
-      dataObject_2 <- get(gsub(".rda", "", pdataObject))
+      load(file = data_file)
+      data_object_2 <- get(gsub(".rda", "", pdata_object))
 
 
 
       ## checkout to HEAD to go back to current branch state
 
-      checkout(".", gitBranch)
+      checkout(".", git_branch)
 
       ###TODO: check differences of data objects
-      differences <- diffdf(dataObject_1, dataObject_2)
+      differences <- diffdf(data_object_1, data_object_2)
 
       ##TODO: fix below
       withCallingHandlers(
-        diffdf(dataObject_1, dataObject_2),
+        diffdf(data_object_1, data_object_2),
         warning = function(w)
           print(w$message)
       )
