@@ -7,7 +7,7 @@ date: '2022-11-02'
 # Statistical Methods
 
 ## Graphical analysis
-Distributions of response magnitudes were plotted for each time point and antigen with box plots superimposed on the distributions. The mid-line of the box denoted the median and the ends of the box denote the $25^{th}$ and $75^{th}$ percentiles. The whiskers denoted the most extreme data points that are no more than 1.5 times the interquartile range (i.e., height of the box). 
+Distributions of response magnitudes were plotted for each time point and antigen with box plots superimposed on the distributions. The mid-line of the box denoted the median and the ends of the box denoted the $25^{th}$ and $75^{th}$ percentiles. The whiskers denoted the most extreme data points that were no more than 1.5 times the interquartile range (i.e., height of the box). 
 
 ## Statistical tests
 
