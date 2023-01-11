@@ -19,16 +19,16 @@ test_that("use full pdata name and suffix", {
 test_that("Warning Message is Shown When Differences Are Detected",{
   df<-data.frame(x=c(1:10),y=c(6:15))
   df2<-data.frame(x=c(1:10), y=c(15:24))
-  testthat::expect_warning(
+  expect_warning(
     obj_compare(df,df2),
     "Not all Values Compared Equal"
   )
 })
 
 
-testthat::test_that("Character String Outputed When No Differences Detected",{
+test_that("Character String Outputed When No Differences Detected",{
   df<-data.frame(x=c(1:10),y=c(6:15))
-  testthat::expect_equal(
+ expect_equal(
     obj_compare(df,df),
    "No issues were found!"
   )
