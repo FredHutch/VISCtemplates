@@ -1,14 +1,17 @@
-
-### The goal of the function is to compare 2 data objects from different commits.
-# data_object can either be selected from choices, typed in as text, or rda object can be used as well
-# SHA1 corresponds to commit of data object that will be compared. SHA1 can either be SHA or commit short form or long form. SHA1 can be null (useful for situations where pdata has just been updated and comparison is being done with previous version)
-# SHA2 can be NULL or have another commit. NULL is useful when you have a current pdata object loaded in workspace. non-null SHA2 is useful for when comparing 2 objects from different commits.
-# objects are compared through package {diffdf}.
-
-#' Compare data objects from two different commits.
+#' @title Compare two data objects from git commits 
+#' @description Compare two data objects from different commits.
+#' data_object can either be selected from choices, typed in as text, or rda object can be used as well
+#' SHA1 corresponds to commit of data object that will be compared. SHA1 can either be SHA or commit short form or long form. SHA1 can be null (useful for situations where pdata has just been updated and comparison is being done with previous version)
+#' SHA2 can be NULL or have another commit. NULL is useful when you have a current pdata object loaded in workspace. non-null SHA2 is useful for when comparing 2 objects from different commits.
+#' objects are compared through package {diffdf}.
+#' @section Last updated by:
+#' Valeria Duran
+#' @section Last updated date:
+#' 01/11/2013
 #' @param data_object the data object name
 #' @param SHA1 first commit id
 #' @param SHA2 second commit id
+#' @param simplify Should the "differences" output contain detailed comparisons? Defaults to FALSE
 #' @return a list of:
 #' \item{repo}{The remote repository}
 #' \item{branch}{The current branch}
@@ -21,12 +24,14 @@
 #' @details working directory must be pointed to repo clone
 #' @examples
 #' # Lusso847
-#' repoList <- object_compare(data_object = "nab", SHA1 = "f199ca8" , SHA2 = "30aa5d5")
+#' repoList <- git_object_compare(data_object = "nab", SHA1 = "f199ca8" , SHA2 = "30aa5d5")
 #' @export
-object_compare <-
+git_object_compare <-
   function(data_object = NULL,
            SHA1 = NULL,
-           SHA2 = NULL) {
+           SHA2 = NULL,
+           simplify = FALSE
+  ) {
     
     repo_info <- list(
       "repo" = NULL,
@@ -191,11 +196,9 @@ object_compare <-
     
     ## check differences of data objects
     
-    differences <- withCallingHandlers(
-      diffdf(data_object_1, data_object_2),
-      warning = function(w)
-        conditionMessage(w)
-    )
+    differences <- obj_compare(data_object_1, data_object_2, simplify = simplify)
+    
+    
     
     repo_info$differences <- differences
     return(repo_info)
@@ -205,4 +208,61 @@ object_compare <-
 
 
 
+#' @title Compare two data objects
+#' @description Compare two data objects
+#'    These are objects that are in environment,
+#'    NOT with git commits.
+#'
+#' @section Last updated by:
+#' Valeria Duran
+#' @section Last updated date:
+#' 01/11/2023
+#' @param data_object_1 data object to compare
+#' @param data_object_2 data object to compare against
+#' @param simplify Should the "differences" output contain detailed comparisons? Defaults to FALSE
+#' @return a list indicating the differences between the two data frames. If no differences are found, a character string is returned. 
+#' @importFrom diffdf diffdf
+#'
+#' @examples
+#'
+#' df<-data.frame(x=c(1:10),y=c(6:15))
+#' df2<-data.frame(x=c(1:10), y=c(15:24))
+#' obj_compare(df,df2)
+#' obj_compare(df,df2, simplify = TRUE)
+#' obj_compare(df,df)
+#' @export
 
+obj_compare <- function(data_object_1, data_object_2, simplify = FALSE){
+  if(!simplify){
+    
+    if(length(invisible(capture.output(diffdf(data_object_1, data_object_2, suppress_warnings = TRUE)))) == 1){
+      capture.output(diffdf(data_object_1, data_object_2))
+    } else{
+      withCallingHandlers(
+        diffdf(data_object_1, data_object_2),
+        warning = function(w)
+          conditionMessage(w)
+      )
+    }
+  } else {
+    if(length(invisible(capture.output(diffdf(data_object_1, data_object_2, suppress_warnings = TRUE)))) == 1){
+      capture.output(diffdf(data_object_1, data_object_2))
+    } else{
+      tryCatch(
+        withCallingHandlers(#diffdf(data_object_1, data_object_2),
+          diffdf(data_object_1, data_object_2),
+          warning = function(w){warn <- conditionMessage(w)
+          } ),
+        warning = function(c){
+          invisible(c)
+          warning("Not all Values Compared Equal", call. = FALSE)
+          return("Not all Values Compared Equal")
+          
+        }
+        
+      )
+      
+    }
+    
+  }
+}
