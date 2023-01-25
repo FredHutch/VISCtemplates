@@ -94,19 +94,15 @@ git_object_compare <-
     
     
     # get commit information on the object
-    files <- subset(odb_blobs(), name == pdata_object)
+    
     ## get SHAs to compare
     ### IF SHA1 NULL then grab most recent pdata commit
     if (is.null(SHA1)) {
-      get_first <- sort(files$when, decreasing = TRUE)[1]
-      
-      SHA_1 <- unique(subset(files, when == get_first)$commit)
+      SHA_1 <- system2("git" ,paste0("log -n 1 --pretty=format:%h -- ","*",pdata_object), stdout = TRUE)
       
     } else if (!is.null(SHA1)) {
       ## if SHA1 isn't null then grab full SHA text
-      SHA_1 <-
-        unique(subset(odb_blobs(), grepl(SHA1, sha) |
-                        grepl(SHA1, commit))$commit)
+      SHA_1 <- system2("git" ,paste("rev-parse", SHA_1), stdout = TRUE)
       
       if (length(SHA_1) < 1) {
         stop("Commit not found. Input should be a commit or SHA.")
