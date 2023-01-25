@@ -72,13 +72,13 @@ git_object_compare <-
       }
       
       pdata_object <- object_names[object_selection]
-    } else if (class(data_object) == "character") {
+    } else if (all(class(data_object) %in% c("character"))) {
       ## if user types in object name then filter to that selection
       pdata_object <- grep(data_object, object_names, value = TRUE, ignore.case = TRUE)
       
       
       
-    } else if (class(data_object) == "data.frame") {
+    } else if (any(grepl("tbl|data", class(data_object)))) {
       #if user inserts object then don't ask for selection input
       data_object_1 <- data_object
       pdata_object_1 <- deparse(substitute(data_object))
