@@ -49,7 +49,7 @@ git_object_compare <-
     repo_info$branch <- git_branch
     
     ## get all rda objects
-   object_names <- sort(unique(gsub(".*/","",system2("git" ,"ls-files '*.rda'" , stdout = TRUE))))
+   object_names <- sort(unique(gsub(".*/","",system2("git" ,"ls-files *.rda" , stdout = TRUE))))
     
     
     ### Give choice to select object name
