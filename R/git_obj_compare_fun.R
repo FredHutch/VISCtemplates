@@ -102,7 +102,7 @@ git_object_compare <-
       
     } else if (!is.null(SHA1)) {
       ## if SHA1 isn't null then grab full SHA text
-      SHA_1 <- system2("git" ,paste("rev-parse", SHA_1), stdout = TRUE)
+      SHA_1 <- system2("git" ,paste("rev-parse", SHA1), stdout = TRUE)
       
       if (length(SHA_1) < 1) {
         stop("Commit not found. Input should be a commit or SHA.")
@@ -115,9 +115,7 @@ git_object_compare <-
     
     ## if comparing object from two different commits, insert SHA2
     if (!is.null(SHA2)) {
-      SHA_2 <-
-        unique(subset(odb_blobs(), grepl(SHA2, sha) |
-                        grepl(SHA2, commit))$commit)
+      SHA_2 <- system2("git" ,paste("rev-parse", SHA2), stdout = TRUE)
       
     } else if (is.null(SHA2)) {
       #if not comparing SHA2 then make blank
