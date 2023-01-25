@@ -19,7 +19,7 @@
 #' \item{SHA_2}{Second commit ID}
 #' \item{object_name}{Name of the object}
 #' \item{differences}{Output of diffdf}
-#' @importFrom git2r repository_head odb_blobs remote_url checkout stash status stash_pop
+#' @importFrom git2r repository_head remote_url checkout stash status stash_pop
 #' @importFrom diffdf diffdf
 #' @details working directory must be pointed to repo clone
 #' @examples
