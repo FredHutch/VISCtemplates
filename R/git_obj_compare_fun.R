@@ -152,7 +152,7 @@ git_object_compare <-
     
     
     
-    data_file <- paste('data/', pdata_object, sep = "")
+    data_file <- system2("git" ,paste0("ls-files ","*",pdata_object), stdout = TRUE)
     # if SHA2 is null then assign checked-out object as object2
     if (is.null(SHA2)) {
       checkout(".", SHA_1)
