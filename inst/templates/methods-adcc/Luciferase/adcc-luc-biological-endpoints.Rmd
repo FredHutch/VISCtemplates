@@ -9,4 +9,4 @@ date: '2022-10-27'
 
 # Biological endpoints
 
-The ADCC luciferase assay tested the presence of vaccine-induced antibody responses in serum samples collected from the study participants against Infectious Molecular Clone (IMC)-infected target cells by measuring percent reduction in Relative Luminescence Units (RLUs) over a series of dilutions of the serum (@103389fimmu201902741).
+The ADCC luciferase assay tested the presence of vaccine-induced antibody responses in serum samples collected from the study participants against Infectious Molecular Clone (IMC)-infected target cells by measuring percent reduction in Relative Luminescence Units (RLUs) over a series of dilutions of the serum (@103389fimmu201902741). (Biological?) endpoints are the response rate and magnitude of ADCC-mediated antibody responses against a panel of [number of IMCs] HIV-1 IMC expressing Env representing [include description of IMCs: those included in the vaccine product (vaccine-matched), Env matched in clade to vaccine products, and other Env to identify the breadth of the response against HIV-1 subtypes].
