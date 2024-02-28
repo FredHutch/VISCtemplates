@@ -364,8 +364,9 @@ if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmark
 
 my_session_info <- VISCfunctions::get_session_info()
 
-kable(
-  my_session_info$platform_table, 
+my_session_info$platform_table %>%
+     add_row(name = "data hash", value = digest::digest(exampleData_ICS), .before = nrow(.)) %>%
+  kable(
   format = output_type, 
   booktabs = TRUE, 
   linesep = "", 
@@ -375,8 +376,17 @@ kable(
 ```
 
 ```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
+my_session_info$packages_table %>%
+           left_join(
+             sessioninfo::package_info() %>% filter(str_detect(source, pattern = "git2r")) %>% 
+               pull(package) %>% 
+               packageDescription() %>% 
+               .[c("Package","RemoteRef")] %>% 
+               as_tibble() %>%
+               rename("package" = "Package",
+                      "branch" = "RemoteRef"),
+             by = "package") %>%
 kable(
-  my_session_info$packages_table, 
   format = output_type, booktabs = TRUE, 
   linesep = "", 
   caption = "Reproducibility software package version information"
