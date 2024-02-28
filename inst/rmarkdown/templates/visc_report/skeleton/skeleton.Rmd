@@ -103,13 +103,24 @@ pandoc_markup <- set_pandoc_markup(output_type)
 remotes::install_github("https://github.com/FredHutch/VDCNNNAnalysis.git")
 ```
 
+```{r check_data_version}
+DataPackageR::assert_data_version("VDCNNNAnalysis",version_string = "data_version")
+testthat::expect_equal(packageDescription("VDCNNNAnalysis")$RemoteSha,"commit_sha")
+testthat::expect_equal(packageDescription("VDCNNNAnalysis")$RemoteRef,"branch_name")
+
+```
+
+
 ```{r data-processing}
 # For this template use VISCfunction example data
 data(exampleData_ICS)
 
+testthat::expect_equal(digest::digest(exampleData_ICS),"data_hash")
+
 ICS_adata <- exampleData_ICS %>% 
   filter(Population == "IFNg" & Group != 3)
 ```
+
 
 `r insert_break()` 
 
