@@ -27,9 +27,7 @@ jobs:
 
       - name: Install the current VISCtemplates and dependencies
         run: |
-         remotes::install_deps(dependencies = TRUE)
-         remotes::install_cran("rcmdcheck")
-         remotes::install_cran("devtools")
+         install.packages("devtools")
          devtools::install()
         shell: Rscript {0}
 
