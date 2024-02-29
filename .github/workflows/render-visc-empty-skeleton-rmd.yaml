@@ -27,7 +27,11 @@ jobs:
 
       - name: Install the current VISCtemplates and dependencies
         run: |
-          Rscript -e "devtools::install('VISCtemplates')"
+         remotes::install_deps(dependencies = TRUE)
+         remotes::install_cran("rcmdcheck")
+         remotes::install_cran("devtools")
+         devtools::install()
+     shell: Rscript {0}
 
       - name: Render visc_empty Rmarkdown skeleton report and Commit Results
         run: |
