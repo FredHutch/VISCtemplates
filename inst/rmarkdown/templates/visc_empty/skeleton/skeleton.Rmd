@@ -89,6 +89,8 @@ pandoc_markup <- set_pandoc_markup(output_type)
 
 # Section Header
 
+## Subsection Header
+
 
 `r insert_break()` 
 
