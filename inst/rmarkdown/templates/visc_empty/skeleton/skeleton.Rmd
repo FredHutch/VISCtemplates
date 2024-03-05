@@ -37,11 +37,11 @@ Location of input data:
 
 ```{r package-loading-and-options, include=FALSE}
 library(VISCtemplates)
+library(VISCfunctions)
 
 check_pandoc_version()
 
-packages_needed <- c("conflicted", "tidyverse", "knitr", "kableExtra", 
-                      "VISCfunctions")
+packages_needed <- c("conflicted", "tidyverse", "knitr", "kableExtra")
 
 install_load_cran_packages(packages_needed)
 
