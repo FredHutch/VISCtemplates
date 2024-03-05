@@ -11,7 +11,7 @@ on:
 name: render-visc-empty-skeleton-rmd
 
 jobs:
-  render-skeleton-rmd:
+  render-visc-empty-skeleton-rmd:
     runs-on: ubuntu-latest
     
     steps:
@@ -38,9 +38,9 @@ jobs:
 
       - name: Render visc_empty Rmarkdown skeleton report and Commit Results
         run: |
-          Rscript -e 'rmarkdown::render("inst/rmarkdown/templates/visc_empty/skeleton/skeleton.Rmd", output_format="all")
+          Rscript -e 'rmarkdown::render("inst/rmarkdown/templates/visc_empty/skeleton/skeleton.Rmd", output_format="all")'
           git config --local user.email "actions@github.com"
-          git config --local user.name "VISCtemplates GitHub Actions"
+          git config --local user.name "GitHub Actions"
           git add inst/rmarkdown/templates/visc_empty/skeleton/skeleton.pdf
           git commit -m 'Re-build visc_empty skeleton Rmd' || echo "No changes to commit"
           git push origin || echo "No changes to commit"
