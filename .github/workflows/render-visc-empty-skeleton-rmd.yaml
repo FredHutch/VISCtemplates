@@ -4,6 +4,8 @@ on:
   workflow_dispatch:
   pull_request:
     branches: [ master, main, develop ]
+  push:
+    branches: [ gh-action-render-skeleton-rmd ]
 
 name: render-visc-empty-skeleton-rmd
 
@@ -44,12 +46,18 @@ jobs:
         run: |
          Rscript -e 'devtools::install()'
 
-      - name: Render visc_empty Rmarkdown skeleton report and Commit Results
+      - name: Render visc_empty Rmarkdown skeleton report
         run: |
           Rscript -e 'rmarkdown::render("inst/rmarkdown/templates/visc_empty/skeleton/skeleton.Rmd", output_format="all")'
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git add inst/rmarkdown/templates/visc_empty/skeleton/skeleton.pdf
-          git add inst/rmarkdown/templates/visc_empty/skeleton/skeleton.docx
-          git commit -m 'Re-build visc_empty skeleton Rmd' || echo "No changes to commit"
-          git push origin || echo "No changes to commit"
+
+      - name: Upload skeleton.pdf as GitHub action artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: visc-empty-skeleton.pdf
+          path: inst/rmarkdown/templates/visc_empty/skeleton/skeleton.pdf
+
+      - name: Upload skeleton.docx as GitHub action artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: visc-empty-skeleton.docx
+          path: inst/rmarkdown/templates/visc_empty/skeleton/skeleton.docx
