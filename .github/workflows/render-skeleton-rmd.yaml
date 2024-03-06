@@ -5,10 +5,10 @@ on:
   pull_request:
     branches: [ master, main, develop ]
 
-name: render-visc-empty-skeleton-rmd
+name: render-skeleton-rmd
 
 jobs:
-  render-visc-empty-skeleton-rmd:
+  render-skeleton-rmd:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
