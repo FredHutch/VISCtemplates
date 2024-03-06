@@ -44,10 +44,9 @@ jobs:
         run: |
          Rscript -e 'devtools::install()'
 
-      - name: Render visc_empty and visc_report versions of skeleton.Rmd to all output formats
+      - name: Render visc_empty skeleton.Rmd to all output formats
         run: |
           Rscript -e 'rmarkdown::render("inst/rmarkdown/templates/visc_empty/skeleton/skeleton.Rmd", output_format="all")'
-          Rscript -e 'rmarkdown::render("inst/rmarkdown/templates/visc_report/skeleton/skeleton.Rmd", output_format="all")'
 
       - name: Upload visc_empty skeleton.docx and skeleton.pdf as GitHub action artifact
         uses: actions/upload-artifact@v4
@@ -56,11 +55,3 @@ jobs:
           path: |
             inst/rmarkdown/templates/visc_empty/skeleton/skeleton.pdf
             inst/rmarkdown/templates/visc_empty/skeleton/skeleton.docx
-
-      - name: Upload visc_report skeleton.docx and skeleton.pdf as GitHub action artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: visc-report-skeleton-pdf-and-docx
-          path: |
-            inst/rmarkdown/templates/visc_report/skeleton/skeleton.pdf
-            inst/rmarkdown/templates/visc_report/skeleton/skeleton.docx
