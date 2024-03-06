@@ -3,10 +3,7 @@
 on:
   workflow_dispatch:
   pull_request:
-    branches: [ master, develop ]
-  push:
-    branches:
-      - "gh-action-render-skeleton-rmd"
+    branches: [ master, main, develop ]
 
 name: render-visc-empty-skeleton-rmd
 
