@@ -313,5 +313,6 @@ visc_word_document <- function(toc = TRUE,
     fig_caption = fig_caption,
     keep_md = keep_md,
     reference_docx = word_style_path,
+    number_sections = FALSE,
     ...)
 }
