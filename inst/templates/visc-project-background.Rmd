@@ -14,12 +14,3 @@ Describe participant enrollment - number per group planned and what those ppts
 received. If study was amended to reduce planned group sample sizes or study 
 allowed for over/under enrollment such that number enrolled per group would not 
 be the same as what is in the schema, mention it here and cite source.
-
-Describe report - "This report presents [blinded/unblinded] [list assay] data 
-in [list groups through what timepoints] as of [ldo_processing_date]." Note 
-that LDO processing date comes from qdata and pdata, this may not be available 
-depending on where this background.Rmd file exists. Anything special about the 
-report could also be mentioned here (e.g., This PT report presents 
-neutralization data to Tier 1A and Tier 2 versions of the vaccine strain, 
-assessed by the TZM-bl assay. Additionally this report summarizes epitope 
-mapping isolate pairs.")
