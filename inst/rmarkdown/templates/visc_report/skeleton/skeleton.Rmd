@@ -122,24 +122,12 @@ the Results section (see `r insert_ref("results", "Results")`).
 
 # Background
 
-<!-- The background section can be saved as a child R Markdown file in the docs/ folder so that the same text can be used across PT reports for the protocol. -->
+<!-- The portion of the background section that is common across assays should be 
+saved as a child R Markdown file in the docs/ folder so that the same text can 
+be used across PT reports for the protocol. -->
 
 ```{r background, child=here::here("docs", "background.Rmd") }
 ```
-
-This report presents data [blinded/unblinded] to treatment arm, 
-as of [enter date of data file creation].
-
-Samples were collected at: 
-[list study time points and corresponding relationship to vaccination, 
-e.g., week 0 (1st vaccination), 
-week 6 (2 weeks post-2nd vaccination), 
-week 10 (2 weeks post-3rd vaccination, 
-and week 26 (2 weeks post-4th (final) vaccination))] 
-for [# groups; list vaccine doses or group descriptions] 
-(reference test: @Huang:2013fl).
-
-<!-- Frequently used citations are included in the `docs/bibliography.bib` file created with `VISCtemplates::create_visc_project()`. If `docs/bibliography.bib` doesn't exist, it will be created when you knit this document. -->
 
 <!-- Also include the study schema here. -->
 
@@ -147,6 +135,20 @@ for [# groups; list vaccine doses or group descriptions]
 source(here("R", "study_schema.R"))
 study_schema()
 ```
+
+Describe this report - "This report presents [blinded/unblinded] [list assay] data 
+in [list groups, including descriptions] at [list timepoints and corresponding 
+relationship to vaccination, e.g., week 0 (1st vaccination), week 10 (2 weeks 
+post-2nd vaccination), and week 26 (2 weeks post-3rd (final) vaccination)] as of 
+[ldo_processing_date]." Note that LDO processing date comes from qdata and pdata. 
+Anything special about the report could also be mentioned here (e.g., This PT report 
+presents neutralization data to Tier 1A and Tier 2 versions of the vaccine strain, 
+assessed by the TZM-bl assay. Additionally this report summarizes epitope mapping 
+isolate pairs.")
+
+Reference test (@Huang:2013fl).
+
+<!-- Frequently used citations are included in the `docs/bibliography.bib` file created with `VISCtemplates::create_visc_project()`. If `docs/bibliography.bib` doesn't exist, it will be created when you knit this document. -->
 
 ## Report Amendments 
 
