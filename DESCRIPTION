@@ -24,7 +24,7 @@ Imports:
     rmarkdown,
     stringr,
     usethis,
-    glue
+    glue,
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/FredHutch/VISCtemplates
@@ -33,5 +33,7 @@ RoxygenNote: 7.1.2
 Roxygen: list(markdown = TRUE)
 Suggests: 
     knitr,
-    testthat (>= 2.1.0)
+    testthat (>= 2.1.0),
+    DataPackageR,
+    digest
 VignetteBuilder: knitr
