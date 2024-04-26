@@ -1,10 +1,11 @@
 #' @title Load a VISC pdata object and check version by datapackage or hash
-#' @description Allows for loading a pdata object either from active project repo (during review) or
-#' from the libarary installed location. This facilitates task switching when transitioning
-#' from adhoc review to production reporting.
+#' @description Allows for loading a pdata object either from active project
+#'   repo (during review) or from the libarary installed location. This
+#'   facilitates task switching when transitioning from adhoc review to
+#'   production reporting.
 #' @param .data pdata name e.g. PKGNAME_ASSAY
 #' @param proj_or_datapackage whether to load the data from the current project
-#' repo or an installed datapackage
+#'   repo or an installed datapackage
 #' @param criteria 32 digit hash or data package version 0.1.X.
 #' @return pdata object
 #' @examples
@@ -22,7 +23,8 @@
 #' visc_load_pdata(Hassell750_ics, proj_or_datapackage = "proj")
 #'
 #' ## add check against hash
-#' visc_load_pdata(Hassell750_ics, proj_or_datapackage = "proj", criteria = "09ab8a5a3831e854d21144d89557ccb1")
+#' visc_load_pdata(Hassell750_ics, proj_or_datapackage = "proj",
+#'   criteria = "09ab8a5a3831e854d21144d89557ccb1")
 #' ## skips criteria check if looking at datapackage
 #' }
 #' @export
@@ -50,16 +52,30 @@ visc_load_pdata <- function(.data,
 
   pdata_env <- new.env()
   if(tolower(proj_or_datapackage) %in% c("proj", "repo")){
+    # data package project / source folder method
     load(DataPackageR::project_data_path(paste0(pdata_name, ".rda")),
          envir = pdata_env)
 
-  } else if(!is.null(packageDescription(pkg_name)$LazyData) && packageDescription(pkg_name)$LazyData == "true"){
-    lazyLoad(filebase = file.path(Sys.getenv("R_LIBS_USER"), pkg_name, "data", "Rdata") ,
-             envir = pdata_env)
   } else {
-    load(file.path(Sys.getenv("R_LIBS_USER"), pkg_name, "data", paste0(pdata_name, ".rda")),
-         envir = pdata_env)
+    # installed datapackage method
+    rda <- system.file(file.path('data', paste0(pdata_name, ".rda")),
+                       package = pkg_name)
+    lz_rd <- system.file(file.path('data', 'Rdata'), package = pkg_name)
+    lzd <- utils::packageDescription(pkg_name)$LazyData
+    if (nzchar(rda) && file.exists(rda)) {
+      # single rda file for data object in data/
+      load(system.file(file.path('data', paste0(pdata_name, ".rda")),
+        package = pkg_name), envir = pdata_env)
+    } else if (nzchar(lz_rd) && file.exists(lz_rd) &&
+                 !is.null(lzd) && tolower(lzd) == 'true'){
+      # undocumented import method from legacy code. Ever needed? Untested.
+      lazyLoad(filebase = system.file(file.path('data', 'Rdata'),
+                 package = pkg_name), envir = pdata_env)
+    } else {
+      stop('Unable to find data object file')
+    }
   }
+
 
   pdata <- get(pdata_name, envir = pdata_env)
   message("Loading ", pdata_name, " from ", proj_or_datapackage)
