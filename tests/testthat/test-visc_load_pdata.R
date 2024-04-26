@@ -22,4 +22,13 @@ test_that("visc_load_pdata works", {
     })
   )
   expect_equal(proj_loaded_pdata, subset(cars, speed > 20))
+  expect_error(
+    suppressMessages({
+      visc_load_pdata(Visc777_cars,
+                                           'proj',
+                                           'fffb5b0aaa74fe7cfc0d3ca6ab0bffff'
+      )
+    }),
+    "pdata_digest.*not equal to.*criteria.*expected"
+  )
 })
