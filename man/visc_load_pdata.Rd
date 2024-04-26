@@ -18,9 +18,10 @@ repo or an installed datapackage}
 pdata object
 }
 \description{
-Allows for loading a pdata object either from active project repo (during review) or
-from the libarary installed location. This facilitates task switching when transitioning
-from adhoc review to production reporting.
+Allows for loading a pdata object either from active project
+repo (during review) or from the libarary installed location. This
+facilitates task switching when transitioning from adhoc review to
+production reporting.
 }
 \examples{
 \dontrun{
@@ -37,7 +38,8 @@ visc_load_pdata(Hassell750_ics, criteria = "0.1.68")
 visc_load_pdata(Hassell750_ics, proj_or_datapackage = "proj")
 
 ## add check against hash
-visc_load_pdata(Hassell750_ics, proj_or_datapackage = "proj", criteria = "09ab8a5a3831e854d21144d89557ccb1")
+visc_load_pdata(Hassell750_ics, proj_or_datapackage = "proj",
+  criteria = "09ab8a5a3831e854d21144d89557ccb1")
 ## skips criteria check if looking at datapackage
 }
 }

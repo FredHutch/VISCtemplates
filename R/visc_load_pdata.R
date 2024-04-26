@@ -1,10 +1,11 @@
 #' @title Load a VISC pdata object and check version by datapackage or hash
-#' @description Allows for loading a pdata object either from active project repo (during review) or
-#' from the libarary installed location. This facilitates task switching when transitioning
-#' from adhoc review to production reporting.
+#' @description Allows for loading a pdata object either from active project
+#'   repo (during review) or from the libarary installed location. This
+#'   facilitates task switching when transitioning from adhoc review to
+#'   production reporting.
 #' @param .data pdata name e.g. PKGNAME_ASSAY
 #' @param proj_or_datapackage whether to load the data from the current project
-#' repo or an installed datapackage
+#'   repo or an installed datapackage
 #' @param criteria 32 digit hash or data package version 0.1.X.
 #' @return pdata object
 #' @examples
@@ -22,7 +23,8 @@
 #' visc_load_pdata(Hassell750_ics, proj_or_datapackage = "proj")
 #'
 #' ## add check against hash
-#' visc_load_pdata(Hassell750_ics, proj_or_datapackage = "proj", criteria = "09ab8a5a3831e854d21144d89557ccb1")
+#' visc_load_pdata(Hassell750_ics, proj_or_datapackage = "proj",
+#'   criteria = "09ab8a5a3831e854d21144d89557ccb1")
 #' ## skips criteria check if looking at datapackage
 #' }
 #' @export
