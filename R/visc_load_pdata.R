@@ -57,10 +57,10 @@ visc_load_pdata <- function(.data,
 
   } else if(!is.null(utils::packageDescription(pkg_name)$LazyData) &&
             utils::packageDescription(pkg_name)$LazyData == "true"){
-    lazyLoad(filebase = file.path(Sys.getenv("R_LIBS_USER"), pkg_name, "data", "Rdata") ,
+    lazyLoad(filebase = system.file(file.path('data', 'Rdata'), package = pkg_name) ,
              envir = pdata_env)
   } else {
-    load(file.path(Sys.getenv("R_LIBS_USER"), pkg_name, "data", paste0(pdata_name, ".rda")),
+    load(system.file(file.path('data', paste0(pdata_name, ".rda")), package = pkg_name),
          envir = pdata_env)
   }
 
