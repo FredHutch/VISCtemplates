@@ -60,5 +60,18 @@ test_that("visc_load_pdata works", {
       }),
       "pdata_digest.*not equal to.*criteria.*expected"
     )
+    # right hash but errors out when can't find the data/object.rda file
+    file.remove(
+      system.file(file.path('data', "Visc777_cars.rda"), package = 'Visc777')
+    )
+    expect_error(
+      suppressMessages({
+        visc_load_pdata(Visc777_cars,
+                        'datapackage',
+                        '3ccb5b0aaa74fe7cfc0d3ca6ab0b5cf3'
+        )
+      }),
+      "Unable to find data object file"
+    )
   })
 })
