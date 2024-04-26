@@ -55,7 +55,8 @@ visc_load_pdata <- function(.data,
     load(DataPackageR::project_data_path(paste0(pdata_name, ".rda")),
          envir = pdata_env)
 
-  } else if(!is.null(packageDescription(pkg_name)$LazyData) && packageDescription(pkg_name)$LazyData == "true"){
+  } else if(!is.null(utils::packageDescription(pkg_name)$LazyData) &&
+            utils::packageDescription(pkg_name)$LazyData == "true"){
     lazyLoad(filebase = file.path(Sys.getenv("R_LIBS_USER"), pkg_name, "data", "Rdata") ,
              envir = pdata_env)
   } else {
