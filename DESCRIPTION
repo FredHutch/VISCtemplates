@@ -24,7 +24,7 @@ Imports:
     rmarkdown,
     stringr,
     usethis,
-    glue,
+    glue
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/FredHutch/VISCtemplates
