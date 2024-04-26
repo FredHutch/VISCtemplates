@@ -19,6 +19,8 @@ License: GPL-3 + file LICENSE
 Depends: R (>= 3.0)
 Imports:
     fs,
+    DataPackageR,
+    digest,
     bookdown,
     here,
     rmarkdown,
@@ -26,12 +28,13 @@ Imports:
     usethis,
     glue
 Encoding: UTF-8
-LazyData: true
 URL: https://github.com/FredHutch/VISCtemplates
 BugReports: https://github.com/FredHutch/VISCtemplates/issues
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)
 Suggests: 
     knitr,
-    testthat (>= 2.1.0)
+    testthat (>= 3.0.0),
+    withr
 VignetteBuilder: knitr
+Config/testthat/edition: 3
