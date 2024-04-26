@@ -1,12 +1,4 @@
 test_that("visc_load_pdata works", {
-  withr::local_options(
-    list(
-      DataPackageR_interact = FALSE,
-      DataPackageR_packagebuilding = FALSE,
-      DataPackageR_verbose = FALSE
-    ),
-    .local_envir = teardown_env()
-  )
   td <- withr::local_tempdir()
   file <- system.file("extdata", "tests", "subsetCars.Rmd",
                       package = "VISCtemplates"
