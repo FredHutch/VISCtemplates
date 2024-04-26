@@ -26,7 +26,6 @@ Imports:
     usethis,
     glue
 Encoding: UTF-8
-LazyData: true
 URL: https://github.com/FredHutch/VISCtemplates
 BugReports: https://github.com/FredHutch/VISCtemplates/issues
 RoxygenNote: 7.3.1
