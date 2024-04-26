@@ -1,3 +1,33 @@
-test_that("multiplication works", {
-  expect_equal(2 * 2, 4)
+test_that("visc_load_pdata works", {
+  withr::local_options(
+    list(
+      DataPackageR_interact = FALSE,
+      DataPackageR_packagebuilding = FALSE,
+      DataPackageR_verbose = FALSE
+    ),
+    .local_envir = teardown_env()
+  )
+  td <- withr::local_tempdir()
+  file <- system.file("extdata", "tests", "subsetCars.Rmd",
+                      package = "VISCtemplates"
+  )
+  DataPackageR::datapackage_skeleton(
+    name = "Visc777",
+    path = td,
+    code_files = file,
+    r_object_names = "Visc777_cars"
+  )
+  suppressMessages({
+    pb_res <- DataPackageR::package_build(file.path(td, "Visc777"))
+  })
+  expect_equal(basename(pb_res), "Visc777_1.0.tar.gz")
+  expect_no_error(
+    suppressMessages({
+      proj_loaded_pdata <- visc_load_pdata(Visc777_cars,
+                            'proj',
+                            '3ccb5b0aaa74fe7cfc0d3ca6ab0b5cf3'
+      )
+    })
+  )
+  expect_equal(proj_loaded_pdata, subset(cars, speed > 20))
 })
