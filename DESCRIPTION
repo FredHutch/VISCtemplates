@@ -1,6 +1,6 @@
 Package: VISCtemplates
 Title: Tools for writing reproducible reports at VISC
-Version: 1.1.0
+Version: 1.2.0.9000
 Authors@R: 
     person(given = "Jimmy",
            family = "Fulp",
@@ -23,6 +23,8 @@ License: GPL-3 + file LICENSE
 Depends: R (>= 3.0)
 Imports:
     fs,
+    DataPackageR,
+    digest,
     bookdown,
     here,
     rmarkdown,
@@ -32,12 +34,13 @@ Imports:
     diffdf,
     git2r
 Encoding: UTF-8
-LazyData: true
 URL: https://github.com/FredHutch/VISCtemplates
 BugReports: https://github.com/FredHutch/VISCtemplates/issues
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)
 Suggests: 
     knitr,
-    testthat (>= 2.1.0)
+    testthat (>= 3.0.0),
+    withr
 VignetteBuilder: knitr
+Config/testthat/edition: 3
