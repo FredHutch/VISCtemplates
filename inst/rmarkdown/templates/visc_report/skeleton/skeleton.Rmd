@@ -46,13 +46,20 @@ Location of input data:
 --->
 
 ```{r package-loading-and-options, include=FALSE}
+
+# packages installed from GitHub
 library(VISCtemplates)
 library(VISCfunctions)
 
 check_pandoc_version()
 
-packages_needed <- c("conflicted", "tidyverse", "knitr", "kableExtra")
+# packages installed from CRAN
+packages_needed <- c("conflicted", "tidyverse", "knitr", "kableExtra", "here", "remotes")
 install_load_cran_packages(packages_needed)
+
+# where to install and look for packages (e.g., data packages) installed on SCHARP server
+my_data_package_lib <- "/Volumes/kmacphee/RLib/" # UPDATE WITH YOUR DATA PACKAGE LOCATION
+.libPaths(c(.libPaths(), my_data_package_lib))
 
 # knitr options
 opts_chunk$set(cache = FALSE, message = TRUE, warning = TRUE, echo = FALSE, 
@@ -98,7 +105,16 @@ pandoc_markup <- set_pandoc_markup(output_type)
 
 ```{r data-package, eval=FALSE}
 
-remotes::install_github("https://github.com/FredHutch/VDCNNNAnalysis.git")
+# note: set_wd() only impacts this code chunk
+if (.Platform$OS.type == 'unix') {
+  setwd("/Volumes/networks")
+} else {
+  setwd("N:")
+}
+
+remotes::install_git(file.path('cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git'),
+                     git = 'external', 
+                     lib = my_data_package_lib)
 ```
 
 ```{r data-processing}
