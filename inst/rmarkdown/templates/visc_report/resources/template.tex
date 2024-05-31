@@ -6,7 +6,7 @@
 \usepackage{url}
 \usepackage[maxfloats=50]{morefloats}
 \usepackage{parskip}
-\usepackage[citestyle=authoryear-comp,natbib=true]{biblatex}
+% \usepackage[citestyle=authoryear-comp,natbib=true]{biblatex}
 \usepackage{pdflscape}
 \usepackage[absolute]{textpos}
 \usepackage{rotating} %for xtable sideways
@@ -123,29 +123,6 @@
 
 % recent versions of pandoc require the CSLReferences environment to be defined
 % $if(csl-refs)$
-% \newlength{\cslhangindent}
-% \setlength{\cslhangindent}{1.5em}
-% \newlength{\csllabelwidth}
-% \setlength{\csllabelwidth}{3em}
-% \newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
-%  {% don't indent paragraphs
-%   \setlength{\parindent}{0pt}
-%   % turn on hanging indent if param 1 is 1
-%   \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
-%   % set entry spacing
-%   \ifnum #2 > 0
-%   \setlength{\parskip}{#2\baselineskip}
-%   \fi
-%  }%
-%  {}
-% \usepackage{calc}
-% \newcommand{\CSLBlock}[1]{#1\hfill\break}
-% \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
-% \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
-% \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
-% $endif$
-
-$if(csl-refs)$
 % definitions for citeproc citations
 \NewDocumentCommand\citeproctext{}{}
 \NewDocumentCommand\citeproc{mm}{%
@@ -179,7 +156,7 @@ $if(csl-refs)$
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
-$endif$
+% $endif$
 
 % this is to adjust header and footer in landscaped pages
 \fancypagestyle{lscape}{%
