@@ -37,6 +37,13 @@ test_that("visc_load_pdata works", {
   )
   # test with installed data package
   withr::with_temp_libpaths({
+    # friendly error message when data package not yet installed
+    expect_error(visc_load_pdata(Visc777_cars,
+                    'datapackage',
+                    '3ccb5b0aaa74fe7cfc0d3ca6ab0b5cf3'),
+                 'Data package.*not installed'
+    )
+    # install
     suppressMessages({
       pb_res <- DataPackageR::package_build(file.path(td, "Visc777"),
                                             install = TRUE, quiet = TRUE)

@@ -58,6 +58,9 @@ visc_load_pdata <- function(.data,
 
   } else {
     # installed datapackage method
+    if (! pkg_name %in% rownames(utils::installed.packages())){
+      stop(paste0("Data package '", pkg_name, "' is not installed"))
+    }
     rda <- system.file(file.path('data', paste0(pdata_name, ".rda")),
                        package = pkg_name)
     lz_rd <- system.file(file.path('data', 'Rdata'), package = pkg_name)
