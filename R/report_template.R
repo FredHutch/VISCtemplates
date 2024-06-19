@@ -8,17 +8,19 @@
 #' @examples
 #' \dontrun{load_install_cran_packages(c("tidyr", "dplyr"))}
 install_load_cran_packages <- function(packages) {
+  installed_packages <- rownames(utils::installed.packages())
   lapply(packages, FUN = function(package) {
-    if (!require(package, character.only = TRUE)) {
+    if (! package %in% installed_packages) {
       if (package %in% c("VISCfunctions", "VISCtemplates")) {
         stop(paste0("The package ", package, " must be installed through GitHub:
                   https://github.com/FredHutch/", package, ".git"))
       } else {
-        utils::install.packages(package, repos = "http://cran.us.r-project.org")
+        utils::install.packages(package)
       }
     }
     library(package, character.only = TRUE)
   })
+  invisible(NULL)
 }
 
 #' Check pandoc version
