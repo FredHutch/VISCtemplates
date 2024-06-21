@@ -32,6 +32,7 @@ create_visc_project <- function(path, interactive = TRUE){
   # create package
   usethis::create_package(
     path = path,
+    rstudio = TRUE,
     open = interactive
   )
 
