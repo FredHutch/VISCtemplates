@@ -267,7 +267,9 @@ visc_pdf_document <- function(latex_engine = "pdflatex",
   logo_path_visc <- find_resource("visc_report", "VISC_logo.jpg")
 
   # If no project-level bib file creating report specific bib
-  if (!file.exists(here::here('docs', 'bibliography.bib'))) {
+  if (!file.exists(
+    rprojroot::find_rstudio_root_file('docs', 'bibliography.bib')
+  )) {
     file.copy(from = system.file("templates", 'bibliography.bib',
                                  package = "VISCtemplates"),
             to = "bibliography.bib",
@@ -315,7 +317,9 @@ visc_word_document <- function(toc = TRUE,
   word_style_path <- find_resource("visc_report", "word-styles-reference.docx")
 
   # If no project-level bib file creating report specific bib
-  if (!file.exists(here::here('docs', 'bibliography.bib'))) {
+  if (!file.exists(
+    rprojroot::find_rstudio_root_file('docs', 'bibliography.bib'))
+  ) {
     file.copy(from = system.file("templates", 'bibliography.bib',
                                  package = "VISCtemplates"),
               to = "bibliography.bib",

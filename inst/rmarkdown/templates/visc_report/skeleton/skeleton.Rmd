@@ -24,7 +24,7 @@ cc:
 includesummary: true
 summary: 
   A short summary about your report. 
-bibliography: "`r ifelse(file.exists('bibliography.bib'), 'bibliography.bib', here::here('docs', 'bibliography.bib'))`"
+bibliography: "`r ifelse(file.exists('bibliography.bib'), 'bibliography.bib', rprojroot::find_rstudio_root_file('docs', 'bibliography.bib'))`"
 lof: true
 lot: true
 toc: true
@@ -74,7 +74,7 @@ theme_set(visc_theme)
 
 # Set group colors for this example.
 # If you have group colors already in your project:
-# source(here::here("R", "group_colors.R"))
+# source(rprojroot::find_rstudio_root_file("R", "group_colors.R"))
 group_colors <- c(
   `1` = "#D92321",
   `2` = "#1749FF",
@@ -126,13 +126,13 @@ the Results section (see `r insert_ref("results", "Results")`).
 saved as a child R Markdown file in the docs/ folder so that the same text can 
 be used across PT reports for the protocol. -->
 
-```{r background, child=here::here("docs", "background.Rmd") }
+```{r background, child=rprojroot::find_rstudio_root_file("docs", "background.Rmd") }
 ```
 
 <!-- Also include the study schema here. -->
 
 ```{r study-schema, results="asis", warning=kable_warnings}
-source(here("R", "study_schema.R"))
+source(rprojroot::find_rstudio_root_file("R", "study_schema.R"))
 study_schema()
 ```
 
