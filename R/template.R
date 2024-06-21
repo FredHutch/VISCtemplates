@@ -157,7 +157,8 @@ use_visc_report <- function(report_name = "PT-Report",
     usethis::ui_done(
       glue::glue("Creating a VISC report at '{{file.path(path, report_name)}}'")
     )
-    use_visc_methods(path = file.path(path, report_name), assay = report_type)
+    use_visc_methods(path = file.path(path, report_name), assay = report_type,
+                     interactive = interactive)
   }
 
 
@@ -189,6 +190,8 @@ challenge_visc_report <- function(report_name, interactive = TRUE) {
 #'
 #' @param assay "bama" or "generic"
 #' @param path path within the active project
+#' @param interactive TRUE by default. FALSE is for non-interactive unit testing
+#'   only.
 #'
 #' @export
 #'
@@ -196,7 +199,13 @@ challenge_visc_report <- function(report_name, interactive = TRUE) {
 #' \dontrun{
 #' use_visc_methods(path = "bama/BAMA-PT-Report", assay = "bama")
 #' }
-use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab")) {
+use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab"),
+                             interactive = TRUE) {
+
+  # suppress usethis output when non-interactive
+  old_usethis_quiet <- getOption('usethis.quiet')
+  on.exit(options(usethis.quiet = old_usethis_quiet))
+  options(usethis.quiet = ! interactive)
 
   pkg_ver <- utils::packageVersion("VISCtemplates")
 
