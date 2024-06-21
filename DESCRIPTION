@@ -35,8 +35,11 @@ BugReports: https://github.com/FredHutch/VISCtemplates/issues
 RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)
 Suggests: 
+    conflicted,
+    kableExtra,
     knitr,
     testthat (>= 3.0.0),
+    tidyverse,
     withr
 Remotes:
     FredHutch/VISCfunctions
