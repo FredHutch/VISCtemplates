@@ -14,7 +14,7 @@ create_visc_project <- function(path, interactive = TRUE){
 
   # top level folder should follow VDCNNNAnalysis format
   repo_name <- basename(path)
-  challenge_visc_name(repo_name)
+  challenge_visc_name(repo_name, interactive)
 
   # get "VDCNNN" if it exists
   # this is a variable that is inserted into templates
@@ -78,7 +78,8 @@ challenge_directory <- function(path, interactive = TRUE) {
 }
 
 
-challenge_visc_name <- function(repo_name) {
+challenge_visc_name <- function(repo_name, interactive = TRUE) {
+  if (! interactive) return(invisible(NULL))
 
   continue <- usethis::ui_yeah("
     Creating a new VISC project called {repo_name}.
