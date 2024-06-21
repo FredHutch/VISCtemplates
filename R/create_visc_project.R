@@ -3,10 +3,12 @@
 #' Creates a new R project with a VISC analysis project structure.
 #'
 #' @param path file path
+#' @param interactive TRUE by default. FALSE is for non-interactive unit testing
+#'   only.
 #'
 #' @return opens a new RStudio session with template project directory
 #' @export
-create_visc_project <- function(path){
+create_visc_project <- function(path, interactive = TRUE){
 
   challenge_directory(path)
 
