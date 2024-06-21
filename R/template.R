@@ -126,6 +126,11 @@ use_visc_report <- function(report_name = "PT-Report",
 
   stopifnot(report_type %in% c("empty", "generic", "bama", "nab"))
 
+  # suppress usethis output when non-interactive
+  old_usethis_quiet <- getOption('usethis.quiet')
+  on.exit(options(usethis.quiet = old_usethis_quiet))
+  options(usethis.quiet = ! interactive)
+
   if (report_type == "empty") {
     rmarkdown::draft(
       file = file.path(path, report_name),
