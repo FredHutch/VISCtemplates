@@ -140,7 +140,7 @@ use_visc_report <- function(report_name = "PT-Report",
 
   } else {
 
-    challenge_visc_report(report_name)
+    challenge_visc_report(report_name, interactive)
 
     rmarkdown::draft(
       file = file.path(path, report_name),
@@ -158,7 +158,8 @@ use_visc_report <- function(report_name = "PT-Report",
 
 }
 
-challenge_visc_report <- function(report_name) {
+challenge_visc_report <- function(report_name, interactive = TRUE) {
+  if (! interactive) return(invisible(NULL))
 
   continue <- usethis::ui_yeah("
     Creating a new VISC PT Report called {report_name}.
