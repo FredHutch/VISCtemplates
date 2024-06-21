@@ -106,6 +106,8 @@ use_bib <- function(study_name) {
 #' @param report_name name of the file (character)
 #' @param path path of the file within the active project
 #' @param report_type "empty", "generic", "bama", or "nab"
+#' @param interactive TRUE by default. FALSE is for non-interactive unit testing
+#'   only.
 #'
 #' @export
 #'
@@ -119,7 +121,8 @@ use_bib <- function(study_name) {
 #' }
 use_visc_report <- function(report_name = "PT-Report",
                             path = ".",
-                            report_type = c("empty", "generic", "bama", "nab")) {
+                            report_type = c("empty", "generic", "bama", "nab"),
+                            interactive = TRUE) {
 
   stopifnot(report_type %in% c("empty", "generic", "bama", "nab"))
 
