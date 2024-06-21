@@ -10,7 +10,7 @@
 #' @export
 create_visc_project <- function(path, interactive = TRUE){
 
-  challenge_directory(path)
+  challenge_directory(path, interactive)
 
   # top level folder should follow VDCNNNAnalysis format
   repo_name <- basename(path)
@@ -55,13 +55,13 @@ create_visc_project <- function(path, interactive = TRUE){
 }
 
 
-challenge_directory <- function(path) {
+challenge_directory <- function(path, interactive = TRUE) {
 
   path <- fs::path_expand(path)
 
   dir_exists <- dir.exists(path)
 
-  if (dir_exists) {
+  if (dir_exists && interactive) {
 
     continue <- usethis::ui_yeah("
       The directory {path} already exists.
