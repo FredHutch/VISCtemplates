@@ -16,7 +16,7 @@ withr::local_options(
 # folder clean and up to date when interactively running the same tests that
 # will be run on CI.
 local({
-  template_snaps_dir <- file.path(getwd(), '_snaps', 'template')
+  template_snaps_dir <- testthat::test_path('_snaps', 'template')
   if (dir.exists(template_snaps_dir)){
     unlink(template_snaps_dir, recursive = TRUE)
   }
