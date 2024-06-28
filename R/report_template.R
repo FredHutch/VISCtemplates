@@ -8,6 +8,12 @@
 #' @examples
 #' \dontrun{load_install_cran_packages(c("tidyr", "dplyr"))}
 install_load_cran_packages <- function(packages) {
+  # this can happen in a spawned knitr session
+  if (is.null(getOption('repos'))){
+    old_repos <- getOption('repos')
+    on.exit(options(repos = old_repos))
+    options(repos = c(CRAN = 'https://cloud.r-project.org/'))
+  }
   installed_packages <- rownames(utils::installed.packages())
   lapply(packages, FUN = function(package) {
     if (! package %in% installed_packages) {
