@@ -14,6 +14,9 @@ install_load_cran_packages <- function(packages) {
     on.exit(options(repos = old_repos))
     options(repos = c(CRAN = 'https://cloud.r-project.org/'))
   }
+  cat('\n')
+  dput(getOption('repos'))
+  cat('\n')
   installed_packages <- rownames(utils::installed.packages())
   lapply(packages, FUN = function(package) {
     if (! package %in% installed_packages) {
