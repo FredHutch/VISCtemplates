@@ -33,6 +33,16 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
+      - name: Set up tinytex
+        uses: r-lib/actions/setup-tinytex@v2
+
+      - name: Preinstall required latex packages
+        run: >
+          tlmgr install
+          lastpage morefloats parskip pdflscape textpos multirow lipsum
+          fancyhdr colortbl soul setspace relsize makecell threeparttable
+          threeparttablex environ trimspaces
+
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}

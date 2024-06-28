@@ -106,6 +106,8 @@ use_bib <- function(study_name) {
 #' @param report_name name of the file (character)
 #' @param path path of the file within the active project
 #' @param report_type "empty", "generic", "bama", or "nab"
+#' @param interactive TRUE by default. FALSE is for non-interactive unit testing
+#'   only.
 #'
 #' @export
 #'
@@ -119,9 +121,15 @@ use_bib <- function(study_name) {
 #' }
 use_visc_report <- function(report_name = "PT-Report",
                             path = ".",
-                            report_type = c("empty", "generic", "bama", "nab")) {
+                            report_type = c("empty", "generic", "bama", "nab"),
+                            interactive = TRUE) {
 
   stopifnot(report_type %in% c("empty", "generic", "bama", "nab"))
+
+  # suppress usethis output when non-interactive
+  old_usethis_quiet <- getOption('usethis.quiet')
+  on.exit(options(usethis.quiet = old_usethis_quiet))
+  options(usethis.quiet = ! interactive)
 
   if (report_type == "empty") {
     rmarkdown::draft(
@@ -137,7 +145,7 @@ use_visc_report <- function(report_name = "PT-Report",
 
   } else {
 
-    challenge_visc_report(report_name)
+    challenge_visc_report(report_name, interactive)
 
     rmarkdown::draft(
       file = file.path(path, report_name),
@@ -149,13 +157,15 @@ use_visc_report <- function(report_name = "PT-Report",
     usethis::ui_done(
       glue::glue("Creating a VISC report at '{{file.path(path, report_name)}}'")
     )
-    use_visc_methods(path = file.path(path, report_name), assay = report_type)
+    use_visc_methods(path = file.path(path, report_name), assay = report_type,
+                     interactive = interactive)
   }
 
 
 }
 
-challenge_visc_report <- function(report_name) {
+challenge_visc_report <- function(report_name, interactive = TRUE) {
+  if (! interactive) return(invisible(NULL))
 
   continue <- usethis::ui_yeah("
     Creating a new VISC PT Report called {report_name}.
@@ -180,6 +190,8 @@ challenge_visc_report <- function(report_name) {
 #'
 #' @param assay "bama" or "generic"
 #' @param path path within the active project
+#' @param interactive TRUE by default. FALSE is for non-interactive unit testing
+#'   only.
 #'
 #' @export
 #'
@@ -187,7 +199,13 @@ challenge_visc_report <- function(report_name) {
 #' \dontrun{
 #' use_visc_methods(path = "bama/BAMA-PT-Report", assay = "bama")
 #' }
-use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab")) {
+use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab"),
+                             interactive = TRUE) {
+
+  # suppress usethis output when non-interactive
+  old_usethis_quiet <- getOption('usethis.quiet')
+  on.exit(options(usethis.quiet = old_usethis_quiet))
+  options(usethis.quiet = ! interactive)
 
   pkg_ver <- utils::packageVersion("VISCtemplates")
 
@@ -249,7 +267,9 @@ visc_pdf_document <- function(latex_engine = "pdflatex",
   logo_path_visc <- find_resource("visc_report", "VISC_logo.jpg")
 
   # If no project-level bib file creating report specific bib
-  if (!file.exists(here::here('docs', 'bibliography.bib'))) {
+  if (!file.exists(
+    rprojroot::find_rstudio_root_file('docs', 'bibliography.bib')
+  )) {
     file.copy(from = system.file("templates", 'bibliography.bib',
                                  package = "VISCtemplates"),
             to = "bibliography.bib",
@@ -297,7 +317,9 @@ visc_word_document <- function(toc = TRUE,
   word_style_path <- find_resource("visc_report", "word-styles-reference.docx")
 
   # If no project-level bib file creating report specific bib
-  if (!file.exists(here::here('docs', 'bibliography.bib'))) {
+  if (!file.exists(
+    rprojroot::find_rstudio_root_file('docs', 'bibliography.bib'))
+  ) {
     file.copy(from = system.file("templates", 'bibliography.bib',
                                  package = "VISCtemplates"),
               to = "bibliography.bib",
