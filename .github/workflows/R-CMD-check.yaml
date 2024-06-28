@@ -62,6 +62,7 @@ jobs:
         with:
           extra-packages: any::rcmdcheck
           needs: check
+        continue-on-error: true
 
       - name: Install statsrv Hmisc version
         if: ${{ matrix.config.r == '4.0.4' }}
