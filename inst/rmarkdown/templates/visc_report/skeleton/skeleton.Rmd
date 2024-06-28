@@ -54,7 +54,7 @@ library(VISCfunctions)
 check_pandoc_version()
 
 # packages installed from CRAN
-packages_needed <- c("conflicted", "tidyverse", "knitr", "kableExtra", "here", "remotes")
+packages_needed <- c("conflicted", "tidyverse", "knitr", "kableExtra", "rprojroot", "remotes")
 install_load_cran_packages(packages_needed)
 
 # where to install and look for packages (e.g., data packages) installed on SCHARP server
