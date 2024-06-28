@@ -58,16 +58,10 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      - name: Preinstall remotes on statsrv
-          if: ${{ matrix.config.r == '4.0.4' }}
-        uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          packages: |
-            any::remotes
-
       - name: Preinstall statsrv Hmisc version
           if: ${{ matrix.config.r == '4.0.4' }}
         run: |
+          Rscript -e 'install.packages("remotes")'
           Rscript -e 'remotes::install_version("Hmisc", "4.5-0")'
 
       - uses: r-lib/actions/setup-r-dependencies@v2
