@@ -58,16 +58,16 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
+      - name: Install statsrv Hmisc version
+        if: ${{ matrix.config.r == '4.0.4' }}
+        run: |
+          R -q -e 'utils::install.packages("remotes")'
+          R -q -e 'remotes::install_version("Hmisc", "4.5-0")'
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
           needs: check
-        continue-on-error: true
-
-      - name: Install statsrv Hmisc version
-        if: ${{ matrix.config.r == '4.0.4' }}
-        run: |
-          Rscript -e 'remotes::install_version("Hmisc", "4.5-0")'
 
       - uses: r-lib/actions/check-r-package@v2
         with:
