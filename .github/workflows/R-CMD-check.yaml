@@ -62,7 +62,8 @@ jobs:
           if: ${{ matrix.config.r == '4.0.4' }}
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          packages: any::remotes
+          packages: |
+            any::remotes
 
       - name: Preinstall statsrv Hmisc version
           if: ${{ matrix.config.r == '4.0.4' }}
