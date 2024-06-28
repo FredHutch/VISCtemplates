@@ -34,13 +34,13 @@ jobs:
 
       - name: Setup statsrv pandoc
         if: ${{ matrix.config.r == '4.0.4' }}
-      - uses: r-lib/actions/setup-pandoc@v2
+        uses: r-lib/actions/setup-pandoc@v2
         with:
           pandoc-version: ${{ matrix.config.pandoc-version }}
 
       - name: Setup default pandoc
         if: ${{ matrix.config.r != '4.0.4' }}
-      - uses: r-lib/actions/setup-pandoc@v2
+        uses: r-lib/actions/setup-pandoc@v2
 
       - name: Set up tinytex
         uses: r-lib/actions/setup-tinytex@v2
