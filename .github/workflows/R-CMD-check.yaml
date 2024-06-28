@@ -62,7 +62,7 @@ jobs:
         if: ${{ matrix.config.r == '4.0.4' }}
         run: |
           R -q -e 'utils::install.packages("remotes")'
-          R -q -e 'remotes::install_version("htmlTable", "2.4.2")'
+          R -q -e 'utils::install.packages("htmlTable")'
           R -q -e 'remotes::install_version("Hmisc", "4.5-0")'
           R -q -e 'remotes::install_github("FredHutch/VISCtemplates", dependencies = TRUE)'
 
