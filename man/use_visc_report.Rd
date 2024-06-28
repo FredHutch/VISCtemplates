@@ -7,7 +7,8 @@
 use_visc_report(
   report_name = "PT-Report",
   path = ".",
-  report_type = c("empty", "generic", "bama", "nab")
+  report_type = c("empty", "generic", "bama", "nab"),
+  interactive = TRUE
 )
 }
 \arguments{
@@ -16,6 +17,9 @@ use_visc_report(
 \item{path}{path of the file within the active project}
 
 \item{report_type}{"empty", "generic", "bama", or "nab"}
+
+\item{interactive}{TRUE by default. FALSE is for non-interactive unit testing
+only.}
 }
 \description{
 This function creates a template R Markdown file for a VISC report.

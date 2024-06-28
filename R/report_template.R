@@ -8,17 +8,28 @@
 #' @examples
 #' \dontrun{load_install_cran_packages(c("tidyr", "dplyr"))}
 install_load_cran_packages <- function(packages) {
+  installed_packages <- rownames(utils::installed.packages())
   lapply(packages, FUN = function(package) {
-    if (!require(package, character.only = TRUE)) {
+    if (! package %in% installed_packages) {
       if (package %in% c("VISCfunctions", "VISCtemplates")) {
         stop(paste0("The package ", package, " must be installed through GitHub:
                   https://github.com/FredHutch/", package, ".git"))
       } else {
-        utils::install.packages(package, repos = "http://cran.us.r-project.org")
+        utils::install.packages(package)
+        # install.packages() installs packages from the repository identified in
+        # options('repos'), which is CRAN by default. To change this
+        # setting, edit your .Rprofile. To view a list of available CRAN
+        # mirrors, use command getCRANmirrors(). As of 2024, the most common
+        # settings are to use https://cloud.r-project.org which auto-redirects
+        # to CRAN mirrors worldwide, or to set up the Posit Public Package
+        # Manager <https://packagemanager.posit.co/client/#/repos/cran/setup>,
+        # especially for fast install of binary CRAN packages on Linux.
+        # See also: <https://github.com/FredHutch/VISCtemplates/pull/163>
       }
     }
     library(package, character.only = TRUE)
   })
+  invisible(NULL)
 }
 
 #' Check pandoc version
