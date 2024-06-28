@@ -67,7 +67,7 @@ jobs:
           R -q -e 'remotes::install_github("FredHutch/VISCtemplates", dependencies = TRUE)'
 
       - uses: r-lib/actions/setup-r-dependencies@v2
-          if: ${{ matrix.config.r != '4.0.4' }}
+        if: ${{ matrix.config.r != '4.0.4' }}
         with:
           extra-packages: any::rcmdcheck
           needs: check
