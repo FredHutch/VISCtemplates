@@ -8,15 +8,6 @@
 #' @examples
 #' \dontrun{load_install_cran_packages(c("tidyr", "dplyr"))}
 install_load_cran_packages <- function(packages) {
-  # this can happen in a spawned knitr session
-  if (is.null(getOption('repos'))){
-    old_repos <- getOption('repos')
-    on.exit(options(repos = old_repos))
-    options(repos = c(CRAN = 'https://cloud.r-project.org/'))
-  }
-  cat('\n')
-  dput(getOption('repos'))
-  cat('\n')
   installed_packages <- rownames(utils::installed.packages())
   lapply(packages, FUN = function(package) {
     if (! package %in% installed_packages) {
@@ -24,9 +15,7 @@ install_load_cran_packages <- function(packages) {
         stop(paste0("The package ", package, " must be installed through GitHub:
                   https://github.com/FredHutch/", package, ".git"))
       } else {
-        quiet_res <- utils::capture.output(
-          utils::install.packages(package, quiet = TRUE)
-        )
+        utils::install.packages(package)
         # install.packages() installs packages from the repository identified in
         # options('repos'), which is CRAN by default. To change this
         # setting, edit your .Rprofile. To view a list of available CRAN
