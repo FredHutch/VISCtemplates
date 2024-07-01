@@ -131,32 +131,22 @@ use_visc_report <- function(report_name = "PT-Report",
   on.exit(options(usethis.quiet = old_usethis_quiet))
   options(usethis.quiet = ! interactive)
 
-  if (report_type == "empty") {
-    rmarkdown::draft(
-      file = file.path(path, report_name),
-      template = "visc_empty",
-      package = "VISCtemplates",
-      create_dir = TRUE,
-      edit = FALSE
-      )
-    usethis::ui_done(
-      glue::glue("Creating an empty VISC report at '{{file.path(path, report_name)}}'")
-      )
-
-  } else {
-
-    challenge_visc_report(report_name, interactive)
-
-    rmarkdown::draft(
-      file = file.path(path, report_name),
-      template = "visc_report",
-      package = "VISCtemplates",
-      create_dir = TRUE,
-      edit = FALSE
-    )
-    usethis::ui_done(
-      glue::glue("Creating a VISC report at '{{file.path(path, report_name)}}'")
-    )
+  if (report_type != 'empty') challenge_visc_report(report_name, interactive)
+  if (! dir.exists(path)) dir.create(path, recursive = TRUE)
+  use_template <- paste0(
+    'visc', '_', if (report_type == 'empty') 'empty' else 'report'
+  )
+  rmarkdown::draft(
+    file = file.path(path, report_name),
+    template = use_template,
+    package = "VISCtemplates",
+    create_dir = TRUE,
+    edit = FALSE
+  )
+  usethis::ui_done(
+    glue::glue("Creating {{report_type}} VISC report at '{{file.path(path, report_name)}}'")
+  )
+  if (report_type != 'empty'){
     use_visc_methods(path = file.path(path, report_name), assay = report_type,
                      interactive = interactive)
   }
