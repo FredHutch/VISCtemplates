@@ -140,7 +140,6 @@ use_visc_report <- function(report_name = "PT-Report",
     file = file.path(path, report_name),
     template = use_template,
     package = "VISCtemplates",
-    create_dir = TRUE,
     edit = FALSE
   )
   usethis::ui_done(
