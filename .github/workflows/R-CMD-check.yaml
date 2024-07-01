@@ -23,6 +23,7 @@ jobs:
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
           - {os: ubuntu-latest,   r: 'oldrel-1'}
+          - {os: ubuntu-latest,   r: '4.0.4', pandoc-version: '2.11.4'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -31,7 +32,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: r-lib/actions/setup-pandoc@v2
+      - name: Setup statsrv pandoc
+        if: ${{ matrix.config.r == '4.0.4' }}
+        uses: r-lib/actions/setup-pandoc@v2
+        with:
+          pandoc-version: ${{ matrix.config.pandoc-version }}
+
+      - name: Setup default pandoc
+        if: ${{ matrix.config.r != '4.0.4' }}
+        uses: r-lib/actions/setup-pandoc@v2
 
       - name: Set up tinytex
         uses: r-lib/actions/setup-tinytex@v2
@@ -49,7 +58,18 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
+      - name: Install statsrv packages
+        if: ${{ matrix.config.r == '4.0.4' }}
+        run: |
+          R -q -e 'utils::install.packages("remotes")'
+          R -q -e 'remotes::install_version("Hmisc", "4.5-0")'
+          R -q -e 'remotes::install_github("FredHutch/VISCfunctions", dependencies = TRUE)'
+          R -q -e 'remotes::install_github("FredHutch/VISCtemplates", dependencies = TRUE)'
+          R -q -e 'utils::install.packages("rcmdcheck")'
+          R -q -e 'utils::install.packages("tidyverse")'
+
       - uses: r-lib/actions/setup-r-dependencies@v2
+        if: ${{ matrix.config.r != '4.0.4' }}
         with:
           extra-packages: any::rcmdcheck
           needs: check
