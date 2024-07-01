@@ -24,3 +24,21 @@ local({
     }
   }
 })
+
+test_that("use_visc_report() creates missing subdirectory", {
+  temp_dir <- withr::local_tempdir()
+  create_visc_project(temp_dir, interactive = FALSE)
+  local({
+    withr::local_dir(temp_dir)
+    report_name <- "Caskey820_BAMA_PT_Report"
+    path <- "BAMA"
+    expect_no_warning(
+      use_visc_report(
+        report_name, path = path, report_type = "bama", interactive = FALSE
+      )
+    )
+    expect_true(
+      file.exists(file.path(path, report_name, paste0(report_name, ".Rmd")))
+    )
+  })
+})
