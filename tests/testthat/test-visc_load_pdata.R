@@ -80,5 +80,7 @@ test_that("visc_load_pdata works", {
       }),
       "Unable to find data object file"
     )
+    # re-break a test
+    expect_true(FALSE)
   })
 })
