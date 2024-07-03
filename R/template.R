@@ -297,7 +297,7 @@ visc_pdf_document <- function(latex_engine = "pdflatex",
       "-V", paste0("logo_path_fh=", logo_path_fh),
       "-V", paste0("logo_path_visc=", logo_path_visc)
     ),
-    includes = includes(in_header = c(preamble, csl_refs_preamble)),
+    includes = rmarkdown::includes(in_header = c(preamble, csl_refs_preamble)),
     ...)
 }
 
