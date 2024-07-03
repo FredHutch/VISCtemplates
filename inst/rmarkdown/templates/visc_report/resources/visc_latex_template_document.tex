@@ -1,0 +1,83 @@
+% This template covers only the \begin{document} to \end{document} portion.
+% See visc_latex_preamble.sty, old_csl_refs.sty, and new_csl_refs.sty for the preamble.
+
+\begin{document}
+\sloppy
+
+% get current date into insertdate
+\makeatletter
+\let\insertdate\@date
+\makeatother
+
+% workaround to use landscape environment with pandoc
+\newcommand{\blandscape}{\begin{landscape}}
+\newcommand{\elandscape}{\end{landscape}}
+
+% To and From Section
+\makeatletter
+\newcommand\tabfill[1]{%
+  \dimen@\linewidth
+  \advance\dimen@\@totalleftmargin
+  \advance\dimen@-\dimen\@curtab
+  \parbox[t]\dimen@{%
+    \leftskip=2em\hspace*{-2em}#1\ifhmode\strut\fi}%
+}
+\makeatother
+\vspace{0.1cm}
+\begin{flushleft}
+\begin{tabbing}
+this line is to\= set up the tab stop \kill
+{\bf Date:} \> \insertdate\\
+{\bf To:} \>  \tabfill{$for(to)$$to.name$$sep$, $endfor$}\\
+{\bf From:} \> \tabfill{$for(from)$$from.name$$sep$, $endfor$}\\
+{\bf RE:} \> \tabfill{$title$}\\
+$if(dropcc)$
+$else$
+{\bf cc:} \> \tabfill{$for(cc)$$cc.name$$sep$, $endfor$}\\
+$endif$
+{\bf Contact:} \> \tabfill{$for(from)$$if(from.contact)$$from.name$, $from.email$$endif$ $endfor$}\\
+\end{tabbing}
+\end{flushleft}
+
+\hrule
+
+\vspace{2cm}
+
+$if(toc)$
+\tableofcontents
+$endif$
+
+% change color of header and footer text to gray
+\makeatletter
+\patchcmd{\@fancyhead}{\rlap}{\color{gray}\rlap}{}{}
+\patchcmd{\headrule}{\hrule}{\color{gray}\hrule}{}{}
+\patchcmd{\@fancyfoot}{\rlap}{\color{gray}\rlap}{}{}
+\patchcmd{\footrule}{\hrule}{\color{gray}\hrule}{}{}
+\makeatother
+
+$if(includesummary)$
+\begin{abstract}
+$summary$
+\end{abstract}
+$endif$
+
+$if(lof)$
+\listoffigures
+$endif$
+
+$if(lot)$
+\listoftables
+$endif$
+
+\newpage
+\fancyhead[R]{\em $shorttitle$}
+\fancyhead[C]{}
+$if(leftheader)$
+\fancyhead[L]{\em $leftheader$}
+$else$
+\fancyhead[L]{\em VISC Report}
+$endif$
+
+$body$
+\label{LastPageOfBackMatter}~
+\end{document}
