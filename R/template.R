@@ -260,7 +260,12 @@ use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab"),
 visc_pdf_document <- function(latex_engine = "pdflatex",
                               keep_tex = TRUE,
                               ...) {
-  template <- find_resource("visc_report", "template.tex")
+
+  if (rmarkdown::pandoc_version() < '3.1.7') {
+    template <- find_resource("visc_report", "template_with_old_csl_refs.tex")
+  } else {
+    template <- find_resource("visc_report", "template.tex")
+  }
 
   logo_path_scharp <- find_resource("visc_report", "SCHARP_logo.png")
   logo_path_fh <- find_resource("visc_report", "FredHutch_logo.png")
