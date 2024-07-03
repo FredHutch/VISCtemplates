@@ -20,7 +20,7 @@ lof: true
 lot: true
 toc: true
 dropVISClogo: false
-csl-refs-old: `r rmarkdown::pandoc_version() < '3.1.7'`
+csl-refs-old: `r tolower(as.character(rmarkdown::pandoc_version() < '3.1.7'))`
 output: 
   VISCtemplates::visc_pdf_document: default
   VISCtemplates::visc_word_document: default
