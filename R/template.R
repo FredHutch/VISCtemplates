@@ -261,13 +261,12 @@ visc_pdf_document <- function(latex_engine = "pdflatex",
                               keep_tex = TRUE,
                               ...) {
 
-  # preamble <- find_resource("visc_report", "visc_latex_preamble.tex")
   if (rmarkdown::pandoc_version() < '3.1.7') {
     csl_refs_preamble <- find_resource("visc_report", "csl_refs_old.tex")
   } else {
     csl_refs_preamble <- find_resource("visc_report", "csl_refs_new.tex")
   }
-  template <- find_resource("visc_report", "visc_latex_template_document.tex")
+  template <- find_resource("visc_report", "visc_latex_template.tex")
 
   logo_path_scharp <- find_resource("visc_report", "SCHARP_logo.png")
   logo_path_fh <- find_resource("visc_report", "FredHutch_logo.png")
