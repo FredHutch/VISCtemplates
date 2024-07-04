@@ -125,8 +125,9 @@
 % and a breaking change was introduced in pandoc version 3.1.7
 % (https://pandoc.org/releases.html#pandoc-3.1.7-2023-08-31)
 % so we need to define it differently depending on the pandoc version used
-% note that the value of csl-refs-old is set aumotically in skeleton.Rmd
-$if(use-old-csl-refs)$
+% note that the value of use_old_csl_refs is set aumotically in
+% visc_pdf_document()
+$if(use_old_csl_refs)$
 % older version of CSLReferences
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{1.5em}
