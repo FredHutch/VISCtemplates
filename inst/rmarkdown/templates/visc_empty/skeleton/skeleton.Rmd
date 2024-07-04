@@ -20,7 +20,7 @@ lof: true
 lot: true
 toc: true
 dropVISClogo: false
-use-old-csl-refs: "`r yaml::as.yaml(rmarkdown::pandoc_version() < '3.1.7', handlers = list(logical = yaml::verbatim_logical))`"
+use-old-csl-refs: "`r yaml::as.yaml(rmarkdown::pandoc_version() < '3.1.7')`"
 output: 
   VISCtemplates::visc_pdf_document: default
   VISCtemplates::visc_word_document: default
