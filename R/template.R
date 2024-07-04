@@ -261,11 +261,11 @@ visc_pdf_document <- function(latex_engine = "pdflatex",
                               keep_tex = TRUE,
                               ...) {
 
-  preamble <- find_resource("visc_report", "visc_latex_preamble.tex")
+  preamble <- find_resource("visc_report", "visc_latex_preamble.sty")
   if (rmarkdown::pandoc_version() < '3.1.7') {
-    csl_refs_preamble <- find_resource("visc_report", "csl_refs_old.tex")
+    csl_refs_preamble <- find_resource("visc_report", "csl_refs_old.sty")
   } else {
-    csl_refs_preamble <- find_resource("visc_report", "csl_refs_new.tex")
+    csl_refs_preamble <- find_resource("visc_report", "csl_refs_new.sty")
   }
   template <- find_resource("visc_report", "visc_latex_template_document.tex")
 
