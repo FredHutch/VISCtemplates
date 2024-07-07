@@ -285,11 +285,11 @@ visc_pdf_document <- function(latex_engine = "pdflatex",
 
 #' Convert to a VISC Report Word document
 #'
-#' Runs the VISC Report for PDF output based on the template.tex file.
+#' Runs the VISC Report for Word output based on the word-styles-reference.docx file.
 #'
 #' @param toc include table of contents
 #' @param fig_caption all figure captions
-#' @param keep_md keep the .tex file
+#' @param keep_md keep the .md file
 #' @param ... other options to pass to \code{bookdown::word_document2()}
 #'
 #' @details
