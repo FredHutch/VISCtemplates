@@ -127,4 +127,4 @@ kable(
 
 `r insert_break()` 
 
-# References
+\section{References}
