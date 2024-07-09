@@ -269,6 +269,9 @@ visc_pdf_document <- function(latex_engine = "pdflatex",
             to = "README.md",
             overwrite = FALSE)
 
+  # switch for a breaking change in pandoc template, see notes in template.tex
+  use_old_csl_refs <- tolower(rmarkdown::pandoc_version() < '3.1.7')
+
   bookdown::pdf_document2(
     template = template,
     keep_tex = keep_tex,
@@ -277,7 +280,8 @@ visc_pdf_document <- function(latex_engine = "pdflatex",
     pandoc_args = c(
       "-V", paste0("logo_path_scharp=", logo_path_scharp),
       "-V", paste0("logo_path_fh=", logo_path_fh),
-      "-V", paste0("logo_path_visc=", logo_path_visc)
+      "-V", paste0("logo_path_visc=", logo_path_visc),
+      "-M", paste0("use_old_csl_refs=", use_old_csl_refs)
     ),
     ...)
 }
