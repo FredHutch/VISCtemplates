@@ -11,12 +11,12 @@ visc_word_document(toc = TRUE, fig_caption = TRUE, keep_md = TRUE, ...)
 
 \item{fig_caption}{all figure captions}
 
-\item{keep_md}{keep the .tex file}
+\item{keep_md}{keep the .md file}
 
 \item{...}{other options to pass to \code{bookdown::word_document2()}}
 }
 \description{
-Runs the VISC Report for PDF output based on the template.tex file.
+Runs the VISC Report for Word output based on the word-styles-reference.docx file.
 }
 \details{
 Normally used through \code{output:VISCtemplates::visc_word_document} in the .rmd YAML

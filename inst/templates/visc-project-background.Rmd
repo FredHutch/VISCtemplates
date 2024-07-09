@@ -6,6 +6,11 @@ output: github_document
 <!-- background.md is generated from the RMARKDOWN file, background.Rmd. 
 Please edit that file. -->
 
-This document should contain the study background section for {{ study_name }}.
+[CAVD PI and number] is a [insert study title].
 
-Write project background here. Don't use headers.
+Describe trial - product, primary hypothesis.
+
+Describe participant enrollment - number per group planned and what those ppts 
+received. If study was amended to reduce planned group sample sizes or study 
+allowed for over/under enrollment such that number enrolled per group would not 
+be the same as what is in the schema, mention it here and cite source.
