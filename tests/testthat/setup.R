@@ -15,7 +15,8 @@ withr::local_options(
 # them and we only want to save the fresh ones. This, along with adding this
 # directory to .gitignore and .Rbuildignore, enables keeping our local snapshots
 # folder clean and up to date when interactively running the same tests that
-# will be run on CI. See additional info in tests/testthat/test-template.R
+# will be run on CI. See additional info in
+# tests/testthat/test-use_visc_report.R
 local({
   template_snaps_dir <- testthat::test_path('_snaps', 'template')
   if (dir.exists(template_snaps_dir)){
