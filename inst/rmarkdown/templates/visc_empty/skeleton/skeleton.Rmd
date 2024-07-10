@@ -127,4 +127,4 @@ kable(
 
 `r insert_break()` 
 
-# References
+`r insert_references_section_header()`
