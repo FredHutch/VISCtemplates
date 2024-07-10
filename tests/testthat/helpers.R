@@ -5,8 +5,9 @@
 #' specified output type. Tests whether the report knits without errors or
 #' warnings, whether the output file exists, and takes file snapshots of the
 #' rendered output and/or intermediate debugging files to the
-#' tests/testthat/_snaps directory. See the documentation in test-template.R for
-#' a description of what happens when testing in different testing environments.
+#' tests/testthat/_snaps directory. See the documentation in
+#' test-use_visc_report.R for a description of what happens when testing in
+#' different testing environments.
 #'
 #' @param report_type Character, one of c('generic', 'empty', 'bama', 'nab')
 #' @param outfile_ext Character, one of c('pdf', 'docx')

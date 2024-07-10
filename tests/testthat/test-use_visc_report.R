@@ -2,15 +2,15 @@
 # happens with file snapshots varies a bit depending on the testing context:
 #
 # When tests are run interactively via devtools::test(), all existing snapshots
-# in tests/testthat/_snaps/template in your VISCtemplates source repo are
+# in tests/testthat/_snaps/use_visc_report in your VISCtemplates source repo are
 # deleted (because tests/testthat/setup.R is automatically run first) and
 # replaced with new snapshots. You shouldn't notice any changes in your git repo
 # because these are already .gitignored and .Rbuildignored.
 #
 # When tests are run inside R CMD check locally, e.g. via devtools::check(), the
 # testing happens from a temporary directory, so any existing files in
-# tests/testthat/_snaps/template within your VISCtemplates package source tree
-# are not changed. Check timestamps if you're confused.
+# tests/testthat/_snaps/use_visc_report within your VISCtemplates package source
+# tree are not changed. Check timestamps if you're confused.
 #
 # When the tests run on GitHub Actions CI, the snapshot files are uploaded as
 # artifacts for online viewing. Currently, if any of the tests fail, the file
