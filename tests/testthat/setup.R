@@ -18,7 +18,7 @@ withr::local_options(
 # will be run on CI. See additional info in
 # tests/testthat/test-use_visc_report.R
 local({
-  template_snaps_dir <- testthat::test_path('_snaps', 'template')
+  template_snaps_dir <- testthat::test_path('_snaps', 'use_visc_report')
   if (dir.exists(template_snaps_dir)){
     unlink(template_snaps_dir, recursive = TRUE)
   }
