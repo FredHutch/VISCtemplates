@@ -4,3 +4,5 @@
 doc
 Meta
 inst/doc
+tests/testthat/_snaps/use_visc_report/
+.DS_store
