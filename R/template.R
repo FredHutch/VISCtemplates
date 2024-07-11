@@ -105,7 +105,7 @@ use_bib <- function(study_name) {
 #'
 #' @param report_name name of the file (character)
 #' @param path path of the file within the active project
-#' @param report_type "empty", "generic", "bama", or "nab"
+#' @param report_type "empty", "generic", "bama", "nab", or "adcc"
 #'
 #' @export
 #'
@@ -119,9 +119,9 @@ use_bib <- function(study_name) {
 #' }
 use_visc_report <- function(report_name = "PT-Report",
                             path = ".",
-                            report_type = c("empty", "generic", "bama", "nab")) {
+                            report_type = c("empty", "generic", "bama", "nab", "adcc")) {
 
-  stopifnot(report_type %in% c("empty", "generic", "bama", "nab"))
+  stopifnot(report_type %in% c("empty", "generic", "bama", "nab", "adcc"))
 
   if (report_type == "empty") {
     rmarkdown::draft(
@@ -178,7 +178,7 @@ challenge_visc_report <- function(report_name) {
 #'  used in PT reports: statistical-methods.Rmd, lab-methods.Rmd,
 #'  and biological-endpoints.Rmd
 #'
-#' @param assay "bama" or "generic"
+#' @param assay "generic", "bama", "nab" or "adcc"
 #' @param path path within the active project
 #'
 #' @export
@@ -187,7 +187,7 @@ challenge_visc_report <- function(report_name) {
 #' \dontrun{
 #' use_visc_methods(path = "bama/BAMA-PT-Report", assay = "bama")
 #' }
-use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab")) {
+use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab", "adcc")) {
 
   pkg_ver <- utils::packageVersion("VISCtemplates")
 
