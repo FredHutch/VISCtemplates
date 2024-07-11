@@ -9,7 +9,15 @@ date: '2022-10-26'
 
 # Lab Methods GTL
 
-ADCC-mediated antibody responses were measured by ADCC GranToxiLux (GTL) [@Pollara2011] and tested against [insert antigens]. Participant sera were incubated with effector cells and gp120-coated target cells and ADCC was quantified as net percent granzyme B activity, which was the percent of target cells positive for GranToxiLux (GTL) detected by flow cytometry. For each subject at each timepoint, percent granzyme B activity was measured at [#] dilution levels: [insert dilution levels] for each antigen. 
+note to self: decided to pull over the lab methods from HVTN word for word
+
+<!-- ORIGINAL: ADCC-mediated antibody GTL responses were measured by ADCC GranToxiLux (GTL) [@Pollara2011] and tested against [insert antigens]. Participant sera were incubated with effector cells and gp120-coated target cells and ADCC was quantified as net percent granzyme B activity, which was the percent of target cells positive for GranToxiLux (GTL) detected by flow cytometry. For each subject at each timepoint, percent granzyme B activity was measured at [#] dilution levels: [insert dilution levels] for each antigen.  -->
+
+
+<!-- FROM HASSELL750: ADCC-mediated antibody GTL responses were measured by ADCC GranToxiLux (GTL) [@Pollara2011].  -->
+<!-- ADCC GTL was quantified as net percent Granzyme B activity, which is the percent of target cells  -->
+<!-- positive for GranToxiLux (GTL) detected by flow cytometry. Percent Granzyme B activity was  -->
+<!-- measured at dilution levels 1:50, 1:200 and 1:800 for antigen BG505_gp120.avi/293F. -->
 
 # Lab Methods Luciferase
 
