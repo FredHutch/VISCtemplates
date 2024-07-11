@@ -48,7 +48,11 @@ install_load_cran_packages(packages_needed)
 # knitr options
 opts_chunk$set(cache = FALSE, message = TRUE, warning = TRUE, echo = FALSE, 
                dev = c("png", "pdf"), dpi = 200, out.width = '100%', 
-               out.extra = '', fig.align = "center", fig.pos = "H")
+               out.extra = '', fig.pos = "H")
+# fig.align argument is not supported in Word (align in template docx)
+if (knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex'){
+  opts_chunk$set(fig.align = "center")
+}
 
 # NA's will be blank in tables
 options(knitr.kable.NA = '')
