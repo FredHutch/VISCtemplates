@@ -15,7 +15,7 @@ cc:
 includesummary: true
 summary: 
   A short summary about your report. 
-bibliography: "`r ifelse(file.exists('bibliography.bib'), 'bibliography.bib', here::here('docs', 'bibliography.bib'))`"
+bibliography: "`r ifelse(file.exists('bibliography.bib'), 'bibliography.bib', rprojroot::find_rstudio_root_file('docs', 'bibliography.bib'))`"
 lof: true
 lot: true
 toc: true
@@ -65,7 +65,7 @@ theme_set(visc_theme)
 
 # Set group colors for this example.
 # If you have group colors already in your project:
-# source(here::here("docs", "group-colors.R"))
+# source(rprojroot::find_rstudio_root_file("docs", "group-colors.R"))
 group_colors <- c(
   `1` = "#D92321",
   `2` = "#1749FF",
@@ -127,4 +127,4 @@ kable(
 
 `r insert_break()` 
 
-# References
+`r insert_references_section_header()`

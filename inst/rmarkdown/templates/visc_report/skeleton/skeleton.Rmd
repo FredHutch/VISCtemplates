@@ -24,7 +24,7 @@ cc:
 includesummary: true
 summary: 
   A short summary about your report. 
-bibliography: "`r ifelse(file.exists('bibliography.bib'), 'bibliography.bib', here::here('docs', 'bibliography.bib'))`"
+bibliography: "`r ifelse(file.exists('bibliography.bib'), 'bibliography.bib', rprojroot::find_rstudio_root_file('docs', 'bibliography.bib'))`"
 lof: true
 lot: true
 toc: true
@@ -46,13 +46,20 @@ Location of input data:
 --->
 
 ```{r package-loading-and-options, include=FALSE}
+
+# packages installed from GitHub
 library(VISCtemplates)
 library(VISCfunctions)
 
 check_pandoc_version()
 
-packages_needed <- c("conflicted", "tidyverse", "knitr", "kableExtra")
+# packages installed from CRAN
+packages_needed <- c("conflicted", "tidyverse", "knitr", "kableExtra", "rprojroot", "remotes")
 install_load_cran_packages(packages_needed)
+
+# where to install and look for packages (e.g., data packages) installed on SCHARP server
+my_data_package_lib <- "/Volumes/kmacphee/RLib/" # UPDATE WITH YOUR DATA PACKAGE LOCATION
+.libPaths(c(.libPaths(), my_data_package_lib))
 
 # knitr options
 opts_chunk$set(cache = FALSE, message = TRUE, warning = TRUE, echo = FALSE, 
@@ -74,7 +81,7 @@ theme_set(visc_theme)
 
 # Set group colors for this example.
 # If you have group colors already in your project:
-# source(here::here("R", "group_colors.R"))
+# source(rprojroot::find_rstudio_root_file("R", "group_colors.R"))
 group_colors <- c(
   `1` = "#D92321",
   `2` = "#1749FF",
@@ -98,7 +105,16 @@ pandoc_markup <- set_pandoc_markup(output_type)
 
 ```{r data-package, eval=FALSE}
 
-remotes::install_github("https://github.com/FredHutch/VDCNNNAnalysis.git")
+# note: set_wd() only impacts this code chunk
+if (.Platform$OS.type == 'unix') {
+  setwd("/Volumes/networks")
+} else {
+  setwd("N:")
+}
+
+remotes::install_git(file.path('cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git'),
+                     git = 'external', 
+                     lib = my_data_package_lib)
 ```
 
 ```{r data-processing}
@@ -126,13 +142,13 @@ the Results section (see `r insert_ref("results", "Results")`).
 saved as a child R Markdown file in the docs/ folder so that the same text can 
 be used across PT reports for the protocol. -->
 
-```{r background, child=here::here("docs", "background.Rmd") }
+```{r background, child=rprojroot::find_rstudio_root_file("docs", "background.Rmd") }
 ```
 
 <!-- Also include the study schema here. -->
 
 ```{r study-schema, results="asis", warning=kable_warnings}
-source(here("R", "study_schema.R"))
+source(rprojroot::find_rstudio_root_file("R", "study_schema.R"))
 study_schema()
 ```
 
@@ -389,4 +405,4 @@ readability, for example:
 - Name 1 (Role 1)
 - Name 2 (Role 2)
 
-# References
+`r insert_references_section_header()`

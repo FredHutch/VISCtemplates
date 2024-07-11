@@ -132,8 +132,39 @@
 
 \bibliography{$bibliography$}
 
-% recent versions of pandoc require the CSLReferences environment to be defined
-% commands below were copied on May 31, 2024 from pandoc 3.2 template at
+% pandoc requires the CSLReferences environment to be defined for bibliographies
+% and a breaking change was introduced in pandoc version 3.1.7
+% (https://pandoc.org/releases.html#pandoc-3.1.7-2023-08-31)
+% so we need to define it differently depending on the pandoc version used
+% note that the value of use_old_csl_refs is set aumotically in
+% visc_pdf_document()
+$if(use_old_csl_refs)$
+% older version of CSLReferences
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{\baselineskip}}} % hard-code single line skip between entries
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+$else$
+% newer version of CSLReferences that uses a list environment with bibitems
+% commands below were adapted from pandoc 3.2 template (as of May 31, 2024) at
 % https://github.com/jgm/pandoc/blob/main/data/templates/default.latex#L384C1-L418C8
 % definitions for citeproc citations
 \NewDocumentCommand\citeproctext{}{}
@@ -161,6 +192,7 @@
    \setlength{\itemindent}{-1\cslhangindent}
   \fi
   % set entry spacing
+  % \setlength{\itemsep}{#2\baselineskip}}}
   \setlength{\itemsep}{\baselineskip}}} % hard-code single line skip between entries
  {\end{list}}
 \usepackage{calc}
@@ -168,11 +200,10 @@
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+$endif$
 
-% ------------------------------------------------------------------------------
-% settings for landscape pages
 
-% adjust header and footer in landscape pages
+% this is to adjust header and footer in landscaped pages
 \fancypagestyle{lscape}{%
     \fancyhf{} % clear all header and footer fields
     \fancyhead[R]{\begin{footnotesize}
