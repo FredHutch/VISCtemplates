@@ -105,7 +105,7 @@ use_bib <- function(study_name) {
 #'
 #' @param report_name name of the file (character)
 #' @param path path of the file within the active project
-#' @param report_type "empty", "generic", "bama", or "nab"
+#' @param report_type "empty", "generic", "bama", "nab", or "adcc"
 #' @param interactive TRUE by default. FALSE is for non-interactive unit testing
 #'   only.
 #'
@@ -121,18 +121,18 @@ use_bib <- function(study_name) {
 #' }
 use_visc_report <- function(report_name = "PT-Report",
                             path = ".",
-                            report_type = c("empty", "generic", "bama", "nab"),
+                            report_type = c("empty", "generic", "bama", "nab", "adcc"),
                             interactive = TRUE) {
 
-  stopifnot(report_type %in% c("empty", "generic", "bama", "nab"))
+  stopifnot(report_type %in% c("empty", "generic", "bama", "nab", "adcc"))
 
   # suppress usethis output when non-interactive
   old_usethis_quiet <- getOption('usethis.quiet')
   on.exit(options(usethis.quiet = old_usethis_quiet))
-  options(usethis.quiet = ! interactive)
+  options(usethis.quiet = !interactive)
 
   if (report_type != 'empty') challenge_visc_report(report_name, interactive)
-  if (! dir.exists(path)) dir.create(path, recursive = TRUE)
+  if (!dir.exists(path)) dir.create(path, recursive = TRUE)
   use_template <- paste0(
     'visc', '_', if (report_type == 'empty') 'empty' else 'report'
   )
@@ -145,7 +145,7 @@ use_visc_report <- function(report_name = "PT-Report",
   usethis::ui_done(
     glue::glue("Creating {{report_type}} VISC report at '{{file.path(path, report_name)}}'")
   )
-  if (report_type != 'empty'){
+  if (report_type != 'empty') {
     use_visc_methods(path = file.path(path, report_name), assay = report_type,
                      interactive = interactive)
   }
@@ -154,7 +154,7 @@ use_visc_report <- function(report_name = "PT-Report",
 }
 
 challenge_visc_report <- function(report_name, interactive = TRUE) {
-  if (! interactive) return(invisible(NULL))
+  if (!interactive) return(invisible(NULL))
 
   continue <- usethis::ui_yeah("
     Creating a new VISC PT Report called {report_name}.
@@ -177,7 +177,7 @@ challenge_visc_report <- function(report_name, interactive = TRUE) {
 #'  used in PT reports: statistical-methods.Rmd, lab-methods.Rmd,
 #'  and biological-endpoints.Rmd
 #'
-#' @param assay "bama" or "generic"
+#' @param assay "generic", "bama", "nab" or "adcc"
 #' @param path path within the active project
 #' @param interactive TRUE by default. FALSE is for non-interactive unit testing
 #'   only.
@@ -188,13 +188,13 @@ challenge_visc_report <- function(report_name, interactive = TRUE) {
 #' \dontrun{
 #' use_visc_methods(path = "bama/BAMA-PT-Report", assay = "bama")
 #' }
-use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab"),
+use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab", "adcc"),
                              interactive = TRUE) {
 
   # suppress usethis output when non-interactive
   old_usethis_quiet <- getOption('usethis.quiet')
   on.exit(options(usethis.quiet = old_usethis_quiet))
-  options(usethis.quiet = ! interactive)
+  options(usethis.quiet = !interactive)
 
   pkg_ver <- utils::packageVersion("VISCtemplates")
 
