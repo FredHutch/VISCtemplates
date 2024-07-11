@@ -59,7 +59,7 @@ responders at week [peak] <!-- peak time point -->.
 <!--- If MB curves plotted, include the following. ---> 
 Magnitude-breadth (MB) curves characterize the magnitude (ID~50~ titer) and 
 breadth (number of isolates neutralized at a given titer) of each individual 
-plasma sample assayed against a panel of isolates [@Huang2009].  
+plasma sample assayed against a panel of isolates [@Huang2009-ao].
 The x-axis represents the neutralization titer (t) and the y-axis represents 
 the fraction of isolates with neutralization titers greater than t.  
 In addition to the individual sample-specific curves, the group-specific curve 
@@ -105,7 +105,7 @@ Pairwise comparisons of the durability (fold-change) between
 week <!-- peak time point --> and week <!-- durability time point -->
 were performed between groups using the log-rank test 
 (two-sided, alpha = 0.05) with Wilcoxon-Mann-Whitney scores and interval 
-censoring for each pseudovirus (@Fay). 
+censoring for each pseudovirus [@Fay2012].
 The method outlined by @Fay2012 maintains the type I error rate under 
 assessment-treatment dependence. 
 A fold-change was considered censored when the ID~50~ titer value at the 

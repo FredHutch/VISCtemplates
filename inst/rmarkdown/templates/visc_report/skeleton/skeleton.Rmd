@@ -162,7 +162,7 @@ presents neutralization data to Tier 1A and Tier 2 versions of the vaccine strai
 assessed by the TZM-bl assay. Additionally this report summarizes epitope mapping 
 isolate pairs.")
 
-Reference test (@Huang:2013fl).
+Reference test [@Huang:2013fl].
 
 <!-- Frequently used citations are included in the `docs/bibliography.bib` file created with `VISCtemplates::create_visc_project()`. If `docs/bibliography.bib` doesn't exist, it will be created when you knit this document. -->
 
