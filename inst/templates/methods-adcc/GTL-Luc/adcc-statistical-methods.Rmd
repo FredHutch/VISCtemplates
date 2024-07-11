@@ -1,6 +1,5 @@
 ---
 title: "statistical-methods"
-output: html_document
 date: '2022-10-27'
 ---
 

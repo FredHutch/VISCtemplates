@@ -1,8 +1,5 @@
 ---
 title: "lab-methods"
-output:
-  pdf_document: default
-  html_document: default
 date: "2022-10-26"
 ---
 
