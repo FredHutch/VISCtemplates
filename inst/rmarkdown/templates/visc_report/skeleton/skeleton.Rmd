@@ -338,55 +338,32 @@ caption_short <- "Short caption to show in List of Tables."
 
 caption <- "Long caption to show above table. Explain everything needed to understand the table here."
 
-magnitude_tab %>%
-  kable(
-    format = output_type, 
-    longtable = FALSE, 
-    booktabs = TRUE,
-    linesep = "", 
-    escape = FALSE,
-    caption.short = caption_short,
-    caption = caption
-  ) %>%
-  kable_styling(
-    font_size = 8,
-    # Note scale_down will overwrite font_size specifications
-    latex_options = c("hold_position", "scale_down", "repeat_header")
-  ) %>% 
-  collapse_rows(
-    columns = 1:2, 
-    row_group_label_position = "identity",
-    latex_hline = "full"
-    ) %>% 
-  footnote("SD: standard deviation.", threeparttable = TRUE)
+print_visc_table(magnitude_tab,
+                 caption,
+                 caption_short = caption_short,
+                 collapse_rows = 1:2,
+                 footnote = "SD: standard deviation.")
 ```
 
 `r insert_break()`  
 
 ```{r Software-Session-Information, results="asis", message=FALSE, warning=kable_warnings}
-# load in rmarkdown to capture verison number
+
+# load in rmarkdown to capture version number
 if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmarkdown))
 
 my_session_info <- VISCfunctions::get_session_info()
 
-kable(
-  my_session_info$platform_table, 
-  format = output_type, 
-  booktabs = TRUE, 
-  linesep = "", 
-  caption = "Reproducibility software session information"
-  ) %>% 
-  kable_styling(font_size = 10)
+print_visc_table(my_session_info$platform_table,
+                 "Reproducibility software session information",
+                 fontsize = 10)
 ```
 
 ```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
-kable(
-  my_session_info$packages_table, 
-  format = output_type, booktabs = TRUE, 
-  linesep = "", 
-  caption = "Reproducibility software package version information"
-  ) %>% 
-  kable_styling(font_size = 10)
+
+print_visc_table(my_session_info$packages_table, 
+                 "Reproducibility software package version information",
+                 fontsize = 10)
 ```
 
 `r insert_break()` 

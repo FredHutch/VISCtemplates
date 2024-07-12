@@ -100,29 +100,21 @@ Add some text here
 # Reproducibility Software Information
 
 ```{r Software-Session-Information, results="asis", message=FALSE, warning=kable_warnings}
-# load in rmarkdown to capture verison number
+# load in rmarkdown to capture version number
 if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmarkdown))
 
 my_session_info <- VISCfunctions::get_session_info()
 
-kable(
-  my_session_info$platform_table, 
-  format = output_type, 
-  booktabs = TRUE, 
-  linesep = "", 
-  caption = "Reproducibility software session information"
-  ) %>% 
-  kable_styling(font_size = 10)
+print_visc_table(my_session_info$platform_table,
+                 caption = "Reproducibility software session information",
+                 fontsize = 10)
 ```
 
 ```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
-kable(
-  my_session_info$packages_table, 
-  format = output_type, booktabs = TRUE, 
-  linesep = "", 
-  caption = "Reproducibility software package version information"
-  ) %>% 
-  kable_styling(font_size = 10)
+
+print_visc_table(my_session_info$packages_table,
+                 caption = "Reproducibility software package version information",
+                 fontsize = 10)
 ```
 
 `r insert_break()` 
