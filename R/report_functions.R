@@ -187,8 +187,8 @@ set_pandoc_markup <- function(output_type) {
 #' outputs using the same function. Uses kable for PDF outputs, and flextable
 #' for Word and pandoc.
 #'
-#' @param df
-#' @param caption
+#' @param df data frame to be printed as a table
+#' @param caption caption (long version)
 #' @param caption_short optional short caption for table of conetents. if NULL (default), caption argument is used.
 #' @param label label to use for table (alternative to setting label in chunk options)
 #' @param fontsize default is 8
@@ -203,6 +203,7 @@ set_pandoc_markup <- function(output_type) {
 #' @param header Use kableExtra::add_header_above style
 #' @param vlines_after list of column numbers to after which to insert vertical lines
 #' @param hlines_after list of row numbers to after which to insert horizontal lines
+#' @param footer_list list of footnotes  (list of strings)
 #'
 #' @return
 #' @export
@@ -220,7 +221,7 @@ print_visc_table <- function(df,
                              collapse_rows = NULL,
                              bold_rows = NULL,
                              header = NULL,
-                             footnote_list = NULL,
+                             footer_list = NULL,
                              vlines_after = NULL,
                              hlines_after = NULL) {
 
@@ -228,70 +229,75 @@ print_visc_table <- function(df,
 
   if (output_type == "latex") {
 
-    tab <- df %>%
-      kable(format = output_type,
-            longtable = longtable,
-            booktabs = TRUE,
-            linesep = "",
-            escape = FALSE,
-            caption = caption,
-            caption_short = ifelse(is.null(caption_short), caption, caption_short),
-            label = label,
-            digits = digits) %>%
-      kable_styling(latex_options = c("HOLD_position", "repeat_header"),
-                    font_size = fontsize) %>%
-      row_spec(0, bold = TRUE) # header is bold
+    # fix latex issue with rendering underscores
+    df_tex <- df %>%
+      dplyr::mutate(dplyr::across(dplyr::where(is.character),
+                                  function(x) stringr::str_replace_all(x, "_", "\\\\_")))
+
+    tab <- df_tex %>%
+      knitr::kable(format = output_type,
+                   longtable = longtable,
+                   booktabs = TRUE,
+                   linesep = "",
+                   escape = FALSE,
+                   caption = caption,
+                   caption_short = ifelse(is.null(caption_short), caption, caption_short),
+                   label = label,
+                   digits = digits) %>%
+      kableExtra::kable_styling(latex_options = c("HOLD_position", "repeat_header"),
+                                font_size = fontsize) %>%
+      kableExtra::row_spec(0, bold = TRUE) # header is bold
 
     if (!is.null(bold_rows)) {
-      tab <- tab %>% row_spec(bold_rows, bold = TRUE)
+      tab <- tab %>% kableExtra::row_spec(bold_rows, bold = TRUE)
     }
     if (!is.null(vlines_after)) {
-      tab <- tab %>% column_spec(vlines_after, border_right = TRUE)
+      tab <- tab %>% kableExtra::column_spec(vlines_after, border_right = TRUE)
     }
     if (!is.null(hlines_after)) {
-      tab <- tab %>% row_spec(hlines_after, hline_after = TRUE)
+      tab <- tab %>% kableExtra::row_spec(hlines_after, hline_after = TRUE)
     }
     if (!is.null(col_widths_inches)) {
       for (i in 1:length(col_widths_inches)) {
         if (!is.na(col_widths_inches[i])) {
-          tab <- tab %>% column_spec(i, width = paste0(col_widths_inches[i], "in"))
+          tab <- tab %>% kableExtra::column_spec(i, width = paste0(col_widths_inches[i], "in"))
         }
       }
     }
     if (!is.null(collapse_rows)) {
 
-      tab <- tab %>% collapse_rows(collapse_rows,
-                                   latex_hline = "full",
-                                   row_group_label_position = "identity",
-                                   longtable_clean_cut = longtable_clean_cut)
+      tab <- tab %>% kableExtra::collapse_rows(collapse_rows,
+                                               latex_hline = "full",
+                                               row_group_label_position = "identity",
+                                               longtable_clean_cut = longtable_clean_cut)
     }
     if (!is.null(header)) {
-      tab <- tab %>% add_header_above(header = header)
+      tab <- tab %>% kableExtra::add_header_above(header = header)
     }
-    if (!is.null(footnote_list)) {
-      tab <- tab %>% add_footnote(footnote_list, notation = "number")
+    if (!is.null(footer_list)) {
+      tab <- tab %>% kableExtra::add_footnote(footer_list, notation = "none")
     }
 
   } else {
 
     tab <- df %>%
-      mutate(across(where(is.character),
-                    # drop latex-specific slashes
-                    function(s) str_replace_all(s, "\\\\", ""))) %>%
-      flextable() %>%
-      set_caption(caption = caption,
-                  autonum = officer::run_autonum(seq_id = "tab", bkm = label))
+      dplyr::mutate(dplyr::across(dplyr::where(is.character),
+                                  # drop latex-specific slashes that may exist
+                                  function(s) stringr::str_replace_all(s, "\\\\", ""))) %>%
+      flextable::flextable() %>%
+      flextable::set_caption(caption = caption,
+                             autonum = officer::run_autonum(seq_id = "tab", bkm = label))
     if (!is.null(bold_rows)) {
-      tab <- tab %>% bold(i = bold_rows)
+      tab <- tab %>% flextable::bold(i = bold_rows)
     }
     if (!is.null(collapse_rows)) {
-      tab <- tab %>% merge_v(collapse_rows)
+      tab <- tab %>% flextable::merge_v(collapse_rows)
     }
     if (!is.null(vlines_after)) {
-      tab <- tab %>% vline(j = vlines_after)
+      tab <- tab %>% flextable::vline(j = vlines_after)
     }
     if (!is.null(hlines_after)) {
-      tab <- tab %>% hline(i = hlines_after)
+      tab <- tab %>% flextable::hline(i = hlines_after)
     }
     if (!is.null(col_widths_inches)) {
       for (i in 1:length(col_widths_inches)) {
@@ -302,13 +308,12 @@ print_visc_table <- function(df,
     }
     if (!is.null(header)) {
       tab <- tab %>%
-        add_header_row(values = names(header),
-                       colwidths = as.numeric(header)) %>%
-        align(i = 1, j = NULL, align = "center", part = "header")
+        flextable::add_header_row(values = names(header),
+                                  colwidths = as.numeric(header)) %>%
+        flextable::align(i = 1, j = NULL, align = "center", part = "header")
     }
-    if (!is.null(footnote_list)) {
-      tab <- tab %>% footnote(ref_symbols = 1:length(footnote_list),
-                              value = as_paragraph(footnote_list))
+    if (!is.null(footer_list)) {
+      tab <- tab %>% flextable::add_footer_lines(values = flextable::as_paragraph(footer_list))
     }
 
   }

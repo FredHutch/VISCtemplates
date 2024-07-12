@@ -50,8 +50,13 @@ opts_chunk$set(cache = FALSE, message = TRUE, warning = TRUE, echo = FALSE,
                dev = c("png", "pdf"), dpi = 200, out.width = '100%', 
                out.extra = '', fig.align = "center", fig.pos = "H")
 
-# NA's will be blank in tables
-options(knitr.kable.NA = '')
+# table settings
+options(knitr.kable.NA = '') # NA's will be blank in tables
+flextable::set_flextable_defaults(na_str = "", # NA's will be blank in tables
+                                  font.size = 8,
+                                  theme_fun = "theme_box",
+                                  table.layout = "autofit",
+                                  digits = 3)
 
 # Create a theme 
 visc_theme <- theme_bw() + 
@@ -100,21 +105,30 @@ Add some text here
 # Reproducibility Software Information
 
 ```{r Software-Session-Information, results="asis", message=FALSE, warning=kable_warnings}
+
 # load in rmarkdown to capture version number
 if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmarkdown))
 
 my_session_info <- VISCfunctions::get_session_info()
 
 print_visc_table(my_session_info$platform_table,
-                 caption = "Reproducibility software session information",
-                 fontsize = 10)
+                 "Reproducibility software session information")
 ```
 
 ```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
 
-print_visc_table(my_session_info$packages_table,
-                 caption = "Reproducibility software package version information",
-                 fontsize = 10)
+pkgs_tbl <- my_session_info$packages_table %>%
+  separate_wider_delim(source, delim = "@", names = c("source1", "source2"),
+                       too_few = "align_start") %>%
+  mutate(source = if_else(
+    is.na(source2),
+    source1,
+    paste0(source1, "@", str_sub(source2, 1, 7), ")") # truncates git hashes
+  )) %>%
+  select(-source1, -source2)
+
+print_visc_table(pkgs_tbl, 
+                 "Reproducibility software package version information")
 ```
 
 `r insert_break()` 
