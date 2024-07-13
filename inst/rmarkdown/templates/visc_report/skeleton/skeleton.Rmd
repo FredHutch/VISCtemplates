@@ -64,7 +64,11 @@ my_data_package_lib <- "/Volumes/kmacphee/RLib/" # UPDATE WITH YOUR DATA PACKAGE
 # knitr options
 opts_chunk$set(cache = FALSE, message = TRUE, warning = TRUE, echo = FALSE, 
                dev = c("png", "pdf"), dpi = 200, out.width = "100%", 
-               out.extra = "", fig.align = "center", fig.pos = "H")
+               out.extra = "", fig.pos = "H")
+# fig.align argument is not supported in Word (align in template docx)
+if (knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex'){
+  opts_chunk$set(fig.align = "center")
+}
 
 # NA's will be blank in tables
 options(knitr.kable.NA = '')
@@ -162,7 +166,7 @@ presents neutralization data to Tier 1A and Tier 2 versions of the vaccine strai
 assessed by the TZM-bl assay. Additionally this report summarizes epitope mapping 
 isolate pairs.")
 
-Reference test (@Huang:2013fl).
+Reference test [@Huang:2013fl].
 
 <!-- Frequently used citations are included in the `docs/bibliography.bib` file created with `VISCtemplates::create_visc_project()`. If `docs/bibliography.bib` doesn't exist, it will be created when you knit this document. -->
 
