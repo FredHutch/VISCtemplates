@@ -85,7 +85,7 @@ theme_set(visc_theme)
 
 # Set group colors for this example.
 # If you have group colors already in your project:
-# source(rprojroot::find_rstudio_root_file("R", "group_colors.R"))
+# source(rprojroot::find_rstudio_root_file("R", "group_colors.R"), local = TRUE)
 group_colors <- c(
   `1` = "#D92321",
   `2` = "#1749FF",

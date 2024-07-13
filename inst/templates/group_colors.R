@@ -8,7 +8,7 @@ group_colors <- c(
 )
 
 # To source these group colors in your Rmarkdown report:
-#  source("R/group-colors.R")
+#  source("R/group-colors.R", local = TRUE)
 
 # In ggplot2, you can set colors manually with:
 #  scale_color_manual(values = group_colors)
