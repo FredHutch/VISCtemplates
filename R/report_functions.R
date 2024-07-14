@@ -81,20 +81,16 @@ insert_ref <- function(ref, section_name = NA) {
 }
 
 
-#' Insert a page break
+#' Insert a page break (deprecated)
 #'
-#' Use this function in an R Markdown document to insert a page break when you
-#' are knitting both PDF (Latex) and Word document reports.
+#' Do not use in new code. Use latex command
+#' \code{\\newpage} in your Rmd instead. This function is retained to not
+#' break old Rmd files created from previous templates.
 #'
-#' @return inserts a page break
+#' @return Inserts a page break (deprecated)
 #' @export
-#'
-#' @examples
-#' \dontrun{visc_break()}
 insert_break <- function() {
-  ifelse(knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex',
-         '\\clearpage',
-         '#####')
+  '\\newpage'
 }
 
 #' Insert references section header
