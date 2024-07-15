@@ -17,11 +17,11 @@ Authors@R:
            email = "bmayer@fredhutch.org")
     person(given = "Kellie",
            family = "MacPhee",
-           role = c("aut"),
+           role = c("aut", "cre"),
            email = "kmacphee@fredhutch.org")
     person(given = "Dave",
            family = "Slager",
-           role = c("aut", "cre"),
+           role = c("aut"),
            email = "dslager@fredhutch.org")
 Description: The goal of VISCtemplates is to automate project setup provide a common easy-to-understand directory structure across analyses, provide consistency across reports in the same project/protocol, and provide consistency across reports analyzing data from the same assay.
 License: GPL-3 + file LICENSE
