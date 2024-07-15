@@ -99,7 +99,7 @@ Add some text here
 
 Add some text here
 
-`r insert_break()` 
+\newpage
 
 # Reproducibility Software Information
 
@@ -116,7 +116,7 @@ kable(
   linesep = "", 
   caption = "Reproducibility software session information"
   ) %>% 
-  kable_styling(font_size = 10)
+  kable_styling(font_size = 10, latex_options = "hold_position")
 ```
 
 ```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
@@ -126,9 +126,9 @@ kable(
   linesep = "", 
   caption = "Reproducibility software package version information"
   ) %>% 
-  kable_styling(font_size = 10)
+  kable_styling(font_size = 10, latex_options = "hold_position")
 ```
 
-`r insert_break()` 
+\newpage
 
 `r insert_references_section_header()`

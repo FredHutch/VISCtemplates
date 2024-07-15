@@ -66,9 +66,7 @@ There are some new functions and coding conventions that help with knitting the 
 
 ### Page breaks
 
-* For page breaks use the `insert_break()` function. 
-You can use this as a simple inline code: `` `r knitr::inline_expr("insert_break()")` ``.
-    + `\clearpage` (from previous template) will not work on Word output.
+* For page breaks use `\newpage`.
     
 ### Referencing
 `
