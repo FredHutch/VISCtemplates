@@ -84,7 +84,7 @@ Statistical tests were performed as pairwise tests between the groups at weeks
 
 Pairwise comparisons of response rates between groups for each 
 pseudovirus were conducted using Barnard's exact test (two-sided, alpha = 0.05) 
-[@Lyderson2009], [@Suissa1985]. 
+[@Lyderson2009; @Suissa1985].
 
 Pairwise comparisons of response magnitudes (log~10~ ID~50~ titers) were 
 made between groups for each pseudovirus using the Wilcoxon 

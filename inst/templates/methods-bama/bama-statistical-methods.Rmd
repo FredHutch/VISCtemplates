@@ -157,7 +157,7 @@ at any time point.
 
 To assess if the treatment groups had different response rates than control, 
 each group was compared to control using Barnard's exact test (two-sided, alpha = 0.05)
-for each isotype and antigen [@Suissa1985 and @Lyderson2009].
+for each isotype and antigen [@Suissa1985; @Lyderson2009].
 If there were any significant differences from control, 
 pairwise treatment group tests were performed using Barnard's exact test
 (two-sided, alpha = 0.05).
