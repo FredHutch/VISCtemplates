@@ -89,7 +89,7 @@ There are some new functions and coding conventions that help with knitting the 
 **References/Bibliography**
 
 *  For referencing papers inline, simply use the @ symbol before bib file reference (e.g., "As specified in `@Huang:2013fl`, ...").
-*  For referencing papers in parantheses at the end of a sentence, use brackets and the @ symbol (e.g., `` `r knitr::inline_expr("[@Huang:2013fl]")` ``).
+*  For referencing papers in parantheses at the end of a sentence, use brackets and the @ symbol (e.g., `"[@Huang:2013fl]")`).
 
 
 ### Tables
