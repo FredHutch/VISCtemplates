@@ -85,7 +85,7 @@ theme_set(visc_theme)
 
 # Set group colors for this example.
 # If you have group colors already in your project:
-# source(rprojroot::find_rstudio_root_file("R", "group_colors.R"))
+# source(rprojroot::find_rstudio_root_file("R", "group_colors.R"), local = TRUE)
 group_colors <- c(
   `1` = "#D92321",
   `2` = "#1749FF",
@@ -123,7 +123,7 @@ remotes::install_git(file.path('cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git
 
 ```{r data-processing}
 # For this template use VISCfunction example data
-data(exampleData_ICS)
+data('exampleData_ICS', package = 'VISCfunctions', envir = environment())
 
 ICS_adata <- exampleData_ICS %>% 
   filter(Population == "IFNg" & Group != 3)
@@ -152,7 +152,7 @@ be used across PT reports for the protocol. -->
 <!-- Also include the study schema here. -->
 
 ```{r study-schema, results="asis", warning=kable_warnings}
-source(rprojroot::find_rstudio_root_file("R", "study_schema.R"))
+source(rprojroot::find_rstudio_root_file("R", "study_schema.R"), local = TRUE)
 study_schema()
 ```
 

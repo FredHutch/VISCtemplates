@@ -89,7 +89,6 @@ There are some new functions and coding conventions that help with knitting the 
 
 *  For referencing papers, simply use the @ symbol before bib file reference (i.e. `@Huang:2013fl`).
 
-
 ### Tables
 
 * Only output one table per code chunk.
@@ -110,3 +109,10 @@ There are some new functions and coding conventions that help with knitting the 
 
 * When using `VISCfunctions::pretty_pvalues()` make sure to use `output_type = output_type`,  `bold  = pandoc_markup`, and `italic = pandoc_markup`. This will give the appropriate markup depending on PDF or Word output.
 
+### Sourcing external R scripts
+
+* When using the `source()` function for external R scripts, use its `local = TRUE` argument. This will ensure that the objects created are placed in your Rmd's environment, rather than your global environment, which is a safer practice.
+
+### Loading external data
+
+* When using the `data()` function to load external data (e.g. from another package), specify `environment = environment()`. This will ensure that the object is placed in your Rmd's environment, rather than your global environment, which is a safer practice. See the "Good practice" section in `?utils::data` for more info.

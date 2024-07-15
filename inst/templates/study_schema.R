@@ -1,7 +1,7 @@
 #' Study Schema for {{ study_name }}
 #'
 #' To source the study schema in a chunk in your Rmarkdown report:
-#' source("R/study_schema.R")
+#' source("R/study_schema.R", local = TRUE)
 #'
 #' @param caption caption for the study schema table
 #'
