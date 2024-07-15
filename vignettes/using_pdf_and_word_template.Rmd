@@ -90,6 +90,7 @@ There are some new functions and coding conventions that help with knitting the 
 
 *  For referencing papers inline, simply use the @ symbol before bib file reference (e.g., "As specified in `@Huang:2013fl`, ...").
 *  For referencing papers in parentheses at the end of a sentence, use brackets and the @ symbol (e.g., `[@Huang:2013fl]`). The parentheses will be automatically included - do not add any extra.
+#  For multiple papers in the same citation, separate with a semicolon (e.g., ` [@Suissa1985; @Lyderson2009]`).
 
 ### Tables
 
