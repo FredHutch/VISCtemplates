@@ -1,41 +1,50 @@
 ---
 title: "statistical-methods"
-date: '2022-10-27'
 ---
 
 <!-- This file was adapted from VISCtemplates {{pkg_ver}}. -->
 
-# Statistical Methods GTL
+## Statistical Endpoints GTL
+
+### Peak activity
+
+Peak net percent granzyme B activity defined as the maximum activity across the six dilution levels ("peak activity"). Peak activity less than 0\% is set to 0\%. 
+
+### AUC
+
+Area under the net percent granzyme B activity vs log10 (dilution) curve is ("AUC") calculated using the trapezoidal rule, setting any net percent granzyme B activity below 0\% to 0\%.
+
+### Response call
+
+A positive response is defined as peak activity greater than or equal to 8\%. Tables show positive response rates and corresponding 95\% confidence intervals calculated by the Wilson score method [@AgCo1998], as well as summary statistics among positive responders and both responders and non-responders  [update as needed; must have a table of summary statistics for the same population as comparisons described below].
+
+
+## Statistical Endpoints Luciferase
+
+### Percent loss
+
+Percent loss Luciferase activity was averaged over wells within participant, timepoint, and dilution. Baseline-subtracted percent loss activity was calculated for each dilution as baseline activity subtracted from post-baseline activity. Negative values were truncated at zero.
+
+### Peak percent loss
+
+Baseline-subtracted peak percent (\%) loss Luciferase activity was defined as the maximum baseline-subtracted activity across the six dilution levels.
+
+### AUC
+
+Nonparametric partial Area under the baseline-subtracted curves ("pAUC"), calculated using the trapezoidal rule on three dilutions of the baseline-subtracted curves, setting baseline-subtracted loss Luciferase activity less than 0\% to zero.
+
+### Response call
+
+A response is defined as positive if the peak baseline-subtracted \% loss Luciferase activity greater than or equal to 10\% for either the 1:50 or 1:200 dilution.
+
+# Statistical Methods GTL and Luciferase
 
 ## Graphical analysis
 
-Response rates were plotted for each antigen at each time point. Response rates were also plotted on radar plots, which depicted the response rate for each antigen as a point on an individual spoke. 
+Plots of peak activity and AUC show both response rates and the distribution of magnitude. Positive responses are indicated by dots color-coded by treatment group, and negative responses by gray triangles. A boxplot is superimposed on the distribution, including only positive responses. The mid-line of the box denotes the median and the ends of the box denote the $25^{th}$ and $75^{th}$ percentiles. The whiskers that extend from the top and bottom of the box extend to the most extreme data points that are no more than 1.5 times the interquartile range (i.e., height of the box) or if no value meets this criterion, to the data extremes.
 
-Distributions of peak and AUTC across time were plotted for each antigen with box plots superimposed on the distribution of responders. The mid-line of the box denoted the median and the ends of the box denoted the $25^{th}$ and $75^{th}$ percentiles. The whiskers denoted the most extreme data points that were no more than 1.5 times the interquartile range (i.e., height of the box). Lines connected each participant at each time point.
-
-Individual sample-specific magnitude-breadth (MB) curve curves were plotted where the x-axis represented a response magnitude value (x) and the y-axis represented the fraction of antigens or isolates with response magnitudes less than x. In addition to the individual sample-specific curves, the group-specific curve displayed the average MB across all subjects in that group. 
-
-Distributions of durability (area under the durability curve) were plotted with superimposed box plots. The mid-line of the box denoted the median and the ends of the box denoted the $25^{th}$ and $75^{th}$ percentiles. The whiskers denoted the most extreme data points that were no more than 1.5 times the interquartile range (i.e., height of the box).
-
+*[If working with durability data and calculating fold change from peak, be sure to specify direction of difference, e.g. $\text{log10(durability visit)} - \text{log10(peak visit)}$.]*
 
 ## Statistical tests
 
-Response rates and magnitudes were summarized by timepoints. Pairwise comparisons of response rates between groups at each timepoint was conducted using Barnard's exact test (two-sided, alpha = 0.05) (@Lyderson2009; @Suissa1985). Pairwise comparisons of response magnitudes between groups at each timepoint was conducted using the Wilcoxon rank-sum test (two-sided, alpha = 0.05) among positive responders. 
-
-Within each treatment group, response rates and response magnitudes between the timepoints were compared using the McNemar's Test and Wilcoxon signed-rank test respectively (two-sided, alpha = 0.05).  
-
-Response magnitude tests required at least four positive responders in at least one of the treatment groups being compared. If at least four responders were detected among all dose levels, global tests for response magnitude would be performed using the Kruskal-Wallis test (approximate distribution, alpha = 0.05) (@Hothorn2008). If the global test was significant, then the pairwise dose group comparisons would be performed among the treatment groups. Censored measurements below the assay quantification limit were treated as ties with ties handled using the Wilcoxon rank-sum exact method. Durability, as defined by change in response magnitude, was measured using area under the AUTC curve from peak to the final durability time point ([insert final time point, e.g., week 48]). 
-
-# Statistical Methods Luciferase
-
-## Graphical analysis
-
-Response rates were plotted for each treatment group and time point with corresponding 95% two-sided Wilson score confidence intervals. Distributions of response magnitudes were plotted for each treatment group and time point with box plots superimposed on the distribution of responders. The mid-line of the box denoted the median and the ends of the box denoted the $25^{th}$ and $75^{th}$ percentiles. The whiskers denoted the most extreme data points that were no more than 1.5 times the interquartile range (i.e., height of the box). 
-Line plots of response magnitudes were plotted for each group to show response trends for each subject over time.
-
-## Statistical tests
-Response rates and magnitudes were summarized by timepoints. Pairwise comparisons of response rates between groups at each timepoint was conducted using Barnard's exact test (two-sided, alpha = 0.05) (@Lyderson2009; @Suissa1985). Pairwise comparisons of response magnitudes between groups at each timepoint was conducted using the Wilcoxon rank-sum test (two-sided, alpha = 0.05) among positive responders. 
-Within each treatment group, response rates and response magnitudes between the two timepoints were compared using the McNemar's Test and Wilcoxon signed-rank test respectively (two-sided, alpha = 0.05). 
-
-Response magnitude tests required at least four [Adjust if different] positive responders in at least one of the treatment groups being compared. If at least four responders were detected among all dose levels, global tests for response magnitude would be performed using the Kruskal-Wallis test (approximate distribution, alpha = 0.05) (@Hothorn2008). If the global test was significant, then the pairwise dose group comparisons would be performed among the treatment groups. Censored measurements below the assay quantification limit were treated as ties with ties handled using the Wilcoxon rank-sum exact method.
-
+*[If statistical tests are used to compare responses, describe here. Follow protocol and assay specific SAP, converting the language to past tense. Generally, response rates are compared between groups using Barnard's test, and response are compared using Wilcoxon rank sum tests. Typically, two sets of magnitude comparisons are done: restricted to positive responders only, and all data i.e. positive and nonresponders.]*
