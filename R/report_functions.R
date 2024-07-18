@@ -224,18 +224,12 @@ print_visc_table <- function(df,
   output_type <- get_output_type()
 
   if (output_type == "latex") {
-
-    # fix latex issue with rendering underscores
-    df_tex <- df %>%
-      dplyr::mutate(dplyr::across(dplyr::where(is.character),
-                                  function(x) stringr::str_replace_all(x, "_", "\\\\_")))
-
-    tab <- df_tex %>%
+    tab <- df %>%
       knitr::kable(format = output_type,
                    longtable = longtable,
                    booktabs = TRUE,
                    linesep = "",
-                   escape = FALSE,
+                   escape = TRUE,
                    caption = caption,
                    caption_short = ifelse(is.null(caption_short), caption, caption_short),
                    label = label,
