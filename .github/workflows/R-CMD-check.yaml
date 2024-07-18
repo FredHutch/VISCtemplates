@@ -47,7 +47,7 @@ jobs:
           R -q -e 'utils::install.packages("pak")'
           R -q -e 'pak::pkg_install("remotes")'
           R -q -e 'remotes::install_version("Hmisc", "4.5-0")'
-          R -q -e 'pak::pkg_install(c("FredHutch/VISCtemplates@develop", "flextable", "Hmisc=?ignore", "htmlTable=?ignore"), dependencies=TRUE)'
+          R -q -e 'pak::pkg_install(c("FredHutch/VISCtemplates@develop", "FredHutch/VISCfunctions", "flextable", "Hmisc=?ignore", "htmlTable=?ignore"), dependencies=TRUE)'
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
