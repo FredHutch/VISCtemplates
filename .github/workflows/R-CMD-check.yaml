@@ -45,7 +45,9 @@ jobs:
         if: ${{ matrix.config.r == '4.0.4' }}
         run: |
           R -q -e 'utils::install.packages("remotes")'
+          R -q -e 'utils::install.packages("pak")'
           R -q -e 'remotes::install_version("Hmisc", "4.5-0")'
+          R -q -e 'pak::pak_install(c("FredHutch/VISCtemplates@develop", "flextable"))'
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
