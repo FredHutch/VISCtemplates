@@ -47,9 +47,9 @@ jobs:
           R -q -e 'utils::install.packages("pak")'
           R -q -e 'pak::pkg_install("remotes")'
           R -q -e 'remotes::install_version("Hmisc", "4.5-0")'
-          R -q -e 'pak::pkg_install(setdiff(pak::pkg_deps("FredHutch/VISCfunctions", upgrade = FALSE, dependencies = TRUE)$ref, c("Hmisc", "htmlTable")), upgrade = FALSE, dependencies = FALSE)
-          R -q -e 'pak::pkg_install(setdiff(pak::pkg_deps("FredHutch/VISCtemplates@develop", upgrade = FALSE, dependencies = TRUE)$ref, c("Hmisc", "htmlTable")), upgrade = FALSE, dependencies = FALSE)
-          R -q -e 'pak::pkg_install(setdiff(pak::pkg_deps("flextable", upgrade = FALSE, dependencies = TRUE)$ref, c("Hmisc", "htmlTable")), upgrade = FALSE, dependencies = FALSE)
+          R -q -e 'pak::pkg_install(setdiff(pak::pkg_deps("FredHutch/VISCfunctions", upgrade = FALSE, dependencies = TRUE)$ref, c("Hmisc", "htmlTable")), upgrade = FALSE, dependencies = FALSE)'
+          R -q -e 'pak::pkg_install(setdiff(pak::pkg_deps("FredHutch/VISCtemplates@develop", upgrade = FALSE, dependencies = TRUE)$ref, c("Hmisc", "htmlTable")), upgrade = FALSE, dependencies = FALSE)'
+          R -q -e 'pak::pkg_install(setdiff(pak::pkg_deps("flextable", upgrade = FALSE, dependencies = TRUE)$ref, c("Hmisc", "htmlTable")), upgrade = FALSE, dependencies = FALSE)'
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
