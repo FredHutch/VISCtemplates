@@ -44,13 +44,11 @@ jobs:
       - name: Install statsrv packages
         if: ${{ matrix.config.r == '4.0.4' }}
         run: |
-          R -q -e 'utils::install.packages("pak")'
-          R -q -e 'pak::pkg_install("remotes")'
+          R -q -e 'utils::install.packages("remotes")'
           R -q -e 'remotes::install_version("Hmisc", "4.5-0")'
-          R -q -e 'pak::pkg_install(setdiff(pak::pkg_deps("FredHutch/VISCfunctions", upgrade = FALSE, dependencies = TRUE)$ref, c("Hmisc", "htmlTable")), upgrade = FALSE, dependencies = FALSE)'
-          R -q -e 'pak::pkg_install(setdiff(pak::pkg_deps("FredHutch/VISCtemplates@develop", upgrade = FALSE, dependencies = TRUE)$ref, c("Hmisc", "htmlTable")), upgrade = FALSE, dependencies = FALSE)'
-          R -q -e 'pak::pkg_install(setdiff(pak::pkg_deps("flextable", upgrade = FALSE, dependencies = TRUE)$ref, c("Hmisc", "htmlTable")), upgrade = FALSE, dependencies = FALSE)'
-
+          R -q -e 'remotes::install_github("FredHutch/VISCfunctions", dependencies = TRUE)'
+          R -q -e 'remotes::install_github("FredHutch/VISCtemplates", dependencies = TRUE)'
+          R -q -e 'utils::install.packages(c("rcmdcheck", "tidyverse", "flextable"))'
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck, Hmisc=?ignore-before-r=4.4.1
