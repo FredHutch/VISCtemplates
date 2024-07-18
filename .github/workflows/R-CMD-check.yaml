@@ -49,10 +49,6 @@ jobs:
           R -q -e 'remotes::install_github("FredHutch/VISCfunctions", dependencies = TRUE)'
           R -q -e 'remotes::install_github("FredHutch/VISCtemplates", dependencies = TRUE)'
           R -q -e 'utils::install.packages(c("rcmdcheck", "tidyverse", "flextable"))'
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: any::rcmdcheck, Hmisc=?ignore-before-r=4.4.1
-          needs: check
 
       - uses: r-lib/actions/check-r-package@v2
         with:
