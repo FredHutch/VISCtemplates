@@ -352,6 +352,7 @@ print_visc_table(
   magnitude_tab,
   caption,
   caption_short = caption_short,
+  label = 'example-tab',
   collapse_rows = 1:2,
   footer_list = c("SD: standard deviation.")
 )
