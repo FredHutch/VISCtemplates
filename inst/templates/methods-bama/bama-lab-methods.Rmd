@@ -10,7 +10,7 @@ Please edit that file. -->
 
 Serum HIV-1 [IgG/IgA] responses against [# antigens] were measured on a Bio-Plex 
 instrument (Bio-Rad) using a standardized custom HIV-1 Luminex assay 
-(@tomaras2008). 
+[@tomaras2008].
 The readout is background-subtracted median fluorescent intensity (MFI), 
 where background refers to the antigen-specific plate-level control 
 (i.e., a blank well containing antigen-conjugated beads run on each plate). 

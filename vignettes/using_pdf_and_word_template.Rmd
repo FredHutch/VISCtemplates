@@ -1,6 +1,5 @@
 ---
 title: "Using a VISC Report Template"
-author: Jimmy Fulp and Monica Gerber
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -16,6 +15,7 @@ There are a few different types of reports available:
 * **empty**: A blank report template that includes the VISC header, but no other text.
 * **generic**: A PT report template that includes generic text that can be adapted to your statistical analysis.
 * **bama**: A PT report template for the BAMA assay.
+* **nab**: A PT report template for the NAb assay.
 
 To use a VISC report template, run:
 
@@ -23,12 +23,13 @@ To use a VISC report template, run:
 use_visc_report(
   report_name = "VDCnnn_BAMA_PT_Report_statusifapplicable", # the name of the report file
   path = "BAMA", # the path within the active directory, usually the name of the assay
-  report_type = "bama" # "empty", "generic", or "bama" 
+  report_type = "bama" # "empty", "generic", "bama", or "nab"
 )
 ```
 
-If you choose `report_type = "generic"` or `report_type = "bama"`, this will set 
-up the following structure in the existing `BAMA/` directory:
+If you choose any `report_type` other than `"empty"`, this will set 
+up a specific structure in the directory specified in `path`. Continuing with the BAMA
+example above, this structure looks like:
 
 ```
 |- BAMA/
@@ -66,9 +67,7 @@ There are some new functions and coding conventions that help with knitting the 
 
 ### Page breaks
 
-* For page breaks use the `insert_break()` function. 
-You can use this as a simple inline code: `` `r knitr::inline_expr("insert_break()")` ``.
-    + `\clearpage` (from previous template) will not work on Word output.
+* For page breaks use `\newpage`.
     
 ### Referencing
 `
@@ -89,8 +88,9 @@ You can use this as a simple inline code: `` `r knitr::inline_expr("insert_break
 
 **References/Bibliography**
 
-*  For referencing papers, simply use the @ symbol before bib file reference (i.e. `@Huang:2013fl`).
-
+*  For referencing papers inline, simply use the @ symbol before bib file reference (e.g., "As specified in `@Huang:2013fl`, ...").
+*  For referencing papers in parentheses at the end of a sentence, use brackets and the @ symbol (e.g., `[@Huang:2013fl]`). The parentheses will be automatically included - do not add any extra.
+*  For multiple papers in the same citation, separate with a semicolon (e.g., ` [@Suissa1985; @Lyderson2009]`).
 
 ### Tables
 
@@ -112,3 +112,10 @@ You can use this as a simple inline code: `` `r knitr::inline_expr("insert_break
 
 * When using `VISCfunctions::pretty_pvalues()` make sure to use `output_type = output_type`,  `bold  = pandoc_markup`, and `italic = pandoc_markup`. This will give the appropriate markup depending on PDF or Word output.
 
+### Sourcing external R scripts
+
+* When using the `source()` function for external R scripts, use its `local = TRUE` argument. This will ensure that the objects created are placed in your Rmd's environment, rather than your global environment, which is a safer practice.
+
+### Loading external data
+
+* When using the `data()` function to load external data (e.g. from another package), specify `environment = environment()`. This will ensure that the object is placed in your Rmd's environment, rather than your global environment, which is a safer practice. See the "Good practice" section in `?utils::data` for more info.

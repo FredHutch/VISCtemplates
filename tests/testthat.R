@@ -9,4 +9,4 @@
 library(testthat)
 library(VISCtemplates)
 
-test_check("VISCtemplates")
+test_check("VISCtemplates", stop_on_warning = TRUE)

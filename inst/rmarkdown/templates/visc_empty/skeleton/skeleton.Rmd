@@ -48,7 +48,11 @@ install_load_cran_packages(packages_needed)
 # knitr options
 opts_chunk$set(cache = FALSE, message = TRUE, warning = TRUE, echo = FALSE, 
                dev = c("png", "pdf"), dpi = 200, out.width = '100%', 
-               out.extra = '', fig.align = "center", fig.pos = "H")
+               out.extra = '', fig.pos = "H")
+# fig.align argument is not supported in Word (align in template docx)
+if (knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex'){
+  opts_chunk$set(fig.align = "center")
+}
 
 # table settings
 options(knitr.kable.NA = '') # NA's will be blank in tables
@@ -70,7 +74,7 @@ theme_set(visc_theme)
 
 # Set group colors for this example.
 # If you have group colors already in your project:
-# source(rprojroot::find_rstudio_root_file("docs", "group-colors.R"))
+# source(rprojroot::find_rstudio_root_file("docs", "group-colors.R"), local = TRUE)
 group_colors <- c(
   `1` = "#D92321",
   `2` = "#1749FF",
@@ -100,7 +104,7 @@ Add some text here
 
 Add some text here
 
-`r insert_break()` 
+\newpage
 
 # Reproducibility Software Information
 
@@ -131,6 +135,6 @@ print_visc_table(pkgs_tbl,
                  "Reproducibility software package version information")
 ```
 
-`r insert_break()` 
+\newpage
 
 `r insert_references_section_header()`

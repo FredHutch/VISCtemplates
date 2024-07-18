@@ -5,10 +5,10 @@
 
 The goal of VISCtemplates is to:
 
--   automate project setup
--   provide a common, easy-to-understand directory structure across
-    analyses
--   provide consistency across VISC reports
+- automate project setup
+- provide a common, easy-to-understand directory structure across
+  analyses
+- provide consistency across VISC reports
 
 ## Installation
 
@@ -23,13 +23,12 @@ remotes::install_github("FredHutch/VISCtemplates", build_vignettes = TRUE)
 
 ## Requirements
 
--   R (version &gt;= 3.0)
--   RStudio (version &gt;= 1.2)
-    -   Includes Pandoc (version &gt;= 2.0), which is needed for Word
-        reports.
--   TinyTeX (or MiKTeX), which is needed for PDF reports.
-    -   `install.packages(“tinytex”)`
-    -   `tinytex::install_tinytex()`
+- R (version \>= 3.0)
+- RStudio (version \>= 1.2)
+  - Includes Pandoc (version \>= 2.0), which is needed for Word reports.
+- TinyTeX (or MiKTeX), which is needed for PDF reports.
+  - `install.packages(“tinytex”)`
+  - `tinytex::install_tinytex()`
 
 ## Vignettes
 
@@ -69,7 +68,7 @@ Use a VISC Report:
 use_visc_report(
   report_name = "VDCnnn_BAMA_PT_Report_statusifapplicable", # the name of the report file
   path = "BAMA", # the path within the active directory, usually the name of the assay
-  report_type = "bama" # "empty", "generic", or "bama" 
+  report_type = "bama" # "empty", "generic", "bama", or "nab"
 )
 ```
 

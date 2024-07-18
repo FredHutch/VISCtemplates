@@ -55,7 +55,7 @@ The new release number is bumped to 1.0.0 because this version implements the st
 
 * Changes to VISC Report (PDF & Word Output) template.
     + Example text updated.
-    + Functions defined in report are now exported functions from {VISCtemplates}. Use `insert_break()` to create a page break and `insert_ref()` to insert a reference to a table or figure.
+    + Functions defined in report are now exported functions from {VISCtemplates}. Use `insert_ref()` to insert a reference to a table or figure.
     + Vignette updated to reflect these changes. 
 
 

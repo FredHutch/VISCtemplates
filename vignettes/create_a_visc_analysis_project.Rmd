@@ -71,7 +71,7 @@ usethis::use_github(organisation = "FredHutch", private = TRUE, protocol = "ssh"
 # Make sure your repo is private.
 ```
 
-Note that you must have a [personal access token (PAT)](https://happygitwithr.com/github-pat.html) set up to do this.
+Note that you must have an [SSH key](https://happygitwithr.com/ssh-keys) set up to do this.
 
 You still need to set the permissions to the project to vidd-visc:
 

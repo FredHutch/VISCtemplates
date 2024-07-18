@@ -43,9 +43,8 @@ test_knit_report <- function(report_type, outfile_ext){
                           quiet = TRUE,
                           clean = FALSE)
       )
-      # push this variable out of the local() block
-      outfile_sans_ext <<- file.path(temp_dir, report_name, report_name)
     })
+    outfile_sans_ext <- file.path(temp_dir, report_name, report_name)
     expect_true(
       file.exists(paste0(outfile_sans_ext, '.', outfile_ext))
     )

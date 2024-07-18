@@ -88,7 +88,7 @@ Net MFI values were truncated at 1 for AUC calculations.
 
 <!-- if you have all antigens from an ARP (antigen reagent project) panel -->
 
-Individual-specific and group-averaged magnitude-breadth (MB) curves (@Huang2009-ao) 
+Individual-specific and group-averaged magnitude-breadth (MB) curves [@Huang2009-ao]
 characterized the 
 magnitude (binding antibody MFI\*) and 
 breadth (number of antigens with positive response at a given value of net MFI that is greater than 100) 
@@ -145,8 +145,7 @@ Response proportions were displayed for each group at week [xx, peak].
 
 Individual-specific and group-average magnitude-breadth (MB) curves were plotted 
 to display the breadth of binding antibody activities. 
-[if applicable] MB curves were stratified by ARP panels (i.e., gp140, gp120 and V1V2) 
-(Table `r VISCtemplates::insert_ref("tab:sample-size")`).
+[if applicable] MB curves were stratified by ARP panels (i.e., gp140, gp120 and V1V2).
 
 Line plots were used to display the trend and the variability of the group
 median net MFI or AUTC over time by antigen. 
@@ -157,10 +156,10 @@ at any time point.
 ## Statistical Tests
 
 To assess if the treatment groups had different response rates than control, 
-each group was compared to control using Barnard’s exact test (two-sided, alpha = 0.05) 
-for each isotype and antigen (@Suissa1985 and @Lyderson2009). 
+each group was compared to control using Barnard's exact test (two-sided, alpha = 0.05)
+for each isotype and antigen [@Suissa1985; @Lyderson2009].
 If there were any significant differences from control, 
-pairwise treatment group tests were performed using Barnard’s exact test 
+pairwise treatment group tests were performed using Barnard's exact test
 (two-sided, alpha = 0.05).
 
 Pairwise comparisons of response magnitude ([AUTC, net MFI]) between study groups 
@@ -171,7 +170,7 @@ positive responders in each treatment group.
 Pairwise comparisons of net MFI durability (fold-change) between peak and 
 durability were performed between treatment groups using the log-rank test 
 (two-sided, alpha = 0.05) with Wilcoxon-Mann-Whitney scores and interval 
-censoring for each antigen (@Fay2012). 
+censoring for each antigen [@Fay2012].
 The method outlined by @Fay2012 maintains the type I error rate under 
 assessment-treatment dependence. 
 A fold-change was considered censored when the net MFI value at the durability 
