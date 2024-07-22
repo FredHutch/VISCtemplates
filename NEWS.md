@@ -1,3 +1,10 @@
+# VISCtemplates 1.2.0
+
+* Update Fred Hutch logo in Word and PDF templates
+* Fix continuous integration issues (GitHub actions)
+* New GitHub action to auto-generate empty report template in Word and PDF (for verifying format with PRs) and associated template fixes
+* Fix double section numbering issue in Word doc template
+* Add visc_load_pdata and DataPackageR to Rmd template code
 
 # VISCtemplates 1.1.0
 
