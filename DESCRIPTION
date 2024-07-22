@@ -4,16 +4,25 @@ Version: 1.2.0.9000
 Authors@R: 
     person(given = "Jimmy",
            family = "Fulp",
-           role = c("aut", "cre"),
-           email = "wfulp@fredhutch.org")
+           role = c("aut"))
     person(given = "Marie",
            family = "Vendettuoli",
-           role = c("aut"),
-           email = "mvendett@fredhutch.org")
+           role = c("aut"))
     person(given = "Monica",
            family = "Gerber",
+           role = c("aut"))
+    person(given = "Bryan",
+           family = "Mayer",
+           role = c("aut"),
+           email = "bmayer@fredhutch.org")
+    person(given = "Dave",
+           family = "Slager",
+           role = c("aut"),
+           email = "dslager@fredhutch.org")
+    person(given = "Kellie",
+           family = "MacPhee",
            role = c("aut", "cre"),
-           email = "mwgerber@gmail.com")
+           email = "kmacphee@fredhutch.org")
 Description: The goal of VISCtemplates is to automate project setup provide a common easy-to-understand directory structure across analyses, provide consistency across reports in the same project/protocol, and provide consistency across reports analyzing data from the same assay.
 License: GPL-3 + file LICENSE
 Depends: R (>= 3.0)
