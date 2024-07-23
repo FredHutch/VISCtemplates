@@ -2,6 +2,7 @@
 
 Bug Fixes
 * Fix major bug that broke PDF knitting on pandoc >= 3.1.7 (#159)
+* Fix bug with latex packages (specifically etex's \reserveinserts command) that broke PDF knitting (#160)
 * Fix bug that occurred when a report subdirectory did not already exist, and add unit test (#173)
 * Fix `insert_break()` to actually create a page break (#188)
   + Update documentation to instruct users to use `\newpage` instead in new code
@@ -10,6 +11,9 @@ Improvements to Report Templates
 * Update header logo for SCHARP/Fred Hutch branding compliance (#195)
 * Update templates and documentation for using correct syntax for multiple citations (#191)
 * Add section number to References section in PDF output (#176)
+* Clarify expectations for Background section of report (#143)
+* Fix BAMA positivity call definition (#144)
+* Add Acknowledgments section to report templates (#153)
 
 Testing and Continuous Integration
 * Create unit tests to test knit all report templates to PDF and Word (#168, #182, #186, #187, #192)
@@ -24,20 +28,14 @@ Documentation and UI Improvements
 * Fix bad URL in GitHub setup instructions (#185)
 * Add guidance for where to install data packages (#154)
 * Add friendly error message to visc_load_pdata() when data package is not installed (#152)
+* Specify existence of NAb template in README and vignettes (#189)
 
 Package Maintenance
 * Adjust filenames in R/ and tests/ to follow best practices (#175, #179)
 * Respect existing getOption('repos') instead of forcing CRAN installations (#163)
 * Adjust dependencies in DESCRIPTION (#164)
-
-Kellie
-* #189 - Kellie
-* #190 - Kellie
-* (#196 - Kellie, once merged)
-* #160 - Kellie
-* #153 - Kellie
-* #144 - Kellie
-* #143 - Kellie
+* Update package authors and maintainer (#190)
+* Clean up latex template code, removing commented-out code and reorganizing for better readability (#196)
 
 # VISCtemplates 1.2.0
 
