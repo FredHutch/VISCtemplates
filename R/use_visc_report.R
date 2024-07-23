@@ -119,7 +119,7 @@ use_bib <- function(study_name) {
 #'   report_type = "bama"
 #'   )
 #' }
-use_visc_report <- function(report_name = "PT-Report",
+use_visc_report <- function(report_name = "PTreport",
                             path = ".",
                             report_type = c("empty", "generic", "bama", "nab"),
                             interactive = TRUE) {
@@ -159,10 +159,10 @@ challenge_visc_report <- function(report_name, interactive = TRUE) {
   continue <- usethis::ui_yeah("
     Creating a new VISC PT Report called {report_name}.
     At VISC, we use a naming convention for PT reports:
-    'VDCnnn_assay_PT_Report_statusifapplicable'
-    where 'statusifapplicable' distinguishes blinded reports,
-    HIV status, or something that distinguishes a type/subset
-    of a report.
+    'VDCnnn_assay_PTreport_status_blindingifapplicable'
+    where 'status' should be either 'interim' or 'final'
+    and 'blindingifapplicable' should be either 'blinded'
+    or 'unblinded' (applicable to interim reports only).
     'VDC' is the PI name and 'nnn' is the study number.
     Would you like to continue?")
 
