@@ -62,9 +62,16 @@ my_data_package_lib <- "/Volumes/kmacphee/RLib/" # UPDATE WITH YOUR DATA PACKAGE
 .libPaths(c(.libPaths(), my_data_package_lib))
 
 # knitr options
-opts_chunk$set(cache = FALSE, message = TRUE, warning = TRUE, echo = FALSE, 
-               dev = c("png", "pdf"), dpi = 200, out.width = "100%", 
-               out.extra = "", fig.pos = "H")
+opts_chunk$set(cache = FALSE, 
+               message = TRUE,
+               warning = TRUE,
+               echo = FALSE, 
+               dev = c("png", "pdf"),
+               dpi = 200,
+               out.width = "100%", 
+               out.extra = "",
+               fig.pos = "H",
+               eval.after = c("fig.scap", "fig.cap")) # allows using variables from chunk in figure caption
 # fig.align argument is not supported in Word (align in template docx)
 if (knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex'){
   opts_chunk$set(fig.align = "center")
@@ -73,24 +80,8 @@ if (knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex'){
 # NA's will be blank in tables
 options(knitr.kable.NA = '')
 
-# Create a theme 
-visc_theme <- theme_bw() + 
-  theme(
-    legend.position = "bottom", 
-    legend.margin = margin(unit = "cm"),
-    panel.grid.minor = element_blank()
-    )
-
-theme_set(visc_theme)
-
-# Set group colors for this example.
-# If you have group colors already in your project:
-# source(rprojroot::find_rstudio_root_file("R", "group_colors.R"), local = TRUE)
-group_colors <- c(
-  `1` = "#D92321",
-  `2` = "#1749FF",
-  `4` = "#0AB7C9"
-)
+# Figure settings
+source(rprojroot::find_rstudio_root_file("R", "ggplot_settings.R"), local = TRUE)
 ```
 
 ```{r conflicted-preferences, message=FALSE}
