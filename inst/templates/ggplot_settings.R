@@ -1,7 +1,9 @@
 ## Plot settings for {{ study_name }} to be used across PT reports
 
 visc_theme <- theme_bw() +
-  theme(legend.position = "bottom")
+  theme(legend.position = "bottom",
+        legend.margin = margin(unit = "cm"),
+        panel.grid.minor = element_blank())
 theme_set(visc_theme)
 
 placebocolor <- "grey50"
@@ -22,10 +24,8 @@ response_shapes <- c(
   `Positive Response` = 16,
   `Detectable Response` = 16
 )
-assign("scale_shape_discrete", function(..., values = response_shapes) scale_color_manual(..., values = values), globalenv())
+# default shape scheme will be given by response_shapes
+assign("scale_shape_discrete", function(..., values = response_shapes) scale_shape_manual(..., values = values), globalenv())
 
 # To source these group colors, response shapes, and other plot settings in your Rmarkdown report:
-#  source("R/ggplot_settings.R", local = TRUE)
-
-# allows using variables from chunk in figure caption
-opts_knit$set(eval.after = c("fig.scap", "fig.cap"))
+#  source(rprojroot::find_rstudio_root_file("R", "ggplot_settings.R"), local = TRUE)
