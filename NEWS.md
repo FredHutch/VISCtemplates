@@ -1,4 +1,4 @@
-# VISCtemplates (development version)
+# VISCtemplates 1.3.0
 
 Bug Fixes
 * Fix major bug that broke PDF knitting on pandoc >= 3.1.7 (#159)
