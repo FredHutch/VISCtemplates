@@ -77,11 +77,16 @@ if (knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex'){
   opts_chunk$set(fig.align = "center")
 }
 
-# NA's will be blank in tables
-options(knitr.kable.NA = '')
+# Table settings
+options(knitr.kable.NA = '') # NAs will show as blank
 
 # Figure settings
-source(rprojroot::find_rstudio_root_file("R", "ggplot_settings.R"), local = TRUE)
+visc_theme <- theme_bw() +
+  theme(legend.position = "bottom",
+        legend.margin = margin(unit = "cm"),
+        panel.grid.minor = element_blank())
+theme_set(visc_theme)
+source(rprojroot::find_rstudio_root_file("R", "colors_and_shapes.R"), local = TRUE)
 ```
 
 ```{r conflicted-preferences, message=FALSE}
