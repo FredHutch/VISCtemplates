@@ -8,19 +8,12 @@ from:
    contact: true
  - name: FirstNameB LastNameB
 to:
- - name: FirstNameA LastNameA
- - name: FirstNameB LastNameB
  - name: FirstNameC LastNameC
  - name: FirstNameD LastNameD
- - name: FirstNameE LastNameE
- - name: FirstNameF LastNameF
 dropcc: false
 cc:
- - name: FirstNameA LastNameA
- - name: FirstNameB LastNameB
- - name: FirstNameC LastNameC
- - name: FirstNameD LastNameD
  - name: FirstNameE LastNameE
+ - name: FirstNameF LastNameF
 includesummary: true
 summary: 
   A short summary about your report. 
