@@ -382,7 +382,8 @@ kable(
 ```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
 kable(
   my_session_info$packages_table, 
-  format = output_type, booktabs = TRUE, 
+  format = output_type,
+  booktabs = TRUE, 
   linesep = "", 
   caption = "Reproducibility software package version information"
   ) %>% 

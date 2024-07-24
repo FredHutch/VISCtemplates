@@ -47,7 +47,7 @@ library(VISCfunctions)
 check_pandoc_version()
 
 # packages installed from CRAN
-packages_needed <- c("conflicted", "tidyverse", "knitr", "kableExtra", "rprojroot", "remotes")
+packages_needed <- c("conflicted", "dplyr", "knitr", "kableExtra", "rprojroot")
 install_load_cran_packages(packages_needed)
 
 # knitr options
@@ -135,7 +135,8 @@ kable(
 ```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
 kable(
   my_session_info$packages_table, 
-  format = output_type, booktabs = TRUE, 
+  format = output_type,
+  booktabs = TRUE, 
   linesep = "", 
   caption = "Reproducibility software package version information"
   ) %>% 
