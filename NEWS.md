@@ -1,5 +1,8 @@
 # VISCtemplates (development version)
 
+Bug Fix
+* Re-flip Fred Hutch and SCHARP header logos to fix regression from #196, restoring intended logo positions in #195 (#205)
+
 # VISCtemplates 1.3.0
 
 Bug Fixes
