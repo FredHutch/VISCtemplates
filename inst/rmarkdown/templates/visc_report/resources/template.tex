@@ -20,6 +20,10 @@
 \usepackage{threeparttable} % provides a scheme for tables that have a structured (foot)note section, after the caption
 \usepackage{threeparttablex} % provides the functionality of the threeparttable package to tables created using the longtable package
 
+% needed for flextable to work
+\newlength\Oldarrayrulewidth
+\newlength\Oldtabcolsep
+
 % being able to set emphasis for entire table row
 \newcommand\setrow[1]{\gdef\rowmac{#1}#1\ignorespaces}
 \newcommand\clearrow{\global\let\rowmac\relax}

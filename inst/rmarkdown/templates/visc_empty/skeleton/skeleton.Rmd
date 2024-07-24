@@ -21,8 +21,8 @@ lot: true
 toc: true
 dropVISClogo: false
 output: 
-  VISCtemplates::visc_pdf_document: default
   VISCtemplates::visc_word_document: default
+  VISCtemplates::visc_pdf_document: default
 ---
 
 <!---
@@ -41,7 +41,7 @@ library(VISCfunctions)
 
 check_pandoc_version()
 
-packages_needed <- c("conflicted", "tidyverse", "knitr", "kableExtra")
+packages_needed <- c("conflicted", "tidyverse", "knitr", "flextable")
 
 install_load_cran_packages(packages_needed)
 
@@ -54,13 +54,13 @@ if (knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex'){
   opts_chunk$set(fig.align = "center")
 }
 
-# table settings
-options(knitr.kable.NA = '') # NA's will be blank in tables
-flextable::set_flextable_defaults(na_str = "", # NA's will be blank in tables
-                                  font.size = 8,
-                                  theme_fun = "theme_box",
-                                  table.layout = "autofit",
-                                  digits = 3)
+# Table settings
+set_flextable_defaults(na_str = "", # NA's will be blank in tables
+                       font.size = 8,
+                       theme_fun = "theme_box",
+                       table.layout = "autofit",
+                       digits = 3,
+                       fonts_ignore = TRUE)
 
 # Create a theme 
 visc_theme <- theme_bw() + 
@@ -115,8 +115,8 @@ if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmark
 
 my_session_info <- VISCfunctions::get_session_info()
 
-print_visc_table(my_session_info$platform_table,
-                 "Reproducibility software session information")
+flextable(my_session_info$platform_table) %>%
+  set_caption("Reproducibility software session information")
 ```
 
 ```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
@@ -131,8 +131,8 @@ pkgs_tbl <- my_session_info$packages_table %>%
   )) %>%
   select(-source1, -source2)
 
-print_visc_table(pkgs_tbl, 
-                 "Reproducibility software package version information")
+flextable(pkgs_tbl) %>%
+  set_caption("Reproducibility software package version information")
 ```
 
 \newpage

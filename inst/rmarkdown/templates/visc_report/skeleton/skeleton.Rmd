@@ -54,7 +54,7 @@ library(VISCfunctions)
 check_pandoc_version()
 
 # packages installed from CRAN
-packages_needed <- c("conflicted", "tidyverse", "knitr", "kableExtra", "rprojroot", "remotes")
+packages_needed <- c("conflicted", "tidyverse", "knitr", "flextable", "rprojroot", "remotes")
 install_load_cran_packages(packages_needed)
 
 # where to install and look for packages (e.g., data packages) installed on SCHARP server
@@ -72,12 +72,12 @@ if (knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex'){
 
 
 # table settings
-options(knitr.kable.NA = '') # NA's will be blank in tables
-flextable::set_flextable_defaults(na_str = "", # NA's will be blank in tables
-                                  font.size = 8,
-                                  theme_fun = "theme_box",
-                                  table.layout = "autofit",
-                                  digits = 3)
+set_flextable_defaults(na_str = "", # NA's will be blank in tables
+                       font.size = 8,
+                       theme_fun = "theme_box",
+                       table.layout = "autofit",
+                       digits = 3,
+                       fonts_ignore = TRUE)
 
 # Create a theme 
 visc_theme <- theme_bw() + 
@@ -157,7 +157,7 @@ be used across PT reports for the protocol. -->
 
 <!-- Also include the study schema here. -->
 
-```{r study-schema, results="asis", warning=kable_warnings}
+```{r study-schema, results="asis"}
 source(rprojroot::find_rstudio_root_file("R", "study_schema.R"), local = TRUE)
 study_schema()
 ```
@@ -226,15 +226,15 @@ response_results <- ICS_adata %>%
         verbose = FALSE
         )
     ) %>%  
-  ungroup() %>% 
-  mutate(
-    ResponseTest = pretty_pvalues( 
-      ResponseTest, output_type = output_type, sig_alpha = .1, 
-      background = 'yellow',
-      bold = if_else(pandoc_markup , TRUE, FALSE),
-      italic = if_else(pandoc_markup , TRUE, FALSE)
-      )
-    )
+  ungroup() #%>% 
+  # mutate(
+  #   ResponseTest = pretty_pvalues( 
+  #     ResponseTest, output_type = output_type, sig_alpha = .1, 
+  #     background = 'yellow',
+  #     bold = if_else(pandoc_markup , TRUE, FALSE),
+  #     italic = if_else(pandoc_markup , TRUE, FALSE)
+  #     )
+  #   )
 ```
 
 ```{r magnitude-testing, warning=FALSE}
@@ -255,14 +255,14 @@ magnitude_results <- ICS_adata %>%
       )
     ) %>% 
    ungroup() %>% 
-  mutate(
-    MagnitudeTest = pretty_pvalues(
-      MagnitudeTest, output_type = output_type, sig_alpha = .1,
-      background = "yellow",
-      bold = if_else(pandoc_markup , TRUE, FALSE),
-      italic = if_else(pandoc_markup , TRUE, FALSE)
-      )
-    ) %>% 
+  # mutate(
+  #   MagnitudeTest = pretty_pvalues(
+  #     MagnitudeTest, output_type = output_type, sig_alpha = .1,
+  #     background = "yellow",
+  #     bold = if_else(pandoc_markup , TRUE, FALSE),
+  #     italic = if_else(pandoc_markup , TRUE, FALSE)
+  #     )
+  #   ) %>% 
   rename("Median (Range)" = Median_Min_Max, 'Mean (SD)' = Mean_SD)
 ```
 
@@ -339,39 +339,38 @@ ICS_adata %>%
 
 \newpage
 
-```{r example-tab, results="asis", warning=kable_warnings}
+```{r example-tab, results="asis"}
 
 magnitude_tab <- magnitude_results %>% 
   select(-Population, -contains("Perfect")) 
 
+label <- "example-tab"
 caption_short <- "Short caption to show in List of Tables."
-
 caption <- "Long caption to show above table. Explain everything needed to understand the table here."
 
-print_visc_table(
-  magnitude_tab,
-  caption,
-  caption_short = caption_short,
-  label = 'example-tab',
-  collapse_rows = 1:2,
-  footer_list = c("SD: standard deviation.")
-)
+flextable(magnitude_tab) %>%
+  set_caption(caption,
+              autonum = officer::run_autonum(seq_id = "tab", bkm = label)) %>%
+  merge_v(1:2) %>%
+  add_footer_lines(values = as_paragraph("SD: standard deviation."))
+
+# TODO: figure out how to use caption_short
 ```
 
 \newpage
 
-```{r Software-Session-Information, results="asis", message=FALSE, warning=kable_warnings}
+```{r Software-Session-Information, results="asis"}
 
 # load in rmarkdown to capture version number
 if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmarkdown))
 
 my_session_info <- VISCfunctions::get_session_info()
 
-print_visc_table(my_session_info$platform_table,
-                 "Reproducibility software session information")
+flextable(my_session_info$platform_table) %>%
+  set_caption("Reproducibility software session information")
 ```
 
-```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
+```{r Software-Package-Version-Information, results="asis"}
 
 pkgs_tbl <- my_session_info$packages_table %>%
   separate_wider_delim(source, delim = "@", names = c("source1", "source2"),
@@ -383,8 +382,8 @@ pkgs_tbl <- my_session_info$packages_table %>%
   )) %>%
   select(-source1, -source2)
 
-print_visc_table(pkgs_tbl, 
-                 "Reproducibility software package version information")
+flextable(pkgs_tbl) %>%
+  set_caption("Reproducibility software package version information")
 ```
 
 \newpage
