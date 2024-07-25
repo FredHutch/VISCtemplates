@@ -72,7 +72,7 @@ set_flextable_defaults(na_str = "", # NA's will be blank in tables
                        table.layout = "autofit",
                        digits = 3,
                        fonts_ignore = TRUE)
-add_caption <- function(x, caption, label) {
+add_caption_and_label <- function(x, caption, label) {
   set_caption(x,
               caption = caption,
               autonum = officer::run_autonum(seq_id = "tab", bkm = label))
@@ -129,7 +129,7 @@ if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmark
 my_session_info <- VISCfunctions::get_session_info()
 
 flextable(my_session_info$platform_table) %>%
-  add_caption(caption, label)
+  add_caption_and_label(caption, label)
 ```
 
 \newpage
@@ -140,7 +140,7 @@ label <- "Software-Package-Version-Information"
 caption <- "Reproducibility software package version information"
 
 flextable(my_session_info$packages_table) %>%
-  add_caption(caption, label)
+  add_caption_and_label(caption, label)
 ```
 
 \newpage

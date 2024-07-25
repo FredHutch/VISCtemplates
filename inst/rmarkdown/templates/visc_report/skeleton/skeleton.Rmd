@@ -77,7 +77,7 @@ set_flextable_defaults(na_str = "", # NA's will be blank in tables
                        table.layout = "autofit",
                        digits = 3,
                        fonts_ignore = TRUE)
-add_caption <- function(x, caption, label) {
+add_caption_and_label <- function(x, caption, label) {
   set_caption(x,
               caption = caption,
               autonum = officer::run_autonum(seq_id = "tab", bkm = label))
@@ -153,7 +153,7 @@ be used across PT reports for the protocol. -->
 ```{r, results="asis"}
 source(rprojroot::find_rstudio_root_file("R", "study_schema.R"), local = TRUE)
 flextable(schema_table) %>%
-  add_caption("[CAVD PI and number] study schema", "study-schema")
+  add_caption_and_label("[CAVD PI and number] study schema", "study-schema")
 ```
 
 Describe this report - "This report presents [blinded/unblinded] [list assay] data 
@@ -334,7 +334,7 @@ magnitude_results %>%
   width(2, 0.4, unit = "in") %>%
   highlight(i = ~ (MagnitudeTest < 0.05), j = ~ MagnitudeTest, color = "yellow") %>%
   add_footer_lines(values = footnotes) %>%
-  add_caption(caption, label)
+  add_caption_and_label(caption, label)
 ```
 
 \newpage
@@ -350,7 +350,7 @@ if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmark
 my_session_info <- VISCfunctions::get_session_info()
 
 flextable(my_session_info$platform_table) %>%
-  add_caption(caption, label) %>%
+  add_caption_and_label(caption, label) %>%
   width(2, 6, unit = "in")
 ```
 
@@ -362,7 +362,7 @@ label <- "Software-Package-Version-Information"
 caption <- "Reproducibility software package version information"
 
 flextable(my_session_info$packages_table) %>%
-  add_caption(caption, label)
+  add_caption_and_label(caption, label)
 ```
 
 \newpage
