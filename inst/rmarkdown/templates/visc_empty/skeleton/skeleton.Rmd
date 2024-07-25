@@ -108,7 +108,10 @@ Add some text here
 
 # Reproducibility Software Information
 
-```{r Software-Session-Information, results="asis", message=FALSE, warning=kable_warnings}
+```{r, results="asis"}
+
+label <- "Software-Session-Information"
+caption <- "Reproducibility software session information"
 
 # load in rmarkdown to capture version number
 if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmarkdown))
@@ -116,10 +119,14 @@ if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmark
 my_session_info <- VISCfunctions::get_session_info()
 
 flextable(my_session_info$platform_table) %>%
-  set_caption("Reproducibility software session information")
+  set_caption(caption,
+              autonum = officer::run_autonum(seq_id = "tab", bkm = label))
 ```
 
-```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
+```{r, results="asis"}
+
+label <- "Software-Package-Version-Information"
+caption <- "Reproducibility software package version information"
 
 pkgs_tbl <- my_session_info$packages_table %>%
   separate_wider_delim(source, delim = "@", names = c("source1", "source2"),
@@ -132,7 +139,8 @@ pkgs_tbl <- my_session_info$packages_table %>%
   select(-source1, -source2)
 
 flextable(pkgs_tbl) %>%
-  set_caption("Reproducibility software package version information")
+  set_caption(caption,
+              autonum = officer::run_autonum(seq_id = "tab", bkm = label))
 ```
 
 \newpage
