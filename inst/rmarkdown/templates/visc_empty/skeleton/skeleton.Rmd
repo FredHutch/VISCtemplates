@@ -21,8 +21,8 @@ lot: true
 toc: true
 dropVISClogo: false
 output: 
-  VISCtemplates::visc_word_document: default
   VISCtemplates::visc_pdf_document: default
+  VISCtemplates::visc_word_document: default
 ---
 
 <!---
@@ -122,17 +122,7 @@ flextable(my_session_info$platform_table) %>%
 label <- "Software-Package-Version-Information"
 caption <- "Reproducibility software package version information"
 
-pkgs_tbl <- my_session_info$packages_table %>%
-  separate_wider_delim(source, delim = "@", names = c("source1", "source2"),
-                       too_few = "align_start") %>%
-  mutate(source = if_else(
-    is.na(source2),
-    source1,
-    paste0(source1, "@", str_sub(source2, 1, 7), ")") # truncates git hashes
-  )) %>%
-  select(-source1, -source2)
-
-flextable(pkgs_tbl) %>%
+flextable(my_session_info$packages_table) %>%
   set_caption(caption,
               autonum = officer::run_autonum(seq_id = "tab", bkm = label))
 ```

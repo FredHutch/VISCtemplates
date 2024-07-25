@@ -1,9 +1,10 @@
 #' Study Schema for {{ study_name }}
 #'
-#' To print the study schema in a chunk in your Rmarkdown report, use:
+#' To source the study schema in a chunk in your Rmarkdown report:
 #' source("R/study_schema.R", local = TRUE)
 #'
 #' @param caption caption for the study schema table
+#' @param label label for the study schema table (to be used in cross referencing)
 #'
 study_schema <- function(caption = "{{ study_name }} study schema.",
                          label = "study-schema") {
