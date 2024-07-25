@@ -45,11 +45,12 @@ RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Suggests: 
     conflicted,
+    dplyr,
+    ggplot2,
     kableExtra,
     knitr,
     remotes,
     testthat (>= 3.0.0),
-    tidyverse,
     withr
 Remotes:
     FredHutch/VISCfunctions
