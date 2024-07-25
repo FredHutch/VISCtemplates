@@ -63,8 +63,8 @@ jobs:
         run: |
           R -q -e 'utils::install.packages("remotes")'
           R -q -e 'remotes::install_version("Hmisc", "4.5-0")'
-          R -q -e 'remotes::install_github("FredHutch/VISCfunctions", ref = "untidy", dependencies = TRUE)'
-          R -q -e 'remotes::install_github("FredHutch/VISCtemplates", ref = "untidy", dependencies = TRUE)'
+          R -q -e 'remotes::install_github("FredHutch/VISCfunctions", dependencies = TRUE)'
+          R -q -e 'remotes::install_github("FredHutch/VISCtemplates", dependencies = TRUE)'
           R -q -e 'utils::install.packages(c("ggplot2", "dplyr"))'
           R -q -e 'utils::install.packages("rcmdcheck")'
 
