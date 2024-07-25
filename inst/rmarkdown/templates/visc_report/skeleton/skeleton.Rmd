@@ -360,6 +360,7 @@ caption <- "Reproducibility software package version information"
 flextable(my_session_info$packages_table) %>%
   set_caption(caption,
               autonum = officer::run_autonum(seq_id = "tab", bkm = label))
+```
 
 \newpage
 
@@ -376,6 +377,5 @@ readability, for example:
 
 - Name 1 (Role 1)
 - Name 2 (Role 2)
-```
 
 `r insert_references_section_header()`
