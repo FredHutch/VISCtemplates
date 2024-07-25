@@ -1,5 +1,7 @@
 # VISCtemplates (development version)
 
+* Reconcile differences between empty report template and other report templates (#204)
+
 # VISCtemplates 1.3.1
 
 Bug Fix
