@@ -331,7 +331,7 @@ flextable(magnitude_tab) %>%
   merge_v(1:2) %>%
   width(1, 0.4, unit = "in") %>%
   width(2, 0.4, unit = "in") %>%
-  bg(i = ~ (MagnitudeTest < 0.05), j = ~ MagnitudeTest, bg = "yellow") %>%
+  highlight(i = ~ (MagnitudeTest < 0.05), j = ~ MagnitudeTest, color = "yellow") %>%
   add_footer_lines(values = as_paragraph("SD: standard deviation.")) %>%
   set_caption(caption,
               autonum = officer::run_autonum(seq_id = "tab", bkm = label))
