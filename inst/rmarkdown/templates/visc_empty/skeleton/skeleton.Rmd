@@ -23,8 +23,8 @@ lot: true
 toc: true
 dropVISClogo: false
 output: 
-  VISCtemplates::visc_pdf_document: default
   VISCtemplates::visc_word_document: default
+  VISCtemplates::visc_pdf_document: default
 ---
 
 <!---
@@ -47,7 +47,7 @@ library(VISCfunctions)
 check_pandoc_version()
 
 # packages installed from CRAN
-packages_needed <- c("conflicted", "dplyr", "knitr", "flextable", "rprojroot")
+packages_needed <- c("conflicted", "dplyr", "ggplot2", "knitr", "flextable", "rprojroot")
 install_load_cran_packages(packages_needed)
 
 # knitr options
@@ -118,7 +118,7 @@ Add some text here
 
 # Reproducibility Software Information
 
-```{r, results="asis"}
+```{r}
 
 label <- "Software-Session-Information"
 caption <- "Reproducibility software session information"
@@ -134,7 +134,7 @@ flextable(my_session_info$platform_table) %>%
 
 \newpage
 
-```{r, results="asis"}
+```{r}
 
 label <- "Software-Package-Version-Information"
 caption <- "Reproducibility software package version information"

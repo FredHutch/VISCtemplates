@@ -150,7 +150,7 @@ be used across PT reports for the protocol. -->
 
 <!-- Also include the study schema here. -->
 
-```{r, results="asis"}
+```{r}
 source(rprojroot::find_rstudio_root_file("R", "study_schema.R"), local = TRUE)
 flextable(schema_table) %>%
   add_caption_and_label("[CAVD PI and number] study schema", "study-schema")
@@ -318,7 +318,7 @@ ICS_adata %>%
 
 \newpage
 
-```{r, results="asis"}
+```{r}
 
 label <- "example-tab"
 caption <- "Example caption (should be short but specific, as it will be used in list of tables)"
@@ -339,7 +339,7 @@ magnitude_results %>%
 
 \newpage
 
-```{r, results="asis"}
+```{r}
 
 label <- "Software-Session-Information"
 caption <- "Reproducibility software session information"
@@ -356,7 +356,7 @@ flextable(my_session_info$platform_table) %>%
 
 \newpage
 
-```{r, results="asis"}
+```{r}
 
 label <- "Software-Package-Version-Information"
 caption <- "Reproducibility software package version information"
