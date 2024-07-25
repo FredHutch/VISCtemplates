@@ -147,7 +147,9 @@ be used across PT reports for the protocol. -->
 
 ```{r, results="asis"}
 source(rprojroot::find_rstudio_root_file("R", "study_schema.R"), local = TRUE)
-study_schema()
+flextable(schema_table) %>%
+  set_caption("[CAVD PI and number] study schema",
+              autonum = officer::run_autonum(seq_id = "tab", bkm = "study-schema"))
 ```
 
 Describe this report - "This report presents [blinded/unblinded] [list assay] data 
