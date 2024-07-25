@@ -77,6 +77,11 @@ set_flextable_defaults(na_str = "", # NA's will be blank in tables
                        table.layout = "autofit",
                        digits = 3,
                        fonts_ignore = TRUE)
+add_caption <- function(x, caption, label) {
+  set_caption(x,
+              caption = caption,
+              autonum = officer::run_autonum(seq_id = "tab", bkm = label))
+}
 
 # Create a ggplot theme for consistency of figures
 visc_theme <- theme_bw() + 
@@ -148,8 +153,7 @@ be used across PT reports for the protocol. -->
 ```{r, results="asis"}
 source(rprojroot::find_rstudio_root_file("R", "study_schema.R"), local = TRUE)
 flextable(schema_table) %>%
-  set_caption("[CAVD PI and number] study schema",
-              autonum = officer::run_autonum(seq_id = "tab", bkm = "study-schema"))
+  add_caption("[CAVD PI and number] study schema", "study-schema")
 ```
 
 Describe this report - "This report presents [blinded/unblinded] [list assay] data 
@@ -318,8 +322,8 @@ ICS_adata %>%
 
 label <- "example-tab"
 caption <- "Example caption (should be short but specific, as it will be used in list of tables)"
-footnotes <- as_paragraph("SD: standard deviation.",
-                          "Any other details needed to understand the table.")
+footnotes <- c("SD: standard deviation.",
+               "Any other details needed to understand the table.")
 
 magnitude_results %>% 
   select(-Population, -contains("Perfect")) %>%
@@ -330,8 +334,7 @@ magnitude_results %>%
   width(2, 0.4, unit = "in") %>%
   highlight(i = ~ (MagnitudeTest < 0.05), j = ~ MagnitudeTest, color = "yellow") %>%
   add_footer_lines(values = footnotes) %>%
-  set_caption(caption,
-              autonum = officer::run_autonum(seq_id = "tab", bkm = label))
+  add_caption(caption, label)
 ```
 
 \newpage
@@ -347,8 +350,7 @@ if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmark
 my_session_info <- VISCfunctions::get_session_info()
 
 flextable(my_session_info$platform_table) %>%
-  set_caption(caption,
-              autonum = officer::run_autonum(seq_id = "tab", bkm = label)) %>%
+  add_caption(caption, label) %>%
   width(2, 6, unit = "in")
 ```
 
@@ -360,8 +362,7 @@ label <- "Software-Package-Version-Information"
 caption <- "Reproducibility software package version information"
 
 flextable(my_session_info$packages_table) %>%
-  set_caption(caption,
-              autonum = officer::run_autonum(seq_id = "tab", bkm = label))
+  add_caption(caption, label)
 ```
 
 \newpage
