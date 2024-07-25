@@ -315,20 +315,19 @@ ICS_adata %>%
 ```{r, results="asis"}
 
 label <- "example-tab"
-caption <- "Long caption to show above table. Explain everything needed to understand the table here."
+caption <- "Example caption (should be short but specific, as it will be used in list of tables)"
+footnotes <- c("SD: standard deviation.",
+               "Any other details needed to understand the table")
 
-# TODO: figure out how to use caption_short
-
-magnitude_tab <- magnitude_results %>% 
-  select(-Population, -contains("Perfect")) 
-
-flextable(magnitude_tab) %>%
+magnitude_results %>% 
+  select(-Population, -contains("Perfect")) %>%
+  flextable() %>%
   fontsize(size = 7) %>%
   merge_v(1:2) %>%
   width(1, 0.4, unit = "in") %>%
   width(2, 0.4, unit = "in") %>%
   highlight(i = ~ (MagnitudeTest < 0.05), j = ~ MagnitudeTest, color = "yellow") %>%
-  add_footer_lines(values = as_paragraph("SD: standard deviation.")) %>%
+  add_footer_lines(values = footnotes) %>%
   set_caption(caption,
               autonum = officer::run_autonum(seq_id = "tab", bkm = label))
 ```
