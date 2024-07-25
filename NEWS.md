@@ -2,6 +2,11 @@
 
 * Reconcile differences between empty report template and other report templates (#204)
 
+# VISCtemplates 1.3.1
+
+Bug Fix
+* Re-flip Fred Hutch and SCHARP header logos to fix regression from #196, restoring intended logo positions in #195 (#205)
+
 # VISCtemplates 1.3.0
 
 Bug Fixes
