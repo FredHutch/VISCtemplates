@@ -74,7 +74,7 @@ if (knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex'){
 # table settings
 set_flextable_defaults(na_str = "", # NA's will be blank in tables
                        font.size = 8,
-                       theme_fun = "theme_box",
+                       theme_fun = "theme_vanilla",
                        table.layout = "autofit",
                        digits = 3,
                        fonts_ignore = TRUE)
@@ -333,8 +333,8 @@ ICS_adata %>%
 
 ```{r, results="asis"}
 
-#| tab.id: example-tab
-#| tab.cap: "Long caption to show above table. Explain everything needed to understand the table here."
+label <- "example-tab"
+caption <- "Long caption to show above table. Explain everything needed to understand the table here."
 
 # TODO: figure out how to use caption_short
 
@@ -343,30 +343,34 @@ magnitude_tab <- magnitude_results %>%
 
 flextable(magnitude_tab) %>%
   merge_v(1:2) %>%
-  add_footer_lines(values = as_paragraph("SD: standard deviation."))
+  add_footer_lines(values = as_paragraph("SD: standard deviation.")) %>%
+  set_caption(caption,
+              autonum = officer::run_autonum(seq_id = "tab", bkm = label))
 ```
 
 \newpage
 
 ```{r, results="asis"}
 
-#| tab.id: Software-Session-Information
-#| tab.cap: "Reproducibility software session information"
+label <- "Software-Session-Information"
+caption <- "Reproducibility software session information"
 
 # load in rmarkdown to capture version number
 if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmarkdown))
 
 my_session_info <- VISCfunctions::get_session_info()
 
-flextable(my_session_info$platform_table)
+flextable(my_session_info$platform_table) %>%
+  set_caption(caption,
+              autonum = officer::run_autonum(seq_id = "tab", bkm = label))
 ```
 
 \newpage
 
 ```{r, results="asis"}
 
-#| tab.id: Software-Package-Version-Information
-#| tab.cap: "Reproducibility software package version information"
+label <- "Software-Package-Version-Information"
+caption <- "Reproducibility software package version information"
 
 pkgs_tbl <- my_session_info$packages_table %>%
   separate_wider_delim(source, delim = "@", names = c("source1", "source2"),
@@ -378,7 +382,9 @@ pkgs_tbl <- my_session_info$packages_table %>%
   )) %>%
   select(-source1, -source2)
 
-flextable(pkgs_tbl)
+flextable(pkgs_tbl) %>%
+  set_caption(caption,
+              autonum = officer::run_autonum(seq_id = "tab", bkm = label))
 ```
 
 \newpage
