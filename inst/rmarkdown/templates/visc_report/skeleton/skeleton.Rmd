@@ -316,8 +316,8 @@ ICS_adata %>%
 
 label <- "example-tab"
 caption <- "Example caption (should be short but specific, as it will be used in list of tables)"
-footnotes <- c("SD: standard deviation.",
-               "Any other details needed to understand the table")
+footnotes <- as_paragraph("SD: standard deviation.",
+                          "Any other details needed to understand the table.")
 
 magnitude_results %>% 
   select(-Population, -contains("Perfect")) %>%
