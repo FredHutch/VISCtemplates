@@ -376,5 +376,6 @@ readability, for example:
 
 - Name 1 (Role 1)
 - Name 2 (Role 2)
+```
 
 `r insert_references_section_header()`
