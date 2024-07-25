@@ -47,10 +47,11 @@ Suggests:
     conflicted,
     flextable,
     officer,
+    dplyr,
+    ggplot2,
     knitr,
     remotes,
     testthat (>= 3.0.0),
-    tidyverse,
     withr
 Remotes:
     FredHutch/VISCfunctions
