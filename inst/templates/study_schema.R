@@ -1,15 +1,12 @@
 #' Study Schema for {{ study_name }}
 #'
-#' To source the study schema in a chunk in your Rmarkdown report:
+#' To print the study schema in a chunk in your Rmarkdown report, use:
 #' source("R/study_schema.R", local = TRUE)
 #'
 #' @param caption caption for the study schema table
 #'
-#' @return a kable table with the study schema
-#' @export
-#'
-#' @examples
-study_schema <- function(caption = "{{ study_name }} study schema.") {
+study_schema <- function(caption = "{{ study_name }} study schema.",
+                         label = "study-schema") {
 
   schema_table <- tibble::tribble(
     ~Group, ~`Sample Size`, ~`Week 10`, ~`Week 20`,
@@ -17,12 +14,7 @@ study_schema <- function(caption = "{{ study_name }} study schema.") {
     "Group B", 10, "Dose B", "Dose B"
     )
 
-  schema_table %>%
-    knitr::kable(
-      format = VISCtemplates::get_output_type(),
-      caption = caption,
-      booktabs = TRUE,
-      linesep = ""
-    ) %>%
-    kableExtra::kable_styling(latex_options = c("hold_position"))
+  flextable(schema_table) %>%
+    set_caption(caption,
+                autonum = officer::run_autonum(seq_id = "tab", bkm = label))
   }

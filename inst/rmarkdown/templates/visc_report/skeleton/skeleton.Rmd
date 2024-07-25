@@ -149,9 +149,9 @@ be used across PT reports for the protocol. -->
 
 <!-- Also include the study schema here. -->
 
-```{r study-schema, results="asis"}
+```{r, results="asis"}
 source(rprojroot::find_rstudio_root_file("R", "study_schema.R"), local = TRUE)
-study_schema()
+study_schema(label = "study-schema")
 ```
 
 Describe this report - "This report presents [blinded/unblinded] [list assay] data 
