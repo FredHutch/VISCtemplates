@@ -1,6 +1,7 @@
 # VISCtemplates (development version)
 
 * Reconcile differences between empty report template and other report templates (#204)
+* Remove dependency on the full tidyverse, per best practices (#213)
 
 # VISCtemplates 1.3.1
 
