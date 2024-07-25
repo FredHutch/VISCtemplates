@@ -45,11 +45,11 @@ RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Suggests: 
     conflicted,
-    flextable,
-    officer,
     dplyr,
+    flextable,
     ggplot2,
     knitr,
+    officer,
     remotes,
     testthat (>= 3.0.0),
     withr
