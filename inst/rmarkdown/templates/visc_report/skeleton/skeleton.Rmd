@@ -218,15 +218,7 @@ response_results <- ICS_adata %>%
         verbose = FALSE
         )
     ) %>%  
-  ungroup() #%>% 
-  # mutate(
-  #   ResponseTest = pretty_pvalues( 
-  #     ResponseTest, output_type = output_type, sig_alpha = .1, 
-  #     background = 'yellow',
-  #     bold = if_else(pandoc_markup , TRUE, FALSE),
-  #     italic = if_else(pandoc_markup , TRUE, FALSE)
-  #     )
-  #   )
+  ungroup()
 ```
 
 ```{r magnitude-testing, warning=FALSE}
@@ -247,14 +239,7 @@ magnitude_results <- ICS_adata %>%
       )
     ) %>% 
    ungroup() %>% 
-  # mutate(
-  #   MagnitudeTest = pretty_pvalues(
-  #     MagnitudeTest, output_type = output_type, sig_alpha = .1,
-  #     background = "yellow",
-  #     bold = if_else(pandoc_markup , TRUE, FALSE),
-  #     italic = if_else(pandoc_markup , TRUE, FALSE)
-  #     )
-  #   ) %>% 
+  mutate(MagnitudeTest = round(MagnitudeTest, 3)) %>%
   rename("Median (Range)" = Median_Min_Max, 'Mean (SD)' = Mean_SD)
 ```
 
@@ -342,7 +327,11 @@ magnitude_tab <- magnitude_results %>%
   select(-Population, -contains("Perfect")) 
 
 flextable(magnitude_tab) %>%
+  fontsize(size = 7) %>%
   merge_v(1:2) %>%
+  width(1, 0.4, unit = "in") %>%
+  width(2, 0.4, unit = "in") %>%
+  bg(i = ~ (MagnitudeTest < 0.05), j = ~ MagnitudeTest, bg = "yellow") %>%
   add_footer_lines(values = as_paragraph("SD: standard deviation.")) %>%
   set_caption(caption,
               autonum = officer::run_autonum(seq_id = "tab", bkm = label))
@@ -362,7 +351,8 @@ my_session_info <- VISCfunctions::get_session_info()
 
 flextable(my_session_info$platform_table) %>%
   set_caption(caption,
-              autonum = officer::run_autonum(seq_id = "tab", bkm = label))
+              autonum = officer::run_autonum(seq_id = "tab", bkm = label)) %>%
+  width(2, 6, unit = "in")
 ```
 
 \newpage
