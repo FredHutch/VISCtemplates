@@ -1,5 +1,9 @@
 # VISCtemplates (development version)
 
+Bug Fix
+* Fix issue with insert_break() not inserting page breaks at times (#216)
+
+Other improvements
 * Reconcile differences between empty report template and other report templates (#204)
 * Remove dependency on the full tidyverse, per best practices (#213)
 
@@ -15,7 +19,7 @@ Bug Fixes
 * Fix bug with latex packages (specifically etex's \reserveinserts command) that broke PDF knitting (#160)
 * Fix bug that occurred when a report subdirectory did not already exist, and add unit test (#173)
 * Fix `insert_break()` to actually create a page break (#188)
-  + Update documentation to instruct users to use `\newpage` instead in new code
+  + Update documentation to instruct users to use latex command instead in new code
 
 Improvements to Report Templates
 * Update header logo for SCHARP/Fred Hutch branding compliance (#195)

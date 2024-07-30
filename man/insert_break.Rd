@@ -2,15 +2,14 @@
 % Please edit documentation in R/report_functions.R
 \name{insert_break}
 \alias{insert_break}
-\title{Insert a page break (deprecated)}
+\title{Insert a page break}
 \usage{
 insert_break()
 }
 \value{
-Inserts a page break (deprecated)
+Inserts a page break
 }
 \description{
-Do not use in new code. Use latex command
-\code{\\newpage} in your Rmd instead. This function is retained to not
-break old Rmd files created from previous templates.
+Use this function in your Rmd document to create a page break across PDF or
+Word output types
 }
