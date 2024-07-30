@@ -84,13 +84,13 @@ insert_ref <- function(ref, section_name = NA) {
 #' Insert a page break (deprecated)
 #'
 #' Do not use in new code. Use latex command
-#' \code{\\newpage} in your Rmd instead. This function is retained to not
+#' \code{\\clearpage} in your Rmd instead. This function is retained to not
 #' break old Rmd files created from previous templates.
 #'
 #' @return Inserts a page break (deprecated)
 #' @export
 insert_break <- function() {
-  '\\newpage'
+  '\\clearpage'
 }
 
 #' Insert references section header
