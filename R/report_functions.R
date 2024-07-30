@@ -81,16 +81,17 @@ insert_ref <- function(ref, section_name = NA) {
 }
 
 
-#' Insert a page break (deprecated)
+#' Insert a page break
 #'
-#' Do not use in new code. Use latex command
-#' \code{\\clearpage} in your Rmd instead. This function is retained to not
-#' break old Rmd files created from previous templates.
+#' Use this function in your Rmd document to create a page break across PDF or
+#' Word output types
 #'
-#' @return Inserts a page break (deprecated)
+#' @return Inserts a page break
 #' @export
 insert_break <- function() {
-  '\\clearpage'
+  ifelse(knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex',
+         '\\clearpage',
+         '\\newpage')
 }
 
 #' Insert references section header

@@ -1,7 +1,7 @@
 # VISCtemplates (development version)
 
 Bug Fix
-* Fix issue with insert_break() not inserting page breaks at times by replacing \newpage with \clearpage (#216)
+* Fix issue with insert_break() not inserting page breaks at times (#216)
 
 Other improvements
 * Reconcile differences between empty report template and other report templates (#204)

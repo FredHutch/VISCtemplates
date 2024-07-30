@@ -112,7 +112,7 @@ Add some text here
 
 Add some text here
 
-\clearpage
+`r insert_break()`
 
 # Reproducibility Software Information
 
@@ -143,7 +143,7 @@ kable(
   kable_styling(font_size = 10, latex_options = "hold_position")
 ```
 
-\clearpage
+`r insert_break()`
 
 # Acknowledgements
 
