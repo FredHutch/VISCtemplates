@@ -99,7 +99,7 @@ Add some text here
 
 Add some text here
 
-\newpage
+\clearpage
 
 # Reproducibility Software Information
 
@@ -129,6 +129,6 @@ kable(
   kable_styling(font_size = 10, latex_options = "hold_position")
 ```
 
-\newpage
+\clearpage
 
 `r insert_references_section_header()`

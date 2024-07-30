@@ -67,7 +67,7 @@ There are some new functions and coding conventions that help with knitting the 
 
 ### Page breaks
 
-* For page breaks use `\newpage`.
+* For page breaks use `\clearpage`.
     
 ### Referencing
 `

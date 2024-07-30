@@ -129,7 +129,7 @@ ICS_adata <- exampleData_ICS %>%
   filter(Population == "IFNg" & Group != 3)
 ```
 
-\newpage
+\clearpage
 
 # Summary of Main Results
 
@@ -285,7 +285,7 @@ Consider breaking up the results section by objective or by statistical endpoint
 Make sure to include p-values and references to relevant tables and figures. 
 See Figure `r insert_ref("fig:example-plot")` and Table `r insert_ref("tab:example-tab")`. 
 
-\newpage
+\clearpage
 
 # Figures and Tables
 
@@ -331,7 +331,7 @@ ICS_adata %>%
   )
 ```
 
-\newpage
+\clearpage
 
 ```{r example-tab, results="asis", warning=kable_warnings}
 
@@ -365,7 +365,7 @@ magnitude_tab %>%
   footnote("SD: standard deviation.", threeparttable = TRUE)
 ```
 
-\newpage
+\clearpage
 
 ```{r Software-Session-Information, results="asis", message=FALSE, warning=kable_warnings}
 # load in rmarkdown to capture verison number
@@ -393,7 +393,7 @@ kable(
   kable_styling(font_size = 10, latex_options = "hold_position")
 ```
 
-\newpage
+\clearpage
 
 # Acknowledgements
 
