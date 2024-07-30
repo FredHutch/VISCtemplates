@@ -1,4 +1,4 @@
-# VISCtemplates (development version)
+# VISCtemplates 1.3.2
 
 Bug Fix
 * Fix issue with insert_break() not inserting page breaks at times (#216)
