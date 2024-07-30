@@ -1,3 +1,8 @@
+# VISCtemplates 1.3.2
+
+Bug Fix
+* Fix issue with insert_break() not inserting page breaks at times by replacing \newpage with \clearpage (#216)
+
 # VISCtemplates 1.3.1
 
 Bug Fix
