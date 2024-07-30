@@ -1,7 +1,11 @@
-# VISCtemplates 1.3.2
+# VISCtemplates (development version)
 
 Bug Fix
 * Fix issue with insert_break() not inserting page breaks at times by replacing \newpage with \clearpage (#216)
+
+Other improvements
+* Reconcile differences between empty report template and other report templates (#204)
+* Remove dependency on the full tidyverse, per best practices (#213)
 
 # VISCtemplates 1.3.1
 

@@ -8,19 +8,12 @@ from:
    contact: true
  - name: FirstNameB LastNameB
 to:
- - name: FirstNameA LastNameA
- - name: FirstNameB LastNameB
  - name: FirstNameC LastNameC
  - name: FirstNameD LastNameD
- - name: FirstNameE LastNameE
- - name: FirstNameF LastNameF
 dropcc: false
 cc:
- - name: FirstNameA LastNameA
- - name: FirstNameB LastNameB
- - name: FirstNameC LastNameC
- - name: FirstNameD LastNameD
  - name: FirstNameE LastNameE
+ - name: FirstNameF LastNameF
 includesummary: true
 summary: 
   A short summary about your report. 
@@ -54,7 +47,7 @@ library(VISCfunctions)
 check_pandoc_version()
 
 # packages installed from CRAN
-packages_needed <- c("conflicted", "tidyverse", "knitr", "kableExtra", "rprojroot", "remotes")
+packages_needed <- c("conflicted", "ggplot2", "dplyr", "knitr", "kableExtra", "rprojroot", "remotes")
 install_load_cran_packages(packages_needed)
 
 # where to install and look for packages (e.g., data packages) installed on SCHARP server
@@ -62,9 +55,15 @@ my_data_package_lib <- "/Volumes/kmacphee/RLib/" # UPDATE WITH YOUR DATA PACKAGE
 .libPaths(c(.libPaths(), my_data_package_lib))
 
 # knitr options
-opts_chunk$set(cache = FALSE, message = TRUE, warning = TRUE, echo = FALSE, 
-               dev = c("png", "pdf"), dpi = 200, out.width = "100%", 
-               out.extra = "", fig.pos = "H")
+opts_chunk$set(cache = FALSE,
+               message = TRUE,
+               warning = TRUE,
+               echo = FALSE, 
+               dev = c("png", "pdf"),
+               dpi = 200,
+               out.width = "100%", 
+               out.extra = "",
+               fig.pos = "H")
 # fig.align argument is not supported in Word (align in template docx)
 if (knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex'){
   opts_chunk$set(fig.align = "center")
@@ -73,14 +72,11 @@ if (knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex'){
 # NA's will be blank in tables
 options(knitr.kable.NA = '')
 
-# Create a theme 
+# Create a ggplot theme for consistency of figures
 visc_theme <- theme_bw() + 
-  theme(
-    legend.position = "bottom", 
-    legend.margin = margin(unit = "cm"),
-    panel.grid.minor = element_blank()
-    )
-
+  theme(legend.position = "bottom", 
+        legend.margin = margin(unit = "cm"),
+        panel.grid.minor = element_blank())
 theme_set(visc_theme)
 
 # Set group colors for this example.
@@ -386,7 +382,8 @@ kable(
 ```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
 kable(
   my_session_info$packages_table, 
-  format = output_type, booktabs = TRUE, 
+  format = output_type,
+  booktabs = TRUE, 
   linesep = "", 
   caption = "Reproducibility software package version information"
   ) %>% 
