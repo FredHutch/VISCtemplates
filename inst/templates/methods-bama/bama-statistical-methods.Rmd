@@ -22,8 +22,7 @@ antibody response by BAMA if they met three criteria:
 
 * Net MFI values at the screening dilution were greater than the maximum of 100 or 
 the 95th percentile of baseline samples (by antigen).
-* Net MFI values were greater than three times the baseline background-adjusted MFI 
-minus baseline background-adjusted blank values.
+* Net MFI values were greater than three times the baseline net MFI.
 * Background-adjusted MFI values were greater than three times the baseline 
 background-adjusted MFI values.
 
