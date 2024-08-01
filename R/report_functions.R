@@ -15,7 +15,10 @@ install_load_cran_packages <- function(packages) {
         stop(paste0("The package ", package, " must be installed through GitHub:
                   https://github.com/FredHutch/", package, ".git"))
       } else {
-        utils::install.packages(package)
+        # provide a default CRAN mirror if missing (e.g. in knitr R session)
+        repos <- getOption("repos")
+        if ("@CRAN@" %in% repos) repos <- "https://cloud.r-project.org/"
+        utils::install.packages(package, repos = repos)
         # install.packages() installs packages from the repository identified in
         # options('repos'), which is CRAN by default. To change this
         # setting, edit your .Rprofile. To view a list of available CRAN
