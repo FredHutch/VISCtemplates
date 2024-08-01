@@ -7,7 +7,7 @@
 use_visc_report(
   report_name = "PT-Report",
   path = ".",
-  report_type = c("empty", "generic", "bama", "nab")
+  report_type = c("empty", "generic", "bama", "nab", "adcc")
 )
 }
 \arguments{
@@ -15,7 +15,7 @@ use_visc_report(
 
 \item{path}{path of the file within the active project}
 
-\item{report_type}{"empty", "generic", "bama", or "nab"}
+\item{report_type}{"empty", "generic", "bama", "nab", or "adcc"}
 }
 \description{
 This function creates a template R Markdown file for a VISC report.

@@ -4,12 +4,12 @@
 \alias{use_visc_methods}
 \title{Use template files for methods sections in PT reports}
 \usage{
-use_visc_methods(path = ".", assay = c("generic", "bama", "nab"))
+use_visc_methods(path = ".", assay = c("generic", "bama", "nab", "adcc"))
 }
 \arguments{
 \item{path}{path within the active project}
 
-\item{assay}{"bama" or "generic"}
+\item{assay}{"generic", "bama", "nab" or "adcc"}
 }
 \description{
 Creates a "methods" directory that contains 3 "child" R Markdown documents
