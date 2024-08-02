@@ -1,8 +1,0 @@
----
-title: "icaba-biological-endpoints"
-output: html_document
-date: '2022-11-03'
----
-
-# Biological Endpoints
-Plasma Ab binding to HIV-1 envelope expressed on the surface of infected cells were measured using Infected Cell Antibody Binding Assay (ICABA) from specimens obtained at [insert visit]. ICABA responses were reported as percent of FITC positive cells and FITC MFI among the viable p24 positive events after subtracting the background observed for the prevaccination samples.
