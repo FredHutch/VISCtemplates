@@ -23,19 +23,19 @@ A positive response is defined as peak activity greater than or equal to 8\%. Ta
 
 ### Percent loss
 
-Percent loss Luciferase activity was averaged over wells within participant, timepoint, and dilution. Baseline-subtracted percent loss activity was calculated for each dilution as baseline activity subtracted from post-baseline activity. Negative values were truncated at zero.
+Percent specific killing was averaged over wells within participant, timepoint, and dilution. Baseline-subtracted percent loss activity was calculated for each dilution as baseline activity subtracted from post-baseline activity. Negative values were truncated at zero.
 
 ### Peak percent loss
 
-Baseline-subtracted peak percent (\%) loss Luciferase activity was defined as the maximum baseline-subtracted activity across the six dilution levels.
+Baseline-subtracted peak percent (\%) specific killing was defined as the maximum baseline-subtracted activity across the six dilution levels.
 
 ### AUC
 
-Nonparametric partial Area under the baseline-subtracted curves ("pAUC"), calculated using the trapezoidal rule on three dilutions of the baseline-subtracted curves, setting baseline-subtracted loss Luciferase activity less than 0\% to zero.
+Nonparametric partial Area under the baseline-subtracted curves ("pAUC"), calculated using the trapezoidal rule on three dilutions of the baseline-subtracted curves, setting baseline-subtracted percent specific killing less than 0\% to zero.
 
 ### Response call
 
-A response is defined as positive if the peak baseline-subtracted \% loss Luciferase activity greater than or equal to 10\% for either the 1:50 or 1:200 dilution.
+A response is defined as positive if the peak baseline-subtracted \% specific killing activity greater than or equal to 10\% for either the 1:50 or 1:200 dilution.
 
 # Statistical Methods GTL and Luciferase
 
