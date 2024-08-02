@@ -18,7 +18,7 @@
 # succeed, they will be in a snapshots artifact. Hopefully soon this will be
 # changed to always have the latter behavior regardless of test success.
 local({
-  for (report_type in c('generic', 'empty', 'bama', 'nab')){
+  for (report_type in c('generic', 'empty', 'bama', 'nab', 'adcc')){
     for (output_ext in c('pdf', 'docx')){
       test_knit_report(report_type, output_ext)
     }
