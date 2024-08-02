@@ -1,6 +1,5 @@
 ---
 title: "lab-methods"
-date: "2022-10-26"
 ---
 
 <!-- This file was adapted from VISCtemplates {{pkg_ver}}. -->
@@ -14,7 +13,7 @@ ADCC is quantified as net percent granzyme B activity, which is the percent of t
 
 # Lab Methods Luciferase
 
-We utilized a modified version of a previously published ADCC luciferase procedure [@Pollara2014, @Fisher2019] . Briefly, CEM.NKRCCR5 cells [@Trkola1999] were used as targets for ADCC luciferase assays after infection by one of the following HIV-1 [vaccine-matched, if all IMCs are vaccine-matched; if not, indicate match in table below] IMCs:
+We utilized a modified version of a previously published ADCC luciferase procedure [@Pollara2014; @Fisher2019] . Briefly, CEM.NKRCCR5 cells [@Trkola1999] were used as targets for ADCC luciferase assays after infection by one of the following HIV-1 [vaccine-matched, if all IMCs are vaccine-matched; if not, indicate match in table below] IMCs:
 Complete IMC name	Accession Number	Abbreviated name	Vaccine Match
 [Full name, as uploaded by lab]	[provided by lab]	[SRA-derived abbreviated name shown in tables and figures]	[if a mix of matched and unmatched IMCs were tested, indicate here which were matched]
 
