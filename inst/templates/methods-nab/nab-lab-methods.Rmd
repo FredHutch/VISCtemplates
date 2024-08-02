@@ -13,7 +13,7 @@ https://www.hiv.lanl.gov/components/sequence/HIV/neutralization/
 
 Neutralizing antibodies against HIV-1 pseudoviruses were measured as a function 
 of reduction in Tat-regulated luciferase (Luc) reporter gene expression in 
-TZM-bl cells [@Montefiori2009], [@Sarzotti-Kelsoe2014]. 
+TZM-bl cells [@Montefiori2009; @Sarzotti-Kelsoe2014].
 Neutralization titer was defined as the serum dilution at which relative 
 luminescence units (RLUs) were reduced by 50% (ID~50~) relative to the RLUs in 
 virus control wells (cell + virus only) after subtraction of background RLUs 

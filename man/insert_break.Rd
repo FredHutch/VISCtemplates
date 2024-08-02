@@ -7,12 +7,9 @@
 insert_break()
 }
 \value{
-inserts a page break
+Inserts a page break
 }
 \description{
-Use this function in an R Markdown document to insert a page break when you
-are knitting both PDF (Latex) and Word document reports.
-}
-\examples{
-\dontrun{visc_break()}
+Use this function in your Rmd document to create a page break across PDF or
+Word output types
 }
