@@ -47,7 +47,7 @@ library(VISCfunctions)
 check_pandoc_version()
 
 # packages installed from CRAN
-packages_needed <- c("conflicted", "ggplot2", "dplyr", "knitr", "kableExtra", "rprojroot", "remotes")
+packages_needed <- c("conflicted", "ggplot2", "dplyr", "knitr", "flextable", "rprojroot", "remotes")
 install_load_cran_packages(packages_needed)
 
 # where to install and look for packages (e.g., data packages) installed on SCHARP server
@@ -69,8 +69,19 @@ if (knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex'){
   opts_chunk$set(fig.align = "center")
 }
 
-# NA's will be blank in tables
-options(knitr.kable.NA = '')
+
+# table settings
+set_flextable_defaults(na_str = "", # NA's will be blank in tables
+                       font.size = 8,
+                       theme_fun = "theme_vanilla",
+                       table.layout = "autofit",
+                       digits = 3,
+                       fonts_ignore = TRUE)
+add_caption_and_label <- function(x, caption, label) {
+  set_caption(x,
+              caption = caption,
+              autonum = officer::run_autonum(seq_id = "tab", bkm = label))
+}
 
 # Create a ggplot theme for consistency of figures
 visc_theme <- theme_bw() + 
@@ -93,14 +104,6 @@ group_colors <- c(
 
 # filter() is used in both dplyr and stats, so need to set the preference to dplyr
 conflict_prefer("filter", "dplyr")
-```
-
-```{r word-pdf-options}
-
-output_type <- get_output_type()
-
-kable_warnings <- set_kable_warnings(output_type)
-pandoc_markup <- set_pandoc_markup(output_type)
 ```
 
 ```{r data-package, eval=FALSE}
@@ -147,9 +150,10 @@ be used across PT reports for the protocol. -->
 
 <!-- Also include the study schema here. -->
 
-```{r study-schema, results="asis", warning=kable_warnings}
+```{r}
 source(rprojroot::find_rstudio_root_file("R", "study_schema.R"), local = TRUE)
-study_schema()
+flextable(schema_table) %>%
+  add_caption_and_label("[CAVD PI and number] study schema", "study-schema")
 ```
 
 Describe this report - "This report presents [blinded/unblinded] [list assay] data 
@@ -216,15 +220,7 @@ response_results <- ICS_adata %>%
         verbose = FALSE
         )
     ) %>%  
-  ungroup() %>% 
-  mutate(
-    ResponseTest = pretty_pvalues( 
-      ResponseTest, output_type = output_type, sig_alpha = .1, 
-      background = 'yellow',
-      bold = if_else(pandoc_markup , TRUE, FALSE),
-      italic = if_else(pandoc_markup , TRUE, FALSE)
-      )
-    )
+  ungroup()
 ```
 
 ```{r magnitude-testing, warning=FALSE}
@@ -245,14 +241,7 @@ magnitude_results <- ICS_adata %>%
       )
     ) %>% 
    ungroup() %>% 
-  mutate(
-    MagnitudeTest = pretty_pvalues(
-      MagnitudeTest, output_type = output_type, sig_alpha = .1,
-      background = "yellow",
-      bold = if_else(pandoc_markup , TRUE, FALSE),
-      italic = if_else(pandoc_markup , TRUE, FALSE)
-      )
-    ) %>% 
+  mutate(MagnitudeTest = round(MagnitudeTest, 3)) %>%
   rename("Median (Range)" = Median_Min_Max, 'Mean (SD)' = Mean_SD)
 ```
 
@@ -329,65 +318,51 @@ ICS_adata %>%
 
 `r insert_break()`
 
-```{r example-tab, results="asis", warning=kable_warnings}
+```{r}
 
-magnitude_tab <- magnitude_results %>% 
-  select(-Population, -contains("Perfect")) 
+label <- "example-tab"
+caption <- "Example caption (should be short but specific, as it will be used in list of tables)"
+footnotes <- c("SD: standard deviation.",
+               "Any other details needed to understand the table.")
 
-caption_short <- "Short caption to show in List of Tables."
-
-caption <- "Long caption to show above table. Explain everything needed to understand the table here."
-
-magnitude_tab %>%
-  kable(
-    format = output_type, 
-    longtable = FALSE, 
-    booktabs = TRUE,
-    linesep = "", 
-    escape = FALSE,
-    caption.short = caption_short,
-    caption = caption
-  ) %>%
-  kable_styling(
-    font_size = 8,
-    # Note scale_down will overwrite font_size specifications
-    latex_options = c("hold_position", "scale_down", "repeat_header")
-  ) %>% 
-  collapse_rows(
-    columns = 1:2, 
-    row_group_label_position = "identity",
-    latex_hline = "full"
-    ) %>% 
-  footnote("SD: standard deviation.", threeparttable = TRUE)
+magnitude_results %>% 
+  select(-Population, -contains("Perfect")) %>%
+  flextable() %>%
+  fontsize(size = 7) %>%
+  merge_v(1:2) %>%
+  width(1, 0.4, unit = "in") %>%
+  width(2, 0.4, unit = "in") %>%
+  highlight(i = ~ (MagnitudeTest < 0.05), j = ~ MagnitudeTest, color = "yellow") %>%
+  add_footer_lines(values = footnotes) %>%
+  add_caption_and_label(caption, label)
 ```
 
 `r insert_break()`
 
-```{r Software-Session-Information, results="asis", message=FALSE, warning=kable_warnings}
-# load in rmarkdown to capture verison number
+```{r}
+
+label <- "Software-Session-Information"
+caption <- "Reproducibility software session information"
+
+# load in rmarkdown to capture version number
 if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmarkdown))
 
 my_session_info <- VISCfunctions::get_session_info()
 
-kable(
-  my_session_info$platform_table, 
-  format = output_type, 
-  booktabs = TRUE, 
-  linesep = "", 
-  caption = "Reproducibility software session information"
-  ) %>% 
-  kable_styling(font_size = 10, latex_options = "hold_position")
+flextable(my_session_info$platform_table) %>%
+  add_caption_and_label(caption, label) %>%
+  width(2, 6, unit = "in")
 ```
 
-```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
-kable(
-  my_session_info$packages_table, 
-  format = output_type,
-  booktabs = TRUE, 
-  linesep = "", 
-  caption = "Reproducibility software package version information"
-  ) %>% 
-  kable_styling(font_size = 10, latex_options = "hold_position")
+\newpage
+
+```{r}
+
+label <- "Software-Package-Version-Information"
+caption <- "Reproducibility software package version information"
+
+flextable(my_session_info$packages_table) %>%
+  add_caption_and_label(caption, label)
 ```
 
 `r insert_break()`
