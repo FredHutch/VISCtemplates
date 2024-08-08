@@ -8,10 +8,12 @@ from:
    contact: true
  - name: FirstNameB LastNameB
 to:
- - name: FirstNameA LastNameA
+ - name: FirstNameC LastNameC
+ - name: FirstNameD LastNameD
 dropcc: false
 cc:
- - name: FirstNameA LastNameA
+ - name: FirstNameE LastNameE
+ - name: FirstNameF LastNameF
 includesummary: true
 summary: 
   A short summary about your report. 
@@ -26,6 +28,7 @@ output:
 ---
 
 <!---
+This section is required according to WI-0010.
 Program Name:
 Creation Date:
 Full name of author:
@@ -36,19 +39,27 @@ Location of input data:
 --->
 
 ```{r package-loading-and-options, include=FALSE}
+
+# packages installed from GitHub
 library(VISCtemplates)
 library(VISCfunctions)
 
 check_pandoc_version()
 
-packages_needed <- c("conflicted", "tidyverse", "knitr", "kableExtra")
-
+# packages installed from CRAN
+packages_needed <- c("conflicted", "dplyr", "knitr", "kableExtra", "rprojroot")
 install_load_cran_packages(packages_needed)
 
 # knitr options
-opts_chunk$set(cache = FALSE, message = TRUE, warning = TRUE, echo = FALSE, 
-               dev = c("png", "pdf"), dpi = 200, out.width = '100%', 
-               out.extra = '', fig.pos = "H")
+opts_chunk$set(cache = FALSE,
+               message = TRUE,
+               warning = TRUE,
+               echo = FALSE, 
+               dev = c("png", "pdf"),
+               dpi = 200,
+               out.width = "100%", 
+               out.extra = "",
+               fig.pos = "H")
 # fig.align argument is not supported in Word (align in template docx)
 if (knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex'){
   opts_chunk$set(fig.align = "center")
@@ -57,24 +68,12 @@ if (knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex'){
 # NA's will be blank in tables
 options(knitr.kable.NA = '')
 
-# Create a theme 
+# Create a ggplot theme for consistency of figures
 visc_theme <- theme_bw() + 
-  theme(
-    legend.position = "bottom", 
-    legend.margin = margin(unit = "cm"),
-    panel.grid.minor = element_blank()
-    )
-
+  theme(legend.position = "bottom", 
+        legend.margin = margin(unit = "cm"),
+        panel.grid.minor = element_blank())
 theme_set(visc_theme)
-
-# Set group colors for this example.
-# If you have group colors already in your project:
-# source(rprojroot::find_rstudio_root_file("docs", "group-colors.R"), local = TRUE)
-group_colors <- c(
-  `1` = "#D92321",
-  `2` = "#1749FF",
-  `4` = "#0AB7C9"
-)
 ```
 
 ```{r conflicted-preferences, message=FALSE}
@@ -91,6 +90,20 @@ kable_warnings <- set_kable_warnings(output_type)
 pandoc_markup <- set_pandoc_markup(output_type)
 ```
 
+```{r read-data}
+
+# Read in your data in this chunk
+
+```
+
+```{r data-processing}
+
+# Do your data processing in this chunk
+
+```
+
+\newpage
+
 # Section Header
 
 Add some text here
@@ -99,7 +112,7 @@ Add some text here
 
 Add some text here
 
-\newpage
+`r insert_break()`
 
 # Reproducibility Software Information
 
@@ -122,12 +135,19 @@ kable(
 ```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
 kable(
   my_session_info$packages_table, 
-  format = output_type, booktabs = TRUE, 
+  format = output_type,
+  booktabs = TRUE, 
   linesep = "", 
   caption = "Reproducibility software package version information"
   ) %>% 
   kable_styling(font_size = 10, latex_options = "hold_position")
 ```
+
+`r insert_break()`
+
+# Acknowledgements
+
+Include your acknowledgements in this section.
 
 \newpage
 
