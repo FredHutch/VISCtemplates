@@ -106,6 +106,8 @@ use_bib <- function(study_name) {
 #' @param report_name name of the file (character)
 #' @param path path of the file within the active project
 #' @param report_type "empty", "generic", "bama", or "nab"
+#' @param interactive TRUE by default. FALSE is for non-interactive unit testing
+#'   only.
 #'
 #' @export
 #'
@@ -119,43 +121,40 @@ use_bib <- function(study_name) {
 #' }
 use_visc_report <- function(report_name = "PT-Report",
                             path = ".",
-                            report_type = c("empty", "generic", "bama", "nab")) {
+                            report_type = c("empty", "generic", "bama", "nab"),
+                            interactive = TRUE) {
 
   stopifnot(report_type %in% c("empty", "generic", "bama", "nab"))
 
-  if (report_type == "empty") {
-    rmarkdown::draft(
-      file = file.path(path, report_name),
-      template = "visc_empty",
-      package = "VISCtemplates",
-      create_dir = TRUE,
-      edit = FALSE
-      )
-    usethis::ui_done(
-      glue::glue("Creating an empty VISC report at '{{file.path(path, report_name)}}'")
-      )
+  # suppress usethis output when non-interactive
+  old_usethis_quiet <- getOption('usethis.quiet')
+  on.exit(options(usethis.quiet = old_usethis_quiet))
+  options(usethis.quiet = ! interactive)
 
-  } else {
-
-    challenge_visc_report(report_name)
-
-    rmarkdown::draft(
-      file = file.path(path, report_name),
-      template = "visc_report",
-      package = "VISCtemplates",
-      create_dir = TRUE,
-      edit = FALSE
-    )
-    usethis::ui_done(
-      glue::glue("Creating a VISC report at '{{file.path(path, report_name)}}'")
-    )
-    use_visc_methods(path = file.path(path, report_name), assay = report_type)
+  if (report_type != 'empty') challenge_visc_report(report_name, interactive)
+  if (! dir.exists(path)) dir.create(path, recursive = TRUE)
+  use_template <- paste0(
+    'visc', '_', if (report_type == 'empty') 'empty' else 'report'
+  )
+  rmarkdown::draft(
+    file = file.path(path, report_name),
+    template = use_template,
+    package = "VISCtemplates",
+    edit = FALSE
+  )
+  usethis::ui_done(
+    glue::glue("Creating {{report_type}} VISC report at '{{file.path(path, report_name)}}'")
+  )
+  if (report_type != 'empty'){
+    use_visc_methods(path = file.path(path, report_name), assay = report_type,
+                     interactive = interactive)
   }
 
 
 }
 
-challenge_visc_report <- function(report_name) {
+challenge_visc_report <- function(report_name, interactive = TRUE) {
+  if (! interactive) return(invisible(NULL))
 
   continue <- usethis::ui_yeah("
     Creating a new VISC PT Report called {report_name}.
@@ -180,6 +179,8 @@ challenge_visc_report <- function(report_name) {
 #'
 #' @param assay "bama" or "generic"
 #' @param path path within the active project
+#' @param interactive TRUE by default. FALSE is for non-interactive unit testing
+#'   only.
 #'
 #' @export
 #'
@@ -187,7 +188,13 @@ challenge_visc_report <- function(report_name) {
 #' \dontrun{
 #' use_visc_methods(path = "bama/BAMA-PT-Report", assay = "bama")
 #' }
-use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab")) {
+use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab"),
+                             interactive = TRUE) {
+
+  # suppress usethis output when non-interactive
+  old_usethis_quiet <- getOption('usethis.quiet')
+  on.exit(options(usethis.quiet = old_usethis_quiet))
+  options(usethis.quiet = ! interactive)
 
   pkg_ver <- utils::packageVersion("VISCtemplates")
 
@@ -223,96 +230,4 @@ use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab")) {
     package = "VISCtemplates"
   )
 
-}
-
-#' Convert to a VISC Report PDF/LaTeX document
-#'
-#' Runs the VISC Report for PDF output based on the template.tex file.
-#'
-#' @param latex_engine latex engine to use
-#' @param keep_tex keep the .tex file
-#' @param ... other options to pass to \code{bookdown::pdf_document2()}
-#'
-#' @details
-#'
-#' Normally used through `output:VISCtemplates::visc_pdf_document` in the .rmd YAML
-#'
-#' @export
-#'
-visc_pdf_document <- function(latex_engine = "pdflatex",
-                              keep_tex = TRUE,
-                              ...) {
-  template <- find_resource("visc_report", "template.tex")
-
-  logo_path_scharp <- find_resource("visc_report", "SCHARP_logo.png")
-  logo_path_fh <- find_resource("visc_report", "FredHutch_logo.png")
-  logo_path_visc <- find_resource("visc_report", "VISC_logo.jpg")
-
-  # If no project-level bib file creating report specific bib
-  if (!file.exists(here::here('docs', 'bibliography.bib'))) {
-    file.copy(from = system.file("templates", 'bibliography.bib',
-                                 package = "VISCtemplates"),
-            to = "bibliography.bib",
-            overwrite = FALSE)
-   }
-
-  file.copy(from = find_resource("visc_report", "README_PT_Report.md"),
-            to = "README.md",
-            overwrite = FALSE)
-
-  bookdown::pdf_document2(
-    template = template,
-    keep_tex = keep_tex,
-    fig_caption = TRUE,
-    latex_engine = latex_engine,
-    pandoc_args = c(
-      "-V", paste0("logo_path_scharp=", logo_path_scharp),
-      "-V", paste0("logo_path_fh=", logo_path_fh),
-      "-V", paste0("logo_path_visc=", logo_path_visc)
-    ),
-    ...)
-}
-
-
-#' Convert to a VISC Report Word document
-#'
-#' Runs the VISC Report for PDF output based on the template.tex file.
-#'
-#' @param toc include table of contents
-#' @param fig_caption all figure captions
-#' @param keep_md keep the .tex file
-#' @param ... other options to pass to \code{bookdown::word_document2()}
-#'
-#' @details
-#'
-#' Normally used through `output:VISCtemplates::visc_word_document` in the .rmd YAML
-#'
-#' @export
-#'
-visc_word_document <- function(toc = TRUE,
-                               fig_caption = TRUE,
-                               keep_md = TRUE,
-                              ...) {
-
-  word_style_path <- find_resource("visc_report", "word-styles-reference.docx")
-
-  # If no project-level bib file creating report specific bib
-  if (!file.exists(here::here('docs', 'bibliography.bib'))) {
-    file.copy(from = system.file("templates", 'bibliography.bib',
-                                 package = "VISCtemplates"),
-              to = "bibliography.bib",
-              overwrite = FALSE)
-  }
-
-  file.copy(from = find_resource("visc_report", "README_PT_Report.md"),
-            to = "README.md",
-            overwrite = FALSE)
-
-  bookdown::word_document2(
-    toc = toc,
-    fig_caption = fig_caption,
-    keep_md = keep_md,
-    reference_docx = word_style_path,
-    number_sections = FALSE,
-    ...)
 }

@@ -3,16 +3,18 @@
 #' Creates a new R project with a VISC analysis project structure.
 #'
 #' @param path file path
+#' @param interactive TRUE by default. FALSE is for non-interactive unit testing
+#'   only.
 #'
 #' @return opens a new RStudio session with template project directory
 #' @export
-create_visc_project <- function(path){
+create_visc_project <- function(path, interactive = TRUE){
 
-  challenge_directory(path)
+  challenge_directory(path, interactive)
 
   # top level folder should follow VDCNNNAnalysis format
   repo_name <- basename(path)
-  challenge_visc_name(repo_name)
+  challenge_visc_name(repo_name, interactive)
 
   # get "VDCNNN" if it exists
   # this is a variable that is inserted into templates
@@ -22,9 +24,16 @@ create_visc_project <- function(path){
     study_name <- repo_name
   }
 
+  # suppress usethis output when non-interactive
+  old_usethis_quiet <- getOption('usethis.quiet')
+  on.exit(options(usethis.quiet = old_usethis_quiet))
+  options(usethis.quiet = ! interactive)
+
   # create package
   usethis::create_package(
-    path = path
+    path = path,
+    rstudio = TRUE,
+    open = interactive
   )
 
   # must set active project otherwise it is <no active project>
@@ -53,13 +62,13 @@ create_visc_project <- function(path){
 }
 
 
-challenge_directory <- function(path) {
+challenge_directory <- function(path, interactive = TRUE) {
 
   path <- fs::path_expand(path)
 
   dir_exists <- dir.exists(path)
 
-  if (dir_exists) {
+  if (dir_exists && interactive) {
 
     continue <- usethis::ui_yeah("
       The directory {path} already exists.
@@ -76,7 +85,8 @@ challenge_directory <- function(path) {
 }
 
 
-challenge_visc_name <- function(repo_name) {
+challenge_visc_name <- function(repo_name, interactive = TRUE) {
+  if (! interactive) return(invisible(NULL))
 
   continue <- usethis::ui_yeah("
     Creating a new VISC project called {repo_name}.

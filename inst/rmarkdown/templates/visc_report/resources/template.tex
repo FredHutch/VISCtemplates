@@ -1,37 +1,58 @@
+% general document layout
 \documentclass[11pt]{article}
-\usepackage{etex}
-\reserveinserts{28}
-\usepackage{lastpage}
 \usepackage[hmargin=2cm, top=2.7cm, bottom=3.5cm, footskip=0.5cm]{geometry}
-\usepackage{url}
-\usepackage[maxfloats=50]{morefloats}
-\usepackage{parskip}
-%\usepackage[citestyle=authoryear-comp,natbib=true]{biblatex}
-\usepackage{pdflscape}
-\usepackage[absolute]{textpos}
-\usepackage{rotating} %for xtable sideways
-\usepackage{verbatim}
+\usepackage{fancyhdr} % Extensive control of page headers and footers
+\usepackage[dvipsnames, table]{xcolor} % Driver-independent color extensions for LATEX and pdfLATEX
+\usepackage{lscape} % Modifies the margins and rotates the page contents but not the page number. Useful, for example, with large multipage tables, as it is compatible with longtable
+\usepackage{pdflscape} % adds PDF support to the landscape environment of package lscape
+\usepackage{lastpage} % for referencing last page in footers as "page N of M"
+\usepackage{setspace} % Provides support for setting the spacing between lines in a document
+\usepackage{float} % Improves the interface for defining floating objects such as figures and tables
+\usepackage[maxfloats=50]{morefloats} % Increase the number of simultaneous LATEX floats (default can only cope with 18)
+
+% table formatting
+\usepackage{multirow} % for creating tabular cells spanning multiple rows
+\usepackage{makecell} % Tabular column heads and multilined cells
 \usepackage{longtable}
-\usepackage{multirow}
-\usepackage{lipsum}
-%\usepackage[acronym,nomain]{glossaries}
-\usepackage{fancyhdr, graphicx, lastpage, ifthen, lscape}
-\usepackage[dvipsnames, table]{xcolor}
-\usepackage{soul}
 \usepackage{booktabs}
-\usepackage{setspace}
-\usepackage{relsize}
-\usepackage{tabularx}
-\usepackage{makecell}
-\usepackage{threeparttable}
-\usepackage{threeparttablex}
-\usepackage{hyperref}
-\usepackage{float}
+\usepackage{tabularx} % defines an environment tabularx, an extension of tabular which has an additional column designator, X, which creates a paragraph-like column whose width automatically expands so that the declared width of the environment is filled
+\usepackage{rotating} % for xtable sideways
+\usepackage{threeparttable} % provides a scheme for tables that have a structured (foot)note section, after the caption
+\usepackage{threeparttablex} % provides the functionality of the threeparttable package to tables created using the longtable package
 
+% being able to set emphasis for entire table row
+\newcommand\setrow[1]{\gdef\rowmac{#1}#1\ignorespaces}
+\newcommand\clearrow{\global\let\rowmac\relax}
+\clearrow
 
+% for links and cross-referencing
+\usepackage{url} % for email addresses, hypertext links, directories/paths, etc.
+\usepackage{hyperref} % for cross-referencing commands to produce hypertext links in the document
+\hypersetup{
+  colorlinks = true, % color links instead of covering them w/red boxes
+  urlcolor   = blue, % color for external hyperlinks
+  linkcolor  = cyan, % color of internal links
+  citecolor  = gray  % color of citations
+}
 
-\bibliography{$bibliography$}
+% other utilities
+\usepackage{graphicx} % Enhanced support for graphics
+\usepackage{ifthen} % Conditional commands such as \ifthenelse andn \whiledo
+\usepackage{verbatim} % Reimplementation of and extensions to LATEX verbatim
+\usepackage{parskip} % alleviate untidiness from changing \parskip and \parindent
+\usepackage{lipsum} % Easy access to the Lorem Ipsum and other dummy texts
+\usepackage{soul} % Hyphenation for letterspacing, underlining, and more
+\usepackage{relsize} % Set the font size relative to the current font size
 
+% Add unicode checkmark for DataPackageR support. The green checkmark
+% that DataPackageR prints to the console during package_build() causes
+% an error with latex. This changes the unicode checkmark to a latex one.
+\DeclareUnicodeCharacter{2714}{\checkmark}
+
+% page settings
+\setlength{\footskip}{56pt}
+\pagestyle{fancy}
+\setlength{\parindent}{0pt}
 
 % For knitr
 \usepackage{lmodern}
@@ -106,22 +127,19 @@
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
 % End For knitr
 
-\renewcommand{\abstractname}{Overview}
+% ------------------------------------------------------------------------------
+% settings for bibliography/references section
 
-% Add unicode checkmark for DataPackageR support. The green checkmark
-% that DataPackageR prints to the console during package_build() causes
-% an error with latex. This changes the unicode checkmark to a latex one.
-\DeclareUnicodeCharacter{2714}{\checkmark}
+\bibliography{$bibliography$}
 
-% Configure hyperref formatting bookmarks and references
-\hypersetup{
-  colorlinks = true, % color links instead of covering them w/red boxes
-  urlcolor   = blue, % color for external hyperlinks
-  linkcolor  = cyan, % color of internal links
-  citecolor  = gray  % color of citations
-}
-
-$if(csl-refs)$
+% pandoc requires the CSLReferences environment to be defined for bibliographies
+% and a breaking change was introduced in pandoc version 3.1.7
+% (https://pandoc.org/releases.html#pandoc-3.1.7-2023-08-31)
+% so we need to define it differently depending on the pandoc version used
+% note that the value of use_old_csl_refs is set aumotically in
+% visc_pdf_document()
+$if(use_old_csl_refs)$
+% older version of CSLReferences
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{1.5em}
 \newlength{\csllabelwidth}
@@ -135,16 +153,55 @@ $if(csl-refs)$
   \ifnum #2 > 0
   \setlength{\parskip}{#2\baselineskip}
   \fi
- }%
+}%
  {}
 \usepackage{calc}
 \newcommand{\CSLBlock}[1]{#1\hfill\break}
 \newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+$else$
+% newer version of CSLReferences that uses a list environment with bibitems
+% commands below were adapted from pandoc 3.2 template (as of May 31, 2024) at
+% https://github.com/jgm/pandoc/blob/main/data/templates/default.latex#L384C1-L418C8
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  % \setlength{\itemsep}{#2\baselineskip}}}
+  \setlength{\itemsep}{\baselineskip}}} % hard-code single line skip between entries
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 $endif$
 
-%this is to adjust header and footer in landscaped pages
+
+% this is to adjust header and footer in landscaped pages
 \fancypagestyle{lscape}{%
     \fancyhf{} % clear all header and footer fields
     \fancyhead[R]{\begin{footnotesize}
@@ -154,7 +211,6 @@ $endif$
     \begin{textblock}{1}(21,1.75){\color{gray}\rotatebox{90}{Page \thepage{}~of~\pageref{LastPage}}}\end{textblock}
     \end{footnotesize} }
     \fancyfoot[R]{\begin{footnotesize}
-%     \begin{textblock}{19.8}[-0.01,{\DynLength}](1.5,23.20){\color{gray}\rotatebox{90}{\Rver}}\end{textblock}
     \begin{textblock}{19.8}(1.5,23.20){\color{gray}\rotatebox{90}{\Rver}}\end{textblock}
     \end{footnotesize} }
     \setlength{\TPHorizModule}{1cm}
@@ -162,53 +218,46 @@ $endif$
     \renewcommand{\headrulewidth}{0.0pt}
     \renewcommand{\footrulewidth}{0.0pt}}
 
-%set header and footer for first page
-\renewcommand{\headrulewidth}{0.8pt}
-\renewcommand{\footrulewidth}{0.8pt}
-\fancyhead[L]{\includegraphics[height=0.8cm]{$logo_path_scharp$}}
-$if(dropVISClogo)$
-$else$
-\fancyhead[C]{\includegraphics[height=0.8cm]{$logo_path_visc$}}
-$endif$
-\fancyhead[R]{\includegraphics[height=0.8cm]{$logo_path_fh$}}
-\fancyfoot[C]{Page \thepage{}~of~\pageref{LastPage}}
-\setlength{\headheight}{27pt}
-
-%decrease margins for landscape pages
+% decrease margins for landscape pages
 \newenvironment{changemargin}[2]{%
 \begin{list}{}{%
 \setlength{\topsep}{0pt}%
 \setlength{\leftmargin}{#1}%
 \setlength{\rightmargin}{#2}%
-%\setlength{\listparindent}{\parindent}%
-%\setlength{\itemindent}{\parindent}%
 \setlength{\parsep}{\parskip}%
 }%
 \item[]}{\end{list}}
-
-% being able to set emphasis for entire table row
-\newcommand\setrow[1]{\gdef\rowmac{#1}#1\ignorespaces}
-\newcommand\clearrow{\global\let\rowmac\relax}
-\clearrow
-
-%page settings
-\setlength{\footskip}{56pt}
-\pagestyle{fancy}
-\setlength{\parindent}{0pt}
-%\makeglossaries
-\begin{document}
-\sloppy
-
-%get current date into insertdate
-\makeatletter
-\let\insertdate\@date
-\makeatother
 
 % workaround to use landscape environment with pandoc
 \newcommand{\blandscape}{\begin{landscape}}
 \newcommand{\elandscape}{\end{landscape}}
 
-%begin To and From Section
+% ------------------------------------------------------------------------------
+% begin first page
+
+% set header and footer
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\footrulewidth}{0.8pt}
+\fancyhead[L]{\includegraphics[height=0.8cm]{$logo_path_fh$}}
+$if(dropVISClogo)$
+$else$
+\fancyhead[C]{\includegraphics[height=0.8cm]{$logo_path_visc$}}
+$endif$
+\fancyhead[R]{\includegraphics[height=0.8cm]{$logo_path_scharp$}}
+\fancyfoot[C]{Page \thepage{}~of~\pageref{LastPage}}
+\setlength{\headheight}{27pt}
+
+\begin{document}
+\sloppy
+
+% ------------------------------------------------------------------------------
+% To and From Section
+
+% get current date into insertdate
+\makeatletter
+\let\insertdate\@date
+\makeatother
+
 \makeatletter
 \newcommand\tabfill[1]{%
   \dimen@\linewidth
@@ -220,6 +269,7 @@ $endif$
 \makeatother
 
 \vspace{0.1cm}
+
 \begin{flushleft}
 \begin{tabbing}
 this line is to\= set up the tab stop \kill
@@ -239,20 +289,13 @@ $endif$
 
 \vspace{2cm}
 
-%begin contents section
+% ------------------------------------------------------------------------------
+
 $if(toc)$
 \tableofcontents
 $endif$
 
-%change color of header and footer text to gray
-\makeatletter
-\patchcmd{\@fancyhead}{\rlap}{\color{gray}\rlap}{}{}
-\patchcmd{\headrule}{\hrule}{\color{gray}\hrule}{}{}
-\patchcmd{\@fancyfoot}{\rlap}{\color{gray}\rlap}{}{}
-\patchcmd{\footrule}{\hrule}{\color{gray}\hrule}{}{}
-\makeatother
-
-
+\renewcommand{\abstractname}{Overview}
 $if(includesummary)$
 \begin{abstract}
 $summary$
@@ -267,6 +310,16 @@ $if(lot)$
 \listoftables
 $endif$
 
+% ------------------------------------------------------------------------------
+% document body
+
+% updating header style
+\makeatletter
+\patchcmd{\@fancyhead}{\rlap}{\color{gray}\rlap}{}{}
+\patchcmd{\headrule}{\hrule}{\color{gray}\hrule}{}{}
+\patchcmd{\@fancyfoot}{\rlap}{\color{gray}\rlap}{}{}
+\patchcmd{\footrule}{\hrule}{\color{gray}\hrule}{}{}
+\makeatother
 \newpage
 \fancyhead[R]{\em $shorttitle$}
 \fancyhead[C]{}
@@ -275,9 +328,12 @@ $if(leftheader)$
 $else$
 \fancyhead[L]{\em VISC Report}
 $endif$
-%\printglossaries
 
 $body$
-\label{LastPageOfBackMatter}~
+
+% ------------------------------------------------------------------------------
+
+\label{LastPageOfBackMatter}~ % for total page count
+
 \end{document}
 
