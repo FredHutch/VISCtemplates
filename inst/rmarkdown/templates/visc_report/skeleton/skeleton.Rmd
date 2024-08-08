@@ -135,12 +135,7 @@ ICS_adata <- exampleData_ICS %>%
   filter(Population == "IFNg" & Group != 3)
 ```
 
-<<<<<<< HEAD
-
-`r insert_break()` 
-=======
 `r insert_break()`
->>>>>>> develop
 
 # Summary of Main Results
 
