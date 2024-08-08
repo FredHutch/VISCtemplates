@@ -16,6 +16,21 @@ use_visc_readme <- function(study_name, save_as = "README.Rmd") {
     data = list(study_name = study_name),
     package = "VISCtemplates"
   )
+  # knit the md from the Rmd on request of SRA team
+  rmarkdown::render(
+    usethis::proj_path('README.Rmd'),
+    quiet = TRUE
+  )
+  # remove Rmd at request of SRA team; they just manually edit the *.md
+  # so the Rmd file merely clutters their working directory
+  unlink(
+    usethis::proj_path(
+      paste0(
+        'README',
+        c('.Rmd', '.html')
+      )
+    )
+  )
 }
 
 #' Create a VISC docs directory with template files
