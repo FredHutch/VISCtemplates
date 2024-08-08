@@ -5,7 +5,7 @@
 \title{Use a VISC Report Template}
 \usage{
 use_visc_report(
-  report_name = "PT-Report",
+  report_name = "PTreport",
   path = ".",
   report_type = c("empty", "generic", "bama", "nab"),
   interactive = TRUE

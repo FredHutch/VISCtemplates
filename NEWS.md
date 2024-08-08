@@ -1,5 +1,7 @@
 # VISCtemplates (development version)
 
+* Update PT report naming practices to the format VDCnnn_assay_PTreport_interim/final_(un)blinded.Rmd
+
 # VISCtemplates 1.3.2
 
 Bug Fix
