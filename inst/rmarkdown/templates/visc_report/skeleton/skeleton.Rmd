@@ -117,9 +117,19 @@ remotes::install_git(file.path('cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git
                      lib = my_data_package_lib)
 ```
 
+```{r check_data_version}
+DataPackageR::assert_data_version("VDCNNNAnalysis",version_string = "data_version")
+testthat::expect_equal(packageDescription("VDCNNNAnalysis")$RemoteSha,"commit_sha")
+testthat::expect_equal(packageDescription("VDCNNNAnalysis")$RemoteRef,"branch_name")
+
+```
+
+
 ```{r data-processing}
 # For this template use VISCfunction example data
 data('exampleData_ICS', package = 'VISCfunctions', envir = environment())
+
+testthat::expect_equal(digest::digest(exampleData_ICS),"data_hash")
 
 ICS_adata <- exampleData_ICS %>% 
   filter(Population == "IFNg" & Group != 3)
@@ -369,8 +379,9 @@ if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmark
 
 my_session_info <- VISCfunctions::get_session_info()
 
-kable(
-  my_session_info$platform_table, 
+my_session_info$platform_table %>%
+     add_row(name = "data hash", value = digest::digest(exampleData_ICS), .before = nrow(.)) %>%
+  kable(
   format = output_type, 
   booktabs = TRUE, 
   linesep = "", 
@@ -380,8 +391,17 @@ kable(
 ```
 
 ```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
+my_session_info$packages_table %>%
+           left_join(
+             sessioninfo::package_info() %>% filter(str_detect(source, pattern = "git2r")) %>% 
+               pull(package) %>% 
+               packageDescription() %>% 
+               .[c("Package","RemoteRef")] %>% 
+               as_tibble() %>%
+               rename("package" = "Package",
+                      "branch" = "RemoteRef"),
+             by = "package") %>%
 kable(
-  my_session_info$packages_table, 
   format = output_type,
   booktabs = TRUE, 
   linesep = "", 
