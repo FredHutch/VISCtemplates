@@ -1,5 +1,8 @@
 # VISCtemplates (development version)
 
+Other improvements
+* create_visc_project() now discards README.Rmd after knitting template to README.md (#223)
+
 # VISCtemplates 1.3.2
 
 Bug Fix
