@@ -2,6 +2,7 @@
 
 Other improvements
 * create_visc_project() now discards README.Rmd after knitting template to README.md (#223)
+* Update PT report naming practices to the format VDCnnn_assay_PTreport_interim/final_(un)blinded.Rmd
 
 # VISCtemplates 1.3.2
 
