@@ -1,5 +1,8 @@
 # VISCtemplates (development version)
 
+Bug fixes
+* Provide default CRAN mirror if missing in install_load_cran_packages(), e.g., in a child R session during knitting. Fixes 'trying to use CRAN without setting a mirror' error (#218)
+
 Other improvements
 * create_visc_project() now discards README.Rmd after knitting template to README.md (#223)
 * Update PT report naming practices to the format VDCnnn_assay_PTreport_interim/final_(un)blinded.Rmd
