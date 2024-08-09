@@ -7,7 +7,7 @@
 use_visc_report(
   report_name = "PTreport",
   path = ".",
-  report_type = c("empty", "generic", "bama", "nab"),
+  report_type = c("empty", "generic", "bama", "nab", "adcc"),
   interactive = TRUE
 )
 }
@@ -16,7 +16,7 @@ use_visc_report(
 
 \item{path}{path of the file within the active project}
 
-\item{report_type}{"empty", "generic", "bama", or "nab"}
+\item{report_type}{"empty", "generic", "bama", "nab", or "adcc"}
 
 \item{interactive}{TRUE by default. FALSE is for non-interactive unit testing
 only.}

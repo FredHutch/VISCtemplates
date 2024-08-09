@@ -15,7 +15,7 @@
 #' @return Side effects only.
 test_knit_report <- function(report_type, outfile_ext){
   stopifnot(
-    report_type %in% c('generic', 'empty', 'bama', 'nab'),
+    report_type %in% c('generic', 'empty', 'bama', 'nab', 'adcc'),
     outfile_ext %in% c('pdf', 'docx')
   )
   report_name <- paste(report_type, outfile_ext, 'report', sep = '_')
