@@ -2,6 +2,7 @@
 
 Bug fixes
 * Provide default CRAN mirror if missing in install_load_cran_packages(), e.g., in a child R session during knitting. Fixes 'trying to use CRAN without setting a mirror' error (#218)
+* Update template.tex so that flextable package can be used to create tables in PDF documents (#226)
 
 Other improvements
 * create_visc_project() now discards README.Rmd after knitting template to README.md (#223)
