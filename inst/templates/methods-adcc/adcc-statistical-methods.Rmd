@@ -12,7 +12,7 @@ Peak net percent granzyme B activity defined as the maximum activity across the 
 
 ### AUC
 
-Area under the net percent granzyme B activity vs log10 (dilution) curve is ("AUC") calculated using the trapezoidal rule, setting any net percent granzyme B activity below 0\% to 0\%.
+Area under the net percent granzyme B activity ("AUC") versus log$_{10}$ (dilution) curve is calculated using the trapezoidal rule, setting any net percent granzyme B activity below 0\% to 0\%.   
 
 ### Response call
 
@@ -35,13 +35,13 @@ Nonparametric partial Area under the baseline-subtracted curves ("pAUC"), calcul
 
 ### Response call
 
-A response is defined as positive if the peak baseline-subtracted \% specific killing activity greater than or equal to 10\% for either the 1:50 or 1:200 dilution.
+A response is defined as positive if the baseline-subtracted percent (\%) specific killing activity is greater than or equal to 10\% for either the 1:50 or 1:200 dilutions.
 
 # Statistical Methods GTL and Luciferase
 
 ## Graphical analysis
 
-Plots of peak activity and AUC show both response rates and the distribution of magnitude. Positive responses are indicated by dots color-coded by treatment group, and negative responses by gray triangles. A boxplot is superimposed on the distribution, including only positive responses. The mid-line of the box denotes the median and the ends of the box denote the $25^{th}$ and $75^{th}$ percentiles. The whiskers that extend from the top and bottom of the box extend to the most extreme data points that are no more than 1.5 times the interquartile range (i.e., height of the box) or if no value meets this criterion, to the data extremes.
+Plots of peak activity and AUC show both response rates and the distribution of magnitude. Positive responses are indicated by dots color-coded by treatment group, and negative responses by gray triangles. A boxplot is superimposed on the distribution of positive responses. The mid-line of the box denotes the median and the ends of the box denote the $25^{th}$ and $75^{th}$ percentiles. The whiskers that extend from the top and bottom of the box extend to the most extreme data points that are no more than 1.5 times the interquartile range (i.e., height of the box) or if no value meets this criterion, to the data extremes.
 
 *[If working with durability data and calculating fold change from peak, be sure to specify direction of difference, e.g. $\text{log10(durability visit)} - \text{log10(peak visit)}$.]*
 
