@@ -43,12 +43,12 @@ doing.
 
 - [ ] The reproducibility tables do not include `NA`, local installations, or unnescessary packages
 
-### Code review: see https://github.com/FredHutch/VISC-Documentation/blob/master/Programming/code-review-guideline.md
+### Code review: see https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/code-review-guideline.md
 
 - [ ]  Necessary context for the analysis is given
 - [ ]  R Markdown file compiles (or the R code runs) correctly with no errors
 - [ ]  Code is readable and easy to understand
-    - [ ]  Code follows the [Coding Principles](https://github.com/FredHutch/VISC-Documentation/blob/master/Programming/Coding-Principles.md) document
+    - [ ]  Code follows the [Coding Principles](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/Coding-Principles.md) document
     - [ ]  Joins are correct
     - [ ]  Any filtering is correct and in a logical order
     - [ ]  Supporting commentary is helpful and does not include debt or backup comments
