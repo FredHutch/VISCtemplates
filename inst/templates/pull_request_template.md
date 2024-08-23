@@ -1,12 +1,12 @@
 ## Description
 
-Make sure to provide a general summary of your changes in the pull request title.
+Make sure to provide a brief summary of your changes in the pull request title above.
 
 Here, describe your changes in detail. 
 Give a short background on the report, outline important questions or details for the reviewer, and add links to any supporting documents (e.g., protocol presentation). 
 It's helpful to add links to the key files with the unique ID for the commit (a.k.a. the "SHA" or "hash").
 
-Make sure to include any known issues in your description.
+Make sure to include any known issues as well.
 
 ## Reflection
 
@@ -86,3 +86,10 @@ See https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing/
 - [ ] Tables look right
     - [ ] Text is not running off the page
     - [ ] Significance highlighting is as expected
+
+### Explanation for why any boxes above are NOT checked
+
+If necessary, provide explanations here for why any boxes above are not checked.
+
+- Reason 1
+- Reason 2
