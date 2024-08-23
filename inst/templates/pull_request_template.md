@@ -50,7 +50,7 @@ See also [code review guidelines](https://github.com/FredHutch/VISC-Documentatio
 
 See also [writing review guidelines](https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing/writing_reviewing_guidelines.md)
 
-- [ ] All necessary source files are pushed to the repo and the report has been compiled without errors
+- [ ] All necessary source files are pushed to the repo and the latest version of the report has been compiled without errors
     - [ ] Unrelated or unnescessary files aren't included (e.g. Latex .toc files)
     - [ ] I've opened and checked compiled documents (.pdf, .docx)
 - [ ] There are no Markdown/pandoc/Latex errors 
@@ -61,7 +61,7 @@ See also [writing review guidelines](https://github.com/FredHutch/VISC-Documenta
     - [ ] The reproducibility tables do not include `NA`, local installations, or unnescessary packages
     - [ ] The most recent versions (note: not the development versions) of VISCtemplates and VISCfunctions are used
     - [ ] If renv is used, I have run `renv::status()` and resolved any issues
-- The report text, including figure and table captions, follows VISC convenctions (refer to the [writing guidelines](https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing) as needed)
+- [ ] The report text, including figure and table captions, follows VISC conventions (refer to the [writing guidelines](https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing) as needed)
     - [ ] The sample type is accurate (e.g., serum, plasma, PBMC)
     - [ ] Objectives follow the SAP and study protocol
     - [ ] Results and summary sections map to the objectives
