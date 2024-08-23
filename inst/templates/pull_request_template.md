@@ -25,7 +25,7 @@ Note: checklists should be completed before a pull request is submitted for revi
 - [ ] The latest versions of all necessary source files have been pushed to the repo
     - [ ] Unrelated or unnescessary files aren't included (e.g., LaTeX .toc files)
 
-### Code review (use for PRs that include analysis or other source code)
+### Code review (use for PRs that include analysis or source code, including any R code)
 
 See also [code review guidelines](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/code-review-guideline.md)
 
