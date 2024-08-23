@@ -6,7 +6,7 @@ Here, describe your changes in detail.
 Give a short background on the report, outline important questions or details for the reviewer, and add links to any supporting documents (e.g., protocol presentation). 
 It's helpful to add links to the key files with the unique ID for the commit (a.k.a. the "SHA" or "hash").
 
-Make sure to include any known issues as well.
+Make sure to include any known outstanding issues as well (and if they will be addressed in future PRs).
 
 ## Reflection
 
