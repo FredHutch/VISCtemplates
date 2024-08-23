@@ -16,6 +16,31 @@ Describe any key challenges you faced in working on these changes. Were these ch
 
 Use one (or multiple) of the following checklists depending on which type of PR you are doing.
 
+### Code review
+
+See https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/code-review-guideline.md
+
+- [ ]  Necessary context for the analysis is given
+- [ ]  R Markdown file compiles (or the R code runs) correctly with no errors
+- [ ]  Code is readable and easy to understand
+    - [ ]  Code follows the [Coding Principles](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/Coding-Principles.md) document
+        - [ ] Lines are at most 100 characters long
+        - [ ] Consistent use of `<-` not `=` for assignment
+        - [ ] Object names include only alphanumeric characters and underscores (no dots)
+        - [ ] Object names are meaningful, descriptive, and unique (avoid overwriting previous variable)
+        - [ ] Rmd code chunk names are descriptive and use dashes (not underscores or spaces)
+        - [ ] File paths are relative (except for trials and network drive paths) and portable across operating systems (use `file.path()`)
+        - [ ] Functions are organized and well-documented, with explanations of purpose, inputs, and ouput
+        - [ ] Hard coding and magic numbers are avoided
+    - [ ]  Joins are correct
+    - [ ]  Any filtering is correct and in a logical order
+    - [ ]  Supporting commentary is helpful and does not include debt or backup comments
+- [ ]  Functions are properly documented
+- [ ]  The analysis code follows the statistical methods section
+- [ ]  VISCtemplates and VISCfunctions are used whenever possible
+- [ ]  VISCtemplates and VISCfunctions are installed from GitHub (not local)
+- Time estimate: ___________
+
 ### PT report / peer writing review
 
 See https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing/writing_reviewing_guidelines.md
@@ -55,28 +80,3 @@ See https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing/
 - [ ] Tables look right
     - [ ] Text is not running off the page
     - [ ] Significance highlighting is as expected
-
-### Code review
-
-See https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/code-review-guideline.md
-
-- [ ]  Necessary context for the analysis is given
-- [ ]  R Markdown file compiles (or the R code runs) correctly with no errors
-- [ ]  Code is readable and easy to understand
-    - [ ]  Code follows the [Coding Principles](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/Coding-Principles.md) document
-        - [ ] Lines are at most 100 characters long
-        - [ ] Consistent use of `<-` not `=` for assignment
-        - [ ] Object names include only alphanumeric characters and underscores (no dots)
-        - [ ] Object names are meaningful, descriptive, and unique (avoid overwriting previous variable)
-        - [ ] Rmd code chunk names are descriptive and use dashes (not underscores or spaces)
-        - [ ] File paths are relative (except for trials and network drive paths) and portable across operating systems (use `file.path()`)
-        - [ ] Functions are organized and well-documented, with explanations of purpose, inputs, and ouput
-        - [ ] Hard coding and magic numbers are avoided
-    - [ ]  Joins are correct
-    - [ ]  Any filtering is correct and in a logical order
-    - [ ]  Supporting commentary is helpful and does not include debt or backup comments
-- [ ]  Functions are properly documented
-- [ ]  The analysis code follows the statistical methods section
-- [ ]  VISCtemplates and VISCfunctions are used whenever possible
-- [ ]  VISCtemplates and VISCfunctions are installed from GitHub (not local)
-- Time estimate: ___________
