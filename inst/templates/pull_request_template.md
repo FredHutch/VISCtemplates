@@ -18,38 +18,38 @@ Use one (or multiple) of the following checklists, depending on which type of PR
 
 Checklists should be completed before a pull request is submitted for review. Note: you can create a draft pull request before completing the checklist, then complete the checklist, and then mark the PR as ready for review.
 
-### Documentation
+### Documentation (use for all PRs)
 
 - [ ] Appropriate README.md files have been updated
+- [ ] Necessary context for the analysis is given
 
-### Code review
+### Code review (use for 
 
-See https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/code-review-guideline.md
+See also [code review guidelines](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/code-review-guideline.md)
 
-- [ ]  Necessary context for the analysis is given
-- [ ]  R Markdown file compiles (or the R code runs) correctly with no errors
-- [ ]  Code is readable and easy to understand
-    - [ ]  Code follows the [Coding Principles](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/Coding-Principles.md) document
-        - [ ] Lines are at most 100 characters long
-        - [ ] Consistent use of `<-` not `=` for assignment
-        - [ ] Object names include only alphanumeric characters and underscores (no dots)
-        - [ ] Object names are meaningful, descriptive, and unique (avoid overwriting previous variable)
-        - [ ] Rmd code chunk names are descriptive and use dashes (not underscores or spaces)
-        - [ ] File paths are relative (except for trials and network drive paths) and portable across operating systems (use `file.path()`)
-        - [ ] Functions are organized and well-documented, with explanations of purpose, inputs, and ouput
-        - [ ] Hard coding and magic numbers are avoided
+- [ ]  I have compiled the R Markdown file(s) (or run the full R code) with no errors
+- [ ]  Code is readable and easy to understand, and follows the [VISC Coding Principles](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/Coding-Principles.md) document
+    - [ ] Lines are at most 100 characters long
+    - [ ] Consistent use of `<-` not `=` for assignment
+    - [ ] Object names include only alphanumeric characters and underscores (no dots)
+    - [ ] Object names are meaningful, descriptive, and unique (avoid overwriting previous variable)
+    - [ ] Rmd code chunk names are descriptive and use dashes (not underscores or spaces)
+    - [ ] File paths are relative (except for trials and network drive paths) and portable across operating systems (use `file.path()`)
+    - [ ] Functions are organized and well-documented, with explanations of purpose, inputs, and ouput
+    - [ ] Hard coding and magic numbers are avoided
+    - [ ]  Supporting commentary is helpful and does not include debt or backup comments
+- [ ]  Code is logically correct
     - [ ]  Joins are correct
     - [ ]  Any filtering is correct and in a logical order
-    - [ ]  Supporting commentary is helpful and does not include debt or backup comments
 - [ ]  Functions are properly documented
 - [ ]  The analysis code follows the statistical methods section
 - [ ]  VISCtemplates and VISCfunctions are used whenever possible
 - [ ]  VISCtemplates and VISCfunctions are installed from GitHub (not local)
 - Time estimate: ___________
 
-### PT report / peer writing review
+### Peer writing review (use for PRs with PDF and/or Word drafts of PT reports)
 
-See https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing/writing_reviewing_guidelines.md
+See also [writing review guidelines](https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing/writing_reviewing_guidelines.md)
 
 - [ ] All necessary source files are pushed to the repo and the report has been compiled without errors
     - [ ] Unrelated or unnescessary files aren't included (e.g. Latex .toc files)
