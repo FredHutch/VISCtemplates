@@ -23,11 +23,18 @@ Checklists should be completed before a pull request is submitted for review. No
 - [ ] Necessary context for the analysis is documented
 - [ ] Appropriate project README.md files have been updated
 
-### Code review (use for 
+### Code review (use for PRs that include analysis code)
 
 See also [code review guidelines](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/code-review-guideline.md)
 
 - [ ]  I have compiled the R Markdown file(s) (or run the full R code) with no errors
+    - [ ]  Running time has been recorded or estimated: ___________
+- [ ]  Code is logically correct
+    - [ ]  Joins are correct
+    - [ ]  Any filtering is correct and in a logical order
+    - [ ]  VISCtemplates and VISCfunctions are used whenever possible
+    - [ ]  VISCtemplates and VISCfunctions are installed from GitHub (not local)
+    - [ ]  For PT reports: the analysis code follows the statistical methods section
 - [ ]  Code is readable and easy to understand, and follows the [VISC Coding Principles](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/Coding-Principles.md) document
     - [ ] Lines are at most 100 characters long
     - [ ] Consistent use of `<-` not `=` for assignment
@@ -37,15 +44,7 @@ See also [code review guidelines](https://github.com/FredHutch/VISC-Documentatio
     - [ ] File paths are relative (except for trials and network drive paths) and portable across operating systems (use `file.path()`)
     - [ ] Functions are organized and well-documented, with explanations of purpose, inputs, and ouput
     - [ ] Hard coding and magic numbers are avoided
-    - [ ]  Supporting commentary is helpful and does not include debt or backup comments
-- [ ]  Code is logically correct
-    - [ ]  Joins are correct
-    - [ ]  Any filtering is correct and in a logical order
-- [ ]  Functions are properly documented
-- [ ]  The analysis code follows the statistical methods section
-- [ ]  VISCtemplates and VISCfunctions are used whenever possible
-- [ ]  VISCtemplates and VISCfunctions are installed from GitHub (not local)
-- Time estimate: ___________
+    - [ ] Comments are helpful and do not include debt (e.g. `# TODO:`) or commented-out backup code
 
 ### Peer writing review (use for PRs with PDF and/or Word drafts of PT reports)
 
