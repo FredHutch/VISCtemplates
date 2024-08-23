@@ -16,7 +16,7 @@ Describe any key challenges you faced in working on these changes. Were these ch
 
 Use one (or multiple) of the following checklists depending on which type of PR you are doing.
 
-### Peer writing review
+### PT report / peer writing review
 
 See https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing/writing_reviewing_guidelines.md
 
