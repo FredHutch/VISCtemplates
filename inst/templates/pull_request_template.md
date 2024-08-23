@@ -16,6 +16,10 @@ Describe any key challenges you faced in working on these changes. Were these ch
 
 Use one (or multiple) of the following checklists depending on which type of PR you are doing.
 
+### Documentation
+
+- [ ] Appropriate README.md files have been updated
+
 ### Code review
 
 See https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/code-review-guideline.md
