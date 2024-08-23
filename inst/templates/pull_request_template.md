@@ -12,9 +12,11 @@ It's helpful to add links to the key files with the unique ID for the commit (a.
 
 Describe any key challenges you faced in working on these changes. Were these challenges unique to this project, or do you think they apply to other VISC projects as well? If not unique, have any GitHub issues in the VISCtemplates or VISCfunctions repos been created that would help for future projects?
 
-## Checklist
+## Checklist(s)
 
-Use one (or multiple) of the following checklists depending on which type of PR you are doing.
+Use one (or multiple) of the following checklists, depending on which type of PR you are doing.
+
+Checklists should be completed before a pull request is submitted for review. Note: you can create a draft pull request before completing the checklist, then complete the checklist, and then mark the PR as ready for review.
 
 ### Documentation
 
