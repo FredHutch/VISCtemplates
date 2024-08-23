@@ -45,7 +45,9 @@ use_visc_gitignore <- function(directory = ".") {
       "**/figure-docx/*.pdf",
       "*.zip",
       # cache files
-      "*_cache/"
+      "*_cache/",
+      # other
+      ".smbdelete*"
     ),
     directory = directory
   )
