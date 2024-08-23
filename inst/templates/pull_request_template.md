@@ -18,23 +18,27 @@ Use one (or multiple) of the following checklists, depending on which type of PR
 
 Checklists should be completed before a pull request is submitted for review. Note: you can create a draft pull request before completing the checklist, then complete the checklist, and then mark the PR as ready for review.
 
-### Documentation (use for all PRs)
+### Documentation and completeness (use for all PRs)
 
-- [ ] Necessary context for the analysis is documented
-- [ ] Appropriate project README.md files have been updated
+- [ ] Necessary context for the project/analysis has been documented
+- [ ] Appropriate README.md files have been updated to reflect the latest changes
+- [ ] The latest versions of all necessary source files have been pushed to the repo
+- [ ] Unrelated or unnescessary files aren't included (e.g., LaTeX .toc files)
 
-### Code review (use for PRs that include analysis code)
+### Code review (use for PRs that include analysis or other source code)
 
 See also [code review guidelines](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/code-review-guideline.md)
 
-- [ ]  I have compiled the R Markdown file(s) (or run the full R code) with no errors
+- [ ]  I have compiled the R Markdown file(s) (or run the relevant R code) with no errors
     - [ ]  Running time has been recorded or estimated: ___________
 - [ ]  Code is logically correct
     - [ ]  Joins are correct
     - [ ]  Any filtering is correct and in a logical order
-    - [ ]  VISCtemplates and VISCfunctions are used whenever possible
-    - [ ]  VISCtemplates and VISCfunctions are installed from GitHub (not local)
     - [ ]  For PT reports: the analysis code follows the statistical methods section
+- [ ]  Appropriate R packages are used
+    - [ ]  VISCtemplates and VISCfunctions are used whenever possible
+    - [ ]  No local package installations or unnescessary packages
+    - [ ]  If renv is used, I have run `renv::status()` and resolved any issues
 - [ ]  Code is readable and easy to understand, and follows the [VISC Coding Principles](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/Coding-Principles.md) document
     - [ ] Lines are at most 100 characters long
     - [ ] Consistent use of `<-` not `=` for assignment
@@ -50,17 +54,16 @@ See also [code review guidelines](https://github.com/FredHutch/VISC-Documentatio
 
 See also [writing review guidelines](https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing/writing_reviewing_guidelines.md)
 
-- [ ] All necessary source files are pushed to the repo and the latest version of the report has been compiled without errors
-    - [ ] Unrelated or unnescessary files aren't included (e.g. Latex .toc files)
-    - [ ] I've opened and checked compiled documents (.pdf, .docx)
-- [ ] There are no Markdown/pandoc/Latex errors 
+- [ ] The latest version of the report has been compiled to both PDF and Word without errors
+    - [ ] I've opened and reviewed the compiled PDF document
+    - [ ] I've opened and reviewed the compiled Word document
+- [ ] There are no obvious Markdown/pandoc/Latex errors 
     - [ ] No broken references (?? or ???) in the text (Use find: “??”)
-    - [ ] There are no blank pages 
-    - [ ] Page x out of y is correct (sometimes y is wrong)   
-- Appropriate versions of R packages are used
+    - [ ] No blank pages 
+    - [ ] Page x out of y is correct (sometimes y is wrong)  
+- [ ] The reproducibility tables look correct
     - [ ] The reproducibility tables do not include `NA`, local installations, or unnescessary packages
     - [ ] The most recent versions (note: not the development versions) of VISCtemplates and VISCfunctions are used
-    - [ ] If renv is used, I have run `renv::status()` and resolved any issues
 - [ ] The report text, including figure and table captions, follows VISC conventions (refer to the [writing guidelines](https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing) as needed)
     - [ ] The sample type is accurate (e.g., serum, plasma, PBMC)
     - [ ] Objectives follow the SAP and study protocol
