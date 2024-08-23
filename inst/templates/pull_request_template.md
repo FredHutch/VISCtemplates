@@ -10,7 +10,7 @@ Make sure to include any known outstanding issues as well (and if they will be a
 
 ## Reflection
 
-Describe any key challenges you faced in working on these changes. Were these challenges unique to this project, or do you think they apply to other VISC projects as well? If not unique, have any GitHub issues in the VISCtemplates or VISCfunctions repos been created that would help for future projects?
+Describe any key challenges you faced in working on these changes. Were these challenges unique to this project, or do you think they apply to other VISC projects as well? If not unique, have any relevant GitHub issues in the [VISCtemplates](https://github.com/FredHutch/VISCtemplates) or [VISCfunctions](https://github.com/FredHutch/VISCfunctions) repos been created that would help for future projects?
 
 ## Checklist(s)
 
