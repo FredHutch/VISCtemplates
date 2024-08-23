@@ -3,10 +3,10 @@
 Make sure to provide a general summary of your changes in the pull request title.
 
 Here, describe your changes in detail. 
-
 Give a short background on the report, outline important questions or details for the reviewer, and add links to any supporting documents (e.g., protocol presentation). 
-
 It's helpful to add links to the key files with the unique ID for the commit (a.k.a. the "SHA" or "hash").
+
+Make sure to include any known issues in your description.
 
 ## Reflection
 
