@@ -22,14 +22,14 @@ Note: checklists should be completed before a pull request is submitted for revi
 
 - [ ] Necessary context for the project/analysis has been documented
 - [ ] Appropriate README.md files have been updated to reflect the latest changes
-- [ ] The latest versions of all necessary source files have been pushed to the repo
+- [ ] The latest versions of all relevant files have been pushed to the repo
     - [ ] Unrelated or unnescessary files aren't included (e.g., LaTeX .toc files)
 
 ### Code review (use for PRs that include any code, such as in .R or .Rmd files)
 
 See also [code review guidelines](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/code-review-guideline.md)
 
-- [ ]  I have compiled the R Markdown file(s) (or run the relevant R code) with no errors
+- [ ]  I have compiled the R Markdown file(s) (or run the relevant code) with no errors
     - [ ]  Running time has been recorded or estimated: ___________
 - [ ]  Code is logically correct
     - [ ]  Joins are correct
@@ -67,21 +67,22 @@ See also [writing review guidelines](https://github.com/FredHutch/VISC-Documenta
 - [ ] The report text, including figure and table captions, follows VISC conventions (refer to the [writing guidelines](https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing) as needed)
     - [ ] The sample type is accurate (e.g., serum, plasma, PBMC)
     - [ ] Objectives follow the SAP and study protocol
-    - [ ] Results and summary sections map to the objectives
+    - [ ] Results and summary of main results sections map to the objectives
     - [ ] Text is spell-checked (including captions and footnotes)
-    - [ ] The correct tense is used throughout the report
+    - [ ] The correct tense (generally past tense) is used throughout the report
     - [ ] Capitalization is correct and consistent
-    - [ ] Acronyms are introduced the first time they're used within a major section
-- [ ] I have reviewed the Results section
-    - [ ] Figures and tables are sorted in parallel with results, and figure and table references are correct
-    - [ ] Results listed in the text are correct and support my statements
-        - [ ] Variables are used in referring to numeric values in the results section (to minimize human error)
-- [ ] Figures look right (refer to the [figure guidelines](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/figure-guidelines.md) as needed)
-    - [ ] The appropriate number of axis tick marks is present (at least 3) for each figure
-    - [ ] Text is not cut off (facet labels, legends, titles)
-- [ ] Tables look right
-    - [ ] Text is not running off the page
-    - [ ] Significance highlighting is as expected
+    - [ ] Acronyms and abbreviations are introduced the first time they are used
+- [ ] I have reviewed the results carefully
+    - [ ] Everything mentioned in the Summary of Main Results is also in the Results section
+    - [ ] Statements in Results section are correct (including p-values) and supported by the correct figure and table references
+        - [ ] Variables are used in referring to numeric values in the Results section (to minimize human error)
+    - [ ] Figures and tables are sorted in parallel with mentions in Results section
+    - [ ] Figures look right (refer to the [figure guidelines](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/figure-guidelines.md) as needed)
+        - [ ] The appropriate number of axis tick marks is present (at least 3) for each figure
+        - [ ] Text is not cut off (facet labels, legends, titles)
+    - [ ] Tables look right
+        - [ ] Text is not running off the page
+        - [ ] Significance highlighting is as expected
 
 ## Notes
 
