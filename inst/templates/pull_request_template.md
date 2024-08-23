@@ -21,7 +21,7 @@ Checklists should be completed before a pull request is submitted for review. No
 ### Documentation (use for all PRs)
 
 - [ ] Appropriate README.md files have been updated
-- [ ] Necessary context for the analysis is given
+- [ ] Necessary context for the analysis is documented
 
 ### Code review (use for 
 
