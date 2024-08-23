@@ -36,6 +36,11 @@ use_visc_gitignore <- function(directory = ".") {
       "Thumbs.db",
       # files from Latex
       "*.log",
+      "*.aux",
+      "*.toc",
+      "*.lof",
+      "*.lot",
+      "*.out",
       "**/figure-latex/*.pdf",
       "**/figure-docx/*.pdf",
       "*.zip"
