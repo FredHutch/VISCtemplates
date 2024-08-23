@@ -16,7 +16,7 @@ Describe any key challenges you faced in working on these changes. Were these ch
 
 Use one (or multiple) of the following checklists, depending on which type of PR you are doing.
 
-Checklists should be completed before a pull request is submitted for review. Note: you can create a draft pull request before completing the checklist, then complete the checklist, and then mark the PR as ready for review.
+Note: checklists should be completed before a pull request is submitted for review. You can create a draft pull request before completing the checklist, then complete the checklist, and then mark the PR as ready for review.
 
 ### Documentation and completeness (use for all PRs)
 
