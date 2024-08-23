@@ -53,18 +53,15 @@ See also [writing review guidelines](https://github.com/FredHutch/VISC-Documenta
 - [ ] All necessary source files are pushed to the repo and the report has been compiled without errors
     - [ ] Unrelated or unnescessary files aren't included (e.g. Latex .toc files)
     - [ ] I've opened and checked compiled documents (.pdf, .docx)
-
 - [ ] There are no Markdown/pandoc/Latex errors 
     - [ ] No broken references (?? or ???) in the text (Use find: “??”)
     - [ ] There are no blank pages 
-    - [ ] Page x out of y is correct (sometimes y is wrong)
-     
-- [ ] Appropriate versions of R packages are used
+    - [ ] Page x out of y is correct (sometimes y is wrong)   
+- Appropriate versions of R packages are used
     - [ ] The reproducibility tables do not include `NA`, local installations, or unnescessary packages
     - [ ] The most recent versions (note: not the development versions) of VISCtemplates and VISCfunctions are used
     - [ ] If renv is used, I have run `renv::status()` and resolved any issues
-     
-- [ ] The report text, including figure and table captions, follows the VISC writing guidelines (see https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing)
+- The report text, including figure and table captions, follows VISC convenctions (refer to the [writing guidelines](https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing) as needed)
     - [ ] The sample type is accurate (e.g., serum, plasma, PBMC)
     - [ ] Objectives follow the SAP and study protocol
     - [ ] Results and summary sections map to the objectives
@@ -72,23 +69,22 @@ See also [writing review guidelines](https://github.com/FredHutch/VISC-Documenta
     - [ ] The correct tense is used throughout the report
     - [ ] Capitalization is correct and consistent
     - [ ] Acronyms are introduced the first time they're used within a major section
-
 - [ ] I have reviewed the Results section
     - [ ] Figures and tables are sorted in parallel with results, and figure and table references are correct
     - [ ] Results listed in the text are correct and support my statements
         - [ ] Variables are used in referring to numeric values in the results section (to minimize human error)
-         
-- [ ] Figures look right and follow the figure guidelines (see https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/figure-guidelines.md)
+- [ ] Figures look right (refer to the [figure guidelines](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/figure-guidelines.md) as needed)
     - [ ] The appropriate number of axis tick marks is present (at least 3) for each figure
     - [ ] Text is not cut off (facet labels, legends, titles)
-
 - [ ] Tables look right
     - [ ] Text is not running off the page
     - [ ] Significance highlighting is as expected
 
-### Explanation for why any boxes above are NOT checked
+## Notes
 
-If necessary, provide explanations here for why any boxes above are not checked.
+Add any additional notes here.
+
+If necessary, provide explanations here for why any boxes from the checklist(s) above are not checked.
 
 - Reason 1
 - Reason 2
