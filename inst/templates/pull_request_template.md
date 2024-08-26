@@ -48,7 +48,8 @@ See also [code review guidelines](https://github.com/FredHutch/VISC-Documentatio
     - [ ] File paths are relative (except for trials and network drive paths) and portable across operating systems (use `file.path()`)
     - [ ] Functions are organized and well-documented, with explanations of purpose, inputs, and ouput
     - [ ] Hard coding and magic numbers are avoided
-    - [ ] Comments are helpful and do not include debt (e.g. `# TODO:`) or commented-out backup code
+    - [ ] Comments are helpful and do not include unaddressed debt (e.g. `# TODO:`)
+    - [ ] Commented-out backup code and unused chunks have been removed
 
 ### Peer writing review (use for PRs with PDF and/or Word drafts of PT reports)
 
