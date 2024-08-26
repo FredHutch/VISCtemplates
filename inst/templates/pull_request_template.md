@@ -60,6 +60,7 @@ See also [writing review guidelines](https://github.com/FredHutch/VISC-Documenta
     - [ ] I've opened and reviewed the compiled Word document
 - [ ] There are no obvious Markdown/pandoc/Latex errors 
     - [ ] No broken references (?? or ???) in the text (Use find: “??”)
+    - [ ] No stray warnings or R output in the text (Use find: “#”)
     - [ ] No blank pages 
     - [ ] Page x out of y is correct (sometimes y is wrong)  
 - [ ] The reproducibility tables look correct
