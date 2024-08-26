@@ -78,7 +78,7 @@ See also [writing review guidelines](https://github.com/FredHutch/VISC-Documenta
 - [ ] I have reviewed the results carefully
     - [ ] Everything mentioned in the Summary of Main Results is also in the Results section
     - [ ] Statements in Results section are correct (including p-values) and supported by the correct figure and table references
-        - [ ] Variables are used in referring to numeric values in the Results section (to minimize human error)
+        - [ ] Code-based methods (i.e., in-line referencing) are used in inserting numeric values in the Results section (to minimize human error)
     - [ ] Figures and tables are sorted in parallel with mentions in Results section
     - [ ] Figures look right (refer to the [figure guidelines](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/figure-guidelines.md) as needed)
         - [ ] The appropriate number of axis tick marks is present (at least 3) for each figure
