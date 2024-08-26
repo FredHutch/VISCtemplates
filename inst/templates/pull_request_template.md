@@ -23,7 +23,7 @@ Note: checklists should be completed before a pull request is submitted for revi
 - [ ] Necessary context for the project/analysis has been documented
 - [ ] Appropriate README.md files have been updated to reflect the latest changes
 - [ ] The latest versions of all relevant files have been pushed to the repo
-    - [ ] Unrelated or unnescessary files aren't included (e.g., LaTeX .toc files)
+    - [ ] Unrelated or unnecessary files aren't included (e.g., LaTeX .toc files)
 
 ### Code review (use for PRs that include any code, such as in .R or .Rmd files)
 
