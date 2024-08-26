@@ -30,6 +30,7 @@ Note: checklists should be completed before a pull request is submitted for revi
 See also [code review guidelines](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/code-review-guideline.md)
 
 - [ ]  I have compiled the R Markdown file(s) (or run the relevant code) with no errors
+    - [ ]  Warnings are not suppressed. If a warning must be suppressed there is a clear explanation (i.e., comment).
     - [ ]  Running time has been recorded or estimated: ___________
 - [ ]  Code is logically correct
     - [ ]  Joins are correct
