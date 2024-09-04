@@ -160,6 +160,9 @@ use_visc_report <- function(report_name = "PTreport",
   usethis::ui_done(
     glue::glue("Creating {{report_type}} VISC report at '{{file.path(path, report_name)}}'")
   )
+  file.copy(from = find_resource("visc_report", "README_PT_Report.md"),
+            to = "README.md",
+            overwrite = FALSE)
   if (report_type != 'empty'){
     use_visc_methods(path = file.path(path, report_name), assay = report_type,
                      interactive = interactive)
