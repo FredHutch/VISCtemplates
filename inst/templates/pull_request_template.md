@@ -32,9 +32,9 @@ See also [code review guidelines](https://github.com/FredHutch/VISC-Documentatio
 - [ ]  I have compiled the R Markdown file(s) (or run the relevant code) with no errors
     - [ ]  Warnings are not suppressed. If a warning must be suppressed there is a clear explanation (i.e., comment).
     - [ ]  Running time has been recorded or estimated: ___________
-- [ ]  Code is logically correct
-    - [ ]  Joins are correct
-    - [ ]  Any filtering is correct and in a logical order
+- [ ]  I have reviewed the code for logical correctness
+    - [ ]  I have double-checked any joins
+    - [ ]  I have double-checked any filtering and it is in a logical order
     - [ ]  For PT reports: the analysis code follows the statistical methods section
 - [ ]  Appropriate R packages are used
     - [ ]  VISCtemplates and VISCfunctions are used whenever possible
