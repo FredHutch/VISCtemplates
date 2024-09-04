@@ -111,9 +111,7 @@ Use one (or multiple) of the following checklists, depending on which type of PR
     - [ ] File paths are relative (except for trials and network drive paths) and portable across operating systems
 - [ ] Warnings are not suppressed. If a warning must be suppressed there is a clear explanation (i.e., comment).
 - [ ] There are no unused Rmd chunks or commented-out backup code
-- [ ]  Appropriate R packages are used
-    - [ ]  VISCtemplates and VISCfunctions are used where possible
-    - [ ]  No local package installations or apparently unused packages are included
+- [ ]  Appropriate R packages are used (VISCtemplates and VISCfunctions are used where possible, no local package installations or apparently unused packages)
 - [ ]  Code appears logically correct
     - [ ]  I have reviewed any joins and they appear correct
     - [ ]  I have reviewed any filtering and it appears correct and in a logical order
