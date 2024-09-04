@@ -43,14 +43,14 @@ See also [code review guidelines](https://github.com/FredHutch/VISC-Documentatio
 - [ ]  Code is readable and easy to understand, and follows the [VISC Coding Principles](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/Coding-Principles.md) document
     - [ ] Lines are at most 100 characters long
     - [ ] Consistent use of `<-` not `=` for assignment
-    - [ ] Object names include only alphanumeric characters and underscores (no dots)
-    - [ ] Object names are meaningful, descriptive, and unique (avoid overwriting previous variable)
+    - [ ] Object names are meaningful, descriptive, and use only alphanumeric characters and underscores (no dots)
+    - [ ] Object names are unique (no overwriting of previous variables)
     - [ ] Rmd code chunk names are descriptive and use dashes (not underscores or spaces)
-    - [ ] File paths are relative (except for trials and network drive paths) and portable across operating systems (use `file.path()`)
     - [ ] Functions are organized and well-documented, with explanations of purpose, inputs, and ouput
-    - [ ] Hard coding and magic numbers are avoided
-    - [ ] Comments are helpful and do not include unaddressed debt (e.g. `# TODO:` or `# FIXME`)
+    - [ ] Comments do not include unaddressed debt (e.g. `# TODO:` or `# FIXME`)
     - [ ] Commented-out backup code and unused chunks have been removed
+    - [ ] File paths are relative (except for trials and network drive paths) and portable across operating systems (use `file.path()`)
+    - [ ] Hard coding and magic numbers are avoided
 
 ### Writing/report review (use for PRs with PDF and/or Word drafts of PT reports)
 
@@ -67,18 +67,18 @@ See also [writing review guidelines](https://github.com/FredHutch/VISC-Documenta
 - [ ] The reproducibility tables look correct
     - [ ] The reproducibility tables do not include `NA`, local installations, or unnescessary packages
     - [ ] The most recent versions (note: not the development versions) of VISCtemplates and VISCfunctions are used
+- [ ] The sample type is accurate (e.g., serum, plasma, PBMC)
+- [ ] Text has been spell-checked (including captions and footnotes)
 - [ ] The report text, including figure and table captions, follows VISC conventions (refer to the [writing guidelines](https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing) as needed)
-    - [ ] The sample type is accurate (e.g., serum, plasma, PBMC)
     - [ ] Objectives follow the SAP and study protocol
     - [ ] Results and summary of main results sections map to the objectives
-    - [ ] Text is spell-checked (including captions and footnotes)
+    - [ ] Everything mentioned in the Summary of Main Results is also in the Results section
     - [ ] The correct tense (generally past tense) is used throughout the report
     - [ ] Capitalization is correct and consistent
     - [ ] Acronyms and abbreviations are introduced the first time they are used
-- [ ] I have reviewed the results carefully
-    - [ ] Everything mentioned in the Summary of Main Results is also in the Results section
-    - [ ] Statements in Results section are correct (including p-values) and supported by the correct figure and table references
-        - [ ] Code-based methods (i.e., in-line referencing) are used in inserting numeric values in the Results section (to minimize human error)
+- [ ] I have reviewed the results sections carefully and confirmed that the statements in Results section are correct (including p-values) and supported by the correct figure and table references
+    - [ ] Code-based methods (i.e., in-line referencing) are used in inserting numeric values in the Results section (to minimize human error)
+- [ ] I have reviewed the figures and tables carefully
     - [ ] Figures and tables are sorted in parallel with mentions in Results section
     - [ ] Figures look right (refer to the [figure guidelines](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/figure-guidelines.md) as needed)
         - [ ] The appropriate number of axis tick marks is present (at least 3) for each figure
