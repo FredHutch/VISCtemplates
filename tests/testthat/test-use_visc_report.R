@@ -38,7 +38,7 @@ test_that("use_visc_report() creates missing subdirectory", {
 #
 # This sets a custom test context(), so should go last in this test file
 local({
-  for (report_type in c('generic', 'empty', 'bama', 'nab')){
+  for (report_type in c('generic', 'empty', 'bama', 'nab', 'adcc')){
     for (output_ext in c('pdf', 'docx')){
       test_knit_report(report_type, output_ext)
     }

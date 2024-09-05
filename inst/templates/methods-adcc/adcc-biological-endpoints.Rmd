@@ -1,0 +1,14 @@
+---
+title: "biological-endpoints"
+---
+
+<!-- This file was adapted from VISCtemplates {{pkg_ver}}. -->
+
+
+## Biological Endpoints GTL
+
+ADCC-mediated antibody responses were measured using GranToxiLux (GTL) assays from specimens obtained at *[describe visits; include visit number, timepoint in weeks or months, and relation to SPA. E.g. week 26 (2 weeks post-4th vaccination, visit 10)]*. The GTL ADCC assay measures percent Granzyme B activity, defined as the percentage of antigen-coated target cells positive for proteolytically active Granzyme B out of the total viable target cell population. Endpoints are the response rate and magnitude of ADCC-mediated antibody responses against a panel of *[number of antigens]* HIV-1 antigens representing *[include description of viruses: those included in the vaccine product (vaccine-matched), Env matched in clade to vaccine products, and other Env to identify the breadth of the responses against HIV-1 subtypes]*. 
+
+## Biological endpoints Luciferase
+
+ADCC-mediated antibody responses were measured using Luciferase ADCC assays from specimens obtained at *[describe visits; include visit number, timepoint in weeks or months, and relation to SPA. E.g. week 26 (2 weeks post-4th vaccination, visit 10)]*. The Luciferase ADCC assay tests reactivity against Infectious Molecular Clone (IMC)-infected target cells by measuring percent reduction in Relative Luminescence Units (RLUs), reported as percentage specific killing. Endpoints are the response rate and magnitude of ADCC-mediated antibody responses against a panel of *[number of IMCs]* HIV-1 IMC expressing Env representing *[include description of IMCs: those included in the vaccine product (vaccine-matched), Env matched in clade to vaccine products, and other Env to identify the breadth of the responses against HIV-1 subtypes]*. 

@@ -6,17 +6,18 @@
 \usage{
 use_visc_methods(
   path = ".",
-  assay = c("generic", "bama", "nab"),
+  assay = c("generic", "bama", "nab", "adcc"),
   interactive = TRUE
 )
 }
 \arguments{
 \item{path}{path within the active project}
 
-\item{assay}{"bama" or "generic"}
+\item{assay}{"generic", "bama", "nab" or "adcc"}
 
 \item{interactive}{TRUE by default. FALSE is for non-interactive unit testing
 only.}
+
 }
 \description{
 Creates a "methods" directory that contains 3 "child" R Markdown documents
