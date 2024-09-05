@@ -67,6 +67,7 @@ See also [writing review guidelines](https://github.com/FredHutch/VISC-Documenta
 - [ ] The reproducibility tables look correct
     - [ ] The reproducibility tables do not include `NA`, local installations, or unnescessary packages
     - [ ] The most recent versions (note: not the development versions) of VISCtemplates and VISCfunctions are used
+    - [ ] The data package git hash refers to the correct branch/version (i.e., is up-to-date)
 - [ ] The sample type is accurate (e.g., serum, plasma, PBMC)
 - [ ] Text has been spell-checked (including captions and footnotes)
 - [ ] The report text, including figure and table captions, follows VISC conventions (refer to the [writing guidelines](https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing) as needed)
