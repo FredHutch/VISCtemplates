@@ -19,6 +19,7 @@
 \usepackage{rotating} % for xtable sideways
 \usepackage{threeparttable} % provides a scheme for tables that have a structured (foot)note section, after the caption
 \usepackage{threeparttablex} % provides the functionality of the threeparttable package to tables created using the longtable package
+\usepackage{caption} % for improving look of table captions when longtable is used
 
 % needed for flextable to work
 \usepackage{hhline}
@@ -255,7 +256,7 @@ $endif$
 \begin{document}
 \sloppy
 
-\captionsetup{width=16cm} % fix caption widths for longtable (narrow by default)
+%\captionsetup{width=16cm} % fix caption widths for longtable (narrow by default)
 
 % ------------------------------------------------------------------------------
 % To and From Section
