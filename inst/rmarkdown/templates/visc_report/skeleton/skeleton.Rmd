@@ -398,7 +398,7 @@ kable(
 
 The authors thank the following individuals for their invaluable contributions to this report.
 From [insert group name or affiliation, for example: the CAVIMC/Duke team] we thank [insert individual names, and roles here, for example: Kelli Greene and Hongmei Gao (Experimental Design, Data Interpretation, Study Management); Nicole Yates (Scientific Research Laboratory Manager) and Sheetal Sawant (Biostatistician)].
-From Fred Hutch Cancer Center, we also thank [insert names and roles here, for example: Ratana Som (SCHARP Lab Data Manager); Marie Vendettuoli and Valeria Duran (SCHARP Statistical Programmers); and Lindsey Mwoga and Drienna Holman (VISC Project Management)].
+From Fred Hutch Cancer Center, we also thank [insert names and roles here, for example: Ratana Som (SCHARP Lab Data Manager); Valeria Duran (SCHARP Statistical Programmer); and Lindsey Mwoga and Drienna Holman (VISC Project Management)].
 
 Note: names may be listed in bullet point format instead of paragraph format if that helps with 
 readability, for example:
