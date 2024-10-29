@@ -34,7 +34,7 @@ create_visc_project <- function(path, interactive = TRUE){
     path = path,
     rstudio = TRUE,
     open = interactive,
-    # fields override for usethis 3.0.0 ORCID placeholder, errors out in R 4.5
+    # fields override for usethis 3.0.0 ORCID placeholder that errored in R 4.5
     # https://github.com/r-lib/usethis/issues/2059
     fields = list(
       `Authors@R` = paste0(
