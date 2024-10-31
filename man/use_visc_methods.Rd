@@ -17,7 +17,6 @@ use_visc_methods(
 
 \item{interactive}{TRUE by default. FALSE is for non-interactive unit testing
 only.}
-
 }
 \description{
 Creates a "methods" directory that contains 3 "child" R Markdown documents
