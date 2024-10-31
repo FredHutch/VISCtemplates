@@ -9,6 +9,7 @@ Other improvements
 * Update PT report naming practices to the format VDCnnn_assay_PTreport_interim/final_(un)blinded.Rmd (#202)
 * Add auxiliary files to template .gitignore (.aux, .toc, .lof, .lot, .out, cache files, and .smbdelete files) (#230)
 * Update analysis repo PR template to be more comprehensive and useful (#231)
+* Update names in template acknowledgements section (#234)
 
 # VISCtemplates 1.3.2
 

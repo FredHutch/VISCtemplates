@@ -1,0 +1,50 @@
+---
+title: "statistical-methods"
+---
+
+<!-- This file was adapted from VISCtemplates {{pkg_ver}}. -->
+
+## Statistical Endpoints GTL
+
+### Peak activity
+
+Peak net percent granzyme B activity defined as the maximum activity across the six dilution levels ("peak activity"). Peak activity less than 0\% is set to 0\%. 
+
+### AUC
+
+Area under the net percent granzyme B activity ("AUC") versus log$_{10}$ (dilution) curve is calculated using the trapezoidal rule, setting any net percent granzyme B activity below 0\% to 0\%.   
+
+### Response call
+
+A positive response is defined as peak activity greater than or equal to 8\%. Tables show positive response rates and corresponding 95\% confidence intervals calculated by the Wilson score method [@AgCo1998], as well as summary statistics among positive responders and both responders and non-responders  [update as needed; must have a table of summary statistics for the same population as comparisons described below].
+
+
+## Statistical Endpoints Luciferase
+
+### Percent loss
+
+Percent specific killing was averaged over wells within participant, timepoint, and dilution. Baseline-subtracted percent loss activity was calculated for each dilution as baseline activity subtracted from post-baseline activity. Negative values were truncated at zero.
+
+### Peak percent loss
+
+Baseline-subtracted peak percent (\%) specific killing was defined as the maximum baseline-subtracted activity across the six dilution levels.
+
+### AUC
+
+Nonparametric partial Area under the baseline-subtracted curves ("pAUC"), calculated using the trapezoidal rule on three dilutions of the baseline-subtracted curves, setting baseline-subtracted percent specific killing less than 0\% to zero.
+
+### Response call
+
+A response is defined as positive if the baseline-subtracted percent (\%) specific killing activity is greater than or equal to 10\% for either the 1:50 or 1:200 dilutions.
+
+# Statistical Methods GTL and Luciferase
+
+## Graphical analysis
+
+Plots of peak activity and AUC show both response rates and the distribution of magnitude. Positive responses are indicated by dots color-coded by treatment group, and negative responses by gray triangles. A boxplot is superimposed on the distribution of positive responses. The mid-line of the box denotes the median and the ends of the box denote the $25^{th}$ and $75^{th}$ percentiles. The whiskers that extend from the top and bottom of the box extend to the most extreme data points that are no more than 1.5 times the interquartile range (i.e., height of the box) or if no value meets this criterion, to the data extremes.
+
+*[If working with durability data and calculating fold change from peak, be sure to specify direction of difference, e.g. $\text{log10(durability visit)} - \text{log10(peak visit)}$.]*
+
+## Statistical tests
+
+*[If statistical tests are used to compare responses, describe here. Follow protocol and assay specific SAP, converting the language to past tense. Generally, response rates are compared between groups using Barnard's test, and response are compared using Wilcoxon rank sum tests. Typically, two sets of magnitude comparisons are done: restricted to positive responders only, and all data i.e. positive and nonresponders.]*
