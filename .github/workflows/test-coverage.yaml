@@ -2,9 +2,9 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    branches: [main, master]
+    branches: [main, master, develop]
   pull_request:
-    branches: [main, master]
+    branches: [main, master, develop]
 
 name: test-coverage.yaml
 
@@ -18,6 +18,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-tinytex@v2
+
+      - name: Preinstall required latex packages
+        run: >
+          tlmgr install
+          lastpage morefloats parskip pdflscape textpos multirow lipsum
+          fancyhdr colortbl soul setspace relsize makecell threeparttable
+          threeparttablex environ trimspaces
 
       - uses: r-lib/actions/setup-r@v2
         with:
