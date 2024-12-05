@@ -72,7 +72,7 @@ Use a VISC Report:
 
 ``` r
 use_visc_report(
-  report_name = "VDCnnn_BAMA_PT_Report_statusifapplicable", # the name of the report file
+  report_name = "VDCnnn_BAMA_PTreport_interim_blinded", # the name of the report file
   path = "BAMA", # the path within the active directory, usually the name of the assay
   report_type = "bama" # "empty", "generic", "bama", or "nab"
 )
