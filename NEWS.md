@@ -50,6 +50,7 @@ Package Maintenance
 * Adjust dependencies in DESCRIPTION (#164)
 * Update package authors and maintainer (#190)
 * Clean up latex template code, removing commented-out code and reorganizing for better readability (#196)
+* Include dataspec html in the files to ignore in use_visc_gitignore() (#254) 
 
 # VISCtemplates 1.2.0
 
