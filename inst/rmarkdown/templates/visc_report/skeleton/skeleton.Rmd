@@ -65,7 +65,7 @@ opts_chunk$set(cache = FALSE,
                out.extra = "",
                fig.pos = "H")
 # fig.align argument is not supported in Word (align in template docx)
-if (knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex'){
+if (get_output_type() == 'latex'){
   opts_chunk$set(fig.align = "center")
 }
 
