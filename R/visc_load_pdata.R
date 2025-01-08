@@ -75,7 +75,13 @@ visc_load_pdata <- function(.data,
       lazyLoad(filebase = system.file(file.path('data', 'Rdata'),
                  package = pkg_name), envir = pdata_env)
     } else {
-      stop('Unable to find data object file')
+      stop(
+        sprintf(
+          "Unable to find data object '%s' in package '%s'",
+          pdata_name,
+          pkg_name
+        )
+      )
     }
   }
 
