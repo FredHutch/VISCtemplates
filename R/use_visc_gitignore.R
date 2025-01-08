@@ -44,7 +44,7 @@ use_visc_gitignore <- function(directory = ".") {
       "**/figure-latex/*.pdf",
       "**/figure-docx/*.pdf",
       "*.zip",
-      "*dataspec*.html"
+      "*dataspec*.html",
       # cache files
       "*_cache/",
       # other
