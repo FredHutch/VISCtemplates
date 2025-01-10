@@ -20,4 +20,4 @@
 
 ## Analysis Notes
 
-<!-- If there is something worth noting about the methods or report versions, briefly describe that here. -->
+If there is anything worth noting about the methods or report versions, briefly describe that here.
