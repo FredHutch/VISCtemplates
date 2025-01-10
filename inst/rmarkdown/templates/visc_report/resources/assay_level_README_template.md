@@ -20,4 +20,6 @@
 
 ## Analysis Notes
 
-If there is anything worth noting about the methods or report versions, briefly describe that here.
+If there is anything worth noting about the report versions or methods, briefly describe that here.
+
+More detailed descriptions specific to an individual report version can go in the README file within that report's folder.
