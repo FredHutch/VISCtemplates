@@ -31,6 +31,10 @@ visc_pdf_document <- function(latex_engine = "pdflatex",
               overwrite = FALSE)
   }
 
+  file.copy(from = find_resource("visc_report", "report_level_README_template.md"),
+            to = "README.md",
+            overwrite = FALSE)
+
   # switch for a breaking change in pandoc template, see notes in template.tex
   use_old_csl_refs <- tolower(rmarkdown::pandoc_version() < '3.1.7')
 
@@ -80,6 +84,10 @@ visc_word_document <- function(toc = TRUE,
               to = "bibliography.bib",
               overwrite = FALSE)
   }
+
+  file.copy(from = find_resource("visc_report", "report_level_README_template.md"),
+            to = "README.md",
+            overwrite = FALSE)
 
   bookdown::word_document2(
     toc = toc,
