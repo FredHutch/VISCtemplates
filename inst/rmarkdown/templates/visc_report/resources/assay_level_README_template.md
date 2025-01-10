@@ -1,4 +1,4 @@
-## Report history
+## Report history for [Insert Assay Name] Assay
 
 <!-- Use a permanent link (with git hash) to link to any data specs and 
      to the version of the report sent to the VDC. 
@@ -11,7 +11,7 @@
        - The hash is url: https://github.com/fredhutch/.../blob/hash/... -->
 
 | **Version** | **Date sent to VDC**| **Unblinded** | **Data Spec.**| **Commit link** |
-|------------------|-----------------|------------------|-----------------|------------------|-----------------|
+|-------------|---------------------|---------------|---------------|-----------------|
 |1.0 | [Date] | [Yes/No] |[Data Spec.](permanent link) | [hash](https://github.com/fredhutch/...) |
 
 
