@@ -31,7 +31,7 @@ visc_pdf_document <- function(latex_engine = "pdflatex",
               overwrite = FALSE)
   }
 
-  file.copy(from = find_resource("visc_report", "report_level_README_template.md"),
+  file.copy(from = find_resource("visc_report", "README_report_folder.md"),
             to = "README.md",
             overwrite = FALSE)
 
@@ -85,7 +85,7 @@ visc_word_document <- function(toc = TRUE,
               overwrite = FALSE)
   }
 
-  file.copy(from = find_resource("visc_report", "report_level_README_template.md"),
+  file.copy(from = find_resource("visc_report", "README_report_folder.md"),
             to = "README.md",
             overwrite = FALSE)
 

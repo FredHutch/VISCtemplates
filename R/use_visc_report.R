@@ -11,7 +11,7 @@
 #' }
 use_visc_readme <- function(study_name, save_as = "README.Rmd") {
   usethis::use_template(
-    template = "visc-project-readme.Rmd",
+    template = "README_visc_project.Rmd",
     save_as = save_as,
     data = list(study_name = study_name),
     package = "VISCtemplates"
@@ -71,7 +71,7 @@ use_visc_docs <- function(study_name) {
 
 use_project_background <- function(study_name) {
   usethis::use_template(
-    template = "visc-project-background.Rmd",
+    template = "background.Rmd",
     save_as = "docs/background.Rmd",
     data = list(study_name = study_name),
     package = "VISCtemplates"
@@ -80,7 +80,7 @@ use_project_background <- function(study_name) {
 
 use_project_objectives <- function(study_name) {
   usethis::use_template(
-    template = "visc-project-objectives.Rmd",
+    template = "objectives.Rmd",
     save_as = "docs/objectives.Rmd",
     data = list(study_name = study_name),
     package = "VISCtemplates"
@@ -150,10 +150,10 @@ use_visc_report <- function(report_name = "PTreport",
 
   # create assay level folder (specified in path) and readme, if don't yet exist
   if (! dir.exists(path)) dir.create(path, recursive = TRUE)
-  file.copy(from = find_resource("visc_report", "assay_level_README_template.md"),
+  file.copy(from = find_resource("visc_report", "README_assay_folder.md"),
             to = file.path(path, "README.md"),
             overwrite = FALSE)
-  
+
   use_template <- paste0(
     'visc', '_', if (report_type == 'empty') 'empty' else 'report'
   )
@@ -166,7 +166,7 @@ use_visc_report <- function(report_name = "PTreport",
   usethis::ui_done(
     glue::glue("Creating {{report_type}} VISC report at '{{file.path(path, report_name)}}'")
   )
-  
+
   if (report_type != 'empty'){
     use_visc_methods(path = file.path(path, report_name), assay = report_type,
                      interactive = interactive)
