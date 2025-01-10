@@ -147,7 +147,13 @@ use_visc_report <- function(report_name = "PTreport",
   options(usethis.quiet = ! interactive)
 
   if (report_type != 'empty') challenge_visc_report(report_name, interactive)
+
+  # create assay level folder (specified in path) and readme, if don't yet exist
   if (! dir.exists(path)) dir.create(path, recursive = TRUE)
+  file.copy(from = find_resource("visc_report", "assay_level_README_template.md"),
+            to = file.path(path, "README.md"),
+            overwrite = FALSE)
+  
   use_template <- paste0(
     'visc', '_', if (report_type == 'empty') 'empty' else 'report'
   )
@@ -160,9 +166,7 @@ use_visc_report <- function(report_name = "PTreport",
   usethis::ui_done(
     glue::glue("Creating {{report_type}} VISC report at '{{file.path(path, report_name)}}'")
   )
-  file.copy(from = find_resource("visc_report", "README_PT_Report.md"),
-            to = file.path(path, "README.md"),
-            overwrite = FALSE)
+  
   if (report_type != 'empty'){
     use_visc_methods(path = file.path(path, report_name), assay = report_type,
                      interactive = interactive)
