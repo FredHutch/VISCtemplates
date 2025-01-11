@@ -72,8 +72,7 @@ create_visc_project <- function(path, interactive = TRUE){
     save_as = "tests/testthat/test-spelling.R",
     package = "VISCtemplates"
   )
-  
-}
+
 }
 
 
