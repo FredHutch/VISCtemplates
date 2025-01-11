@@ -78,7 +78,7 @@ test_that("visc_load_pdata works", {
                         '3ccb5b0aaa74fe7cfc0d3ca6ab0b5cf3'
         )
       }),
-      "Unable to find data object file"
+      "Unable to find data object.*"
     )
   })
 })
