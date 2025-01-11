@@ -1,3 +1,38 @@
+#' Use a VISC README template
+#'
+#' @param study_name name of study in VDCNNN format
+#' @param save_as where to save README.Rmd. Defaults to top-level.
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' use_visc_readme("Gallo477")
+#' }
+use_visc_readme <- function(study_name, save_as = "README.Rmd") {
+  usethis::use_template(
+    template = "README_visc_project.Rmd",
+    save_as = save_as,
+    data = list(study_name = study_name),
+    package = "VISCtemplates"
+  )
+  # knit the md from the Rmd on request of SRA team
+  rmarkdown::render(
+    usethis::proj_path('README.Rmd'),
+    quiet = TRUE
+  )
+  # remove Rmd at request of SRA team; they just manually edit the *.md
+  # so the Rmd file merely clutters their working directory
+  unlink(
+    usethis::proj_path(
+      paste0(
+        'README',
+        c('.Rmd', '.html')
+      )
+    )
+  )
+}
+
 #' Create a VISC project
 #'
 #' Creates a new R project with a VISC analysis project structure.

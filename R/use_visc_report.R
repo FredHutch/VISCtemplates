@@ -1,38 +1,3 @@
-#' Use a VISC README template
-#'
-#' @param study_name name of study in VDCNNN format
-#' @param save_as where to save README.Rmd. Defaults to top-level.
-#'
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' use_visc_readme("Gallo477")
-#' }
-use_visc_readme <- function(study_name, save_as = "README.Rmd") {
-  usethis::use_template(
-    template = "README_visc_project.Rmd",
-    save_as = save_as,
-    data = list(study_name = study_name),
-    package = "VISCtemplates"
-  )
-  # knit the md from the Rmd on request of SRA team
-  rmarkdown::render(
-    usethis::proj_path('README.Rmd'),
-    quiet = TRUE
-  )
-  # remove Rmd at request of SRA team; they just manually edit the *.md
-  # so the Rmd file merely clutters their working directory
-  unlink(
-    usethis::proj_path(
-      paste0(
-        'README',
-        c('.Rmd', '.html')
-      )
-    )
-  )
-}
-
 #' Create a VISC docs directory with template files
 #'
 #' Creates the docs/ directory and presentations/ directory with templates
@@ -134,7 +99,7 @@ use_bib <- function(study_name) {
 #'   report_type = "bama"
 #'   )
 #' }
-use_visc_report <- function(report_name = "PTreport",
+use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
                             path = ".",
                             report_type = c("empty", "generic", "bama", "nab"),
                             interactive = TRUE) {
@@ -149,29 +114,43 @@ use_visc_report <- function(report_name = "PTreport",
   if (report_type != 'empty') challenge_visc_report(report_name, interactive)
 
   # create assay level folder (specified in path) and readme, if don't yet exist
-  if (! dir.exists(path)) dir.create(path, recursive = TRUE)
-  file.copy(from = find_resource("visc_report", "README_assay_folder.md"),
-            to = file.path(path, "README.md"),
-            overwrite = FALSE)
+  if (!dir.exists(path)) {
+    dir.create(path, recursive = TRUE)
+    study_name <- strsplit(report_name, '_')[[1]][1]
+    assay_name <- strsplit(report_name, '_')[[1]][2]
+    usethis::use_template(
+      template = "README_assay_folder.md",
+      data = list(study_name = study_name, assay_name = assay_name),
+      save_as = file.path(path, "README.md"),
+      package = "VISCtemplates"
+    )
+  }
 
-  use_template <- paste0(
-    'visc', '_', if (report_type == 'empty') 'empty' else 'report'
-  )
+  # create report folder and main Rmd document
+  visc_report_type <- paste0('visc', '_', if (report_type == 'empty') 'empty' else 'report')
   rmarkdown::draft(
     file = file.path(path, report_name),
-    template = use_template,
-    package = "VISCtemplates",
+    template = system.file("templates", visc_report_type, package = "VISCtemplates"),
     edit = FALSE
   )
-  usethis::ui_done(
-    glue::glue("Creating {{report_type}} VISC report at '{{file.path(path, report_name)}}'")
+
+  # create readme for report folder
+  usethis::use_template(
+    template = "README_report_folder.md",
+    data = list(),
+    save_as = file.path(path, report_name, "README.md"),
+    package = "VISCtemplates"
   )
 
+  # add draft methods
   if (report_type != 'empty'){
     use_visc_methods(path = file.path(path, report_name), assay = report_type,
                      interactive = interactive)
   }
 
+  usethis::ui_done(
+    glue::glue("Created {{report_type}} VISC report at '{{file.path(path, report_name)}}'")
+  )
 
 }
 

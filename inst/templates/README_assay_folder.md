@@ -1,4 +1,4 @@
-## Overview of [Insert Study Name] [Insert Assay Name] Reports
+## Overview of {{ study_name}} {{ assay_name }} Reports
 
 <!-- Use a permanent link (with git tag or hash) to link to any data specs and 
      to the version of the report sent to the VDC. -->
