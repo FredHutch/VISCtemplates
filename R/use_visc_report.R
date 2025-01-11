@@ -89,7 +89,7 @@ use_project_objectives <- function(study_name) {
 
 use_group_colors <- function(study_name) {
   usethis::use_template(
-    template = "group_colors.R",
+    template = "visc-project-group-colors.R",
     save_as = "R/group_colors.R",
     data = list(study_name = study_name),
     package = "VISCtemplates"
@@ -98,7 +98,7 @@ use_group_colors <- function(study_name) {
 
 use_study_schema <- function(study_name) {
   usethis::use_template(
-    template = "study_schema.R",
+    template = "visc-project-study-schema.R",
     save_as = "R/study_schema.R",
     data = list(study_name = study_name),
     package = "VISCtemplates"
@@ -107,7 +107,7 @@ use_study_schema <- function(study_name) {
 
 use_bib <- function(study_name) {
   usethis::use_template(
-    template = "bibliography.bib",
+    template = "visc-project-bibliography.bib",
     save_as = "docs/bibliography.bib",
     data = list(study_name = study_name),
     package = "VISCtemplates"
