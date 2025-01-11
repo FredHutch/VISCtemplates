@@ -392,7 +392,7 @@ kable(
 
 `r insert_break()`
 
-# Acknowledgements
+# Acknowledgments
 
 [Contact the study PM to get an updated list of internal and external contributors, and then fill in the template below]
 
