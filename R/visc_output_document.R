@@ -1,14 +1,3 @@
-
-find_logo <- function(filename) {
-  res <- system.file(
-    "logos", filename, package = "VISCtemplates"
-  )
-  if (res == "") stop(
-    "Couldn't find logo file ", filename, call. = FALSE
-  )
-  res
-}
-
 #' Convert to a VISC Report PDF/LaTeX document
 #'
 #' Runs the VISC Report for PDF output based on the template.tex file.
@@ -101,3 +90,15 @@ visc_word_document <- function(toc = TRUE,
     number_sections = FALSE,
     ...)
 }
+
+
+find_logo <- function(filename) {
+  res <- system.file(
+    "logos", filename, package = "VISCtemplates"
+  )
+  if (res == "") stop(
+    "Couldn't find logo file ", filename, call. = FALSE
+  )
+  res
+}
+
