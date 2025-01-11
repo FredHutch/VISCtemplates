@@ -8,7 +8,7 @@ test_that("All Rmd files are free of spelling errors", {
   rmd_files <- list.files(path = ".", pattern = "\\.Rmd$", full.names = TRUE, recursive = TRUE)
   
   # Define custom wordlist
-  custom_wordlist <- system.file("templates", WORDLIST, package = "VISCtemplates") # can update to use a project-specific wordlist instead
+  custom_wordlist <- file.path("inst", "WORDLIST")
   if (file.exists(custom_wordlist)) {
     ignore_words <- readLines(custom_wordlist)
   } else {
