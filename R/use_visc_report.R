@@ -174,7 +174,6 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
   usethis::ui_done(
     glue::glue("Created {{report_type}} VISC report at '{{file.path(path, report_name)}}'")
   )
-<<<<<<< HEAD
 
   # create readme for report folder
   usethis::use_template(
@@ -186,9 +185,6 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
 
   # add draft methods
   if (report_type != 'empty'){
-=======
-  if (report_type != 'empty') {
->>>>>>> develop
     use_visc_methods(path = file.path(path, report_name), assay = report_type,
                      interactive = interactive)
   }
