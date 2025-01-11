@@ -11,7 +11,7 @@
 #' }
 use_visc_readme <- function(study_name, save_as = "README.Rmd") {
   usethis::use_template(
-    template = "README_visc_project.Rmd",
+    template = "visc-project-readme.Rmd",
     save_as = save_as,
     data = list(study_name = study_name),
     package = "VISCtemplates"
@@ -71,7 +71,7 @@ use_visc_docs <- function(study_name) {
 
 use_project_background <- function(study_name) {
   usethis::use_template(
-    template = "background.Rmd",
+    template = "visc-project-background.Rmd",
     save_as = "docs/background.Rmd",
     data = list(study_name = study_name),
     package = "VISCtemplates"
@@ -80,7 +80,7 @@ use_project_background <- function(study_name) {
 
 use_project_objectives <- function(study_name) {
   usethis::use_template(
-    template = "objectives.Rmd",
+    template = "visc-project-objectives.Rmd",
     save_as = "docs/objectives.Rmd",
     data = list(study_name = study_name),
     package = "VISCtemplates"

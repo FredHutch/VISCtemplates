@@ -27,8 +27,7 @@ visc_pdf_document <- function(latex_engine = "pdflatex",
                               keep_tex = TRUE,
                               ...) {
 
-  template <- system.file("templates", "report_latex_template.tex",
-                          package = "VISCtemplates")
+  template <- system.file("templates", "report_latex_template.tex", package = "VISCtemplates")
 
   logo_path_scharp <- find_logo("SCHARP_logo.png")
   logo_path_fh <- find_logo("FredHutch_logo.png")
@@ -82,8 +81,7 @@ visc_word_document <- function(toc = TRUE,
                                keep_md = TRUE,
                                ...) {
 
-  word_style_path <- system.file("templates", "report_word_template.docx",
-                                 package = "VISCtemplates")
+  word_style_path <- system.file("templates", "report_word_template.docx", package = "VISCtemplates")
 
   # If no project-level bib file creating report specific bib
   if (!file.exists(
