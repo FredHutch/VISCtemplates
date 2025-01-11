@@ -162,11 +162,17 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
   }
 
   # create report folder and main Rmd document
-  visc_report_type <- paste0('visc', '_', if (report_type == 'empty') 'empty' else 'report')
+  visc_report_type <- paste0(
+    'visc', '_', if (report_type == 'empty') 'empty' else 'report'
+  )
   rmarkdown::draft(
     file = file.path(path, report_name),
     template = system.file("templates", visc_report_type, package = "VISCtemplates"),
     edit = FALSE
+  )
+
+  usethis::ui_done(
+    glue::glue("Created {{report_type}} VISC report at '{{file.path(path, report_name)}}'")
   )
 
   # create readme for report folder
@@ -182,10 +188,6 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
     use_visc_methods(path = file.path(path, report_name), assay = report_type,
                      interactive = interactive)
   }
-
-  usethis::ui_done(
-    glue::glue("Created {{report_type}} VISC report at '{{file.path(path, report_name)}}'")
-  )
 
 }
 
