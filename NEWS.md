@@ -12,7 +12,8 @@ Other improvements
 * Update PT report naming practices to the format VDCnnn_assay_PTreport_interim/final_(un)blinded.Rmd (#202)
 * Add auxiliary files to template .gitignore (.aux, .toc, .lof, .lot, .out, cache files, and .smbdelete files) (#230)
 * Update names in template acknowledgements section (#234)
-* Gitignore html files in data-raw via use_visc_gitignore() (#254) 
+* Gitignore html files in data-raw via use_visc_gitignore() (#254)
+* Remove workaround from #248 that is now fixed in upstream usethis package (#259)
 
 # VISCtemplates 1.3.2
 
