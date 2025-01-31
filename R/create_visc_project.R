@@ -33,15 +33,7 @@ create_visc_project <- function(path, interactive = TRUE){
   usethis::create_package(
     path = path,
     rstudio = TRUE,
-    open = interactive,
-    # fields override for usethis 3.0.0 ORCID placeholder that errored in R 4.5
-    # https://github.com/r-lib/usethis/issues/2059
-    fields = list(
-      `Authors@R` = paste0(
-        "person(\"First\", \"Last\", email = \"first.last",
-        "@example.com\", role = c(\"aut\", \"cre\"))"
-      )
-    )
+    open = interactive
   )
 
   # must set active project otherwise it is <no active project>
