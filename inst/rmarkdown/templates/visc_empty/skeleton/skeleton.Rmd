@@ -47,7 +47,7 @@ library(VISCfunctions)
 check_pandoc_version()
 
 # packages installed from CRAN
-packages_needed <- c("conflicted", "dplyr", "knitr", "kableExtra", "rprojroot")
+packages_needed <- c("conflicted", "dplyr", "ggplot2", "knitr", "kableExtra", "rprojroot")
 install_load_cran_packages(packages_needed)
 
 # knitr options
