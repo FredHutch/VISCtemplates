@@ -87,6 +87,10 @@ group_colors <- c(
   `2` = "#1749FF",
   `4` = "#0AB7C9"
 )
+
+# If you use networks or trials directory file paths
+# Example of usage: declare_directories(trials = TRUE) or declare_directories(networks = TRUE)
+# source(here::here("docs", "declare_directories.R"))
 ```
 
 ```{r conflicted-preferences, message=FALSE}

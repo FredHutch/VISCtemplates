@@ -74,6 +74,19 @@ visc_theme <- theme_bw() +
         legend.margin = margin(unit = "cm"),
         panel.grid.minor = element_blank())
 theme_set(visc_theme)
+
+# Set group colors for this example.
+# If you have group colors already in your project:
+# source(rprojroot::find_rstudio_root_file("R", "group_colors.R"), local = TRUE)
+group_colors <- c(
+  `1` = "#D92321",
+  `2` = "#1749FF",
+  `4` = "#0AB7C9"
+)
+
+# If you use networks or trials directory file paths
+# Example of usage: declare_directories(trials = TRUE) or declare_directories(networks = TRUE)
+# source(here::here("docs", "declare_directories.R"))
 ```
 
 ```{r conflicted-preferences, message=FALSE}

@@ -66,6 +66,9 @@ use_visc_docs <- function(study_name) {
 
   # project-level bib file
   use_bib(study_name)
+
+  # declare directories helper
+  use_declare_directories(study_name)
 }
 
 
@@ -113,6 +116,16 @@ use_bib <- function(study_name) {
     package = "VISCtemplates"
   )
 }
+
+use_declare_directories <- function(study_name) {
+  usethis::use_template(
+    template = "declare_directories.R",
+    save_as = "R/declare_directories.R",
+    data = list(study_name = study_name),
+    package = "VISCtemplates"
+  )
+}
+
 
 #' Use a VISC Report Template
 #'
