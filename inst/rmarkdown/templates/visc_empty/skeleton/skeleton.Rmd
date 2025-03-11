@@ -83,10 +83,6 @@ group_colors <- c(
   `2` = "#1749FF",
   `4` = "#0AB7C9"
 )
-
-# If you use networks or trials directory file paths
-# Example of usage: declare_directories(trials = TRUE) or declare_directories(networks = TRUE)
-# source(here::here("docs", "declare_directories.R"))
 ```
 
 ```{r conflicted-preferences, message=FALSE}
@@ -101,6 +97,14 @@ output_type <- get_output_type()
 
 kable_warnings <- set_kable_warnings(output_type)
 pandoc_markup <- set_pandoc_markup(output_type)
+```
+
+```{r data-package, eval=FALSE}
+remotes::install_git(file.path(declare_directories(folder = "networks"), 
+                               'cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git'),
+                     ref = 'main', # may need to change this to a different branch/tag/SHA to reproduce a specific analysis - see reproducibility tables in previous reports if appropriate
+                     git = 'external', 
+                     lib = my_data_package_lib)
 ```
 
 ```{r read-data}
