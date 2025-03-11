@@ -1,36 +1,34 @@
-
 #' Declare Directories to Load in for Unix/Mac versus Windows Operating System
 #'
-#' @param trials boolean. FALSE by default. if set to TRUE will return variable trials_directory.
-#' only one of trials or networks should be TRUE.
-#' @param networks boolean. FALSE by default. if set to TRUE will return variable network_directory.
-#' only one of trials or networks should be TRUE.
+#' @param folder string for either networks or trials. defaults to networks
+#' @param alt_root string alternative root to find networks or trials file location
+#' @param alt_folder string alternative folder mapping to find networks or trials file location
+#' @param force_windows_path string forces a windows path
 #'
-#' @returns returns network_directory or trials_directory. returns error if both are set to TRUE.
-#' returns nothing if both are set to FALSE or default to FALSE
+#' @returns defaults to "networks" path based on OS.
 #' @export
 #'
 #' @examples
-#' t_dir <- declare_directories(folder = "trials")
+#' # remotes::install_git(file.path(get_network_path(),'cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git'))
+#' or
+#' #' t_dir <- get_network_path(folder = "trials")
 #' CVDXX_adata <-  read_csv(file.path(t_dir, folder_location, "DATE_adata.csv")
-#'  or
-# remotes::install_git(file.path(declare_directories(folder = "networks"),
-#                                'cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git'),
-#                      ref = 'main', # may need to change this to a different branch/tag/SHA to reproduce a specific analysis - see reproducibility tables in previous reports if appropriate
-#                      git = 'external',
-#                      lib = my_data_package_lib)
-declare_directories <- function(folder = c("networks", "trials"),
-                                alt_folder = "",
-                                alt_root = ""){
+get_network_path <- function(folder = c("networks", "trials"),
+                             alt_root = "",
+                             alt_folder = "",
+                             force_windows_path){
 
   # stop and return message if more than one are declared as TRUE
   folder = match.arg(folder)
 
-  stopifnot(is.character(alt_paths))
+  stopifnot(is.character(alt_folder))
 
-  os <- get_os
+  os <- get_os()
 
   if (os == "windows") {
+    if (!missing(force_windows_path)) {
+      return(force_windows_path)
+    }
     # windows is mapped to N or T
     return(switch(folder,
            "networks" = "N:/",
