@@ -27,9 +27,5 @@ defaults to "networks" path based on OS.
 Declare Directories to Load in for Unix/Mac versus Windows Operating System
 }
 \examples{
-# remotes::install_git(file.path(get_server_path(),'cavd', 'Studies',
-'cvdNNN', 'pdata', 'VDCNNN.git'))
-or
-#' t_dir <- get_server_path(folder = "trials")
-CVDXX_adata <-  read_csv(file.path(t_dir, folder_location, "DATE_adata.csv")
+install_git(file.path(get_server_path(),'cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git'))
 }

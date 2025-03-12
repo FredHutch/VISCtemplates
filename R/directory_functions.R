@@ -8,12 +8,7 @@
 #' @returns defaults to "networks" path based on OS.
 #' @export
 #'
-#' @examples
-#' # remotes::install_git(file.path(get_server_path(),'cavd', 'Studies',
-#' 'cvdNNN', 'pdata', 'VDCNNN.git'))
-#' or
-#' #' t_dir <- get_server_path(folder = "trials")
-#' CVDXX_adata <-  read_csv(file.path(t_dir, folder_location, "DATE_adata.csv")
+#' @examples install_git(file.path(get_server_path(),'cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git'))
 get_server_path <- function(folder = c("networks", "trials"),
                              alt_root = "",
                              alt_folder = "",
@@ -91,8 +86,6 @@ get_os <- function(){
 #' @export
 #'
 #' @examples get_root(get_os())
-#' get_root("windows")
-#' get_root("fake root")
 get_root <- function(os) {
 
   stopifnot(is.character(os))
