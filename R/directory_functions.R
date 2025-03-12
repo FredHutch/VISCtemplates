@@ -9,7 +9,8 @@
 #' @export
 #'
 #' @examples
-#' # remotes::install_git(file.path(get_server_path(),'cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git'))
+#' # remotes::install_git(file.path(get_server_path(),'cavd', 'Studies',
+#' 'cvdNNN', 'pdata', 'VDCNNN.git'))
 #' or
 #' #' t_dir <- get_server_path(folder = "trials")
 #' CVDXX_adata <-  read_csv(file.path(t_dir, folder_location, "DATE_adata.csv")
@@ -89,7 +90,9 @@ get_os <- function(){
 #' @returns string for root path to try based on operating system
 #' @export
 #'
-#' @examples get_root(get_os()) or get_root("windows") or get_root("fake root")
+#' @examples get_root(get_os())
+#' get_root("windows")
+#' get_root("fake root")
 get_root <- function(os) {
 
   stopifnot(is.character(os))
@@ -103,8 +106,8 @@ get_root <- function(os) {
 
 #' Try different combinations of roots and folders for directories that exist
 #'
-#' @param root root path to check
-#' @param folder
+#' @param root root to check. joined to path options.
+#' @param path path to check. joined to root options.
 #'
 #' Used in get_server_path() to check all combos of alt_root and alt_path.
 #'

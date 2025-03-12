@@ -16,5 +16,7 @@ string for root path to try based on operating system
 Get root path based on operating system
 }
 \examples{
-get_root(get_os()) or get_root("windows") or get_root("fake root")
+get_root(get_os())
+get_root("windows")
+get_root("fake root")
 }

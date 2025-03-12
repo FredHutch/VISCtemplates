@@ -7,9 +7,11 @@
 .try_paths(root, path)
 }
 \arguments{
-\item{root}{root path to check}
+\item{root}{root to check. joined to path options.}
 
-\item{folder}{Used in get_server_path() to check all combos of alt_root and alt_path.}
+\item{path}{path to check. joined to root options.
+
+Used in get_server_path() to check all combos of alt_root and alt_path.}
 }
 \value{
 vector of root path combinations that exist or if none exist, exists with stop message
