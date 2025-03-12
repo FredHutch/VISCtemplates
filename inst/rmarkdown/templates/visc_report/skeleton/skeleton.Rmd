@@ -104,7 +104,7 @@ pandoc_markup <- set_pandoc_markup(output_type)
 ```
 
 ```{r data-package, eval=FALSE}
-remotes::install_git(file.path(declare_directories(folder = "networks"), 
+remotes::install_git(file.path(get_server_path(folder = "networks"), 
                                'cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git'),
                      ref = 'main', # may need to change this to a different branch/tag/SHA to reproduce a specific analysis - see reproducibility tables in previous reports if appropriate
                      git = 'external', 
