@@ -8,7 +8,8 @@
 #' @returns defaults to "networks" path based on OS.
 #' @export
 #'
-#' @examples install_git(file.path(get_server_path(),'cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git'))
+#' @examples \dontrun{
+#' install_git(file.path(get_server_path(),'cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git'))}
 get_server_path <- function(folder = c("networks", "trials"),
                              alt_root = "",
                              alt_folder = "",
@@ -21,6 +22,7 @@ get_server_path <- function(folder = c("networks", "trials"),
 
   os <- get_os()
 
+  # if it's a windows either use defined path or the force_windows_path
   if (os == "windows") {
     if (!missing(force_windows_path)) {
       return(force_windows_path)
@@ -32,6 +34,7 @@ get_server_path <- function(folder = c("networks", "trials"),
            ))
   }
 
+  # if it's not windows build path based on root and what directories exist
   root <- get_root(os)
 
   test_dir <- file.path(root, folder)
@@ -56,12 +59,11 @@ get_server_path <- function(folder = c("networks", "trials"),
 #' Get operating system
 #'
 #' @returns one of "linux" "windows" or "osx"
-#' @export
 #'
-#' Replaces .Platform$OS.type which only return "windows" or "unix".
-# '
+#' @details Replaces .Platform$OS.type which only return "windows" or "unix".
 #'
-#' @examples get_os()
+#'
+#' @examples \dontrun{get_os()}
 get_os <- function(){
   sysinf <- Sys.info()
   if (!is.null(sysinf)) {
@@ -85,7 +87,7 @@ get_os <- function(){
 #' @returns string for root path to try based on operating system
 #' @export
 #'
-#' @examples get_root(get_os())
+#' @examples \dontrun{get_root(get_os())}
 get_root <- function(os) {
 
   stopifnot(is.character(os))
@@ -107,7 +109,7 @@ get_root <- function(os) {
 #' @returns vector of root path combinations that exist or if none exist, exists with stop message
 #' @export
 #'
-#' @examples .try_paths("N:/", "folder_location")
+#' @examples \dontrun{.try_paths("N:/", "folder_location")}
 .try_paths <- function(root, path){
   all <- expand.grid(root, path) #get all combos of root and path
 

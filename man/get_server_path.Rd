@@ -27,5 +27,6 @@ defaults to "networks" path based on OS.
 Declare Directories to Load in for Unix/Mac versus Windows Operating System
 }
 \examples{
-install_git(file.path(get_server_path(),'cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git'))
+\dontrun{
+install_git(file.path(get_server_path(),'cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git'))}
 }

@@ -16,5 +16,5 @@ string for root path to try based on operating system
 Get root path based on operating system
 }
 \examples{
-get_root(get_os())
+\dontrun{get_root(get_os())}
 }

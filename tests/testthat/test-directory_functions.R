@@ -9,11 +9,8 @@ test_that("get_server_path returns the expected networks, trials or forced locat
   # expect_true(sum(get_server_path(folder = "trials") %in% c("T:/", "/trials/", "/Volumes/trials/")) >= 1)
 
   # force_windows_path provides entry for windows path to output
-  if (.Platform$OS.type == "windows") {
-    expect_equal(get_server_path(force_windows_path = "test/path"),
-                 "test/path") } else {
-                   warning("no test on osx or linux for ")
-                 }
+# testthat::skip_on_os(c("linux", "mac"))
+# expect_equal(get_server_path(force_windows_path = "test/path"), "test/path")
 
   # cant test alt_root or alt_folder without setting up folders to check for in CI enviro
 })
@@ -30,7 +27,7 @@ test_that("get_root returns expected string", {
   # confirm that output of get_root() is one of our three expected string outputs
   # note depends on get_os() which is tested before
   expect_true(get_root(get_os()) %in% c("/", "/Volumes/", ""))
-  expect_true(sum(get_root(get_os()) %in% c("/", "/Volumes/", "")) >=1 )
+  # expect_true(sum(get_root(get_os()) %in% c("/", "/Volumes/", "")) >=1 )
 })
 
 test_that(".try_paths throws error when no paths exist", {

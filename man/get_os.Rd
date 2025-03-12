@@ -12,6 +12,9 @@ one of "linux" "windows" or "osx"
 \description{
 Get operating system
 }
+\details{
+Replaces .Platform$OS.type which only return "windows" or "unix".
+}
 \examples{
-get_os()
+\dontrun{get_os()}
 }

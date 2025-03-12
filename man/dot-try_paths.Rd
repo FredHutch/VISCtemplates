@@ -20,5 +20,5 @@ vector of root path combinations that exist or if none exist, exists with stop m
 Try different combinations of roots and folders for directories that exist
 }
 \examples{
-.try_paths("N:/", "folder_location")
+\dontrun{.try_paths("N:/", "folder_location")}
 }
