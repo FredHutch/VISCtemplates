@@ -15,7 +15,17 @@
 
 | **Report Version** | **Date Sent to VDC**| **Unblinded** | **Data Spec. and Link**| **Commit Tag/Hash and Link** |
 |-------------|---------------------|---------------|---------------|-----------------|
-|1.0 | [Date] | [Yes/No] |[Data Spec.](permanent link) | [tag/hash](https://github.com/fredhutch/...) |
+| **Report Version** | **Date sent to VDC** | **Unblinded** |  **Report Commit Tag/Hash and Link**    | **Pdata location** | **Pdata Commit**| 
+|-----------|----------------------|-------------------|-------------|-------------------|---------------|
+|1.0 | [Date] | [Yes/No] | [tag/hash](https://github.com/fredhutch/...) | [location]  |  [hash]  | 
+
+For additional data, supplement table (long-format by report version if multiple data)
+
+| *Report Version* | *Data description* | *Data location* | *Data date*| 
+|-----------|----------------------|-------------------|------------------|
+|  1.0| [description]| [path]|  [Date]|   
+|  1.0| [description]| [path]|  [Date]|   
+
 
 
 ## Analysis Notes
