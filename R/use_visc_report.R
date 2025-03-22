@@ -196,7 +196,9 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
 
 # function to infer study name from report name
 get_study_name <- function(report_name) {
-  if (str_count(report_name, '_') >= 2) {
+  underscore_positions <- gregexpr('\\_', report_name)[[1]]
+  n_underscores <- length(underscore_positions[underscore_positions != -1])
+  if (n_underscores >= 2) {
     study_name <- strsplit(report_name, '_')[[1]][1]
   } else {
     study_name <- "Study"
@@ -206,16 +208,18 @@ get_study_name <- function(report_name) {
 
 # function to infer assay name from report name
 get_assay_name <- function(report_name) {
-  if (str_count(report_name, '_') >= 2) {
+  underscore_positions <- gregexpr('\\_', report_name)[[1]]
+  n_underscores <- length(underscore_positions[underscore_positions != -1])
+  if (n_underscores >= 2) {
     assay_name <- strsplit(report_name, '_')[[1]][2]
   } else {
     assay_name <- "Assay"
   }
   return(assay_name)
-} 
+}
 
 challenge_visc_report <- function(report_name, interactive = TRUE) {
-  
+
   if (!interactive) return(invisible(NULL))
 
   continue <- usethis::ui_yeah("
