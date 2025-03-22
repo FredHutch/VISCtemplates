@@ -139,7 +139,7 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
                             report_type = c("empty", "generic", "bama", "nab", "adcc"),
                             interactive = TRUE) {
 
-  stopifnot(report_type %in% c("empty", "generic", "bama", "nab", "adcc"))
+  report_type <- match.arg(report_type)
 
   # suppress usethis output when non-interactive
   old_usethis_quiet <- getOption('usethis.quiet')
