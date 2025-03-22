@@ -14,10 +14,12 @@ test_that("use_visc_report() creates main report .Rmd file and assay and report 
       file.exists(file.path(path, report_name, paste0(report_name, ".Rmd")))
     )
     expect_true(
-      file.exists(file.path(path, report_name, "README_report_folder.md"))
+      # report level readme file exists
+      file.exists(file.path(path, report_name, "README.md"))
     )
     expect_true(
-      file.exists(file.path(path, "README_assay_folder.md"))
+      # assay level readme file exists
+      file.exists(file.path(path, "README.md"))
     )
   })
 })
