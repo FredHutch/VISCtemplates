@@ -156,29 +156,9 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
   if (!dir.exists(path)) {
     dir.create(path, recursive = TRUE)
 
-    # try to automatically fill in the study and assay names in readme, otherwise use defaults
-    tryCatch(
-      expr = { study_name <- strsplit(report_name, '_')[[1]][1] },
-      error = function(e){ 
-        message(paste("Could not extract study name from report name", report_name))
-        message("Here's the original error message:")
-        message(conditionMessage(e))
-        study_name <- "Study Name"
-      }
-    )
-    tryCatch(
-      expr = { assay_name <- strsplit(report_name, '_')[[1]][2] },
-      error = function(e){ 
-        message(paste("Could not extract assay name from report name", report_name))
-        message("Here's the original error message:")
-        message(conditionMessage(e))
-        assay_name <- "Assay Name"
-      }
-    )
-    
     usethis::use_template(
       template = "README_assay_folder.md",
-      data = list(study_name = study_name, assay_name = assay_name),
+      data = list(study_name = get_study_name(report_name), assay_name = get_assay_name(report_name)),
       save_as = file.path(path, "README.md"),
       package = "VISCtemplates"
     )
@@ -212,8 +192,27 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
                      interactive = interactive)
   }
 
-
 }
+
+# function to infer study name from report name
+get_study_name <- function(report_name) {
+  if (str_count(report_name, '_') >= 2) {
+    study_name <- strsplit(report_name, '_')[[1]][1]
+  } else {
+    study_name <- "Study"
+  }
+  return(study_name)
+}
+
+# function to infer assay name from report name
+get_assay_name <- function(report_name) {
+  if (str_count(report_name, '_') >= 2) {
+    assay_name <- strsplit(report_name, '_')[[1]][2]
+  } else {
+    assay_name <- "Assay"
+  }
+  return(assay_name)
+} 
 
 challenge_visc_report <- function(report_name, interactive = TRUE) {
   
