@@ -155,8 +155,27 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
   # create assay level folder (specified in path) and readme, if don't yet exist
   if (!dir.exists(path)) {
     dir.create(path, recursive = TRUE)
-    study_name <- strsplit(report_name, '_')[[1]][1]
-    assay_name <- strsplit(report_name, '_')[[1]][2]
+
+    # try to automatically fill in the study and assay names in readme, otherwise use deafults
+    tryCatch(
+      expr = { study_name <- strsplit(report_name, '_')[[1]][1] },
+      error = function(e){ 
+        message(paste("Could not extract study name from report name", report_name))
+        message("Here's the original error message:")
+        message(conditionMessage(e))
+        study_name <- "Study Name"
+      }
+    )
+    tryCatch(
+      expr = { assay_name <- strsplit(report_name, '_')[[1]][2] },
+      error = function(e){ 
+        message(paste("Could not extract assay name from report name", report_name))
+        message("Here's the original error message:")
+        message(conditionMessage(e))
+        assay_name <- "Assay Name"
+      }
+    )
+    
     usethis::use_template(
       template = "README_assay_folder.md",
       data = list(study_name = study_name, assay_name = assay_name),
