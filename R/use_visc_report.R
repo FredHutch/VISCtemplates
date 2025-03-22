@@ -140,7 +140,10 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
                             interactive = TRUE) {
 
   report_type <- match.arg(report_type)
-  print(paste("No report_type specified, so using default option report_type = ", report_type))
+
+  if (dirname(report_name) != ".") {
+    stop("report_name cannot include a subdirectory. you can instead specify a subdirectory using the path argument of use_visc_report().")
+  }
 
   # suppress usethis output when non-interactive
   old_usethis_quiet <- getOption('usethis.quiet')
@@ -213,10 +216,6 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
 }
 
 challenge_visc_report <- function(report_name, interactive = TRUE) {
-
-  if (dirname(report_name) != ".") {
-    stop("report_name cannot be a path. it must be a file name only. you can specify a subdirectory using the path argument of use_visc_report().")
-  }
   
   if (!interactive) return(invisible(NULL))
 
