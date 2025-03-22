@@ -135,14 +135,9 @@ use_bib <- function(study_name) {
 #'   )
 #' }
 use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
-                            path = NULL,
+                            path = ".",
                             report_type = c("empty", "generic", "bama", "nab", "adcc"),
                             interactive = TRUE) {
-
-  if (is.null(path)) {
-    path <- dirname(report_name) # will be "." if no subdirectory specified in report_name
-    report_name <- basename(report_name)
-  }
 
   stopifnot(report_type %in% c("empty", "generic", "bama", "nab", "adcc"))
 
@@ -217,6 +212,11 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
 }
 
 challenge_visc_report <- function(report_name, interactive = TRUE) {
+
+  if (dirname(report_name) != ".") {
+    stop("report_name cannot be a path. it must be a file name only. you can specify a subdirectory using the path argument of use_visc_report().")
+  }
+  
   if (!interactive) return(invisible(NULL))
 
   continue <- usethis::ui_yeah("
