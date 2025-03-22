@@ -135,9 +135,13 @@ use_bib <- function(study_name) {
 #'   )
 #' }
 use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
-                            path = ".",
+                            path = NULL,
                             report_type = c("empty", "generic", "bama", "nab", "adcc"),
                             interactive = TRUE) {
+
+  if (is.null(path)) {
+    path <- dirname(report_name) # will be "." if no subdirectory specified in report_name
+  }
 
   stopifnot(report_type %in% c("empty", "generic", "bama", "nab", "adcc"))
 
