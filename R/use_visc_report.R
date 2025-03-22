@@ -156,7 +156,7 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
   if (!dir.exists(path)) {
     dir.create(path, recursive = TRUE)
 
-    # try to automatically fill in the study and assay names in readme, otherwise use deafults
+    # try to automatically fill in the study and assay names in readme, otherwise use defaults
     tryCatch(
       expr = { study_name <- strsplit(report_name, '_')[[1]][1] },
       error = function(e){ 
