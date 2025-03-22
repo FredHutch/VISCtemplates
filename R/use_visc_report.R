@@ -140,6 +140,7 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
                             interactive = TRUE) {
 
   report_type <- match.arg(report_type)
+  print(paste("No report_type specified, so using default option report_type = ", report_type))
 
   # suppress usethis output when non-interactive
   old_usethis_quiet <- getOption('usethis.quiet')
