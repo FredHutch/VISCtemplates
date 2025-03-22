@@ -24,25 +24,16 @@ test_that("use_visc_report() creates main report .Rmd file and assay and report 
   })
 })
 
-test_that("use_visc_report() creates main report .Rmd file and assay and report level README files, even if path is specified in report_name instead of path argument", {
+test_that("use_visc_report() throws error if subdirectory included in report_name argument", {
   temp_dir <- withr::local_tempdir()
   create_visc_project(temp_dir, interactive = FALSE)
   local({
     withr::local_dir(temp_dir)
     report_name <- "BAMA/Caskey820_BAMA_PT_Report"
-    expect_no_warning(
+    expect_error(
       use_visc_report(
         report_name, report_type = "bama", interactive = FALSE
       )
-    )
-    expect_true(
-      file.exists(file.path("BAMA", "Caskey820_BAMA_PT_Report.Rmd"))
-    )
-    expect_true(
-      file.exists(file.path("BAMA", "Caskey820_BAMA_PT_Report", "README_report_folder.md"))
-    )
-    expect_true(
-      file.exists(file.path("BAMA", "README_assay_folder.md"))
     )
   })
 })
