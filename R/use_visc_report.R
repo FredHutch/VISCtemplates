@@ -141,6 +141,7 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
 
   if (is.null(path)) {
     path <- dirname(report_name) # will be "." if no subdirectory specified in report_name
+    report_name <- basename(report_name)
   }
 
   stopifnot(report_type %in% c("empty", "generic", "bama", "nab", "adcc"))
