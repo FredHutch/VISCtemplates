@@ -1,14 +1,21 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/FredHutch/VISCtemplates/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/FredHutch/VISCtemplates/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/FredHutch/VISCtemplates/graph/badge.svg)](https://app.codecov.io/gh/FredHutch/VISCtemplates)
+<!-- badges: end -->
 
 # VISCtemplates
 
-The goal of VISCtemplates is to:
+The goal of the VISCtemplates package is to:
 
-- automate project setup
-- provide a common, easy-to-understand directory structure across
-  analyses
+- automate VISC project setup
+- provide a common, easy-to-understand directory structure across VISC analyses
 - provide consistency across VISC reports
+
+Most of the actual template files (including rmarkdown, latex, and docx files) are located in the `inst/templates/` folder, while convenience functions in R (building on the style and functionality of the [usethis](https://github.com/r-lib/usethis) package) for setting up VISC projects and reports can be found in the `R` folder.
 
 ## Installation
 
@@ -66,7 +73,7 @@ Use a VISC Report:
 
 ``` r
 use_visc_report(
-  report_name = "VDCnnn_BAMA_PT_Report_statusifapplicable", # the name of the report file
+  report_name = "VDCnnn_BAMA_PTreport_interim_blinded", # the name of the report file
   path = "BAMA", # the path within the active directory, usually the name of the assay
   report_type = "bama" # "empty", "generic", "bama", or "nab"
 )

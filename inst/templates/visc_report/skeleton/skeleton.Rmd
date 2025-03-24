@@ -47,7 +47,7 @@ library(VISCfunctions)
 check_pandoc_version()
 
 # packages installed from CRAN
-packages_needed <- c("conflicted", "tidyverse", "knitr", "kableExtra", "rprojroot", "remotes")
+packages_needed <- c("conflicted", "ggplot2", "dplyr", "knitr", "kableExtra", "rprojroot", "remotes")
 install_load_cran_packages(packages_needed)
 
 # where to install and look for packages (e.g., data packages) installed on SCHARP server
@@ -55,7 +55,7 @@ my_data_package_lib <- "/Volumes/kmacphee/RLib/" # UPDATE WITH YOUR DATA PACKAGE
 .libPaths(c(.libPaths(), my_data_package_lib))
 
 # knitr options
-opts_chunk$set(cache = FALSE, 
+opts_chunk$set(cache = FALSE,
                message = TRUE,
                warning = TRUE,
                echo = FALSE, 
@@ -63,10 +63,9 @@ opts_chunk$set(cache = FALSE,
                dpi = 200,
                out.width = "100%", 
                out.extra = "",
-               fig.pos = "H",
-               eval.after = c("fig.scap", "fig.cap")) # allows using variables from chunk in figure caption
+               fig.pos = "H")
 # fig.align argument is not supported in Word (align in template docx)
-if (knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex'){
+if (get_output_type() == 'latex'){
   opts_chunk$set(fig.align = "center")
 }
 
@@ -106,6 +105,7 @@ if (.Platform$OS.type == 'unix') {
 }
 
 remotes::install_git(file.path('cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git'),
+                     ref = 'main', # may need to change this to a different branch/tag/SHA to reproduce a specific analysis - see reproducibility tables in previous reports if appropriate
                      git = 'external', 
                      lib = my_data_package_lib)
 ```
@@ -118,7 +118,7 @@ ICS_adata <- exampleData_ICS %>%
   filter(Population == "IFNg" & Group != 3)
 ```
 
-\newpage
+`r insert_break()`
 
 # Summary of Main Results
 
@@ -274,7 +274,7 @@ Consider breaking up the results section by objective or by statistical endpoint
 Make sure to include p-values and references to relevant tables and figures. 
 See Figure `r insert_ref("fig:example-plot")` and Table `r insert_ref("tab:example-tab")`. 
 
-\newpage
+`r insert_break()`
 
 # Figures and Tables
 
@@ -320,7 +320,7 @@ ICS_adata %>%
   )
 ```
 
-\newpage
+`r insert_break()`
 
 ```{r example-tab, results="asis", warning=kable_warnings}
 
@@ -354,7 +354,7 @@ magnitude_tab %>%
   footnote("SD: standard deviation.", threeparttable = TRUE)
 ```
 
-\newpage
+`r insert_break()`
 
 ```{r Software-Session-Information, results="asis", message=FALSE, warning=kable_warnings}
 # load in rmarkdown to capture verison number
@@ -375,14 +375,15 @@ kable(
 ```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
 kable(
   my_session_info$packages_table, 
-  format = output_type, booktabs = TRUE, 
+  format = output_type,
+  booktabs = TRUE, 
   linesep = "", 
   caption = "Reproducibility software package version information"
   ) %>% 
   kable_styling(font_size = 10, latex_options = "hold_position")
 ```
 
-\newpage
+`r insert_break()`
 
 # Acknowledgements
 
@@ -390,7 +391,7 @@ kable(
 
 The authors thank the following individuals for their invaluable contributions to this report.
 From [insert group name or affiliation, for example: the CAVIMC/Duke team] we thank [insert individual names, and roles here, for example: Kelli Greene and Hongmei Gao (Experimental Design, Data Interpretation, Study Management); Nicole Yates (Scientific Research Laboratory Manager) and Sheetal Sawant (Biostatistician)].
-From Fred Hutch Cancer Center, we also thank [insert names and roles here, for example: Ratana Som (SCHARP Lab Data Manager); Marie Vendettuoli and Valeria Duran (SCHARP Statistical Programmers); and Lindsey Mwoga and Drienna Holman (VISC Project Management)].
+From Fred Hutch Cancer Center, we also thank [insert names and roles here, for example: Ratana Som (SCHARP Lab Data Manager); Valeria Duran (SCHARP Statistical Programmer); and Lindsey Mwoga and Drienna Holman (VISC Project Management)].
 
 Note: names may be listed in bullet point format instead of paragraph format if that helps with 
 readability, for example:
