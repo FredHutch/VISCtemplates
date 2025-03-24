@@ -1,5 +1,5 @@
 
-# How you can contribute to VISCtemplates
+# How to contribute to VISCtemplates
 
 Thank you for your interest in contributing to VISCtemplates! 
 This package is a common resource for everyone at VISC, and we rely on the whole group to report issues, suggest improvements, and contribute code and documentation.
@@ -71,7 +71,8 @@ Your pull request should follow these guidelines in order to be accepted:
 
 6. **Passes continuous integration tests:** We have several continuous integration (CI) tests set up on GitHub. These run automatically on each PR to reduce the risk of introducing breaking changes in the code base. You will see these at the bottom of your PR after it is created - once all checks have passed, it will look like this:
 <img width="866" alt="Screenshot 2025-03-24 at 11 30 01 AM" src="https://github.com/user-attachments/assets/014f03d2-ecef-4b02-9374-a71bcf32c05f" />
-if you are seeing red X's instead of green check marks, those will need to be addressed before your PR is accepted. Please reach out to a maintainer if you are unsure about how to approach this.
+
+If you are seeing red X's instead of green check marks, those will need to be addressed before your PR is accepted. Please reach out to a maintainer if you are unsure about how to approach this.
 
 7. **Updates NEWS.md file:** we track the changes to the package using the NEWS.md file. Please update this with a brief description of your changes and a link to the relevant PR.
 
