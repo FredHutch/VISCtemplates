@@ -5,13 +5,13 @@ Thank you for your interest in contributing to VISCtemplates!
 This package is a common resource for everyone at VISC, and we rely on all of you to keep it running smoothly.
 There are several ways you can contribute to making this package the best it can be:
 
-* **Report a bug** you encounter while using the pacakge as an issue on GitHub so that someone (maybe even you!) can fix it.
+1. **Report a bug** you encounter while using the package as an issue on GitHub so that someone (maybe even you!) can fix it.
 
-* **Propose or discuss an improvement.** Do you have an idea for a new VISCtemplates feature? Take a look at the [GitHub issue list](https://github.com/FredHutch/VISCtemplates/issues) first to see if someone else has proposed something similar. If yes, comment on the issue with your thoughts! If no, create a new issue describing the improvement you would like to see.
+2. **Propose or discuss an improvement.** Do you have an idea for a new VISCtemplates feature? Take a look at the [GitHub issue list](https://github.com/FredHutch/VISCtemplates/issues) first to see if someone else has proposed something similar. If yes, comment on the issue with your thoughts! If no, create a new issue describing the improvement you would like to see.
 
-* **Update and improve documentation.** Did you notice a typo somewhere in the package? Or think a function could use a better example? Improvements to the documentation are always very welcome! See the development guidelines below for how to create a branch and then a pull request (PR) with your proposed changes.
+3. **Update and improve documentation.** Did you notice a typo somewhere in the package? Or think a function could use a better example? Improvements to the documentation are always very welcome! See the development guidelines below for how to create a branch and then a pull request (PR) with your proposed changes.
 
-* **Contribute code** to fix a bug or implement a new feature. Before you start, have a look at the issue list and leave a comment on the issue you want to work on - or create a new issue if one doesn't exist yet (for example, if you have a new feature idea). Make sure someone from our team (currently: Bryan, Alicia, Kellie, Dave, Gabby) is happy with your basic proposal for tackling the issue before you start coding. Then get to work! See the development guidelines below for how to create a branch and then a pull request (PR) with your proposed changes.
+4. **Contribute code** to fix a bug or implement a new feature. Before you start, have a look at the issue list and leave a comment on the issue you want to work on - or create a new issue if one doesn't exist yet (for example, if you have a new feature idea). Make sure someone from our team (currently: Bryan, Alicia, Kellie, Dave, Gabby) is happy with your basic proposal for tackling the issue before you start coding. Then get to work! See the development guidelines below for how to create a branch and then a pull request (PR) with your proposed changes.
 
 
 ## Guidelines for reporting a bug
