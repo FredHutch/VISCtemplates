@@ -21,7 +21,7 @@ There are several ways you can contribute to making this package the best it can
 
 # Development guidelines for updating code and/or documentation
 
-We follow the [Gitflow](https://nvie.com/posts/a-successful-git-branching-model/) development model and the guidelines from [R packages](https://r-pkgs.org/) by Hadley Wickham and Jenny Bryan. The set of steps to take when updating code and/or docuemntation are below.
+We follow the [Gitflow](https://nvie.com/posts/a-successful-git-branching-model/) development model and the guidelines from [R packages](https://r-pkgs.org/) by Hadley Wickham and Jenny Bryan. Below are the set of steps to take when updating code and/or docuemntation.
 
 1. Make sure you have a local copy of the VISCtemplates repo that is fully up-to-date.
 
