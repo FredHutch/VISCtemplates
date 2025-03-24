@@ -14,14 +14,15 @@ There are several ways you can contribute to making this package the best it can
 4. **CONTRIBUTE CODE** to fix a bug or implement a new feature. Before you start, have a look at the issue list and leave a comment on the issue you want to work on - or create a new issue if one doesn't exist yet (for example, if you have a new feature idea). Make sure someone from our team (currently: Bryan, Alicia, Kellie, Dave, Gabby) is happy with your basic proposal for tackling the issue before you start coding. Then get to work! See the development guidelines below for how to create a branch and then a pull request (PR) with your proposed changes.
 
 
-## Guidelines for reporting a bug
+## Guidelines for filing GitHub issues
 
 When filing an issue, the most important thing is to include a minimal reproducible example (MRE) so whoever is working on the issue can quickly verify the problem, make a plan for how to fix it, and verify that it is fixed once the code has been adapted. There are three things you need to include to make your example reproducible:
 
-    1. **Required packages** should loaded at the top of the script.
-    2. **Example data:** The smaller and simpler, the better! A `data.frame()` with just a handful of rows and columns is ideal. Do NOT share private or confidential data (for example, from a clinical trial you are working on) as part of your example. To help make this step easier, AI tools like GitHub Copilot and ChatGPT are pretty good at generating R code that creates example data - you can prompt them, for example, with the column names you need a dataframe to have and any other critical features.
-    3. **Code** that illustrates the bug, based on the example data. Spend a little bit of time ensuring that your code is easy for others to read: (1) Make sure you've used spaces and your variable names are concise, but informative. (2) Use comments to indicate where your problem lies. (3) Do your best to remove everything that isn't related to the problem. The shorter your code is, the easier it is to understand.
-<br><br>
+1. **Required packages** should loaded at the top of the script.
+
+2. **Example data:** The smaller and simpler, the better! A `data.frame()` with just a handful of rows and columns is ideal. Do NOT share private or confidential data (for example, from a clinical trial you are working on) as part of your example. To help make this step easier, AI tools like GitHub Copilot and ChatGPT are pretty good at generating R code that creates example data - you can prompt them, for example, with the column names you need a dataframe to have and any other critical features.
+
+3. **Code** that illustrates the bug, based on the example data. Spend a little bit of time ensuring that your code is easy for others to read: (1) Make sure you've used spaces and your variable names are concise, but informative. (2) Use comments to indicate where your problem lies. (3) Do your best to remove everything that isn't related to the problem. The shorter your code is, the easier it is to understand.
 
 
 ## Development guidelines for updating code and/or documentation
