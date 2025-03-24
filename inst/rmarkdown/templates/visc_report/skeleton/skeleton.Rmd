@@ -225,15 +225,7 @@ response_results <- ICS_adata %>%
         verbose = FALSE
         )
     ) %>%  
-  ungroup() %>% 
-  mutate(
-    ResponseTest = pretty_pvalues( 
-      ResponseTest, output_type = output_type, sig_alpha = .1, 
-      background = 'yellow',
-      bold = if_else(pandoc_markup , TRUE, FALSE),
-      italic = if_else(pandoc_markup , TRUE, FALSE)
-      )
-    )
+  ungroup()
 ```
 
 ```{r magnitude-testing, warning=FALSE}
@@ -253,16 +245,7 @@ magnitude_results <- ICS_adata %>%
       verbose = FALSE
       )
     ) %>% 
-   ungroup() %>% 
-  mutate(
-    MagnitudeTest = pretty_pvalues(
-      MagnitudeTest, output_type = output_type, sig_alpha = .1,
-      background = "yellow",
-      bold = if_else(pandoc_markup , TRUE, FALSE),
-      italic = if_else(pandoc_markup , TRUE, FALSE)
-      )
-    ) %>% 
-  rename("Median (Range)" = Median_Min_Max, 'Mean (SD)' = Mean_SD)
+   ungroup()
 ```
 
 # Participant Cohort
@@ -341,13 +324,22 @@ ICS_adata %>%
 ```{r example-tab, results="asis", warning=kable_warnings}
 
 magnitude_tab <- magnitude_results %>% 
-  select(-Population, -contains("Perfect")) 
+  select(-Population, -contains("Perfect")) %>%
+  rename("Median (Range)" = Median_Min_Max, 'Mean (SD)' = Mean_SD)
 
 caption_short <- "Short caption to show in List of Tables."
 
 caption <- "Long caption to show above table. Explain everything needed to understand the table here."
 
 magnitude_tab %>%
+  mutate(
+    MagnitudeTest = pretty_pvalues(
+      MagnitudeTest, output_type = output_type, sig_alpha = .1,
+      background = "yellow",
+      bold = if_else(pandoc_markup , TRUE, FALSE),
+      italic = if_else(pandoc_markup , TRUE, FALSE)
+      )
+    ) %>% 
   kable(
     format = output_type, 
     longtable = FALSE, 
@@ -368,10 +360,19 @@ magnitude_tab %>%
     latex_hline = "full"
     ) %>% 
   kableExtra::footnote("SD: standard deviation.", threeparttable = TRUE)
+```
 
-# same table, but using flextable instead of kable (works better for Word output)
-flextable(magnitude_tab) %>%
+`r insert_break()`
+
+```{r, results="asis"}
+
+# same table as above, but using flextable instead of kable (works better for Word output)
+magnitude_tab %>%
+  mutate(MagnitudeTest = round_away_0(MagnitudeTest, 3)) %>%
+  flextable() %>%
+  bg(i = ~ MagnitudeTest < .1, j = "MagnitudeTest", bg = "yellow") %>%
   set_caption(caption) %>%
+  fontsize(size = 6, part = "all") %>%
   merge_v(j = 1:2) %>% # equivalent of collapse_rows
   add_footer_lines("SD: standard deviation.")
 ```
