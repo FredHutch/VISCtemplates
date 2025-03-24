@@ -2,6 +2,8 @@
 title: "Title of Your Submission"
 shorttitle: "Short Title"
 leftheader: "VISC Report"
+author: "Contact: First Name, Last Name (xxx@fredhutch.org)"
+date: "Word document compiled on `r format(Sys.Date(), '%A, %B %d, %Y')`"
 from:
  - name: FirstNameA LastNameA
    email: foo@bar.com
@@ -23,8 +25,8 @@ lot: true
 toc: true
 dropVISClogo: false
 output: 
-  VISCtemplates::visc_pdf_document: default
   VISCtemplates::visc_word_document: default
+  VISCtemplates::visc_pdf_document: default
 ---
 
 <!---
@@ -47,7 +49,7 @@ library(VISCfunctions)
 check_pandoc_version()
 
 # packages installed from CRAN
-packages_needed <- c("conflicted", "ggplot2", "dplyr", "knitr", "kableExtra", "rprojroot", "remotes")
+packages_needed <- c("conflicted", "ggplot2", "dplyr", "knitr", "kableExtra", "flextable", "rprojroot", "remotes")
 install_load_cran_packages(packages_needed)
 
 # where to install and look for packages (e.g., data packages) installed on SCHARP server
@@ -69,8 +71,13 @@ if (get_output_type() == 'latex'){
   opts_chunk$set(fig.align = "center")
 }
 
-# NA's will be blank in tables
-options(knitr.kable.NA = '')
+# table options
+options(knitr.kable.NA = '') # NA's will be blank in kable tables
+set_flextable_defaults(na_str = "",
+                       font.size = 10,
+                       theme_fun = "theme_box",
+                       table.layout = "autofit",
+                       digits = 3)
 
 # Create a ggplot theme for consistency of figures
 visc_theme <- theme_bw() + 
@@ -359,7 +366,13 @@ magnitude_tab %>%
     row_group_label_position = "identity",
     latex_hline = "full"
     ) %>% 
-  footnote("SD: standard deviation.", threeparttable = TRUE)
+  kableExtra::footnote("SD: standard deviation.", threeparttable = TRUE)
+
+# same table, but using flextable instead of kable (works better for Word output)
+flextable(magnitude_tab) %>%
+  set_caption(caption) %>%
+  merge_v(j = 1:2) %>% # equivalent of collapse_rows
+  add_footer_lines("SD: standard deviation.")
 ```
 
 `r insert_break()`
@@ -378,9 +391,14 @@ kable(
   caption = "Reproducibility software session information"
   ) %>% 
   kable_styling(font_size = 10, latex_options = "hold_position")
+
+# same table, but using flextable instead of kable (works better for Word output)
+flextable(my_session_info$platform_table) %>%
+  set_caption("Reproducibility software session information")
 ```
 
 ```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
+
 kable(
   my_session_info$packages_table, 
   format = output_type,
@@ -389,6 +407,10 @@ kable(
   caption = "Reproducibility software package version information"
   ) %>% 
   kable_styling(font_size = 10, latex_options = "hold_position")
+
+# same table, but using flextable instead of kable (works better for Word output)
+flextable(my_session_info$packages_table) %>%
+  set_caption("Reproducibility software package version information")
 ```
 
 `r insert_break()`
