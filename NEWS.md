@@ -14,6 +14,9 @@ Other improvements
 * Add auxiliary files to template .gitignore (.aux, .toc, .lof, .lot, .out, cache files, and .smbdelete files) (#230)
 * Update names in template acknowledgements section (#234)
 * Gitignore html files in data-raw via use_visc_gitignore() (#254)
+* Structured README.md files are now created at the assay folder level at the time of calling use_visc_report(),
+and minimally structured README.md files are created at the report folder level at the same time (#233)
+* Reorganized inst/ folder within package for clarity (#233)
 * Add explicit reference to the version of the data package being installed, and note about changing if needed (#257)
 * Update installation of system dependencies and R packages on CI runners (#261, #265)
 

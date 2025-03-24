@@ -9,12 +9,13 @@ coverage](https://codecov.io/gh/FredHutch/VISCtemplates/graph/badge.svg)](https:
 
 # VISCtemplates
 
-The goal of VISCtemplates is to:
+The goal of the VISCtemplates package is to:
 
-- automate project setup
-- provide a common, easy-to-understand directory structure across
-  analyses
+- automate VISC project setup
+- provide a common, easy-to-understand directory structure across VISC analyses
 - provide consistency across VISC reports
+
+Most of the actual template files (including rmarkdown, latex, and docx files) are located in the `inst/templates/` folder, while convenience functions in R (building on the style and functionality of the [usethis](https://github.com/r-lib/usethis) package) for setting up VISC projects and reports can be found in the `R` folder.
 
 ## Installation
 
