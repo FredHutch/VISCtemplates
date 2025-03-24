@@ -69,12 +69,12 @@ if (get_output_type() == 'latex'){
   opts_chunk$set(fig.align = "center")
 }
 
-# Table settings
-options(knitr.kable.NA = '') # NAs will show as blank
+# NA's will be blank in tables
+options(knitr.kable.NA = '')
 
-# Figure settings
-visc_theme <- theme_bw() +
-  theme(legend.position = "bottom",
+# Create a ggplot theme for consistency of figures
+visc_theme <- theme_bw() + 
+  theme(legend.position = "bottom", 
         legend.margin = margin(unit = "cm"),
         panel.grid.minor = element_blank())
 theme_set(visc_theme)
