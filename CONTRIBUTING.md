@@ -5,7 +5,7 @@ Thank you for your interest in contributing to VISCtemplates!
 This package is a common resource for everyone at VISC, and we rely on all of you to keep it running smoothly.
 There are several ways you can contribute to making this package the best it can be:
 
-1. **REPORT A BUG** you encounter while using the package as an issue on GitHub so that someone (maybe even you!) can fix it.
+1. **REPORT A BUG** you encounter while using the package as an issue on GitHub so that someone (maybe even you!) can fix it. See below for guidelines on how to file a helpful issue.
 
 2. **PROPOSE AND/OR DISCUSS AN IMPROVEMENT.** Do you have an idea for a new VISCtemplates feature? Take a look at the [GitHub issue list](https://github.com/FredHutch/VISCtemplates/issues) first to see if someone else has proposed something similar. If yes, comment on the issue with your thoughts! If no, create a new issue describing the improvement you would like to see.
 
@@ -27,7 +27,7 @@ When filing an issue, the most important thing is to include a minimal reproduci
 
 ## Development guidelines for updating code and/or documentation
 
-We follow the [Gitflow](https://nvie.com/posts/a-successful-git-branching-model/) development model and the guidelines from [R packages](https://r-pkgs.org/) by Hadley Wickham and Jenny Bryan. Below are the set of steps to take when updating code and/or docuemntation.
+We follow the [Gitflow](https://nvie.com/posts/a-successful-git-branching-model/) development model and the guidelines from [R packages](https://r-pkgs.org/) by Hadley Wickham and Jenny Bryan. Below are the set of steps to take when updating code and/or documentation. This might feel overwhelming the first time you get set up, but it gets easier and easier with practice!
 
 1. Make sure you have a local copy of the VISCtemplates repo that is fully up-to-date.
 
@@ -59,7 +59,6 @@ We follow the [Gitflow](https://nvie.com/posts/a-successful-git-branching-model/
 
 10. Discuss the pull request with package maintainers, iterating until a package maintainer either accepts the PR or decides it's not a good fit for VISCtemplates. The maintainers will use the PR guidelines below to determine if your PR is ready to be accepted.
 
-This might feel overwhelming the first time you get set up, but it gets easier with practice!
 
 ## Guidelines for pull requests (PRs)
 
@@ -82,12 +81,14 @@ If you are seeing red X's instead of green check marks, those will need to be ad
 
 7. **Updates NEWS.md file:** we track the changes to the package using the NEWS.md file. Please update this with a brief description of your changes and a link to the relevant PR.
 
+
 ## Code of conduct
 
 Please note that VISCtemplates is released with a [Contributor Code of Conduct](CONDUCT.md). By contributing to this project,
 you agree to abide by its terms.
 
-## Learn about package development
+
+## Learn more about package development
 
 Before contributing, you may want to read a bit more about package development in general.
 
