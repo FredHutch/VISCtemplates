@@ -18,7 +18,7 @@ Other improvements
 and minimally structured README.md files are created at the report folder level at the same time (#233)
 * Reorganized inst/ folder within package for clarity (#233)
 * Add explicit reference to the version of the data package being installed, and note about changing if needed (#257)
-* Fix finicky installation of R package 'htmlTable' on statsrv CI runner (#261)
+* Update installation of system dependencies and R packages on CI runners (#261, #265)
 
 # VISCtemplates 1.3.2
 
