@@ -73,6 +73,7 @@ set_flextable_defaults(na_str = "",
                        font.size = 10,
                        theme_fun = "theme_box",
                        table.layout = "autofit",
+                       fonts_ignore = TRUE,
                        digits = 3)
 
 # Create a ggplot theme for consistency of figures
