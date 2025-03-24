@@ -47,7 +47,7 @@ library(VISCfunctions)
 check_pandoc_version()
 
 # packages installed from CRAN
-packages_needed <- c("conflicted", "dplyr", "ggplot2", "knitr", "flextable", "rprojroot")
+packages_needed <- c("conflicted", "dplyr", "ggplot2", "knitr", "kableExtra", "rprojroot")
 install_load_cran_packages(packages_needed)
 
 # knitr options
@@ -61,21 +61,8 @@ opts_chunk$set(cache = FALSE,
                out.extra = "",
                fig.pos = "H")
 # fig.align argument is not supported in Word (align in template docx)
-if (knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex'){
+if (get_output_type() == 'latex'){
   opts_chunk$set(fig.align = "center")
-}
-
-# Table settings
-set_flextable_defaults(na_str = "", # NA's will be blank in tables
-                       font.size = 8,
-                       theme_fun = "theme_vanilla",
-                       table.layout = "autofit",
-                       digits = 3,
-                       fonts_ignore = TRUE)
-add_caption_and_label <- function(x, caption, label) {
-  set_caption(x,
-              caption = caption,
-              autonum = officer::run_autonum(seq_id = "tab", bkm = label))
 }
 
 # Create a ggplot theme for consistency of figures
@@ -114,7 +101,7 @@ Add some text here
 
 Add some text here
 
-\newpage
+`r insert_break()`
 
 # Reproducibility Software Information
 
@@ -143,7 +130,7 @@ flextable(my_session_info$packages_table) %>%
   add_caption_and_label(caption, label)
 ```
 
-\newpage
+`r insert_break()`
 
 # Acknowledgements
 

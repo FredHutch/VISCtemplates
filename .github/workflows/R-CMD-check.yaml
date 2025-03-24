@@ -22,7 +22,6 @@ jobs:
           - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest,   r: 'release'}
-          - {os: ubuntu-latest,   r: 'oldrel-1'}
           - {os: ubuntu-latest,   r: '4.0.4', pandoc-version: '2.11.4'}
 
     env:
@@ -58,10 +57,17 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
+      - name: Install apt dependencies for all Linux runners
+        if: ${{ contains( matrix.config.os, 'ubuntu') }}
+        run: |
+          sudo apt install -y libgit2-dev
+
       - name: Install statsrv packages
         if: ${{ matrix.config.r == '4.0.4' }}
         run: |
           R -q -e 'utils::install.packages("remotes")'
+          R -q -e 'remotes::install_version("htmlTable", "2.4.1")'
+          sudo apt install -y libjpeg-dev libcurl4-openssl-dev
           R -q -e 'remotes::install_version("Hmisc", "4.5-0")'
           R -q -e 'remotes::install_github("FredHutch/VISCfunctions", dependencies = TRUE)'
           R -q -e 'remotes::install_github("FredHutch/VISCtemplates", dependencies = TRUE)'

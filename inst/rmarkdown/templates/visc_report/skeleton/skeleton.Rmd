@@ -65,7 +65,7 @@ opts_chunk$set(cache = FALSE,
                out.extra = "",
                fig.pos = "H")
 # fig.align argument is not supported in Word (align in template docx)
-if (knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex'){
+if (get_output_type() == 'latex'){
   opts_chunk$set(fig.align = "center")
 }
 
@@ -116,6 +116,7 @@ if (.Platform$OS.type == 'unix') {
 }
 
 remotes::install_git(file.path('cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git'),
+                     ref = 'main', # may need to change this to a different branch/tag/SHA to reproduce a specific analysis - see reproducibility tables in previous reports if appropriate
                      git = 'external', 
                      lib = my_data_package_lib)
 ```
@@ -128,7 +129,7 @@ ICS_adata <- exampleData_ICS %>%
   filter(Population == "IFNg" & Group != 3)
 ```
 
-\newpage
+`r insert_break()`
 
 # Summary of Main Results
 
@@ -270,7 +271,7 @@ Consider breaking up the results section by objective or by statistical endpoint
 Make sure to include p-values and references to relevant tables and figures. 
 See Figure `r insert_ref("fig:example-plot")` and Table `r insert_ref("tab:example-tab")`. 
 
-\newpage
+`r insert_break()`
 
 # Figures and Tables
 
@@ -316,7 +317,7 @@ ICS_adata %>%
   )
 ```
 
-\newpage
+`r insert_break()`
 
 ```{r}
 
@@ -337,7 +338,7 @@ magnitude_results %>%
   add_caption_and_label(caption, label)
 ```
 
-\newpage
+`r insert_break()`
 
 ```{r}
 
@@ -365,7 +366,7 @@ flextable(my_session_info$packages_table) %>%
   add_caption_and_label(caption, label)
 ```
 
-\newpage
+`r insert_break()`
 
 # Acknowledgements
 
@@ -373,7 +374,7 @@ flextable(my_session_info$packages_table) %>%
 
 The authors thank the following individuals for their invaluable contributions to this report.
 From [insert group name or affiliation, for example: the CAVIMC/Duke team] we thank [insert individual names, and roles here, for example: Kelli Greene and Hongmei Gao (Experimental Design, Data Interpretation, Study Management); Nicole Yates (Scientific Research Laboratory Manager) and Sheetal Sawant (Biostatistician)].
-From Fred Hutch Cancer Center, we also thank [insert names and roles here, for example: Ratana Som (SCHARP Lab Data Manager); Marie Vendettuoli and Valeria Duran (SCHARP Statistical Programmers); and Lindsey Mwoga and Drienna Holman (VISC Project Management)].
+From Fred Hutch Cancer Center, we also thank [insert names and roles here, for example: Ratana Som (SCHARP Lab Data Manager); Valeria Duran (SCHARP Statistical Programmer); and Lindsey Mwoga and Drienna Holman (VISC Project Management)].
 
 Note: names may be listed in bullet point format instead of paragraph format if that helps with 
 readability, for example:
