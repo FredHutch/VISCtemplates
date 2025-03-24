@@ -15,7 +15,7 @@ Other improvements
 * Update names in template acknowledgements section (#234)
 * Gitignore html files in data-raw via use_visc_gitignore() (#254)
 * Add explicit reference to the version of the data package being installed, and note about changing if needed (#257)
-* Fix finicky installation of R package 'htmlTable' on statsrv CI runner (#261)
+* Update installation of system dependencies and R packages on CI runners (#261, #265)
 
 # VISCtemplates 1.3.2
 
