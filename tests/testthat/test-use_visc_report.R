@@ -4,7 +4,7 @@ test_that("use_visc_report() creates main report .Rmd file and assay and report 
   local({
     withr::local_dir(temp_dir)
     report_name <- "Caskey820_BAMA_PT_Report"
-    report_type = "bama"
+    report_type <- "bama"
     path <- "BAMA"
     expect_no_warning(
       use_visc_report(
