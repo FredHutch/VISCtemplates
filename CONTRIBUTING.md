@@ -21,15 +21,15 @@ There are several ways you can contribute to making this package the best it can
 
 # Development guidelines for updating code and/or documentation
 
-We follow the [Gitflow](https://nvie.com/posts/a-successful-git-branching-model/) development model and the guidelines from [R packages](https://r-pkgs.org/) by Hadley Wickham and Jenny Bryan.
+We follow the [Gitflow](https://nvie.com/posts/a-successful-git-branching-model/) development model and the guidelines from [R packages](https://r-pkgs.org/) by Hadley Wickham and Jenny Bryan. The set of steps to take when updating code and/or docuemntation are below.
 
 1. Make sure you have a local copy of the VISCtemplates repo that is fully up-to-date.
 
- * Run `git clone` and `git pull` as needed.
+     * Run `git clone` and `git pull` as needed.
 
 2. Create a new git branch to make your changes in. The starting point should be the `develop` branch.
 
- * From the command line, this looks like running: `git checkout develop` then `git pull` (to make sure the development branch is up-to-date) then `git checkout -b my-new-branch-name`
+     * From the command line, this looks like running: `git checkout develop` then `git pull` (to make sure the development branch is up-to-date) then `git checkout -b my-new-branch-name`
 
 4. Open your local copy of `VISCtemplates.Rproj` and make your changes to code and/or documentation.
 
