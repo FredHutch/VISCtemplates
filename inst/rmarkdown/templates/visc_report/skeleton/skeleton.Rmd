@@ -364,9 +364,9 @@ magnitude_tab %>%
 
 `r insert_break()`
 
-```{r, results="asis"}
+```{r, results="asis", eval=(output_type != 'latex')}
 
-# same table as above, but using flextable instead of kable (works better for Word output)
+# same table as above, but using flextable instead of kable for Word output
 magnitude_tab %>%
   mutate(MagnitudeTest = round_away_0(MagnitudeTest, 3)) %>%
   flextable() %>%
@@ -395,8 +395,8 @@ kable(
   kable_styling(font_size = 10, latex_options = "hold_position")
 ```
 
-```{r Software-Session-Information-flextable, results="asis"}
-# same table, but using flextable instead of kable (works better for Word output)
+```{r Software-Session-Information-flextable, results="asis", eval=(output_type != 'latex')}
+# same table, but using flextable instead of kable for Word output
 flextable(my_session_info$platform_table) %>%
   set_caption("Reproducibility software session information")
 ```
@@ -413,8 +413,8 @@ kable(
   kable_styling(font_size = 10, latex_options = "hold_position")
 ```
 
-```{r Software-Package-Version-Information-flextable, results="asis"}
-# same table, but using flextable instead of kable (works better for Word output)
+```{r Software-Package-Version-Information-flextable, results="asis", eval=(output_type != 'latex')}
+# same table, but using flextable instead of kable for Word output
 flextable(my_session_info$packages_table) %>%
   set_caption("Reproducibility software package version information")
 ```
