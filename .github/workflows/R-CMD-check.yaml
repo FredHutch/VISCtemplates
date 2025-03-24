@@ -71,7 +71,8 @@ jobs:
           R -q -e 'remotes::install_version("Hmisc", "4.5-0")'
           R -q -e 'remotes::install_github("FredHutch/VISCfunctions", dependencies = TRUE)'
           R -q -e 'remotes::install_github("FredHutch/VISCtemplates", dependencies = TRUE)'
-          R -q -e 'utils::install.packages(c("rcmdcheck", "ggplot2", "dplyr", "flextable"))'
+          R -q -e 'utils::install.packages(c("ggplot2", "dplyr"))'
+          R -q -e 'utils::install.packages("rcmdcheck")'
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         if: ${{ matrix.config.r != '4.0.4' }}

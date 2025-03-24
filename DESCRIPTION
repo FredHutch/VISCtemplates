@@ -46,10 +46,9 @@ Roxygen: list(markdown = TRUE)
 Suggests: 
     conflicted,
     dplyr,
-    flextable,
     ggplot2,
+    kableExtra,
     knitr,
-    officer,
     remotes,
     testthat (>= 3.0.0),
     withr
