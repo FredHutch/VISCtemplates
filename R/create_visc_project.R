@@ -51,11 +51,17 @@ create_visc_project <- function(path, interactive = TRUE){
   # add pull request template to hidden folder
   use_visc_pr_template()
 
-  # common scientific words for spell check to remember
+  # set up VISC spell check test, with custom word list
   usethis::use_directory("inst")
   usethis::use_template(
     template = "WORDLIST",
     save_as = "inst/WORDLIST",
+    package = "VISCtemplates"
+  )
+  usethis::use_testthat()
+  usethis::use_template(
+    template = "test-spelling.R",
+    save_as = "tests/testthat/test-spelling.R",
     package = "VISCtemplates"
   )
 

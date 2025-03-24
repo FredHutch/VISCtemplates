@@ -145,9 +145,9 @@ kable(
 
 `r insert_break()`
 
-# Acknowledgements
+# Acknowledgments
 
-Include your acknowledgements in this section.
+Include your acknowledgments in this section.
 
 \newpage
 

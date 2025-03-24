@@ -10,7 +10,7 @@ Please edit that file. -->
 
 Describe trial - product, primary hypothesis.
 
-Describe participant enrollment - number per group planned and what those ppts 
+Describe participant enrollment - number per group planned and what those participants 
 received. If study was amended to reduce planned group sample sizes or study 
 allowed for over/under enrollment such that number enrolled per group would not 
 be the same as what is in the schema, mention it here and cite source.
