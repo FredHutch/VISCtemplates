@@ -2,7 +2,7 @@
 # How to contribute to VISCtemplates
 
 Thank you for your interest in contributing to VISCtemplates! 
-This package is a common resource for everyone at VISC, and we rely on all of you to report issues, suggest improvements, and contribute code and documentation.
+This package is a common resource for everyone at VISC, and we rely on all of you to help us keep it running smoothly.
 There are several ways you can contribute to making this package the best it can be:
 
 * **Report a bug.** Report a bug you encounter while using the pacakge as an issue on GitHub so that someone (maybe even you!) can fix it. When filing an issue, the most important thing is to include a minimal reproducible example (MRE) so whoever is working on the issue can quickly verify the problem, make a plan for how to fix it, and verify that it is fixed once the code has been adapted. There are three things you need to include to make your example reproducible:
