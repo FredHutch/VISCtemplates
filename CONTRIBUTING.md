@@ -1,25 +1,30 @@
 
-# How to contribute to VISCtemplates
+# Contributing to VISCtemplates
 
 Thank you for your interest in contributing to VISCtemplates! 
-This package is a common resource for everyone at VISC, and we rely on all of you to help us keep it running smoothly.
+This package is a common resource for everyone at VISC, and we rely on all of you to keep it running smoothly.
 There are several ways you can contribute to making this package the best it can be:
 
-* **Report a bug.** Report a bug you encounter while using the pacakge as an issue on GitHub so that someone (maybe even you!) can fix it. When filing an issue, the most important thing is to include a minimal reproducible example (MRE) so whoever is working on the issue can quickly verify the problem, make a plan for how to fix it, and verify that it is fixed once the code has been adapted. There are three things you need to include to make your example reproducible:
+* **Report a bug** you encounter while using the pacakge as an issue on GitHub so that someone (maybe even you!) can fix it.
+
+* **Propose or discuss an improvement.** Do you have an idea for a new VISCtemplates feature? Take a look at the [GitHub issue list](https://github.com/FredHutch/VISCtemplates/issues) first to see if someone else has proposed something similar. If yes, comment on the issue with your thoughts! If no, create a new issue describing the improvement you would like to see.
+
+* **Update and improve documentation.** Did you notice a typo somewhere in the package? Or think a function could use a better example? Improvements to the documentation are always very welcome! See the development guidelines below for how to create a branch and then a pull request (PR) with your proposed changes.
+
+* **Contribute code** to fix a bug or implement a new feature. Before you start, have a look at the issue list and leave a comment on the issue you want to work on - or create a new issue if one doesn't exist yet (for example, if you have a new feature idea). Make sure someone from our team (currently: Bryan, Alicia, Kellie, Dave, Gabby) is happy with your basic proposal for tackling the issue before you start coding. Then get to work! See the development guidelines below for how to create a branch and then a pull request (PR) with your proposed changes.
+
+
+## Guidelines for reporting a bug
+
+When filing an issue, the most important thing is to include a minimal reproducible example (MRE) so whoever is working on the issue can quickly verify the problem, make a plan for how to fix it, and verify that it is fixed once the code has been adapted. There are three things you need to include to make your example reproducible:
 
     1. **Required packages** should loaded at the top of the script.
     2. **Example data:** The smaller and simpler, the better! A `data.frame()` with just a handful of rows and columns is ideal. Do NOT share private or confidential data (for example, from a clinical trial you are working on) as part of your example. To help make this step easier, AI tools like GitHub Copilot and ChatGPT are pretty good at generating R code that creates example data - you can prompt them, for example, with the column names you need a dataframe to have and any other critical features.
     3. **Code** that illustrates the bug, based on the example data. Spend a little bit of time ensuring that your code is easy for others to read: (1) Make sure you've used spaces and your variable names are concise, but informative. (2) Use comments to indicate where your problem lies. (3) Do your best to remove everything that isn't related to the problem. The shorter your code is, the easier it is to understand.
 <br><br>
 
-* **Propose an improvement.** Do you have an idea for a new VISCtemplates feature, or another way to improve the package? Take a look at the issue list first to see if it isn't included or suggested yet. If not, suggest your idea as an issue on GitHub.
 
-* **Update and improve documentation.** Noticed a typo somewhere in the package? Think a function could use a better example? Improvements to the documentation are always very welcome! See the development guidelines below for how to create a branch and then a pull request (PR) with your proposed changes.
-
-* **Contribute code** to fix a bug or implement a new feature. Before you start, have a look at the issue list and leave a comment on the issue you want to work on - or create a new issue if one doesn't exist yet (for example, if you have a new feature idea). Make sure someone from our team (currently: Bryan, Alicia, Kellie, Dave, Gabby) is happy with your basic proposal for tackling the issue before you start coding. Then get to work! See the development guidelines below for how to create a branch and then a pull request (PR) with your proposed changes.
-
-
-# Development guidelines for updating code and/or documentation
+## Development guidelines for updating code and/or documentation
 
 We follow the [Gitflow](https://nvie.com/posts/a-successful-git-branching-model/) development model and the guidelines from [R packages](https://r-pkgs.org/) by Hadley Wickham and Jenny Bryan. Below are the set of steps to take when updating code and/or docuemntation.
 
@@ -76,12 +81,12 @@ If you are seeing red X's instead of green check marks, those will need to be ad
 
 7. **Updates NEWS.md file:** we track the changes to the package using the NEWS.md file. Please update this with a brief description of your changes and a link to the relevant PR.
 
-# Code of conduct
+## Code of conduct
 
 Please note that VISCtemplates is released with a [Contributor Code of Conduct](CONDUCT.md). By contributing to this project,
 you agree to abide by its terms.
 
-# Learn about package development
+## Learn about package development
 
 Before contributing, you may want to read a bit more about package development in general.
 
