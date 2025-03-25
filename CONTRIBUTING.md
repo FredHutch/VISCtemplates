@@ -56,6 +56,7 @@ We follow the [Gitflow](https://nvie.com/posts/a-successful-git-branching-model/
 
     * In your PR, make sure to clearly state the rationale behind the changes.
     * Request PR reviews from people who are already familar with the issue (if any).
+    * Note that you can create a "draft PR" if you want to start the process but you know that the PR is not quite ready for review.
 
 10. Discuss the pull request with package maintainers, iterating until a package maintainer either accepts the PR or decides it's not a good fit for VISCtemplates. The maintainers will use the PR guidelines below to determine if your PR is ready to be accepted.
 
@@ -77,7 +78,8 @@ Your pull request should follow these guidelines in order to be accepted:
 6. **Passes continuous integration tests:** We have several continuous integration (CI) tests set up on GitHub. These run automatically on each PR to reduce the risk of introducing breaking changes in the code base. You will see these at the bottom of your PR after it is created - once all checks have passed, it will look like this:
 <img width="866" alt="Screenshot 2025-03-24 at 11 30 01 AM" src="https://github.com/user-attachments/assets/014f03d2-ecef-4b02-9374-a71bcf32c05f" />
 
-If you are seeing red X's instead of green check marks, those will need to be addressed before your PR is accepted. Please reach out to a maintainer if you are unsure about how to approach this.
+Basically, the CIs are running tests on varying combinations of operating systems (OS) and versions of R. For example, R-Cmd-check/ubuntu-latest (4.0.4) runs the current code on a linux operating system with R-version 4.0.4, mimicking what is currently on statsrv.
+If you are seeing red X's instead of green check marks for any of the CI tests, those will need to be addressed before your PR is accepted. Please reach out to a maintainer if you are unsure about how to approach this.
 
 7. **Updates NEWS.md file:** we track the changes to the package using the NEWS.md file. Please update this with a brief description of your changes and a link to the relevant PR.
 
