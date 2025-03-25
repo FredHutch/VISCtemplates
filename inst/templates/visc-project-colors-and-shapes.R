@@ -1,4 +1,4 @@
-## Colors and shapes for {{ study_name }} figures, to be used across PT reports
+## Colors and shapes for VDCnnn figures, to be used across PT reports
 
 # To source these for use in your Rmarkdown report:
 # source("R/group-colors.R", local = TRUE)
@@ -9,7 +9,16 @@
 # "can you give me both dark and light variations of the blue, orange, green, and purple?"
 
 group_colors <- c(
+
   `Placebo` = "#999999", # medium gray
+  `Baseline` = "#999999", # medium gray
+  `No Response` = "#999999", # medium gray
+
+  `Group 1` = "#005682", # dark blue,
+  `Group 2` = "#B97500", # dark orange
+  `Group 3` = "#007856", # dark green
+  `Group 4` = "#994E71", # dark purple/maroon
+
   `Treatment 1, Low Dose` = "#66B2FF", # light blue
   `Treatment 1, High Dose` = "#005682", # dark blue
   `Treatment 2, Low Dose` = "#FFBF80", # light orange
@@ -17,8 +26,8 @@ group_colors <- c(
   `Treatment 3, Low Dose` = "#80E1B8", # light green
   `Treatment 3, High Dose` = "#007856", # dark green
   `Treatment 4, Low Dose` = "#E6AFC8", # light purple/maroon
-  `Treatment 4, High Dose` = "#994E71", # dark purple/maroon
-  `Non-responder` = "#999999" # medium gray
+  `Treatment 4, High Dose` = "#994E71" # dark purple/maroon
+
 )
 
 response_shapes <- c(

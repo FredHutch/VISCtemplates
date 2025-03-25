@@ -78,7 +78,7 @@ visc_theme <- theme_bw() +
         legend.margin = margin(unit = "cm"),
         panel.grid.minor = element_blank())
 theme_set(visc_theme)
-source(rprojroot::find_rstudio_root_file("R", "colors_and_shapes.R"), local = TRUE)
+source(rprojroot::find_rstudio_root_file("R", "colors-and-shapes.R"), local = TRUE)
 ```
 
 ```{r conflicted-preferences, message=FALSE}
@@ -280,29 +280,28 @@ See Figure `r insert_ref("fig:example-plot")` and Table `r insert_ref("tab:examp
 
 ```{r example-plot, fig.scap="Shorter caption for List of Figures.", fig.cap= "Longer caption that shows under the figure. Explain everything needed to understand the figure here."}
 
-ICS_adata %>%
-  ggplot(aes(x = factor(Group), y = pmax(PercentCellNet, 0.005))) +
-  geom_point(
-    data = ICS_adata %>% filter(response == 0),
-    aes(shape = factor(response)),
-    position = position_jitter(width = .25, height = 0, seed = 3241),
-    color = "#787873", size = 1, show.legend = FALSE
-    ) +
-  geom_point(
-    data = ICS_adata %>% filter(response == 1), 
-    aes(shape = factor(response), color = factor(Group)),
-    position = position_jitter(width = .25, seed = 3241), size = 1
-    ) +
+plt_data <- ICS_adata %>%
+  mutate(
+    Group = factor(Group),
+    group_color = case_when(response == 0 ~ 'No Response',
+                            response == 1 ~ paste("Group", Group)),
+    response_shape = case_when(response == 0 ~ 'No Response',
+                               response == 1 ~ 'Positive Response')
+  )
+
+plt_data %>%
+  ggplot(aes(x = Group,
+             y = pmax(PercentCellNet, 0.005),
+             shape = response_shape,
+             color = group_color)) +
+  geom_point(position = position_jitter(width = .25, height = 0, seed = 3241),
+             size = 1) +
+  scale_color_discrete() +
+  scale_shape_discrete() +
   geom_boxplot(
-    data = ICS_adata %>% filter(response == 1),
-    aes(col = factor(Group)),
+    data = plt_data %>% filter(response == 1),
+    # aes(col = Group),
     fill = NA, lwd = .5, outlier.colour = NA
-    ) +  
-  scale_color_manual(values = group_colors) +
-  scale_shape_manual(
-    breaks = c(0,1), 
-    labels = c("Non-responder", "Responder"), 
-    values = c(2, 19)
     ) +
   scale_y_log10(
     breaks = c(.005,.01,.05,.25,1,2, 4, 10),
@@ -310,14 +309,13 @@ ICS_adata %>%
                "0.01", "0.05", '0.25%', "1%", "2%", "4%", "10%")
     ) +
   facet_grid(Stim ~ Visit) +
-  theme(
-    axis.title.x = element_blank()
-  ) +
   labs(
     y = expression("Background-Adjusted % Activation Marker+"),
-    shape = "",
-    color = "Group"
-  )
+    shape = NULL,
+    color = NULL
+  ) +
+  theme(legend.direction = "vertical",
+        legend.spacing.x = unit(1.5, "cm"))
 ```
 
 `r insert_break()`
