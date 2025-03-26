@@ -1,7 +1,7 @@
 ## Colors and shapes for VDCnnn figures, to be used across PT reports
 
 # To source these for use in your Rmarkdown report:
-# source("R/group-colors.R", local = TRUE)
+# source("R/colors-and-shapes.R", local = TRUE)
 
 # this color scheme was generated on 3/24/25 with help from microsoft copilot
 # the following prompts were used:
@@ -39,13 +39,7 @@ response_shapes <- c(
   `Detectable Response` = 16 # filled circle
 )
 
-# Set these colors and shapes to be the ggplot defaults
-assign("scale_color_discrete", function(..., values = group_colors) scale_color_manual(..., values = values), globalenv())
-assign("scale_fill_discrete", function(..., values = group_colors) scale_fill_manual(..., values = values), globalenv())
-assign("scale_shape_discrete", function(..., values = response_shapes) scale_shape_manual(..., values = values), globalenv())
-
-# Alternatively, you can apply
+# You can apply these colors and shapes to ggplot figures using:
 # scale_color_manual(values = group_colors)
 # scale_fill_manual(values = group_colors)
 # scale_shape_manual(values = response_shapes)
-# to individual ggplot objects in the report
