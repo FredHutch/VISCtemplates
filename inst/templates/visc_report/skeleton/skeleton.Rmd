@@ -78,7 +78,14 @@ visc_theme <- theme_bw() +
         legend.margin = margin(unit = "cm"),
         panel.grid.minor = element_blank())
 theme_set(visc_theme)
+
+# source group_colors and response_shapes for use in figures
 source(rprojroot::find_rstudio_root_file("R", "colors-and-shapes.R"), local = TRUE)
+
+# Set these colors and shapes to be the ggplot defaults when using scale_xxx_discrete()
+assign("scale_color_discrete", function(..., values = group_colors) scale_color_manual(..., values = values), globalenv())
+assign("scale_fill_discrete", function(..., values = group_colors) scale_fill_manual(..., values = values), globalenv())
+assign("scale_shape_discrete", function(..., values = response_shapes) scale_shape_manual(..., values = values), globalenv())
 ```
 
 ```{r conflicted-preferences, message=FALSE}
