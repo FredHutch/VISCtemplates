@@ -69,7 +69,7 @@ Your pull request should follow these guidelines in order to be accepted:
 
 2. **Includes only related changes:** Before you submit your pull request, check to make sure that you haven't accidentally included any unrelated changes. These make it harder to see exactly what's changed, and to evaluate any unexpected side effects. (Note that each PR corresponds to a git branch, so you should create a new, separate branch each time you start working on an unrelated task.)
 
-3. **Follows good coding style:** Please follow the official [tidyverse style](https://style.tidyverse.org/). Maintaining a consistent style across the whole code base makes it much easier to maintain and use. If you're modifying existing VISCtemplates code that doesn't follow the style guide, a separate pull request to fix the style would be greatly appreciated.
+3. **Follows good coding style:** Please follow the official [tidyverse style guide](https://style.tidyverse.org/) for coding style (note: this does not mean using tidyverse packages - we actually want VISCtemplates to have minimal dependencies on other packages). Maintaining a consistent style across the whole code base makes it much easier to maintain and use. If you're modifying existing VISCtemplates code that doesn't follow the style guide, a separate pull request to fix the style would be greatly appreciated.
 
 4. **Includes documentation:** If you're adding new parameters or a new function, you'll also need to document them with roxygen. Make sure to re-run `devtools::document()` on the code before submitting.
 
