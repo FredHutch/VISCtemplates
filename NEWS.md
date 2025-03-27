@@ -7,6 +7,7 @@ Bug fixes
 * Fix error when running skeleton.Rmd file interactively (#249)
 * Include pdata object name and data package name in visc_load_pdata() error message (#252)
 * Add ggplot2 loading to visc_empty PT report skeleton to avoid rendering error (#256)
+* Fix formatting issue in assay folder README template (#266)
 
 Other improvements
 * create_visc_project() now discards README.Rmd after knitting template to README.md (#223)
