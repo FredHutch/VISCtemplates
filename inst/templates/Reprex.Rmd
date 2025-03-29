@@ -1,0 +1,135 @@
+---
+title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore '
+shorttitle: Lorem ipsum dolor sit
+from:
+- name: Lorem Ipsum
+  email: dolor@scharp.org
+  contact: yes
+to:
+- name: Lorem Ipsum
+- name: Lorem Ipsum
+cc:
+- name: Lorem Ipsum
+- name: Lorem Ipsum
+- name: Lorem Ipsum
+- name: Lorem Ipsum
+- name: Lorem Ipsum 
+- name: Lorem Ipsum
+- name: Lorem Ipsum
+- name: Lorem Ipsum
+summary: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+bibliography: visc-project-bibliography.bib
+lof: yes
+lot: yes
+toc: yes
+output: VISCtemplates::visc_pdf_document
+editor_options:
+  chunk_output_type: console
+vignette: >
+  %\VignetteIndexEntry{Lorem ipsum}
+  \usepackage[utf8]{inputenc}
+  %\VignetteEngine{knitr::rmarkdown_notangle}
+---
+
+```{r Setup, echo=FALSE, message=FALSE, warning=FALSE}
+
+
+# Functions
+quiet <- capture.output({
+  usethis::proj_get()
+})
+suppressWarnings({
+  library(knitr)
+  library(kableExtra)
+  library(dplyr)
+  library(VISCtemplates)
+})
+
+# Set R chunk options
+
+opts_chunk$set(
+  results = "asis",
+  cache = FALSE,
+  echo = FALSE,
+  tidy = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  dev = c("pdf", "png"),
+  dpi = 300,
+  fig.pos = 'htbp',
+  fig.height = 7,
+  fig.width = 7,
+  scipen = 0,
+  digits = 4,
+  eval = FALSE,
+  concordance = TRUE
+)
+
+```
+
+\clearpage
+
+Table \ref{ant} presents Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat ex ea commodo consequat [@labranche_henderson, definition 2].
+
+```{r antigens, eval=TRUE}
+
+mtcars[1:5, 1:5] %>%
+  kable(
+    format = "latex",
+    caption = "Count of records ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.   \\label{ant}",
+    label = "ant",
+    align = "lllccc",
+    booktabs = TRUE,
+    longtable = TRUE,
+    linesep = "",
+    escape = TRUE
+  ) %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"),
+                font_size = 10)
+
+```
+
+# Net MFI at Screening Dilution
+
+## Net MFI for Differential Binding Antigens
+
+```{r diff-binding-plot, fig.cap="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", out.extra = "", eval=TRUE, fig.pos="H", fig.height=6}
+
+plot(1:10, 1:10)
+
+```
+
+## Net MFI Relative to Baseline
+
+```{r response-plot-base, eval=TRUE, fig.cap = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt.", out.extra = "", eval=TRUE, fig.pos="H", fig.height=6}
+
+plot(1:10, 1:10)
+
+```
+
+\clearpage
+
+# Response Rates
+
+## Relative to Baseline
+
+```{r response-rates-base, echo=FALSE, results="asis", eval=TRUE}
+
+mtcars[rep(1:32, 2), 1:5] %>%
+  kable(
+    format = "latex",
+    caption = paste0("Response Rates Compared to Baseline. "),
+    align = "lllrr",
+    booktabs = TRUE,
+    longtable = TRUE,
+    linesep = "",
+    escape = FALSE
+  ) %>%
+  kable_styling(latex_options = c( "repeat_header"),
+                font_size = 10)
+
+```
+
+\clearpage
+
+`r VISCtemplates::insert_references_section_header()`
