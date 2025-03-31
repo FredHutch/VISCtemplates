@@ -7,10 +7,10 @@
 trials_path(...)
 }
 \arguments{
-\item{...}{character vectors; path components passed to \code{\link[=file.path]{file.path()}}}
+\item{...}{additional path components passed to \code{\link[=file.path]{file.path()}}; appended after the trials root path}
 }
 \value{
-additional path components passed to \code{\link[=file.path]{file.path()}}; appended after the trials root path
+a character vector of the concatenated path
 }
 \description{
 Requires environment variable \code{VISCTEMPLATES_TRIALS_PATH} to be defined in

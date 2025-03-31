@@ -26,9 +26,9 @@ networks_path <- function(...){
 #' system's custom mapping. You can edit this file in Rstudio with
 #' [usethis::edit_r_environ()].
 #'
-#' @param ... character vectors; path components passed to [file.path()]
+#' @param ... additional path components passed to [file.path()]; appended after the trials root path
 #'
-#' @return additional path components passed to [file.path()]; appended after the trials root path
+#' @return a character vector of the concatenated path
 #' @export
 trials_path <- function(...){
   p <- Sys.getenv('VISCTEMPLATES_TRIALS_PATH')
