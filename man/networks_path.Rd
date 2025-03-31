@@ -7,13 +7,15 @@
 networks_path(...)
 }
 \arguments{
-\item{...}{character vectors; path components passed to \code{\link[=file.path]{file.path()}}}
+\item{...}{additional path components passed to \code{\link[=file.path]{file.path()}}; appended after the networks root path}
 }
 \value{
 a character vector of the concatenated path
 }
 \description{
-Requires environment variable VISCTEMPLATES_NETWORKS_PATH to be defined in
-your .Renviron file. You can edit this file in Rstudio with
+Requires environment variable \code{VISCTEMPLATES_NETWORKS_PATH} to be defined in
+your \code{.Renviron} file. This will typically be \verb{/networks} on Linux, \verb{N:} on
+Windows, and \verb{/Volumes/networks} on macOS, but may vary depending on your
+system's custom mapping. You can edit this file in Rstudio with
 \code{\link[usethis:edit]{usethis::edit_r_environ()}}.
 }

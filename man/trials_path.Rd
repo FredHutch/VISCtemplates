@@ -10,10 +10,12 @@ trials_path(...)
 \item{...}{character vectors; path components passed to \code{\link[=file.path]{file.path()}}}
 }
 \value{
-a character vector of the concatenated path
+additional path components passed to \code{\link[=file.path]{file.path()}}; appended after the trials root path
 }
 \description{
-Requires environment variable VISCTEMPLATES_TRIALS_PATH to be defined in
-your .Renviron file. You can edit this file in Rstudio with
+Requires environment variable \code{VISCTEMPLATES_TRIALS_PATH} to be defined in
+your \code{.Renviron} file. This will typically be \verb{/trials} on Linux, \verb{T:} on
+Windows, and \verb{/Volumes/trials} on macOS, but may vary depending on your
+system's custom mapping. You can edit this file in Rstudio with
 \code{\link[usethis:edit]{usethis::edit_r_environ()}}.
 }
