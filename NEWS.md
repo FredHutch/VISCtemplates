@@ -7,6 +7,7 @@ Bug fixes
 * Fix error when running skeleton.Rmd file interactively (#249)
 * Include pdata object name and data package name in visc_load_pdata() error message (#252)
 * Add ggplot2 loading to visc_empty PT report skeleton to avoid rendering error (#256)
+* Fix formatting issue in assay folder README template (#266)
 
 Other improvements
 * create_visc_project() now discards README.Rmd after knitting template to README.md (#223)
@@ -19,6 +20,7 @@ and minimally structured README.md files are created at the report folder level 
 * Reorganized inst/ folder within package for clarity (#233)
 * Add explicit reference to the version of the data package being installed, and note about changing if needed (#257)
 * Update installation of system dependencies and R packages on CI runners (#261, #265)
+* Update and clarify CONTRIBUTING.md (#269)
 * Better default colors and shapes for reports (#268)
 
 # VISCtemplates 1.3.2

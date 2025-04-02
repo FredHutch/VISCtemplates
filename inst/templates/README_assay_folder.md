@@ -13,18 +13,16 @@
        - Find the report among the edits and click "View"
        - The hash is url: https://github.com/fredhutch/.../blob/hash/... -->
 
-| **Report Version** | **Date Sent to VDC**| **Unblinded** | **Data Spec. and Link**| **Commit Tag/Hash and Link** |
-|-------------|---------------------|---------------|---------------|-----------------|
-| **Report Version** | **Date sent to VDC** | **Unblinded** |  **Report Commit Tag/Hash and Link**    | **Pdata location** | **Pdata Commit**| 
+| **Report Version** | **Date Sent to VDC**| **Unblinded** | **Report Commit Tag/Hash and Link** | **Pdata location** | **Pdata Commit**| 
 |-----------|----------------------|-------------------|-------------|-------------------|---------------|
 |1.0 | [Date] | [Yes/No] | [tag/hash](https://github.com/fredhutch/...) | [location]  |  [hash]  | 
 
 For additional data, supplement table (long-format by report version if multiple data)
 
-| *Report Version* | *Data description* | *Data location* | *Data date*| 
+| *Report Version* | *Data Description* | *Data Location* | *Data Date*| 
 |-----------|----------------------|-------------------|------------------|
 |  1.0| [description]| [path]|  [Date]|   
-|  1.0| [description]| [path]|  [Date]|   
+|  2.0| [description]| [path]|  [Date]|   
 
 
 
