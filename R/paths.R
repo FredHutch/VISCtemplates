@@ -3,8 +3,8 @@
 #' Requires environment variable `VISCTEMPLATES_NETWORKS_PATH` to be defined (on
 #' its own line) in your `.Renviron` file. To make changes, edit this file in
 #' Rstudio with [usethis::edit_r_environ()], save the file, then restart your R
-#' session. Do not include trailing path separator like `/` or `\`. Typical
-#' settings by operating system:
+#' session. Only use the forward slash `/` as a path separator and do not use a
+#' trailing `/`. Typical settings by operating system:
 #' \itemize{
 #' \item Windows
 #' \preformatted{
@@ -34,8 +34,8 @@ networks_path <- function(...){
 #' Requires environment variable `VISCTEMPLATES_TRIALS_PATH` to be defined (on
 #' its own line) in your `.Renviron` file. To make changes, edit this file in
 #' Rstudio with [usethis::edit_r_environ()], save the file, then restart your R
-#' session. Do not include trailing path separator like `/` or `\`. Typical
-#' settings by operating system:
+#' session. Only use the forward slash `/` as a path separator and do not use a
+#' trailing `/`. Typical settings by operating system:
 #' \itemize{
 #' \item Windows
 #' \preformatted{
@@ -71,7 +71,7 @@ trials_path <- function(...){
 #' @noRd
 path_helper <- function(envvar_nm, fn_nm, ...){
   p <- Sys.getenv(envvar_nm)
-  if (grepl('(/|\\\\)$', p)){
+  if (grepl('/$', p)){
     warning(
       sprintf(
         'Trailing path separator in `.Renviron` variable %s. See `?%s()`',
@@ -80,7 +80,7 @@ path_helper <- function(envvar_nm, fn_nm, ...){
     )
   }
   if (!nzchar(p)){
-    stop(sprintf('%s not found. See `?%s()`', envvar_nm, fn_nm))
+    stop(sprintf('%s not defined in `.Renviron`. See `?%s()`', envvar_nm, fn_nm))
   }
   file.path(p, ...)
 }
