@@ -71,6 +71,9 @@ trials_path <- function(...){
 #' @noRd
 path_helper <- function(envvar_nm, fn_nm, ...){
   p <- Sys.getenv(envvar_nm)
+  if (!nzchar(p)){
+    stop(sprintf('%s not defined in `.Renviron`. See `?%s()`', envvar_nm, fn_nm))
+  }
   if (grepl('/$', p)){
     warning(
       sprintf(
@@ -78,9 +81,6 @@ path_helper <- function(envvar_nm, fn_nm, ...){
         envvar_nm, fn_nm
       )
     )
-  }
-  if (!nzchar(p)){
-    stop(sprintf('%s not defined in `.Renviron`. See `?%s()`', envvar_nm, fn_nm))
   }
   file.path(p, ...)
 }
