@@ -321,7 +321,7 @@ ICS_adata %>%
 
 `r insert_break()`
 
-```{r example-tab, results="asis", warning=kable_warnings, eval=(output_type == 'latex')}
+```{r example-tab, results="asis", warning=kable_warnings}
 
 magnitude_tab <- magnitude_results %>% 
   select(-Population, -contains("Perfect")) %>%
@@ -366,7 +366,7 @@ magnitude_tab %>%
 
 ```{r, results="asis", eval=(output_type != 'latex')}
 
-# NOTE: this is the same table as above, but using flextable instead of kable for Word output only
+# NOTE: this table is a duplicate of the above, but uses flextable instead of kable, because kable formatting is poor for Word output
 magnitude_tab %>%
   mutate(MagnitudeTest = round_away_0(MagnitudeTest, 3)) %>%
   flextable() %>%
