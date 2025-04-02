@@ -321,7 +321,7 @@ ICS_adata %>%
 
 `r insert_break()`
 
-```{r example-tab, results="asis", warning=kable_warnings}
+```{r example-tab, results="asis", warning=kable_warnings, eval=(output_type == 'latex')}
 
 magnitude_tab <- magnitude_results %>% 
   select(-Population, -contains("Perfect")) %>%
@@ -366,7 +366,7 @@ magnitude_tab %>%
 
 ```{r, results="asis", eval=(output_type != 'latex')}
 
-# same table as above, but using flextable instead of kable for Word output
+# NOTE: this is the same table as above, but using flextable instead of kable for Word output only
 magnitude_tab %>%
   mutate(MagnitudeTest = round_away_0(MagnitudeTest, 3)) %>%
   flextable() %>%
@@ -379,12 +379,19 @@ magnitude_tab %>%
 
 `r insert_break()`
 
+# Reproducibility Software Information
+
+EDIT ME: there are duplicated tables below, to illustrate the use of both kable() and flextable().
+Note that the kable() tables will be formatted poorly in Word document outputs, due to limitations of the kableExtra package.
+
 ```{r Software-Session-Information, results="asis", message=FALSE, warning=kable_warnings}
 # load in rmarkdown to capture verison number
 if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmarkdown))
 
 my_session_info <- VISCfunctions::get_session_info()
 
+# this creates the software session information table using kable() and kableExtra
+# NOTE: formatting will look bad in Word output, but good in PDF output
 kable(
   my_session_info$platform_table, 
   format = output_type, 
@@ -396,13 +403,17 @@ kable(
 ```
 
 ```{r Software-Session-Information-flextable, results="asis", eval=(output_type != 'latex')}
-# same table, but using flextable instead of kable for Word output
+
+# this creates the software session information table using flextable
+# NOTE: formatting should look good in both Word and PDF outputs
 flextable(my_session_info$platform_table) %>%
   set_caption("Reproducibility software session information")
 ```
 
 ```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
 
+# this creates the software package version information table using kable() and kableExtra
+# NOTE: formatting will look bad in Word output, but good in PDF output
 kable(
   my_session_info$packages_table, 
   format = output_type,
@@ -414,7 +425,9 @@ kable(
 ```
 
 ```{r Software-Package-Version-Information-flextable, results="asis", eval=(output_type != 'latex')}
-# same table, but using flextable instead of kable for Word output
+
+# this creates the software package version information table using flextable
+# NOTE: formatting should look good in both Word and PDF outputs
 flextable(my_session_info$packages_table) %>%
   set_caption("Reproducibility software package version information")
 ```
