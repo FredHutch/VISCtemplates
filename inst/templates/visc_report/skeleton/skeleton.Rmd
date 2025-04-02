@@ -303,8 +303,8 @@ plt_data %>%
              color = group_color)) +
   geom_point(position = position_jitter(width = .25, height = 0, seed = 3241),
              size = 1) +
-  scale_color_discrete() +
-  scale_shape_discrete() +
+  scale_color_visc() +
+  scale_shape_visc() +
   geom_boxplot(
     data = plt_data %>% filter(response == 1),
     # aes(col = Group),
