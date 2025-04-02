@@ -1,12 +1,26 @@
 #' Construct networks path
 #'
-#' Requires environment variable `VISCTEMPLATES_NETWORKS_PATH` to be defined in
-#' your `.Renviron` file. This will typically be `/networks` on Linux, `N:` on
-#' Windows, and `/Volumes/networks` on macOS, but may vary depending on your
-#' system's custom mapping. You can edit this file in Rstudio with
-#' [usethis::edit_r_environ()].
+#' Requires environment variable `VISCTEMPLATES_NETWORKS_PATH` to be defined (on
+#' its own line) in your `.Renviron` file. To make changes, edit this file in
+#' Rstudio with [usethis::edit_r_environ()], save the file, then restart your R
+#' session. Typical settings by operating system:
+#' \itemize{
+#' \item Windows
+#' \preformatted{
+#' VISCTEMPLATES_NETWORKS_PATH="N:"
+#' }
+#' \item macOS
+#' \preformatted{
+#' VISCTEMPLATES_NETWORKS_PATH="/Volumes/networks"
+#' }
+#' \item Linux
+#' \preformatted{
+#' VISCTEMPLATES_NETWORKS_PATH="/networks"
+#' }
+#' }
 #'
-#' @param ... additional path components passed to [file.path()]; appended after the networks root path
+#' @param ... additional path components passed to [file.path()]; appended after
+#'   the networks root path
 #'
 #' @return a character vector of the concatenated path
 #' @export
@@ -20,11 +34,24 @@ networks_path <- function(...){
 
 #' Construct trials path
 #'
-#' Requires environment variable `VISCTEMPLATES_TRIALS_PATH` to be defined in
-#' your `.Renviron` file. This will typically be `/trials` on Linux, `T:` on
-#' Windows, and `/Volumes/trials` on macOS, but may vary depending on your
-#' system's custom mapping. You can edit this file in Rstudio with
-#' [usethis::edit_r_environ()].
+#' Requires environment variable `VISCTEMPLATES_TRIALS_PATH` to be defined (on
+#' its own line) in your `.Renviron` file. To make changes, edit this file in
+#' Rstudio with [usethis::edit_r_environ()], save the file, then restart your R
+#' session. Typical settings by operating system:
+#' \itemize{
+#' \item Windows
+#' \preformatted{
+#' VISCTEMPLATES_TRIALS_PATH="T:"
+#' }
+#' \item macOS
+#' \preformatted{
+#' VISCTEMPLATES_TRIALS_PATH="/Volumes/trials"
+#' }
+#' \item Linux
+#' \preformatted{
+#' VISCTEMPLATES_TRIALS_PATH="/trials"
+#' }
+#' }
 #'
 #' @param ... additional path components passed to [file.path()]; appended after the trials root path
 #'

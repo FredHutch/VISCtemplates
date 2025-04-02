@@ -13,9 +13,22 @@ trials_path(...)
 a character vector of the concatenated path
 }
 \description{
-Requires environment variable \code{VISCTEMPLATES_TRIALS_PATH} to be defined in
-your \code{.Renviron} file. This will typically be \verb{/trials} on Linux, \verb{T:} on
-Windows, and \verb{/Volumes/trials} on macOS, but may vary depending on your
-system's custom mapping. You can edit this file in Rstudio with
-\code{\link[usethis:edit]{usethis::edit_r_environ()}}.
+Requires environment variable \code{VISCTEMPLATES_TRIALS_PATH} to be defined (on
+its own line) in your \code{.Renviron} file. To make changes, edit this file in
+Rstudio with \code{\link[usethis:edit]{usethis::edit_r_environ()}}, save the file, then restart your R
+session. Typical settings by operating system:
+\itemize{
+\item Windows
+\preformatted{
+VISCTEMPLATES_TRIALS_PATH="T:"
+}
+\item macOS
+\preformatted{
+VISCTEMPLATES_TRIALS_PATH="/Volumes/trials"
+}
+\item Linux
+\preformatted{
+VISCTEMPLATES_TRIALS_PATH="/trials"
+}
+}
 }

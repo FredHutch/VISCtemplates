@@ -7,15 +7,29 @@
 networks_path(...)
 }
 \arguments{
-\item{...}{additional path components passed to \code{\link[=file.path]{file.path()}}; appended after the networks root path}
+\item{...}{additional path components passed to \code{\link[=file.path]{file.path()}}; appended after
+the networks root path}
 }
 \value{
 a character vector of the concatenated path
 }
 \description{
-Requires environment variable \code{VISCTEMPLATES_NETWORKS_PATH} to be defined in
-your \code{.Renviron} file. This will typically be \verb{/networks} on Linux, \verb{N:} on
-Windows, and \verb{/Volumes/networks} on macOS, but may vary depending on your
-system's custom mapping. You can edit this file in Rstudio with
-\code{\link[usethis:edit]{usethis::edit_r_environ()}}.
+Requires environment variable \code{VISCTEMPLATES_NETWORKS_PATH} to be defined (on
+its own line) in your \code{.Renviron} file. To make changes, edit this file in
+Rstudio with \code{\link[usethis:edit]{usethis::edit_r_environ()}}, save the file, then restart your R
+session. Typical settings by operating system:
+\itemize{
+\item Windows
+\preformatted{
+VISCTEMPLATES_NETWORKS_PATH="N:"
+}
+\item macOS
+\preformatted{
+VISCTEMPLATES_NETWORKS_PATH="/Volumes/networks"
+}
+\item Linux
+\preformatted{
+VISCTEMPLATES_NETWORKS_PATH="/networks"
+}
+}
 }
