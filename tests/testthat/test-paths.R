@@ -10,8 +10,8 @@ test_that("paths functions work", {
   })
   if (.Platform$OS.type == 'windows'){
     trailing_envvars <- c(
-      VISCTEMPLATES_NETWORKS_PATH = 'N:\\',
-      VISCTEMPLATES_TRIALS_PATH = 'T:\\'
+      VISCTEMPLATES_NETWORKS_PATH = 'N:/',
+      VISCTEMPLATES_TRIALS_PATH = 'T:/'
     )
     withr::with_envvar(trailing_envvars, {
       expect_warning(networks_path(), 'Trailing.*VISCTEMPLATES_NETWORKS_PATH')
