@@ -17,7 +17,8 @@ a character vector of the concatenated path
 Requires environment variable \code{VISCTEMPLATES_NETWORKS_PATH} to be defined (on
 its own line) in your \code{.Renviron} file. To make changes, edit this file in
 Rstudio with \code{\link[usethis:edit]{usethis::edit_r_environ()}}, save the file, then restart your R
-session. Typical settings by operating system:
+session. Do not include trailing path separator like \code{/} or \verb{\\}. Typical
+settings by operating system:
 \itemize{
 \item Windows
 \preformatted{

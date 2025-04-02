@@ -3,7 +3,8 @@
 #' Requires environment variable `VISCTEMPLATES_NETWORKS_PATH` to be defined (on
 #' its own line) in your `.Renviron` file. To make changes, edit this file in
 #' Rstudio with [usethis::edit_r_environ()], save the file, then restart your R
-#' session. Typical settings by operating system:
+#' session. Do not include trailing path separator like `/` or `\`. Typical
+#' settings by operating system:
 #' \itemize{
 #' \item Windows
 #' \preformatted{
@@ -25,11 +26,7 @@
 #' @return a character vector of the concatenated path
 #' @export
 networks_path <- function(...){
-  p <- Sys.getenv('VISCTEMPLATES_NETWORKS_PATH')
-  if (!nzchar(p)){
-    stop('VISCTEMPLATES_NETWORKS_PATH not found. See `?VISCtemplates::networks_path`')
-  }
-  file.path(p, ...)
+  path_helper('VISCTEMPLATES_NETWORKS_PATH', 'VISCtemplates::networks_path', ...)
 }
 
 #' Construct trials path
@@ -37,7 +34,8 @@ networks_path <- function(...){
 #' Requires environment variable `VISCTEMPLATES_TRIALS_PATH` to be defined (on
 #' its own line) in your `.Renviron` file. To make changes, edit this file in
 #' Rstudio with [usethis::edit_r_environ()], save the file, then restart your R
-#' session. Typical settings by operating system:
+#' session. Do not include trailing path separator like `/` or `\`. Typical
+#' settings by operating system:
 #' \itemize{
 #' \item Windows
 #' \preformatted{
@@ -53,14 +51,36 @@ networks_path <- function(...){
 #' }
 #' }
 #'
-#' @param ... additional path components passed to [file.path()]; appended after the trials root path
+#' @param ... additional path components passed to [file.path()]; appended after
+#'   the trials root path
 #'
 #' @return a character vector of the concatenated path
 #' @export
 trials_path <- function(...){
-  p <- Sys.getenv('VISCTEMPLATES_TRIALS_PATH')
+  path_helper('VISCTEMPLATES_TRIALS_PATH', 'VISCtemplates::trials_path', ...)
+}
+
+
+#' Internal helper function for [networks_path()] and [trials_path()]
+#'
+#' @param envvar_nm Name of `.Renviron` variable
+#' @param fn_nm Name of host function
+#' @param ... Passed to [file.path()]
+#'
+#' @return Character vector of concatenated path elements
+#' @noRd
+path_helper <- function(envvar_nm, fn_nm, ...){
+  p <- Sys.getenv(envvar_nm)
+  if (grepl('(/|\\\\)$', p)){
+    warning(
+      sprintf(
+        'Trailing path separator in `.Renviron` variable %s. See `?%s()`',
+        envvar_nm, fn_nm
+      )
+    )
+  }
   if (!nzchar(p)){
-    stop('VISCTEMPLATES_TRIALS_PATH not found. See `?VISCtemplates::trials_path`')
+    stop(sprintf('%s not found. See `?%s()`', envvar_nm, fn_nm))
   }
   file.path(p, ...)
 }
