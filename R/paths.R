@@ -30,9 +30,7 @@
 #'
 #' @return a character vector of the concatenated path
 #' @export
-networks_path <- function(...){
-  path_helper('VISCTEMPLATES_NETWORKS_PATH', 'VISCtemplates::networks_path', ...)
-}
+networks_path <- function(...) path_helper('networks', ...)
 
 #' Construct trials path
 #'
@@ -66,25 +64,23 @@ networks_path <- function(...){
 #'
 #' @return a character vector of the concatenated path
 #' @export
-trials_path <- function(...){
-  path_helper('VISCTEMPLATES_TRIALS_PATH', 'VISCtemplates::trials_path', ...)
-}
-
+trials_path <- function(...) path_helper('trials', ...)
 
 #' Internal helper function for [networks_path()] and [trials_path()]
 #'
-#' @param envvar_nm Name of `.Renviron` variable
-#' @param fn_nm Name of host function
+#' @param nm Short name of host function (`networks` or `trials`)
 #' @param ... Passed to [file.path()]
 #'
 #' @return Character vector of concatenated path elements
 #' @noRd
-path_helper <- function(envvar_nm, fn_nm, ...){
-  p <- Sys.getenv(envvar_nm)
-  if (!nzchar(p)){
+path_helper <- function(nm, ...){
+  envvar_nm <- sprintf('VISCTEMPLATES_%s_PATH', toupper(nm))
+  fn_nm <- sprintf('VISCtemplates::%s_path', nm)
+  p_root <- Sys.getenv(envvar_nm)
+  if (!nzchar(p_root)){
     stop(sprintf('%s not defined in `.Renviron`. See `?%s()`', envvar_nm, fn_nm))
   }
-  if (grepl('/$', p)){
+  if (grepl('/$', p_root)){
     warning(
       sprintf(
         'Trailing path separator in `.Renviron` variable %s. See `?%s()`',
@@ -92,5 +88,5 @@ path_helper <- function(envvar_nm, fn_nm, ...){
       )
     )
   }
-  file.path(p, ...)
+  file.path(p_root, ...)
 }
