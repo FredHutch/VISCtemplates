@@ -331,50 +331,52 @@ caption_short <- "Short caption to show in List of Tables."
 
 caption <- "Long caption to show above table. Explain everything needed to understand the table here."
 
-magnitude_tab %>%
-  mutate(
-    MagnitudeTest = pretty_pvalues(
-      MagnitudeTest, output_type = output_type, sig_alpha = .1,
-      background = "yellow",
-      bold = if_else(pandoc_markup , TRUE, FALSE),
-      italic = if_else(pandoc_markup , TRUE, FALSE)
+if (output_type == 'latex') {
+
+  magnitude_tab %>%
+    mutate(
+      MagnitudeTest = pretty_pvalues(
+        MagnitudeTest, output_type = output_type, sig_alpha = .1,
+        background = "yellow",
+        bold = if_else(pandoc_markup , TRUE, FALSE),
+        italic = if_else(pandoc_markup , TRUE, FALSE)
       )
     ) %>% 
-  kable(
-    format = output_type, 
-    longtable = FALSE, 
-    booktabs = TRUE,
-    linesep = "", 
-    escape = FALSE,
-    caption.short = caption_short,
-    caption = caption
-  ) %>%
-  kable_styling(
-    font_size = 8,
-    # Note scale_down will overwrite font_size specifications
-    latex_options = c("hold_position", "scale_down", "repeat_header")
-  ) %>% 
-  collapse_rows(
-    columns = 1:2, 
-    row_group_label_position = "identity",
-    latex_hline = "full"
+    kable(
+      format = output_type, 
+      longtable = FALSE, 
+      booktabs = TRUE,
+      linesep = "", 
+      escape = FALSE,
+      caption.short = caption_short,
+      caption = caption
+    ) %>%
+    kable_styling(
+      font_size = 8,
+      # Note scale_down will overwrite font_size specifications
+      latex_options = c("hold_position", "scale_down", "repeat_header")
     ) %>% 
-  kableExtra::footnote("SD: standard deviation.", threeparttable = TRUE)
-```
-
-`r insert_break()`
-
-```{r, results="asis", eval=(output_type != 'latex')}
-
-# NOTE: this table is a duplicate of the above, but uses flextable instead of kable, because kable formatting is poor for Word output
-magnitude_tab %>%
-  mutate(MagnitudeTest = round_away_0(MagnitudeTest, 3)) %>%
-  flextable() %>%
-  bg(i = ~ MagnitudeTest < .1, j = "MagnitudeTest", bg = "yellow") %>%
-  set_caption(caption) %>%
-  fontsize(size = 6, part = "all") %>%
-  merge_v(j = 1:2) %>% # equivalent of collapse_rows
-  add_footer_lines("SD: standard deviation.")
+    collapse_rows(
+      columns = 1:2, 
+      row_group_label_position = "identity",
+      latex_hline = "full"
+    ) %>% 
+    kableExtra::footnote("SD: standard deviation.", threeparttable = TRUE)
+  
+} else {
+  
+  # flextable version of table for Word doc output
+  
+  magnitude_tab %>%
+    mutate(MagnitudeTest = round_away_0(MagnitudeTest, 3)) %>%
+    flextable() %>%
+    bg(i = ~ MagnitudeTest < .1, j = "MagnitudeTest", bg = "yellow") %>%
+    set_caption(caption) %>%
+    fontsize(size = 7, part = "all") %>%
+    merge_v(j = 1:2) %>% # equivalent of collapse_rows
+    add_footer_lines("SD: standard deviation.")
+  
+}
 ```
 
 `r insert_break()`
