@@ -138,7 +138,8 @@ if (output_type == 'latex') {
   # format nicely for PDF with kable and kableExtra
   my_session_info$platform_table %>%
     kable(booktabs = TRUE, linesep = "", caption = tbl_caption) %>% 
-    kable_styling()
+    kable_styling() %>%
+    column_spec(2, width = "5.5in") # to force text wrapping
   
 } else {
   
