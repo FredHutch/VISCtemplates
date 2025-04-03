@@ -1,68 +1,44 @@
-#' Construct networks path
+#' Construct paths
 #'
-#' Requires environment variable `VISCTEMPLATES_NETWORKS_PATH` to be defined in
-#' your `.Renviron` file. To do this,
+#' Requires the environment variable `VISCTEMPLATES_NETWORKS_PATH` or
+#' `VISCTEMPLATES_TRIALS_PATH` to be defined in your `.Renviron` file. To do
+#' this,
 #' \enumerate{
-#' \item Edit this file in Rstudio with [usethis::edit_r_environ()]
-#' \item Add a line to `.Renviron` defining `VISCTEMPLATES_NETWORKS_PATH`.
-#' Only use the forward slash `/` as a path separator and do not use a trailing `/`.
-#' Typical settings by operating system:
+#' \item Edit your `.Renviron` file in Rstudio with [usethis::edit_r_environ()]
+#' \item Add needed line(s) to `.Renviron` defining `VISCTEMPLATES_NETWORKS_PATH`
+#' and/or `VISCTEMPLATES_TRIALS_PATH`. Only use the forward slash `/` as a path
+#' separator and do not use a trailing `/`. Typical settings:
 #' \itemize{
 #' \item Windows
 #' \preformatted{
 #' VISCTEMPLATES_NETWORKS_PATH="N:"
-#' }
-#' \item macOS
-#' \preformatted{
-#' VISCTEMPLATES_NETWORKS_PATH="/Volumes/networks"
-#' }
-#' \item Linux
-#' \preformatted{
-#' VISCTEMPLATES_NETWORKS_PATH="/networks"
-#' }
-#' }
-#' \item Save the file
-#' \item Restart your R session
-#' }
-#'
-#' @param ... additional path components passed to [file.path()]; appended after
-#'   the networks root path
-#'
-#' @return a character vector of the concatenated path
-#' @export
-networks_path <- function(...) path_helper('networks', ...)
-
-#' Construct trials path
-#'
-#' Requires environment variable `VISCTEMPLATES_TRIALS_PATH` to be defined in
-#' your `.Renviron` file. To do this,
-#' \enumerate{
-#' \item Edit this file in Rstudio with [usethis::edit_r_environ()]
-#' \item Add a line to `.Renviron` defining `VISCTEMPLATES_TRIALS_PATH`.
-#' Only use the forward slash `/` as a path separator and do not use a trailing `/`.
-#' Typical settings by operating system:
-#' \itemize{
-#' \item Windows
-#' \preformatted{
 #' VISCTEMPLATES_TRIALS_PATH="T:"
 #' }
 #' \item macOS
 #' \preformatted{
+#' VISCTEMPLATES_NETWORKS_PATH="/Volumes/networks"
 #' VISCTEMPLATES_TRIALS_PATH="/Volumes/trials"
 #' }
 #' \item Linux
 #' \preformatted{
-#' VISCTEMPLATES_TRIALS_PATH="/trials"
-#' }
+#' VISCTEMPLATES_NETWORKS_PATH="/networks"
+#' VISCTEMPLATES_NETWORKS_PATH="/trials" }
 #' }
 #' \item Save the file
 #' \item Restart your R session
 #' }
 #'
 #' @param ... additional path components passed to [file.path()]; appended after
-#'   the trials root path
-#'
+#'   the networks or trials root path
+#' @name paths
 #' @return a character vector of the concatenated path
+NULL
+
+#' @rdname paths
+#' @export
+networks_path <- function(...) path_helper('networks', ...)
+
+#' @rdname paths
 #' @export
 trials_path <- function(...) path_helper('trials', ...)
 
