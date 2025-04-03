@@ -80,7 +80,7 @@ options(knitr.table.format = output_type,
 set_flextable_defaults(na_str = "", # NA's will be blank
                        font.size = 10,
                        theme_fun = "theme_box",
-                       table.layout = "autofit",
+                       table.layout = "autofit", # automatically sets column width and row height, can be overridden for individual tables with set_table_properties(layout = "fixed")
                        fonts_ignore = TRUE,
                        digits = 3)
 
@@ -139,19 +139,21 @@ if (output_type == 'latex') {
   my_session_info$platform_table %>%
     kable(booktabs = TRUE, linesep = "", caption = tbl_caption) %>% 
     kable_styling() %>%
-    column_spec(2, width = "5.5in") # to force text wrapping
+    column_spec(1, width = "1in") %>%
+    column_spec(2, width = "5.5in")
   
 } else {
   
   # format nicely for Word with flextable
   my_session_info$platform_table %>%
     flextable() %>%
-    set_caption(tbl_caption)
+    set_caption(tbl_caption) %>%
+    set_table_properties(layout = "fixed") %>% # to allow overriding automatic column width
+    flextable::width(1, 1, unit = "in") %>%
+    flextable::width(2, 5.5, unit = "in")
   
 }
 ```
-
-`r insert_break()`
 
 ```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
 
@@ -165,6 +167,8 @@ if (output_type == 'latex') {
     kable_styling()
   
 } else {
+  
+  cat(insert_break())
   
   # format nicely for Word with flextable
   my_session_info$packages_table %>%
