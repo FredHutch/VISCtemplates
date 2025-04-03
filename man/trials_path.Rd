@@ -14,11 +14,13 @@ the trials root path}
 a character vector of the concatenated path
 }
 \description{
-Requires environment variable \code{VISCTEMPLATES_TRIALS_PATH} to be defined (on
-its own line) in your \code{.Renviron} file. To make changes, edit this file in
-Rstudio with \code{\link[usethis:edit]{usethis::edit_r_environ()}}, save the file, then restart your R
-session. Only use the forward slash \code{/} as a path separator and do not use a
-trailing \code{/}. Typical settings by operating system:
+Requires environment variable \code{VISCTEMPLATES_TRIALS_PATH} to be defined in
+your \code{.Renviron} file. To do this,
+\enumerate{
+\item Edit this file in Rstudio with \code{\link[usethis:edit]{usethis::edit_r_environ()}}
+\item Add a line to \code{.Renviron} defining \code{VISCTEMPLATES_TRIALS_PATH}.
+Only use the forward slash \code{/} as a path separator and do not use a trailing \code{/}.
+Typical settings by operating system:
 \itemize{
 \item Windows
 \preformatted{
@@ -32,5 +34,8 @@ VISCTEMPLATES_TRIALS_PATH="/Volumes/trials"
 \preformatted{
 VISCTEMPLATES_TRIALS_PATH="/trials"
 }
+}
+\item Save the file
+\item Restart your R session
 }
 }

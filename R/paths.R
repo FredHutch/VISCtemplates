@@ -1,10 +1,12 @@
 #' Construct networks path
 #'
-#' Requires environment variable `VISCTEMPLATES_NETWORKS_PATH` to be defined (on
-#' its own line) in your `.Renviron` file. To make changes, edit this file in
-#' Rstudio with [usethis::edit_r_environ()], save the file, then restart your R
-#' session. Only use the forward slash `/` as a path separator and do not use a
-#' trailing `/`. Typical settings by operating system:
+#' Requires environment variable `VISCTEMPLATES_NETWORKS_PATH` to be defined in
+#' your `.Renviron` file. To do this,
+#' \enumerate{
+#' \item Edit this file in Rstudio with [usethis::edit_r_environ()]
+#' \item Add a line to `.Renviron` defining `VISCTEMPLATES_NETWORKS_PATH`.
+#' Only use the forward slash `/` as a path separator and do not use a trailing `/`.
+#' Typical settings by operating system:
 #' \itemize{
 #' \item Windows
 #' \preformatted{
@@ -19,6 +21,9 @@
 #' VISCTEMPLATES_NETWORKS_PATH="/networks"
 #' }
 #' }
+#' \item Save the file
+#' \item Restart your R session
+#' }
 #'
 #' @param ... additional path components passed to [file.path()]; appended after
 #'   the networks root path
@@ -31,11 +36,13 @@ networks_path <- function(...){
 
 #' Construct trials path
 #'
-#' Requires environment variable `VISCTEMPLATES_TRIALS_PATH` to be defined (on
-#' its own line) in your `.Renviron` file. To make changes, edit this file in
-#' Rstudio with [usethis::edit_r_environ()], save the file, then restart your R
-#' session. Only use the forward slash `/` as a path separator and do not use a
-#' trailing `/`. Typical settings by operating system:
+#' Requires environment variable `VISCTEMPLATES_TRIALS_PATH` to be defined in
+#' your `.Renviron` file. To do this,
+#' \enumerate{
+#' \item Edit this file in Rstudio with [usethis::edit_r_environ()]
+#' \item Add a line to `.Renviron` defining `VISCTEMPLATES_TRIALS_PATH`.
+#' Only use the forward slash `/` as a path separator and do not use a trailing `/`.
+#' Typical settings by operating system:
 #' \itemize{
 #' \item Windows
 #' \preformatted{
@@ -49,6 +56,9 @@ networks_path <- function(...){
 #' \preformatted{
 #' VISCTEMPLATES_TRIALS_PATH="/trials"
 #' }
+#' }
+#' \item Save the file
+#' \item Restart your R session
 #' }
 #'
 #' @param ... additional path components passed to [file.path()]; appended after
