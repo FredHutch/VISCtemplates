@@ -22,7 +22,7 @@
 #' \item Linux
 #' \preformatted{
 #' VISCTEMPLATES_NETWORKS_PATH="/networks"
-#' VISCTEMPLATES_NETWORKS_PATH="/trials" }
+#' VISCTEMPLATES_TRIALS_PATH="/trials" }
 #' }
 #' \item Save the file
 #' \item Restart your R session
