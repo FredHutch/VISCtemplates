@@ -75,16 +75,16 @@ trials_path <- function(...) path_helper('trials', ...)
 #' @noRd
 path_helper <- function(nm, ...){
   envvar_nm <- sprintf('VISCTEMPLATES_%s_PATH', toupper(nm))
-  fn_nm <- sprintf('VISCtemplates::%s_path', nm)
+  fn_help <- sprintf('See `?VISCtemplates::%s_path()`', nm)
   p_root <- Sys.getenv(envvar_nm)
   if (!nzchar(p_root)){
-    stop(sprintf('%s not defined in `.Renviron`. See `?%s()`', envvar_nm, fn_nm))
+    stop(sprintf('%s not defined in `.Renviron`. %s', envvar_nm, fn_help))
   }
   if (grepl('/$', p_root)){
     warning(
       sprintf(
-        'Trailing path separator in `.Renviron` variable %s. See `?%s()`',
-        envvar_nm, fn_nm
+        'Trailing path separator in `.Renviron` variable %s. %s',
+        envvar_nm, fn_help
       )
     )
   }
