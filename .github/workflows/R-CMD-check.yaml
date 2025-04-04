@@ -67,7 +67,7 @@ jobs:
         run: |
           R -q -e 'utils::install.packages("remotes")'
           R -q -e 'remotes::install_version("htmlTable", "2.4.1")'
-          sudo apt install -y libjpeg-dev libcurl4-openssl-dev fontconfig freetype2
+          sudo apt install -y libjpeg-dev libcurl4-openssl-dev fontconfig
           R -q -e 'remotes::install_version("Hmisc", "4.5-0")'
           R -q -e 'remotes::install_github("FredHutch/VISCfunctions", dependencies = TRUE)'
           R -q -e 'remotes::install_github("FredHutch/VISCtemplates", dependencies = TRUE)'
