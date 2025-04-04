@@ -1,12 +1,14 @@
 #' Construct paths
 #'
-#' Requires the environment variable `VISCTEMPLATES_NETWORKS_PATH` or
-#' `VISCTEMPLATES_TRIALS_PATH` to be defined in your `.Renviron` file. To do
-#' this,
+#' Requires one-time setup of the environment variable
+#' `VISCTEMPLATES_NETWORKS_PATH` or `VISCTEMPLATES_TRIALS_PATH` in your
+#' `.Renviron` file. To do this,
 #' \enumerate{
-#' \item Edit your `.Renviron` file in Rstudio with [usethis::edit_r_environ()]
+#' \item Open your `.Renviron` file for editing in Rstudio
+#' with [usethis::edit_r_environ()]
 #' \item Add needed line(s) to `.Renviron` defining `VISCTEMPLATES_NETWORKS_PATH`
-#' and/or `VISCTEMPLATES_TRIALS_PATH`. Only use the forward slash `/` as a path
+#' and/or `VISCTEMPLATES_TRIALS_PATH` to reflect your operating system and your
+#' drive mappings. Only use the forward slash `/` as a path
 #' separator and do not use a trailing `/`. Typical settings:
 #' \itemize{
 #' \item Windows
@@ -25,13 +27,14 @@
 #' VISCTEMPLATES_TRIALS_PATH="/trials" }
 #' }
 #' \item Save the file
-#' \item Restart your R session
+#' \item Restart your R session (in Rstudio: `Session` > `Restart R`)
+#' \item The function should now work for constructing paths
 #' }
 #'
 #' @param ... additional path components passed to [file.path()]; appended after
-#'   the networks or trials root path
+#'   the networks or trials root path defined in your `.Renviron` file
 #' @name paths
-#' @return a character vector of the concatenated path
+#' @return Character; the concatenated path
 NULL
 
 #' @rdname paths
@@ -50,10 +53,10 @@ trials_path <- function(...) path_helper('trials', ...)
 #' @return Character vector of concatenated path elements
 #' @noRd
 path_helper <- function(nm, ...){
-  envvar_nm <- sprintf('VISCTEMPLATES_%s_PATH', toupper(nm))
   fn_help <- sprintf('See `?VISCtemplates::%s_path()`', nm)
+  envvar_nm <- sprintf('VISCTEMPLATES_%s_PATH', toupper(nm))
   p_root <- Sys.getenv(envvar_nm)
-  if (!nzchar(p_root)){
+  if (! nzchar(p_root)){
     stop(sprintf('%s not defined in `.Renviron`. %s', envvar_nm, fn_help))
   }
   if (grepl('/$', p_root)){

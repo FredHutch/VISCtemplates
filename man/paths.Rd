@@ -12,19 +12,21 @@ trials_path(...)
 }
 \arguments{
 \item{...}{additional path components passed to \code{\link[=file.path]{file.path()}}; appended after
-the networks or trials root path}
+the networks or trials root path defined in your \code{.Renviron} file}
 }
 \value{
-a character vector of the concatenated path
+Character; the concatenated path
 }
 \description{
-Requires the environment variable \code{VISCTEMPLATES_NETWORKS_PATH} or
-\code{VISCTEMPLATES_TRIALS_PATH} to be defined in your \code{.Renviron} file. To do
-this,
+Requires one-time setup of the environment variable
+\code{VISCTEMPLATES_NETWORKS_PATH} or \code{VISCTEMPLATES_TRIALS_PATH} in your
+\code{.Renviron} file. To do this,
 \enumerate{
-\item Edit your \code{.Renviron} file in Rstudio with \code{\link[usethis:edit]{usethis::edit_r_environ()}}
+\item Open your \code{.Renviron} file for editing in Rstudio
+with \code{\link[usethis:edit]{usethis::edit_r_environ()}}
 \item Add needed line(s) to \code{.Renviron} defining \code{VISCTEMPLATES_NETWORKS_PATH}
-and/or \code{VISCTEMPLATES_TRIALS_PATH}. Only use the forward slash \code{/} as a path
+and/or \code{VISCTEMPLATES_TRIALS_PATH} to reflect your operating system and your
+drive mappings. Only use the forward slash \code{/} as a path
 separator and do not use a trailing \code{/}. Typical settings:
 \itemize{
 \item Windows
@@ -43,6 +45,7 @@ VISCTEMPLATES_NETWORKS_PATH="/networks"
 VISCTEMPLATES_TRIALS_PATH="/trials" }
 }
 \item Save the file
-\item Restart your R session
+\item Restart your R session (in Rstudio: \code{Session} > \verb{Restart R})
+\item The function should now work for constructing paths
 }
 }
