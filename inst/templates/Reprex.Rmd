@@ -125,7 +125,8 @@ mtcars[rep(1:32, 2), 1:5] %>%
     linesep = "",
     escape = FALSE
   ) %>%
-  kable_styling(latex_options = c( "repeat_header"),
+  kable_styling(latex_options = 'repeat_header',
+                repeat_header_method = 'replace',
                 font_size = 10)
 
 ```
