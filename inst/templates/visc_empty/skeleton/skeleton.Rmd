@@ -2,6 +2,8 @@
 title: "Title of Your Submission"
 shorttitle: "Short Title"
 leftheader: "VISC Report"
+author: "Contact: First Name, Last Name (xxx@fredhutch.org)"
+date: "Word document compiled on `r format(Sys.Date(), '%A, %B %d, %Y')`"
 from:
  - name: FirstNameA LastNameA
    email: foo@bar.com
@@ -45,9 +47,12 @@ library(VISCtemplates)
 library(VISCfunctions)
 
 check_pandoc_version()
+output_type <- get_output_type()
+kable_warnings <- set_kable_warnings(output_type)
+pandoc_markup <- set_pandoc_markup(output_type)
 
 # packages installed from CRAN
-packages_needed <- c("conflicted", "dplyr", "ggplot2", "knitr", "kableExtra", "rprojroot")
+packages_needed <- c("conflicted", "dplyr", "ggplot2", "knitr", "kableExtra", "flextable", "rprojroot")
 install_load_cran_packages(packages_needed)
 
 # knitr options
@@ -60,13 +65,24 @@ opts_chunk$set(cache = FALSE,
                out.width = "100%", 
                out.extra = "",
                fig.pos = "H")
-# fig.align argument is not supported in Word (align in template docx)
-if (get_output_type() == 'latex'){
+# note: fig.align argument is not supported in Word
+if (output_type == 'latex'){
   opts_chunk$set(fig.align = "center")
 }
 
-# NA's will be blank in tables
-options(knitr.kable.NA = '')
+# table options for kable() and kableExtra
+options(knitr.table.format = output_type,
+        knitr.kable.NA = '', # NA's will be blank
+        kable_styling_font_size = 10,
+        kable_styling_latex_options = c("hold_position"))
+
+# table options for flextable
+set_flextable_defaults(na_str = "", # NA's will be blank
+                       font.size = 10,
+                       theme_fun = "theme_box",
+                       table.layout = "autofit", # automatically sets column width and row height, can be overridden for individual tables with set_table_properties(layout = "fixed")
+                       fonts_ignore = TRUE,
+                       digits = 3)
 
 # Create a ggplot theme for consistency of figures
 visc_theme <- theme_bw() + 
@@ -82,14 +98,6 @@ theme_set(visc_theme)
 conflict_prefer("filter", "dplyr")
 ```
 
-```{r word-pdf-options}
-
-output_type <- get_output_type()
-
-kable_warnings <- set_kable_warnings(output_type)
-pandoc_markup <- set_pandoc_markup(output_type)
-```
-
 ```{r read-data}
 
 # Read in your data in this chunk
@@ -102,7 +110,7 @@ pandoc_markup <- set_pandoc_markup(output_type)
 
 ```
 
-\newpage
+`r insert_break()`
 
 # Section Header
 
@@ -117,30 +125,57 @@ Add some text here
 # Reproducibility Software Information
 
 ```{r Software-Session-Information, results="asis", message=FALSE, warning=kable_warnings}
-# load in rmarkdown to capture verison number
+
+# load in rmarkdown to capture version number
 if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmarkdown))
 
 my_session_info <- VISCfunctions::get_session_info()
 
-kable(
-  my_session_info$platform_table, 
-  format = output_type, 
-  booktabs = TRUE, 
-  linesep = "", 
-  caption = "Reproducibility software session information"
-  ) %>% 
-  kable_styling(font_size = 10, latex_options = "hold_position")
+tbl_caption <- "Reproducibility software session information"
+
+if (output_type == 'latex') {
+  
+  # format nicely for PDF with kable and kableExtra
+  my_session_info$platform_table %>%
+    kable(booktabs = TRUE, linesep = "", caption = tbl_caption) %>% 
+    kable_styling() %>%
+    column_spec(1, width = "1in") %>%
+    column_spec(2, width = "5.5in")
+  
+} else {
+  
+  # format nicely for Word with flextable
+  my_session_info$platform_table %>%
+    flextable() %>%
+    set_caption(tbl_caption) %>%
+    set_table_properties(layout = "fixed") %>% # to allow overriding automatic column width
+    flextable::width(1, 1, unit = "in") %>%
+    flextable::width(2, 5.5, unit = "in")
+  
+}
 ```
 
 ```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
-kable(
-  my_session_info$packages_table, 
-  format = output_type,
-  booktabs = TRUE, 
-  linesep = "", 
-  caption = "Reproducibility software package version information"
-  ) %>% 
-  kable_styling(font_size = 10, latex_options = "hold_position")
+
+tbl_caption <- "Reproducibility software package version information"
+
+if (output_type == 'latex') {
+  
+  # format nicely for PDF with kable and kableExtra
+  my_session_info$packages_table %>%
+    kable(booktabs = TRUE, linesep = "", caption = tbl_caption) %>% 
+    kable_styling()
+  
+} else {
+  
+  cat(insert_break())
+  
+  # format nicely for Word with flextable
+  my_session_info$packages_table %>%
+    flextable() %>%
+    set_caption(tbl_caption)
+  
+}
 ```
 
 `r insert_break()`
@@ -149,6 +184,6 @@ kable(
 
 Include your acknowledgements in this section.
 
-\newpage
+`r insert_break()`
 
 `r insert_references_section_header()`

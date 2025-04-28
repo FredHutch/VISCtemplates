@@ -46,6 +46,7 @@ Roxygen: list(markdown = TRUE)
 Suggests: 
     conflicted,
     dplyr,
+    flextable,
     ggplot2,
     kableExtra,
     knitr,
