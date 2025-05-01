@@ -81,11 +81,9 @@ theme_set(visc_theme)
 
 # source group_colors and response_shapes for use in figures
 source(rprojroot::find_rstudio_root_file("R", "colors-and-shapes.R"), local = TRUE)
-
-# Set these colors and shapes to be the defaults when using scale_xxx_yyy()
-scale_color_visc <- function(..., values = group_colors) scale_color_manual(..., values = values)
-scale_fill_visc <- function(..., values = group_colors) scale_fill_manual(..., values = values)
-scale_shape_visc <- function(..., values = response_shapes) scale_shape_manual(..., values = values)
+scale_color_visc <- function(..., values = report_colors) scale_color_manual(..., values = values)
+scale_fill_visc <- function(..., values = report_colors) scale_fill_manual(..., values = values)
+scale_shape_visc <- function(..., values = report_shapes) scale_shape_manual(..., values = values)
 ```
 
 ```{r conflicted-preferences, message=FALSE}
@@ -290,24 +288,21 @@ See Figure `r insert_ref("fig:example-plot")` and Table `r insert_ref("tab:examp
 plt_data <- ICS_adata %>%
   mutate(
     Group = factor(Group),
-    group_color = case_when(response == 0 ~ 'No Response',
-                            response == 1 ~ paste("Group", Group)),
-    response_shape = case_when(response == 0 ~ 'No Response',
-                               response == 1 ~ 'Positive Response')
+    response_and_group = case_when(response == 0 ~ 'Non-Responders',
+                                   response == 1 ~ paste("Group", Group, '(Responders)'))
   )
 
 plt_data %>%
   ggplot(aes(x = Group,
              y = pmax(PercentCellNet, 0.005),
-             shape = response_shape,
-             color = group_color)) +
+             shape = response_and_group,
+             color = response_and_group)) +
   geom_point(position = position_jitter(width = .25, height = 0, seed = 3241),
              size = 1) +
   scale_color_visc() +
   scale_shape_visc() +
   geom_boxplot(
     data = plt_data %>% filter(response == 1),
-    # aes(col = Group),
     fill = NA, lwd = .5, outlier.colour = NA
     ) +
   scale_y_log10(

@@ -8,17 +8,24 @@
 # "I need a colorblind friendly palette that includes 4 colors plus a medium gray"
 # "can you give me both dark and light variations of the blue, orange, green, and purple?"
 
-group_colors <- c(
+report_colors <- c(
 
+  # for plots using color to indicate group, regardless of response status
   `Placebo` = "#999999", # medium gray
-  `Baseline` = "#999999", # medium gray
-  `No Response` = "#999999", # medium gray
-
   `Group 1` = "#005682", # dark blue,
   `Group 2` = "#B97500", # dark orange
   `Group 3` = "#007856", # dark green
   `Group 4` = "#994E71", # dark purple/maroon
 
+  # for plots using color to indicate group AND response status
+  `Baseline` = "#999999", # medium gray
+  `Non-Responders` = "#999999", # medium gray
+  `Group 1 (Responders)` = "#005682", # dark blue,
+  `Group 2 (Responders)` = "#B97500", # dark orange
+  `Group 3 (Responders)` = "#007856", # dark green
+  `Group 4 (Responders)` = "#994E71", # dark purple/maroon
+
+  # alternative color scheme for dose-response study
   `Treatment 1, Low Dose` = "#66B2FF", # light blue
   `Treatment 1, High Dose` = "#005682", # dark blue
   `Treatment 2, Low Dose` = "#FFBF80", # light orange
@@ -30,16 +37,21 @@ group_colors <- c(
 
 )
 
-response_shapes <- c(
+report_shapes <- c(
+
   `Baseline` = 5, # open diamond
   `Baseline (Upper Limit)` = 0, # open square
-  `No Detectable Response` = 2, # open triangle
-  `No Response` = 2, # open triangle
-  `Positive Response` = 16, # filled circle
-  `Detectable Response` = 16 # filled circle
+
+  `Non-Responders` = 2, # open triangle
+
+  # filled circles
+  `Group 1 (Responders)` = 16,
+  `Group 2 (Responders)` = 16,
+  `Group 3 (Responders)` = 16,
+  `Group 4 (Responders)` = 16
 )
 
 # You can apply these colors and shapes to ggplot figures using:
-# scale_color_manual(values = group_colors)
-# scale_fill_manual(values = group_colors)
-# scale_shape_manual(values = response_shapes)
+# scale_color_manual(values = report_colors)
+# scale_fill_manual(values = report_colors)
+# scale_shape_manual(values = report_shapes)
