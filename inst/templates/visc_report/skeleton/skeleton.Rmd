@@ -2,6 +2,8 @@
 title: "Title of Your Submission"
 shorttitle: "Short Title"
 leftheader: "VISC Report"
+author: "Contact: First Name, Last Name (xxx@fredhutch.org)"
+date: "Word document compiled on `r format(Sys.Date(), '%A, %B %d, %Y')`"
 from:
  - name: FirstNameA LastNameA
    email: foo@bar.com
@@ -45,9 +47,12 @@ library(VISCtemplates)
 library(VISCfunctions)
 
 check_pandoc_version()
+output_type <- get_output_type()
+kable_warnings <- set_kable_warnings(output_type)
+pandoc_markup <- set_pandoc_markup(output_type)
 
 # packages installed from CRAN
-packages_needed <- c("conflicted", "ggplot2", "dplyr", "knitr", "kableExtra", "rprojroot", "remotes")
+packages_needed <- c("conflicted", "ggplot2", "dplyr", "knitr", "kableExtra", "flextable", "rprojroot", "remotes")
 install_load_cran_packages(packages_needed)
 
 # where to install and look for packages (e.g., data packages) installed on SCHARP server
@@ -64,13 +69,24 @@ opts_chunk$set(cache = FALSE,
                out.width = "100%", 
                out.extra = "",
                fig.pos = "H")
-# fig.align argument is not supported in Word (align in template docx)
-if (get_output_type() == 'latex'){
+# note: fig.align argument is not supported in Word
+if (output_type == 'latex'){
   opts_chunk$set(fig.align = "center")
 }
 
-# NA's will be blank in tables
-options(knitr.kable.NA = '')
+# table options for kable() and kableExtra
+options(knitr.table.format = output_type,
+        knitr.kable.NA = '', # NA's will be blank
+        kable_styling_font_size = 10,
+        kable_styling_latex_options = c("hold_position"))
+
+# table options for flextable
+set_flextable_defaults(na_str = "", # NA's will be blank
+                       font.size = 10,
+                       theme_fun = "theme_box",
+                       table.layout = "autofit", # automatically sets column width and row height, can be overridden for individual tables with set_table_properties(layout = "fixed")
+                       fonts_ignore = TRUE,
+                       digits = 3)
 
 # Create a ggplot theme for consistency of figures
 visc_theme <- theme_bw() + 
@@ -79,28 +95,17 @@ visc_theme <- theme_bw() +
         panel.grid.minor = element_blank())
 theme_set(visc_theme)
 
-# Set group colors for this example.
-# If you have group colors already in your project:
-# source(rprojroot::find_rstudio_root_file("R", "group_colors.R"), local = TRUE)
-group_colors <- c(
-  `1` = "#D92321",
-  `2` = "#1749FF",
-  `4` = "#0AB7C9"
-)
+# source group_colors and response_shapes for use in figures
+source(rprojroot::find_rstudio_root_file("R", "colors-and-shapes.R"), local = TRUE)
+scale_color_visc <- function(..., values = report_colors) scale_color_manual(..., values = values)
+scale_fill_visc <- function(..., values = report_colors) scale_fill_manual(..., values = values)
+scale_shape_visc <- function(..., values = report_shapes) scale_shape_manual(..., values = values)
 ```
 
 ```{r conflicted-preferences, message=FALSE}
 
 # filter() is used in both dplyr and stats, so need to set the preference to dplyr
 conflict_prefer("filter", "dplyr")
-```
-
-```{r word-pdf-options}
-
-output_type <- get_output_type()
-
-kable_warnings <- set_kable_warnings(output_type)
-pandoc_markup <- set_pandoc_markup(output_type)
 ```
 
 ```{r data-package, eval=FALSE}
@@ -220,15 +225,7 @@ response_results <- ICS_adata %>%
         verbose = FALSE
         )
     ) %>%  
-  ungroup() %>% 
-  mutate(
-    ResponseTest = pretty_pvalues( 
-      ResponseTest, output_type = output_type, sig_alpha = .1, 
-      background = 'yellow',
-      bold = if_else(pandoc_markup , TRUE, FALSE),
-      italic = if_else(pandoc_markup , TRUE, FALSE)
-      )
-    )
+  ungroup()
 ```
 
 ```{r magnitude-testing, warning=FALSE}
@@ -248,16 +245,7 @@ magnitude_results <- ICS_adata %>%
       verbose = FALSE
       )
     ) %>% 
-   ungroup() %>% 
-  mutate(
-    MagnitudeTest = pretty_pvalues(
-      MagnitudeTest, output_type = output_type, sig_alpha = .1,
-      background = "yellow",
-      bold = if_else(pandoc_markup , TRUE, FALSE),
-      italic = if_else(pandoc_markup , TRUE, FALSE)
-      )
-    ) %>% 
-  rename("Median (Range)" = Median_Min_Max, 'Mean (SD)' = Mean_SD)
+   ungroup()
 ```
 
 # Participant Cohort
@@ -291,29 +279,25 @@ See Figure `r insert_ref("fig:example-plot")` and Table `r insert_ref("tab:examp
 
 ```{r example-plot, fig.scap="Shorter caption for List of Figures.", fig.cap= "Longer caption that shows under the figure. Explain everything needed to understand the figure here."}
 
-ICS_adata %>%
-  ggplot(aes(x = factor(Group), y = pmax(PercentCellNet, 0.005))) +
-  geom_point(
-    data = ICS_adata %>% filter(response == 0),
-    aes(shape = factor(response)),
-    position = position_jitter(width = .25, height = 0, seed = 3241),
-    color = "#787873", size = 1, show.legend = FALSE
-    ) +
-  geom_point(
-    data = ICS_adata %>% filter(response == 1), 
-    aes(shape = factor(response), color = factor(Group)),
-    position = position_jitter(width = .25, seed = 3241), size = 1
-    ) +
+plt_data <- ICS_adata %>%
+  mutate(
+    Group = factor(Group),
+    response_and_group = case_when(response == 0 ~ 'Non-Responders',
+                                   response == 1 ~ paste("Group", Group, '(Responders)'))
+  )
+
+plt_data %>%
+  ggplot(aes(x = Group,
+             y = pmax(PercentCellNet, 0.005),
+             shape = response_and_group,
+             color = response_and_group)) +
+  geom_point(position = position_jitter(width = .25, height = 0, seed = 3241),
+             size = 1) +
+  scale_color_visc() +
+  scale_shape_visc() +
   geom_boxplot(
-    data = ICS_adata %>% filter(response == 1),
-    aes(col = factor(Group)),
+    data = plt_data %>% filter(response == 1),
     fill = NA, lwd = .5, outlier.colour = NA
-    ) +  
-  scale_color_manual(values = group_colors) +
-  scale_shape_manual(
-    breaks = c(0,1), 
-    labels = c("Non-responder", "Responder"), 
-    values = c(2, 19)
     ) +
   scale_y_log10(
     breaks = c(.005,.01,.05,.25,1,2, 4, 10),
@@ -321,14 +305,13 @@ ICS_adata %>%
                "0.01", "0.05", '0.25%', "1%", "2%", "4%", "10%")
     ) +
   facet_grid(Stim ~ Visit) +
-  theme(
-    axis.title.x = element_blank()
-  ) +
   labs(
     y = expression("Background-Adjusted % Activation Marker+"),
-    shape = "",
-    color = "Group"
-  )
+    shape = NULL,
+    color = NULL
+  ) +
+  theme(legend.direction = "vertical",
+        legend.spacing.x = unit(1.5, "cm"))
 ```
 
 `r insert_break()`
@@ -336,62 +319,117 @@ ICS_adata %>%
 ```{r example-tab, results="asis", warning=kable_warnings}
 
 magnitude_tab <- magnitude_results %>% 
-  select(-Population, -contains("Perfect")) 
+  select(-Population, -contains("Perfect")) %>%
+  rename("Median (Range)" = Median_Min_Max, 'Mean (SD)' = Mean_SD)
 
 caption_short <- "Short caption to show in List of Tables."
 
 caption <- "Long caption to show above table. Explain everything needed to understand the table here."
 
-magnitude_tab %>%
-  kable(
-    format = output_type, 
-    longtable = FALSE, 
-    booktabs = TRUE,
-    linesep = "", 
-    escape = FALSE,
-    caption.short = caption_short,
-    caption = caption
-  ) %>%
-  kable_styling(
-    font_size = 8,
-    # Note scale_down will overwrite font_size specifications
-    latex_options = c("hold_position", "scale_down", "repeat_header")
-  ) %>% 
-  collapse_rows(
-    columns = 1:2, 
-    row_group_label_position = "identity",
-    latex_hline = "full"
+if (output_type == 'latex') {
+
+  magnitude_tab %>%
+    mutate(
+      MagnitudeTest = pretty_pvalues(
+        MagnitudeTest, output_type = output_type, sig_alpha = .1,
+        background = "yellow",
+        bold = if_else(pandoc_markup , TRUE, FALSE),
+        italic = if_else(pandoc_markup , TRUE, FALSE)
+      )
     ) %>% 
-  footnote("SD: standard deviation.", threeparttable = TRUE)
+    kable(
+      format = output_type, 
+      longtable = FALSE, 
+      booktabs = TRUE,
+      linesep = "", 
+      escape = FALSE,
+      caption.short = caption_short,
+      caption = caption
+    ) %>%
+    kable_styling(
+      font_size = 8,
+      # Note scale_down will overwrite font_size specifications
+      latex_options = c("hold_position", "scale_down", "repeat_header")
+    ) %>% 
+    collapse_rows(
+      columns = 1:2, 
+      row_group_label_position = "identity",
+      latex_hline = "full"
+    ) %>% 
+    kableExtra::footnote("SD: standard deviation.", threeparttable = TRUE)
+  
+} else {
+  
+  # flextable version of table for Word doc output
+  
+  magnitude_tab %>%
+    mutate(MagnitudeTest = round_away_0(MagnitudeTest, 3)) %>%
+    flextable() %>%
+    bg(i = ~ MagnitudeTest < .1, j = "MagnitudeTest", bg = "yellow") %>%
+    set_caption(caption) %>%
+    fontsize(size = 7, part = "all") %>%
+    merge_v(j = 1:2) %>% # equivalent of collapse_rows
+    add_footer_lines("SD: standard deviation.")
+  
+}
 ```
 
 `r insert_break()`
 
+# Reproducibility Software Information
+
 ```{r Software-Session-Information, results="asis", message=FALSE, warning=kable_warnings}
-# load in rmarkdown to capture verison number
+
+# load in rmarkdown to capture version number
 if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmarkdown))
 
 my_session_info <- VISCfunctions::get_session_info()
 
-kable(
-  my_session_info$platform_table, 
-  format = output_type, 
-  booktabs = TRUE, 
-  linesep = "", 
-  caption = "Reproducibility software session information"
-  ) %>% 
-  kable_styling(font_size = 10, latex_options = "hold_position")
+tbl_caption <- "Reproducibility software session information"
+
+if (output_type == 'latex') {
+  
+  # format nicely for PDF with kable and kableExtra
+  my_session_info$platform_table %>%
+    kable(booktabs = TRUE, linesep = "", caption = tbl_caption) %>% 
+    kable_styling() %>%
+    column_spec(1, width = "1in") %>%
+    column_spec(2, width = "5.5in")
+  
+} else {
+  
+  # format nicely for Word with flextable
+  my_session_info$platform_table %>%
+    flextable() %>%
+    set_caption(tbl_caption) %>%
+    set_table_properties(layout = "fixed") %>% # to allow overriding automatic column width
+    flextable::width(1, 1, unit = "in") %>%
+    flextable::width(2, 5.5, unit = "in")
+  
+}
 ```
 
 ```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
-kable(
-  my_session_info$packages_table, 
-  format = output_type,
-  booktabs = TRUE, 
-  linesep = "", 
-  caption = "Reproducibility software package version information"
-  ) %>% 
-  kable_styling(font_size = 10, latex_options = "hold_position")
+
+tbl_caption <- "Reproducibility software package version information"
+
+if (output_type == 'latex') {
+  
+  # format nicely for PDF with kable and kableExtra
+  my_session_info$packages_table %>%
+    kable(booktabs = TRUE, linesep = "", caption = tbl_caption) %>% 
+    kable_styling()
+  
+} else {
+  
+  cat(insert_break())
+  
+  # format nicely for Word with flextable
+  my_session_info$packages_table %>%
+    flextable() %>%
+    set_caption(tbl_caption)
+  
+}
 ```
 
 `r insert_break()`
