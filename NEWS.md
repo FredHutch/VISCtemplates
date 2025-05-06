@@ -12,6 +12,7 @@ Bug fixes
 
 Improvements for users
 * Add new helper functions `networks_path()` and `trials_path()` (#271)
+* Improvements to Word document formatting (#212, #281)
 * Better default colors and shapes for reports, in line with current report practices (#268)
 * Added to default gitignore: .aux, .toc, .lof, .lot, .out, .smbdelete, and cache files (#230); html files in data-raw (#255)
 * Update PT report naming practice to VDCnnn_assay_PTreport_interim/final_(un)blinded.Rmd (#202)
