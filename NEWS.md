@@ -10,6 +10,7 @@ Bug fixes
 * Fix formatting issue in assay folder README template (#266)
 
 Other improvements
+* add new helper functions `networks_path()` and `trials_path()` (#271)
 * create_visc_project() now discards README.Rmd after knitting template to README.md (#223)
 * Update PT report naming practices to the format VDCnnn_assay_PTreport_interim/final_(un)blinded.Rmd (#202)
 * Add auxiliary files to template .gitignore (.aux, .toc, .lof, .lot, .out, cache files, and .smbdelete files) (#230)
