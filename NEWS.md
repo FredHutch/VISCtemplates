@@ -8,23 +8,24 @@ Bug fixes
 * Include pdata object name and data package name in visc_load_pdata() error message (#253)
 * Add ggplot2 loading to visc_empty PT report skeleton to avoid rendering error (#256)
 * Fix formatting issue in assay folder README template (#266)
-
-Other improvements
-* add new helper functions `networks_path()` and `trials_path()` (#271)
-* create_visc_project() now discards README.Rmd after knitting template to README.md (#223, #224)
-* Update PT report naming practices to the format VDCnnn_assay_PTreport_interim/final_(un)blinded.Rmd (#202)
-* Add auxiliary files to template .gitignore (.aux, .toc, .lof, .lot, .out, cache files, and .smbdelete files) (#230)
-* Update names in template acknowledgements section (#234)
-* Gitignore html files in data-raw via use_visc_gitignore() (#254)
-* Structured README.md files are now created at the assay folder level at the time of calling use_visc_report(),
-and minimally structured README.md files are created at the report folder level at the same time (#233)
-* Reorganized inst/ folder within package for clarity (#233)
-* Add explicit reference to the version of the data package being installed, and note about changing if needed (#257)
 * Update installation of system dependencies and R packages on CI runners (#261, #265, #273, #278, #280)
+
+Improvements for users
+* Add new helper functions `networks_path()` and `trials_path()` (#271)
+* Better default colors and shapes for reports, in line with current report practices (#268)
+* Added to default gitignore: .aux, .toc, .lof, .lot, .out, .smbdelete, and cache files (#230); html files in data-raw (#255)
+* Update PT report naming practice to VDCnnn_assay_PTreport_interim/final_(un)blinded.Rmd (#202)
+* Updated README practices
+  * Structured README.md files are now created at the assay folder level at the time of calling use_visc_report(),
+and minimally structured README.md files are created at the report folder level at the same time (#233)
+  * create_visc_project() now discards README.Rmd after knitting template to README.md (#223, #224)
+* Updated names of people in template acknowledgements section (#234)
+* Explicitly include reference to data package version in template data package installion code (#257)
+
+Improvements for package contributors and maintainers
 * Update and clarify CONTRIBUTING.md (#269)
-* Better default colors and shapes for reports (#268)
 * Auto-calculate unit test coverage on PRs and view results on Codecov (#250)
-* Have visc_git_ignore ignore html files in data-raw/, including dataspec html (#255)
+* Reorganized and renamed files in inst/ folder for clarity (#233)
 
 # VISCtemplates 1.3.2
 
