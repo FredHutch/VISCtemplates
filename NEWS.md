@@ -11,7 +11,7 @@ Bug fixes
 
 Other improvements
 * add new helper functions `networks_path()` and `trials_path()` (#271)
-* create_visc_project() now discards README.Rmd after knitting template to README.md (#223)
+* create_visc_project() now discards README.Rmd after knitting template to README.md (#223, #224)
 * Update PT report naming practices to the format VDCnnn_assay_PTreport_interim/final_(un)blinded.Rmd (#202)
 * Add auxiliary files to template .gitignore (.aux, .toc, .lof, .lot, .out, cache files, and .smbdelete files) (#230)
 * Update names in template acknowledgements section (#234)
@@ -23,6 +23,9 @@ and minimally structured README.md files are created at the report folder level 
 * Update installation of system dependencies and R packages on CI runners (#261, #265, #273, #278, #280)
 * Update and clarify CONTRIBUTING.md (#269)
 * Better default colors and shapes for reports (#268)
+* Auto-calculate unit test coverage on PRs and view results on Codecov (#250)
+* Improve an error message in visc_load_pdata() to include the data package name (#253)
+* Have visc_git_ignore ignore html files in data-raw/, including dataspec html (#255)
 
 # VISCtemplates 1.3.2
 
