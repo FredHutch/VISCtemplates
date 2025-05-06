@@ -20,7 +20,7 @@ Other improvements
 and minimally structured README.md files are created at the report folder level at the same time (#233)
 * Reorganized inst/ folder within package for clarity (#233)
 * Add explicit reference to the version of the data package being installed, and note about changing if needed (#257)
-* Update installation of system dependencies and R packages on CI runners (#261, #265, #273, #278)
+* Update installation of system dependencies and R packages on CI runners (#261, #265, #273, #278, #280)
 * Update and clarify CONTRIBUTING.md (#269)
 * Better default colors and shapes for reports (#268)
 
