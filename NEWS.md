@@ -21,6 +21,7 @@ and minimally structured README.md files are created at the report folder level 
 * Add explicit reference to the version of the data package being installed, and note about changing if needed (#257)
 * Update installation of system dependencies and R packages on CI runners (#261, #265, #273, #278)
 * Update and clarify CONTRIBUTING.md (#269)
+* Better default colors and shapes for reports (#268)
 
 # VISCtemplates 1.3.2
 
