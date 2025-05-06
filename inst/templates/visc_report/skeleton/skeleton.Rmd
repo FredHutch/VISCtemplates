@@ -104,18 +104,21 @@ pandoc_markup <- set_pandoc_markup(output_type)
 ```
 
 ```{r data-package, eval=FALSE}
-
-# note: set_wd() only impacts this code chunk
-if (.Platform$OS.type == 'unix') {
-  setwd("/Volumes/networks")
-} else {
-  setwd("N:")
-}
-
-remotes::install_git(file.path('cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git'),
-                     ref = 'main', # may need to change this to a different branch/tag/SHA to reproduce a specific analysis - see reproducibility tables in previous reports if appropriate
-                     git = 'external', 
-                     lib = my_data_package_lib)
+# Notes on `install_git()`:
+#
+# 1) `install_git()` doesn't work with network drives on Macs: to `install_git`
+# on a Mac, temporarily change your working directory to the data package
+# network path. Note that in Rmd files, `setwd()` only impacts the current code
+# chunk.
+#
+# 2) may need to change `ref` to a different branch/tag/SHA to reproduce a
+# specific analysis - see reproducibility tables in previous reports if
+# appropriate
+remotes::install_git(
+  networks_path('cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git'),
+  ref = 'main',
+  git = 'external'
+)
 ```
 
 ```{r data-processing}
