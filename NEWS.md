@@ -1,4 +1,4 @@
-# VISCtemplates (development version)
+# VISCtemplates 2.0.0
 
 Improvements for users
 * Add new helper functions `networks_path()` and `trials_path()` (#271)
