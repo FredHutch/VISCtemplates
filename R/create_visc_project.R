@@ -41,7 +41,7 @@ create_visc_project <- function(path, interactive = TRUE){
 
   # git and .gitignore
   use_visc_gitignore()
-  usethis::use_git()
+  # usethis::use_git()
 
   # use readme template
   use_visc_readme(study_name = study_name)
@@ -60,7 +60,8 @@ create_visc_project <- function(path, interactive = TRUE){
     package = "VISCtemplates"
   )
 
-  # set up continuous integration
+  # set up unit tests and continuous integration
+  usethis::use_testthat()
   usethis::use_github_action("check-release")
 
 }
