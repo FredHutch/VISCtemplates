@@ -157,6 +157,7 @@ for (fname in all_rmd_paths) {
 }
 
 
+# Comments do not include unaddressed debt
 for (fname in all_rmd_paths) {
 
   test_that(paste("Checking for TODO and FIXME in", fname), {
@@ -170,11 +171,35 @@ for (fname in all_rmd_paths) {
 }
 
 
-# TODO: functions are properly documented
+# TODO: functions are organized and well-documented, with explanations of purpose, inputs, and ouput
 
 # TODO: eval = F chunks
 
-# TODO: code follows the style guide
+# TODO: line lengths
+# Strive to limit your code to 80 characters per line (100 max)
 
-# TODO: other code linting
+# TODO: Use <- not = for assignment
+
+# TODO: Use base R pipe instead of dplyr
+
+# TODO: check variable names (within reason)
+# Object names are meaningful, descriptive, and use only alphanumeric characters and underscores (no dots)
+# Object names are unique (no overwriting of previous variables)
+
+# TODO: check for non-portable / non-relative file paths
+
+# TODO: the most recent releases of VISCfunctions and VISCtemplates are used
+
+# TODO: check for magic numbers and hard-coding
+
+# TODO: Rmd code chunk names are descriptive and use dashes (not underscores or spaces)
+
+# TODO: The correct tense (generally past tense) is used throughout the report
+
+# TODO: report content is not running off the page into the margins
+
+# TODO: checks for figures
+# see: https://github.com/FredHutch/VISCtemplates/pull/231/files
+
+
 
