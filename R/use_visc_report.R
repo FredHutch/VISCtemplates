@@ -77,18 +77,7 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
   }
 
   # add report QC tests
-  usethis::use_template(
-    template = "report_code_qc_tests.R",
-    save_as = paste0("tests/testthat/test-report-code-", report_name, ".R"),
-    data = list(report_name = report_name, path = path),
-    package = "VISCtemplates"
-  )
-  usethis::use_template(
-    template = "report_output_qc_tests.R",
-    save_as = paste0("tests/testthat/test-report-output-", report_name, ".R"),
-    data = list(report_name = report_name, path = path),
-    package = "VISCtemplates"
-  )
+  use_visc_report_test_suite(report_name, path)
 
 }
 
@@ -191,6 +180,43 @@ use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab", "ad
       ),
     data = list(pkg_ver = pkg_ver),
     save_as = file.path(path, "methods", "biological-endpoints.Rmd"),
+    package = "VISCtemplates"
+  )
+
+}
+
+
+#' Use PT report QC test template for a specfic report
+#'
+#' Creates two unit test files in tests/testthat/ that check code and outputs
+#' for path/report_name. Tests can be run with devtools::test().
+#'
+#' @param report_name name of the file (character)
+#' @param path path of the file within the active project
+#' @param interactive TRUE by default. FALSE is for non-interactive unit testing
+#'   only.
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' use_visc_report_test_suite(report_name = "VDCnnn_BAMA_PTreport", path = "BAMA")
+#' }
+use_visc_report_test_suite <- function(report_name, path = ".", interactive = TRUE) {
+
+  usethis::use_testthat()
+
+  usethis::use_template(
+    template = "report_code_qc_tests.R",
+    save_as = paste0("tests/testthat/test-report-code-", report_name, ".R"),
+    data = list(report_name = report_name, path = path),
+    package = "VISCtemplates"
+  )
+
+  usethis::use_template(
+    template = "report_output_qc_tests.R",
+    save_as = paste0("tests/testthat/test-report-output-", report_name, ".R"),
+    data = list(report_name = report_name, path = path),
     package = "VISCtemplates"
   )
 
