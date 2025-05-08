@@ -1,5 +1,6 @@
 
 library(spelling)
+library(lintr)
 
 custom_wordlist <- file.path("..", "..", "inst", "WORDLIST")
 if (file.exists(custom_wordlist)) {
@@ -28,6 +29,14 @@ for (fname in all_rmd_paths) {
   })
 
 
+  test_that(paste("Checking for eval=F in", fname), {
+
+    content <- readLines(fname)
+    expect_false(any(grepl("eval\\s*=\\s*F", content)))
+
+  })
+
+
   test_that(paste("Checking spelling in", fname), {
 
     spelling_errors <- spell_check_files(fname, ignore = ignore_words, lang = "en_US")
@@ -41,27 +50,59 @@ for (fname in all_rmd_paths) {
 
   test_that(paste("Checking for commented out code in", fname), {
 
-    lines <- readLines(fname, warn = FALSE)
-    comment_lines <- grep("^\\s*#", lines, value = TRUE)
-
-    # Heuristic: look for common code patterns in comments
-    code_patterns <- c("<-", "=", "\\(", "\\)", "\\{", "\\}", "function", "if", "for", "while", "library\\(", "require\\(")
-    pattern <- paste(code_patterns, collapse = "|")
-
-    commented_code <- grep(pattern, comment_lines, value = TRUE)
-
-    expect_length(commented_code, 0, info = paste("Commented-out code found:\n", paste(commented_code, collapse = "\n")))
+    lints <- lint(fname, linters = commented_code_linter())
+    expect_length(lints, 0)
 
   })
 
 
-  test_that(paste("Checking for TODO and FIXME in", fname), {
+  test_that(paste("Checking for TODO, FIXME, and similar comments in", fname), {
 
-    lines <- readLines(fname, warn = FALSE)
-    todo_and_fixme_lines <- grep("TODO|FIXME", lines, ignore.case = TRUE, value = TRUE)
-    expect_length(todo_and_fixme_lines, 0)
+    lints <- lint(fname, linters = todo_comment_linter())
+    expect_length(lints, 0)
 
   })
+
+
+  test_that(paste("Checking for dplyr pipe use instead of base R pipe in", fname), {
+
+    lines <- readLines(file_path, warn = FALSE)
+    base_pipe_lines <- grep("%>%", lines, value = TRUE)
+    expect_length(base_pipe_lines, 0)
+
+  })
+
+
+  test_that(paste("Checking for use of '<-' instead of '=' for assignment in", fname), {
+
+    lints <- lint(fname, linters = assignment_linter())
+    expect_length(lints, 0)
+
+  })
+
+
+  test_that(paste("Checking line lengths in", fname), {
+
+    lints <- lint(fname, linters = line_length_linter())
+    expect_length(lints, 0)
+
+  })
+
+
+  test_that(paste("Checking for non-portable or non-relative file paths in", fname), {
+
+    non_portable_path_linter <- function() {
+      regex_linter(
+        pattern = "(\\b[A-Z]:/|/Users/|/home/|\\\\)",
+        message = "Avoid absolute or non-portable file paths. Use `here::here()` or `file.path()` instead."
+      )
+    }
+
+    lints <- lint(fname, linters = list(non_portable_path_linter()))
+    expect_length(lints, 0)
+
+  })
+
 
 
 }
@@ -69,20 +110,10 @@ for (fname in all_rmd_paths) {
 
 # TODO: functions are organized and well-documented, with explanations of purpose, inputs, and ouput
 
-# TODO: eval = F chunks
-
-# TODO: line lengths
-# Strive to limit your code to 80 characters per line (100 max)
-
-# TODO: Use <- not = for assignment
-
-# TODO: Use base R pipe instead of dplyr
-
 # TODO: check variable names (within reason)
 # Object names are meaningful, descriptive, and use only alphanumeric characters and underscores (no dots)
 # Object names are unique (no overwriting of previous variables)
-
-# TODO: check for non-portable / non-relative file paths
+# should be able to use object_name_linter()
 
 # TODO: the most recent releases of VISCfunctions and VISCtemplates are used
 

@@ -14,26 +14,32 @@ if (file.exists(custom_wordlist)) {
 }
 
 report_folder <- file.path("..", "..", "{{ path }}", "{{ report_name }}")
+main_rmd_path <- file.path(report_folder, paste0("{{ report_name }}", ".Rmd"))
 pdf_path <- file.path(report_folder, paste0("{{ report_name }}", ".pdf"))
 docx_path <- file.path(report_folder, paste0("{{ report_name }}", ".docx"))
-
 
 ###### run tests
 
 
-test_that("Checking that PDF was generated after last updates to main Rmd file", {
+test_that("Checking that main Rmd, PDF, and docx are all in sync", {
 
   rmd_datetime <- file.info(main_rmd_path)$mtime
   pdf_datetime <- file.info(pdf_path)$mtime
+  docx_datetime <- file.info(docx_path)$mtime
+
+  # pdf_text <- pdf_text(pdf_path)
+  # first_page_text <- pdf_text[[1]]
+  # pdf_datetime_in_document <-
+
   expect_lt(rmd_datetime, pdf_datetime)
+  expect_equal(docx_datetime, pdf_datetime, tolerance = 0.0001)
+  # expect_equal(pdf_datetime_in_document, pdf_datetime, tolerance = 0.0001)
 
 })
 
 test_that(paste("Checking spelling in", pdf_path), {
 
   pdf_text <- pdf_text(pdf_path)
-  pdf_text <- pdf_text[3:length(pdf_text)] # skip title page and table of contents
-  pdf_text <- pdf_text[c(1:6, 9:length(pdf_text))] # skip lab and data processing methods
   pdf_text <- pdf_text[1:(length(pdf_text) - 1)] # skip references
   pdf_text <- pdf_text[c(1:(length(pdf_text) - 3), length(pdf_text))] # skip reproducibility tables
 
@@ -49,7 +55,7 @@ test_that(paste("Checking spelling in", pdf_path), {
 
   expect(
     length(spelling_errors_final) == 0,
-    failure_message = paste("Possible spelling errors after rendering to PDF: \n ", paste(spelling_errors_final, collapse = ", "))
+    failure_message = paste("Possible spelling errors in PDF: \n ", paste(spelling_errors_final, collapse = ", "))
   )
 
 })
@@ -105,10 +111,6 @@ test_that(paste(pdf_path, "has correct page count"), {
 
 })
 
-
-# TODO: The correct tense (generally past tense) is used throughout the report
-
-# TODO: report content is not running off the page into the margins
 
 # TODO: checks for figures
 # see: https://github.com/FredHutch/VISCtemplates/pull/231/files
