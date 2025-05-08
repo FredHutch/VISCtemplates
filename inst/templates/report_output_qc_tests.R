@@ -27,13 +27,16 @@ test_that("Checking that main Rmd, PDF, and docx are all in sync", {
   pdf_datetime <- file.info(pdf_path)$mtime
   docx_datetime <- file.info(docx_path)$mtime
 
-  # pdf_text <- pdf_text(pdf_path)
-  # first_page_text <- pdf_text[[1]]
-  # pdf_datetime_in_document <-
+  pdf_text <- pdf_text(pdf_path)
+  first_page_text <- pdf_text[[1]]
+  pdf_date_in_document <- stringr::str_extract_all(first_page_text, "Date:\\s+.+\\n")[[1]]
+  pdf_date_in_document <- stringr::str_remove_all(pdf_date_in_document, "Date:\\s+")
+  pdf_date_in_document <- stringr::str_remove_all(pdf_date_in_document, "\\n")
+  pdf_date_in_document <- as.Date.character(pdf_date_in_document, format = "%B %d, %Y")
 
   expect_lt(rmd_datetime, pdf_datetime)
-  expect_equal(docx_datetime, pdf_datetime, tolerance = 0.0001)
-  # expect_equal(pdf_datetime_in_document, pdf_datetime, tolerance = 0.0001)
+  expect_lt(pdf_datetime - docx_datetime, as.difftime(0.5, units = "days"))
+  expect_equal(pdf_date_in_document, as.Date(pdf_datetime))
 
 })
 
