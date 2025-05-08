@@ -78,8 +78,14 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
 
   # add report QC tests
   usethis::use_template(
-    template = "report_qc_tests.R",
-    save_as = paste0("tests/testthat/test-report_qc_tests_", report_name, ".R"),
+    template = "report_code_qc_tests.R",
+    save_as = paste0("tests/testthat/test-report-code-", report_name, ".R"),
+    data = list(report_name = report_name, path = path),
+    package = "VISCtemplates"
+  )
+  usethis::use_template(
+    template = "report_output_qc_tests.R",
+    save_as = paste0("tests/testthat/test-report-output-", report_name, ".R"),
     data = list(report_name = report_name, path = path),
     package = "VISCtemplates"
   )
