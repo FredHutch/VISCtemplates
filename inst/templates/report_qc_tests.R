@@ -13,17 +13,17 @@ if (file.exists(custom_wordlist)) {
   ignore_words <- character(0)
 }
 
-report_folder <- file.path("..", "..", "bcell", "Caskey904_920_Bcell_PTreport")
-main_rmd_path <- file.path(report_folder, paste0(report_folder, ".Rmd"))
-main_pdf_path <- file.path(report_folder, paste0(report_folder, ".pdf"))
+report_folder <- file.path("..", "..", "{{ path }}", "{{ report_name }}")
+main_rmd_path <- file.path(report_folder, paste0("{{ report_name }}", ".Rmd"))
+pdf_path <- file.path(report_folder, paste0("{{ report_name }}", ".pdf"))
 
-child_rmd_paths <- list.files(
-  path = file.path(report_folder, "child-docs"),
+other_rmd_paths <- list.files(
+  path = file.path(report_folder, "methods"),
   pattern = "\\.Rmd$",
   full.names = TRUE
 )
 
-all_rmd_paths <- c(main_rmd_path, child_rmd_paths)
+all_rmd_paths <- c(main_rmd_path, other_rmd_paths)
 
 
 ###### run tests
@@ -110,17 +110,71 @@ test_that(paste("Checking", pdf_path, "for code output (messages, warnings, etc.
 })
 
 
-# TODO: blank page test
+test_that(paste(pdf_path, "has no blank pages"), {
 
-# TODO: page number test
+  pdf_text <- pdf_text(pdf_path)
+  blank_pages <- which(trimws(pdf_text) == "")
+  expect_length(blank_pages, 0)
 
-# TODO: eval = F chunks
-# TODO: commented out code
+})
+
+
+test_that(paste(pdf_path, "has correct page count"), {
+
+  pdf_text <- pdf_text(pdf_path)
+
+  actual_page_count <- length(pdf_text)
+  last_page_text <- pdf_text[[actual_page_count]]
+
+  # Use regex to find the largest number near the bottom of the page
+  page_number_footer <- stringr::str_extract_all(last_page_text, "Page [0-9]+ of [0-9]+")[[1]]
+  last_page_footer_x <- stringr::str_remove_all(stringr::str_remove_all(page_number_footer, "Page "), " of [0-9]+")
+  last_page_footer_y <- stringr::str_remove_all(page_number_footer, "Page [0-9]+ of ")
+
+  expect_equal(actual_page_count, as.numeric(last_page_footer_x))
+  expect_equal(actual_page_count, as.numeric(last_page_footer_y))
+
+})
+
+
+for (fname in all_rmd_paths) {
+
+  test_that(paste("Checking for commented out code in", fname), {
+
+    lines <- readLines(fname, warn = FALSE)
+    comment_lines <- grep("^\\s*#", lines, value = TRUE)
+
+    # Heuristic: look for common code patterns in comments
+    code_patterns <- c("<-", "=", "\\(", "\\)", "\\{", "\\}", "function", "if", "for", "while", "library\\(", "require\\(")
+    pattern <- paste(code_patterns, collapse = "|")
+
+    commented_code <- grep(pattern, comment_lines, value = TRUE)
+
+    expect_length(commented_code, 0, info = paste("Commented-out code found:\n", paste(commented_code, collapse = "\n")))
+
+  })
+
+}
+
+
+for (fname in all_rmd_paths) {
+
+  test_that(paste("Checking for TODO and FIXME in", fname), {
+
+    lines <- readLines(fname, warn = FALSE)
+    todo_and_fixme_lines <- grep("TODO|FIXME", lines, ignore.case = TRUE, value = TRUE)
+    expect_length(todo_and_fixme_lines, 0)
+
+  })
+
+}
+
 
 # TODO: functions are properly documented
 
+# TODO: eval = F chunks
+
 # TODO: code follows the style guide
 
-# TODO: no TODO or FIXME
-
 # TODO: other code linting
+

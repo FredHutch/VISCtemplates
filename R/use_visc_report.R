@@ -76,6 +76,15 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
                      interactive = interactive)
   }
 
+  # add report QC tests
+  usethis::use_testthat()
+  usethis::use_template(
+    template = "report_qc_tests.R",
+    save_as = paste0("tests/testthat/test-report_qc_tests_", report_name, ".R"),
+    data = list(report_name = report_name, path = path),
+    package = "VISCtemplates"
+  )
+
 }
 
 # function to infer study name from report name
