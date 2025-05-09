@@ -61,6 +61,7 @@ jobs:
         if: ${{ matrix.config.r == '4.0.4' }}
         run: |
           R -q -e 'utils::install.packages("remotes")'
+          Sys.setenv(R_REMOTES_UPGRADE = "never")
           R -q -e 'remotes::install_version("htmlTable", "2.4.1")'
           sudo apt install -y libx11-dev libcurl4-openssl-dev libssl-dev make libcairo2-dev libfontconfig1-dev libfreetype6-dev libgit2-dev libjpeg-dev libpng-dev libtiff-dev libicu-dev libfribidi-dev libharfbuzz-dev libxml2-dev libssh2-1-dev zlib1g-dev
           R -q -e 'remotes::install_version("scales", "1.3.0")'
