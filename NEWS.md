@@ -1,5 +1,9 @@
 # VISCtemplates (development version)
 
+Improvements for package contributors and maintainers
+* Fix Codecov badge and URL (#287)
+* CI maintenance (#287)
+
 # VISCtemplates 2.0.0
 
 Improvements for users

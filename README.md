@@ -4,7 +4,7 @@
 
 [![R-CMD-check](https://github.com/FredHutch/VISCtemplates/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/FredHutch/VISCtemplates/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/FredHutch/VISCtemplates/graph/badge.svg)](https://app.codecov.io/gh/FredHutch/VISCtemplates)
+coverage](https://codecov.io/gh/FredHutch/VISCtemplates/branch/main/graph/badge.svg)](https://app.codecov.io/gh/FredHutch/VISCtemplates/tree/main)
 <!-- badges: end -->
 
 # VISCtemplates
