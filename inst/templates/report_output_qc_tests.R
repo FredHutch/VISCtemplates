@@ -15,6 +15,8 @@ main_rmd_path <- file.path(report_folder, paste0("{{ report_name }}", ".Rmd"))
 pdf_path <- file.path(report_folder, paste0("{{ report_name }}", ".pdf"))
 docx_path <- file.path(report_folder, paste0("{{ report_name }}", ".docx"))
 
+pdf_text <- pdf_text(pdf_path)
+
 
 test_that("Checking that main Rmd, PDF, and docx are all in sync", {
 
@@ -22,7 +24,6 @@ test_that("Checking that main Rmd, PDF, and docx are all in sync", {
   pdf_datetime <- file.info(pdf_path)$mtime
   docx_datetime <- file.info(docx_path)$mtime
 
-  pdf_text <- pdf_text(pdf_path)
   first_page_text <- pdf_text[[1]]
   pdf_date_in_document <- stringr::str_extract_all(first_page_text, "Date:\\s+.+\\n")[[1]]
   pdf_date_in_document <- stringr::str_remove_all(pdf_date_in_document, "Date:\\s+")
@@ -38,29 +39,26 @@ test_that("Checking that main Rmd, PDF, and docx are all in sync", {
 
 test_that(paste("Checking spelling in", pdf_path), {
 
-  pdf_text <- pdf_text(pdf_path)
-  pdf_text <- pdf_text[1:(length(pdf_text) - 1)] # skip references
-  pdf_text <- pdf_text[c(1:(length(pdf_text) - 3), length(pdf_text))] # skip reproducibility tables
+  n_pages <- length(pdf_text)
+  exclude_pages <- c(1, n_pages - 1, n_pages) # exclude cover page, repro. tables, references and acknowledgments
+  pdf_text_truncated <- pdf_text[-exclude_pages]
 
-  spelling_errors_raw <- spell_check_text(pdf_text, ignore = ignore_words, lang = "en_US")$word
+  # Remove URLs from each page
+  pdf_text_truncated <- stringr::str_remove_all(pdf_text_truncated, "https?://\\S+")
+
+  spelling_errors_raw <- spell_check_text(pdf_text_truncated, ignore = ignore_words, lang = "en_US")
 
   # checking also after collapsing line breaks and hyphens
-  text_combined <- paste(pdf_text, collapse = "\n")
+  text_combined <- paste(pdf_text_truncated, collapse = "\n")
   text_cleaned <- gsub("\\s*-\\s*\n\\s*", "", text_combined)
-  spelling_errors_cleaned <- spell_check_text(text_cleaned, ignore = ignore_words, lang = "en_US")$word
+  spelling_errors_cleaned <- spell_check_text(text_cleaned, ignore = ignore_words, lang = "en_US")
 
-  # final set of spelling errors: present in both raw and cleaned version
-  spelling_errors_final <- spelling_errors_raw[spelling_errors_raw %in% spelling_errors_cleaned]
-
-  if (length(spelling_errors_final) > 0) {
-    warning_message <- paste("Possible spelling errors in PDF: \n ",
-                             paste(spelling_errors_final, collapse = ", "))
-    warning(warning_message)
-  }
+  spelling_errors_final <- spelling_errors_raw |>
+    filter(word %in% spelling_errors_cleaned$word, nchar(word) > 2)
 
   expect(
-    length(spelling_errors_final) < 5,
-    failure_message = "More than 5 possible spelling errors found; review and resolve"
+    nrow(spelling_errors_final) == 0,
+    failure_message = paste("Possible spelling errors in PDF: \n", paste(spelling_errors_final$word, collapse = "\n "))
   )
 
 })
@@ -68,7 +66,6 @@ test_that(paste("Checking spelling in", pdf_path), {
 
 test_that(paste("Checking", pdf_path, "for broken references"), {
 
-  pdf_text <- pdf_text(pdf_path)
   missing_refs_check <- grepl("\\?\\?", pdf_text)
   expect(
     sum(missing_refs_check) == 0,
@@ -80,7 +77,6 @@ test_that(paste("Checking", pdf_path, "for broken references"), {
 
 test_that(paste("Checking", pdf_path, "for code output (messages, warnings, etc.)"), {
 
-  pdf_text <- pdf_text(pdf_path)
   code_output_check <- grepl("#", pdf_text)
   expect(
     sum(code_output_check) == 0,
@@ -92,7 +88,6 @@ test_that(paste("Checking", pdf_path, "for code output (messages, warnings, etc.
 
 test_that(paste(pdf_path, "has no blank pages"), {
 
-  pdf_text <- pdf_text(pdf_path)
   blank_pages <- which(trimws(pdf_text) == "")
   expect_length(blank_pages, 0)
 
@@ -100,8 +95,6 @@ test_that(paste(pdf_path, "has no blank pages"), {
 
 
 test_that(paste(pdf_path, "has correct page count"), {
-
-  pdf_text <- pdf_text(pdf_path)
 
   actual_page_count <- length(pdf_text)
   last_page_text <- pdf_text[[actual_page_count]]
