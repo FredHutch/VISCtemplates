@@ -1,3 +1,4 @@
+# This is a template for QC tests run on report code (Rmd files)
 
 library(spelling)
 library(lintr)
@@ -18,28 +19,35 @@ other_rmd_paths <- list.files(
 )
 all_rmd_paths <- c(main_rmd_path, other_rmd_paths)
 
-for (fname in all_rmd_paths) {
+
+for (file_path in all_rmd_paths) {
 
 
-  test_that(paste("Checking for warning=F in", fname), {
+  test_that(paste("Checking for warning=F in", file_path), {
 
-    content <- readLines(fname)
+    content <- readLines(file_path)
     expect_false(any(grepl("warning\\s*=\\s*F", content)))
 
   })
 
 
-  test_that(paste("Checking for eval=F in", fname), {
+  test_that(paste("Checking for eval=F in", file_path), {
 
-    content <- readLines(fname)
-    expect_false(any(grepl("eval\\s*=\\s*F", content)))
+    content <- readLines(file_path)
+    if (file_path == main_rmd_path) {
+      # one eval=F expected for loading in data package
+      expect_lte(sum(grepl("eval\\s*=\\s*F", content)), 1)
+    } else {
+      # no eval=F expected in any child Rmd files
+      expect_false(any(grepl("eval\\s*=\\s*F", content)))
+    }
 
   })
 
 
-  test_that(paste("Checking spelling in", fname), {
+  test_that(paste("Checking spelling in", file_path), {
 
-    spelling_errors <- spell_check_files(fname, ignore = ignore_words, lang = "en_US")
+    spelling_errors <- spell_check_files(file_path, ignore = ignore_words, lang = "en_US")
     expect(
       nrow(spelling_errors) == 0,
       failure_message = paste(capture.output(print(spelling_errors)), collapse = "\n")
@@ -48,23 +56,23 @@ for (fname in all_rmd_paths) {
   })
 
 
-  test_that(paste("Checking for commented out code in", fname), {
+  test_that(paste("Checking for commented out code in", file_path), {
 
-    lints <- lint(fname, linters = commented_code_linter())
+    lints <- lint(file_path, linters = commented_code_linter())
     expect_length(lints, 0)
 
   })
 
 
-  test_that(paste("Checking for TODO, FIXME, and similar comments in", fname), {
+  test_that(paste("Checking for TODO, FIXME, and similar comments in", file_path), {
 
-    lints <- lint(fname, linters = todo_comment_linter())
+    lints <- lint(file_path, linters = todo_comment_linter())
     expect_length(lints, 0)
 
   })
 
 
-  test_that(paste("Checking for dplyr pipe use instead of base R pipe in", fname), {
+  test_that(paste("Checking for dplyr pipe use instead of base R pipe in", file_path), {
 
     lines <- readLines(file_path, warn = FALSE)
     base_pipe_lines <- grep("%>%", lines, value = TRUE)
@@ -73,52 +81,84 @@ for (fname in all_rmd_paths) {
   })
 
 
-  test_that(paste("Checking for use of '<-' instead of '=' for assignment in", fname), {
+  test_that(paste("Checking for use of '<-' instead of '=' for assignment in", file_path), {
 
-    lints <- lint(fname, linters = assignment_linter())
+    lints <- lint(file_path, linters = assignment_linter())
     expect_length(lints, 0)
 
   })
 
 
-  test_that(paste("Checking line lengths in", fname), {
+  test_that(paste("Checking line lengths in", file_path), {
 
-    lints <- lint(fname, linters = line_length_linter())
+    lints <- lint(file_path, linters = line_length_linter(length = 80L))
     expect_length(lints, 0)
 
   })
 
 
-  test_that(paste("Checking for non-portable or non-relative file paths in", fname), {
+  test_that(paste("Checking for non-portable or non-relative file paths in", file_path), {
 
-    non_portable_path_linter <- function() {
-      regex_linter(
-        pattern = "(\\b[A-Z]:/|/Users/|/home/|\\\\)",
-        message = "Avoid absolute or non-portable file paths. Use `here::here()` or `file.path()` instead."
-      )
+    lints <- lint(file_path, linters = list(absolute_path_linter(),
+                                            nonportable_path_linter()))
+    expect_length(lints, 0)
+
+  })
+
+
+  test_that("Library calls are correct and appropriately placed", {
+
+    if (file_path == main_rmd_path) {
+
+      # library calls in main Rmd file are at together at the beginning
+
+      lints <- lint(file_path, linters = list(missing_package_linter,
+                                              unused_import_linter,
+                                              library_call_linter(allow_preamble = TRUE)))
+      expect_length(lints, 0)
+
+    }
+    else {
+
+      # no library calls in child Rmd files
+
+      library_call_linter_custom <- function(source_file) {
+        lints <- list()
+        lines <- readLines(source_file)
+        for (i in seq_along(lines)) {
+          if (grepl("library\\(", lines[i])) {
+            lints <- c(lints, Lint(
+              filename = source_file,
+              line_number = i,
+              column_number = 1,
+              type = "warning",
+              message = "Avoid using library() calls in child Rmd documents.",
+              line = lines[i]
+            ))
+          }
+        }
+        return(lints)
+      }
+
+      lints <- lint(file_path, linters = list(missing_package_linter,
+                                              unused_import_linter,
+                                              library_call_linter_custom))
+      expect_length(lints, 0)
+
     }
 
-    lints <- lint(fname, linters = list(non_portable_path_linter()))
+  })
+
+
+  test_that("Object names are reasonable", {
+
+    lints <- lint(file_path, linters = list(object_length_linter,
+                                            object_name_linter,
+                                            object_overwrite_linter))
     expect_length(lints, 0)
 
   })
-
 
 
 }
-
-
-# TODO: functions are organized and well-documented, with explanations of purpose, inputs, and ouput
-
-# TODO: check variable names (within reason)
-# Object names are meaningful, descriptive, and use only alphanumeric characters and underscores (no dots)
-# Object names are unique (no overwriting of previous variables)
-# should be able to use object_name_linter()
-
-# TODO: the most recent releases of VISCfunctions and VISCtemplates are used
-
-# TODO: check for magic numbers and hard-coding
-
-# TODO: Rmd code chunk names are descriptive and use dashes (not underscores or spaces)
-
 

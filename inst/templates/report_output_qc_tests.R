@@ -109,9 +109,3 @@ test_that(paste(pdf_path, "has correct page count"), {
 
 })
 
-
-# TODO: checks for figures
-# see: https://github.com/FredHutch/VISCtemplates/pull/231/files
-# resolution (dpi) is sufficient
-# figure size (width and height, in inches) is reasonable
-# font size (in figures) is
