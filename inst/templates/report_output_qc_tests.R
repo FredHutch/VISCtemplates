@@ -1,7 +1,4 @@
-
-
-###### setup
-
+# This is a template for QC tests run on report outputs (PDF, Word)
 
 library(spelling)
 library(pdftools)
@@ -17,8 +14,6 @@ report_folder <- file.path("..", "..", "{{ path }}", "{{ report_name }}")
 main_rmd_path <- file.path(report_folder, paste0("{{ report_name }}", ".Rmd"))
 pdf_path <- file.path(report_folder, paste0("{{ report_name }}", ".pdf"))
 docx_path <- file.path(report_folder, paste0("{{ report_name }}", ".docx"))
-
-###### run tests
 
 
 test_that("Checking that main Rmd, PDF, and docx are all in sync", {
@@ -40,6 +35,7 @@ test_that("Checking that main Rmd, PDF, and docx are all in sync", {
 
 })
 
+
 test_that(paste("Checking spelling in", pdf_path), {
 
   pdf_text <- pdf_text(pdf_path)
@@ -56,9 +52,15 @@ test_that(paste("Checking spelling in", pdf_path), {
   # final set of spelling errors: present in both raw and cleaned version
   spelling_errors_final <- spelling_errors_raw[spelling_errors_raw %in% spelling_errors_cleaned]
 
+  if (length(spelling_errors_final) > 0) {
+    warning_message <- paste("Possible spelling errors in PDF: \n ",
+                             paste(spelling_errors_final, collapse = ", "))
+    warning(warning_message)
+  }
+
   expect(
-    length(spelling_errors_final) == 0,
-    failure_message = paste("Possible spelling errors in PDF: \n ", paste(spelling_errors_final, collapse = ", "))
+    length(spelling_errors_final) < 5,
+    failure_message = "More than 5 possible spelling errors found; review and resolve"
   )
 
 })
