@@ -53,7 +53,8 @@ Suggests:
     remotes,
     testthat (>= 3.0.0),
     withr,
-    spelling
+    spelling,
+    pdftools
 Remotes:
     FredHutch/VISCfunctions
 VignetteBuilder: knitr
