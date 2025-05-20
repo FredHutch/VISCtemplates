@@ -112,8 +112,8 @@ for (file_path in all_rmd_paths) {
 
       # library calls in main Rmd file are at together at the beginning
 
-      lints <- lint(file_path, linters = list(missing_package_linter,
-                                              unused_import_linter,
+      lints <- lint(file_path, linters = list(missing_package_linter(),
+                                              unused_import_linter(),
                                               library_call_linter(allow_preamble = TRUE)))
       expect_length(lints, 0)
 
@@ -140,9 +140,9 @@ for (file_path in all_rmd_paths) {
         return(lints)
       }
 
-      lints <- lint(file_path, linters = list(missing_package_linter,
-                                              unused_import_linter,
-                                              library_call_linter_custom))
+      lints <- lint(file_path, linters = list(missing_package_linter(),
+                                              unused_import_linter(),
+                                              library_call_linter_custom()))
       expect_length(lints, 0)
 
     }
@@ -152,9 +152,9 @@ for (file_path in all_rmd_paths) {
 
   test_that("Object names are reasonable", {
 
-    lints <- lint(file_path, linters = list(object_length_linter,
-                                            object_name_linter,
-                                            object_overwrite_linter))
+    lints <- lint(file_path, linters = list(object_length_linter(),
+                                            object_name_linter(),
+                                            object_overwrite_linter()))
     expect_length(lints, 0)
 
   })
