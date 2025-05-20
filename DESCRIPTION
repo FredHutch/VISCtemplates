@@ -54,7 +54,8 @@ Suggests:
     testthat (>= 3.0.0),
     withr,
     spelling,
-    pdftools
+    pdftools,
+    lintr
 Remotes:
     FredHutch/VISCfunctions
 VignetteBuilder: knitr
