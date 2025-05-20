@@ -52,7 +52,10 @@ Suggests:
     knitr,
     remotes,
     testthat (>= 3.0.0),
-    withr
+    withr,
+    spelling,
+    pdftools,
+    lintr
 Remotes:
     FredHutch/VISCfunctions
 VignetteBuilder: knitr
