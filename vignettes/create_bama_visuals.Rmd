@@ -38,6 +38,7 @@ tail(exampleData_BAMA)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
+library(ggbeeswarm)
 ```
 
 
@@ -49,10 +50,18 @@ describe what you'll need to make below tables & plots. Includes response rate s
 # generate response rate summary table
 ```
 
+```{r other-tab-visual-inputs, eval=eval_chunks}
+# group_colours <- c(`Group 1` = "lightblue", `Group 2` = "lightgreen") # do we want/need this?
+
+```
+
 ## Step two: Create Standard Response-rate and Magnitude
 
 The standard magnitude and response rate plots include stacked response rates and magnitude boxplots.
+
 - Only post-baseline magnitudes and response-rates are included
+- Magnitude boxplots are only based on responders
+- Non-responders are overlaid with grey triangles
 - Colours are used for treatment groups and should be colour-blind friendly.
 - Plots are generated using the R-package `ggplot2`.
 
@@ -67,46 +76,47 @@ insert code
 # generate response rate plot first - will need object with rates measures
 
 # generate mag plot second
-    # mag_pl_dat = bamab_adata %>%
-    #   filter(wk != "Baseline" & is.na(response) == FALSE & antigen == ag) %>%
-    #   mutate(group_plot_placebo = factor(group_plot_placebo, levels = group_plot_placebo_order))
 bama_mag <- exampleData_BAMA %>% 
   filter(visitno != 0) %>%
-  mutate(group = group)
+  mutate(group = factor(paste0("Group ", group), 
+                        levels = c("Group 1", "Group 2")),
+         group_colour = case_when(group == "Group 1" ~ "lightblue",
+                                  group == "Group 2" ~ "lightgreen"))
 
 bama_responders <- filter(bama_mag, response == 1)
 bama_nonresponders <-  filter(bama_mag, response == 0)
     
 bama_mag %>%
-  ggplot(aes(x = group, y = pmax(100,delta))) +
+  ggplot(aes(x = group, y = magnitude)) +
   geom_boxplot(
-    data = responders,
-    aes(color = group_plot_placebo),
+    data = bama_responders,
+    aes(colour = group_colour),
     outlier.colour = NA,
     show.legend = FALSE
   ) +
   geom_beeswarm(
-    data = nonresponders,
-    aes(shape = as.factor(response), color = "#8F8F8F"),
+    data = bama_nonresponders,
+    aes(shape = as.factor(response), colour = "darkgrey"),
     size = 1.5
   ) +
   geom_beeswarm(
-    data = responders,
-    aes(color = group_plot_placebo, shape = as.factor(response)),
+    data = bama_responders,
+    aes(color = group_colour, shape = as.factor(response)),
     size = 2.5
   ) +
-  facet_grid(antigen ~ wk) +
-  scale_color_manual(values = group_placebo_colors) +
-  scale_shape_manual(
-    name = "",
-    values = c("0" = 2, "1" = 19),
-    labels = c("Non Responder", "Responder")
-  ) +
-  scale_y_log10(
-    expression("Net MFI"),
-    breaks = c(100, 1000, 10000, 22000),
-    labels = c(expression("" <= 100), "1000", "10000", expression("" >= 22000))
-  ) +
+  facet_grid(antigen ~ visitno) +
+  # scale_color_manual(values = group_colours) +
+  # scale_shape_manual(
+  #   name = "",
+  #   values = c("0" = 2, "1" = 19),
+  #   labels = c("Non Responder", "Responder")
+  # ) +
+# i dont think these data are on log scale
+  # scale_y_log10(
+  #   expression("Net MFI"),
+  #   breaks = c(100, 1000, 10000, 22000),
+  #   labels = c(expression("" <= 100), "1000", "10000", expression("" >= 22000))
+  # ) +
   scale_x_discrete(drop = F) +
   labs(x = "Group", y = "Net MFI") +
   theme_bw() +
@@ -126,10 +136,8 @@ bama_mag %>%
     legend.margin = margin(-1, 0, 0, 0),
     legend.spacing = unit(0, units = "cm"),
     strip.text.x = element_blank(),
-    strip.text.y = element_text(size = 12)
-  ) +
-    
-
+    strip.text.y = element_text(size = 8)
+  )
 
 ```
 
