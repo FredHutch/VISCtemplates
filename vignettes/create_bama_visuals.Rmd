@@ -1,0 +1,242 @@
+---
+title: "BAMA Figures for VISC reports"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{BAMA Figures for VISC reports}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+<!-- streamlined - coding template. dont want it to be this dense. -->
+<!--   - data processing -- link of how data looks before you start piping into the figures -->
+<!--   - make one strong dataset instead of a lot of manipulation per figure -->
+
+<!-- sections: -->
+<!--   - 1. data structure (for the purposes of generating all the visual we want) -->
+<!--     - magnitude can be AUTC, or netMFI at a specific dilution, etc -->
+<!--   - 2. respose rate + magnitude plots -->
+<!--   - 3. durability - fold change -->
+<!--     - from W001 final BAMA report. Figure 3: Boxplots displaying log10 fold-change in AUTC -->
+
+<!-- note to self: can make small mod to data to get a time effect in a hidden chunk at top. -->
+
+## Step one: Load and Preprocess Data
+
+```{r eval=FALSE}
+library(VISCfunctions)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+# data(package = "VISCfunctions")
+
+exampleData_BAMA
+
+```
+
+
+<!-- - **table to links to resources** (one click away) -->
+<!--   - eventually vignettes to link together (not there yet) -->
+
+<!-- - **another section for data complexity** (when you have this kind of data do this other thing) -->
+<!--   - multiple magnitudes etc - in data and in visuals -->
+
+<!-- - What do we want to include in the early steps? should this be more short and sweet (only the visual)? or include things like:  -->
+<!--   - loading data - `visc_load_pdata()` (`digest()`) and where to expect data (names of data?),  -->
+<!--   - datastructures - and/or column names (link to scharpimmunotemplates: https://github.com/FredHutch/scharpimmunotemplates/blob/main/processing%20specs/pdata_specs_excel_templates/scharpbama_pdata_specs_template_v1.2.5.xlsx, Variables tab (note this is reference to private repo)), -->
+<!--   - check for missingness -->
+<!--   - refer to info on what BAMA is or how it works? (training material internal or external or papers) -->
+<!--     - ex: to explain what "antigen" field is that seems helpful -->
+<!--     - could start with a blurb at the top about the BAMA assay (quick overview) - could pull from "articulate" -->
+<!--     - https://rise.articulate.com/share/YrBlmEeOvM_Y3yW6kEwV3DcsC8xpdmeC#/lessons/XerUSQ844rs4hlIrShidkq9Zc2aPLhYH -->
+<!--   - magnitude is preloaded in this case but depending if you data is long or wide you may need to pivot on aval_cd and aval (specify which aval_cd) -->
+<!--   - the visual data -->
+<!--   - others: looping/function/create multiple? options -->
+<!--   - others: latex errors -->
+
+
+# ------
+
+Below we have an example of a minimalistic BAMA dataset which contains:
+- `pubID` a unique ID for each participant
+- `visitno` denotes a specific visit
+  - Checks should be run to see the number of participants by `visitno` and whether any participants are missing a `visitno`
+- `group` denotes the treatment the participant may have gotten. This variable combined with any unblinding information will allow you to know what dosage of a vaccine a participant received or if they are a placebo.
+- `antigen` *the serum (plasma?) is added to wells containing beads with antigen on them. the reaction of * denotes what was used on the beads the serum were 
+- `magnitude` - blank and background subtracted netMFI (include formula here), 
+  - what is the linear range
+  - higher means more reactogenicity
+- `response` depending on whether a 3 or 5 part response call (outline what it is)
+
+```{r}
+exampleData_BAMA %>% names()
+exampleData_BAMA %>% distinct(pubID) %>% nrow()
+exampleData_BAMA %>% distinct(antigen) %>% nrow()
+exampleData_BAMA %>% 
+  select(magnitude) %>% 
+  summarise(min = min(magnitude),
+            max = max(magnitude),
+            mean = mean(magnitude))
+plot(exampleData_BAMA$magnitude, 
+     col = exampleData_BAMA$group) #signal
+plot(exampleData_BAMA$magnitude, 
+     col = exampleData_BAMA$visitno) #no signal - so no fold change
+```
+
+```{r, echo = F, message = F, warning = F}
+library(knitr)
+library(kableExtra)
+knitr::kable(exampleData_BAMA %>% 
+               select(pubID = pubID, 
+                      Group = group, 
+                      Visit = visitno,
+                      Antigen = antigen) %>%
+               unique() %>%
+               group_by(pubID) %>% 
+               pivot_wider(names_from = Visit,
+                           values_from = pubID,
+                           values_fn = list(pubID = length))) %>%
+    kable_styling(
+    font_size = 12,
+    latex_options = c("hold_position",  "scale_down")
+    ) %>% 
+  add_header_above(c(" " = 2, "Visitno" = 3))
+```
+
+### What to include in vignette
+
+<!-- Once you've: -->
+<!-- - done stuff (whatever is listed above) -->
+
+<!-- Now you can  -->
+<!--   - (generate one visual and outline) -->
+<!--   - talk about combining visuals -->
+
+<!-- RR on top and Magnitude below: -->
+<!--   - we don't plot baseline (filter out time at baseline) -->
+<!--   -  -->
+
+Which visuals
+
+*is there one dataset that can make all these plots* (we think ans is no, but maybe 2?)... example of 
+
+- example of elegant way to make both these 
+
+- stacked rr and magnitude (doesnt matter what the mag is, can mention it could be diff: mfi, autc, etc)
+  - Figure 6: Response rates with 95% Wilson CIs and net MFI
+- line plots for one magnitude 
+- durability
+- wishlist: breadth plot
+
+- with each visual make summary table (from same dataset)
+  - to highlight (you dont need to keep remaking objects) - tidyverse "rectangular data"
+  
+<!-- - could have later section brief theme things: axis breaks etc  -->
+
+```{r eval=F, eacho = T, warning = F, message = F}
+
+exampleData_BAMA %>%
+      filter(visitno != 0 & antigen == "gp41") %>%
+      mutate(group_plot_placebo = factor(group_plot_placebo, levels = group_plot_placebo_order))
+    
+    responders = filter(mag_pl_dat, response == 1)
+    nonresponders = filter(mag_pl_dat, response == 0)
+    
+    mag_pl_dat %>%
+      ggplot(aes(x = group_plot_placebo, y = pmax(100,delta))) +
+      geom_boxplot(
+        data = responders,
+        aes(color = group_plot_placebo),
+        outlier.colour = NA,
+        show.legend = FALSE
+      ) +
+      geom_beeswarm(
+        data = nonresponders,
+        aes(shape = as.factor(response), color = "#8F8F8F"),
+        size = 1.5
+      ) +
+      geom_beeswarm(
+        data = responders,
+        aes(color = group_plot_placebo, shape = as.factor(response)),
+        size = 2.5
+      ) +
+      facet_grid(antigen ~ wk) +
+      scale_color_manual(values = group_placebo_colors) +
+      scale_shape_manual(
+        name = "",
+        values = c("0" = 2, "1" = 19),
+        labels = c("Non Responder", "Responder")
+      ) +
+      scale_y_log10(
+        expression("Net MFI"),
+        breaks = c(100, 1000, 10000, 22000),
+        labels = c(expression("" <= 100), "1000", "10000", expression("" >= 22000))
+      ) +
+      scale_x_discrete(drop = F) +
+      labs(x = "Group", y = "Net MFI") +
+      theme_bw() +
+      theme(
+        axis.text.x = element_text(
+          size = 11,
+          angle = 90,
+          vjust = .5,
+          hjust = 1
+        ),
+        axis.title.y = element_text(size = 13),
+        axis.title.x = element_blank(),
+        axis.text.y = element_text(size = 11),
+        legend.position = "bottom",
+        legend.text = element_text(size = 12),
+        legend.box = "vertical",
+        legend.margin = margin(-1, 0, 0, 0),
+        legend.spacing = unit(0, units = "cm"),
+        strip.text.x = element_blank(),
+        strip.text.y = element_text(size = 12)
+      ) +
+      guides(colour = "none")
+    
+  })    
+
+
+```
+
+- could go over making one plot with loops (the `map()` stuff)
+  - get away from copy and pasting
+
+
+## Managing High Dimensional Data Structures
+
+- automated chunks in it's own vignette
+  multiple plots
+  
+- theme could be it's own "advanced visual topics" - keep simple for this 
+
+(table approach - caption, short caption, ex)
+multiple ways to do similar visuals
+some pros and cons of each way (global variables, environment clean, )
+- whats 
+
+```{r, eval = F}
+# do in map fnt
+  map(function(ag){
+  
+    mag_pl_dat = bama_adata %>%
+      filter(wk != "Baseline" &
+               is.na(response) == FALSE & antigen == ag) %>%
+
+# create function
+create function then call in map()
+loop (similar to map)
+
+patchwork (collect argument, instead of needing to strip the axes <- gets rid of some of these themes) 
+vs cowplot 
+
+# cant facet by antigen when you have two visuals stacked (RR & magnitude)
+```
