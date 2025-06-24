@@ -46,7 +46,7 @@ jobs:
 
       - name: Preinstall required latex packages
         run: >
-          tlmgr install
+          tlmgr update --self && tlmgr install
           lastpage morefloats parskip pdflscape textpos multirow lipsum
           fancyhdr colortbl soul setspace relsize makecell threeparttable
           threeparttablex environ trimspaces
