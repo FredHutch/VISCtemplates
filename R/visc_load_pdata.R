@@ -63,17 +63,20 @@ visc_load_pdata <- function(.data,
     }
     rda <- system.file(file.path('data', paste0(pdata_name, ".rda")),
                        package = pkg_name)
-    lz_rd <- system.file(file.path('data', 'Rdata'), package = pkg_name)
+    lz_rd <- system.file(
+      file.path('data', paste0('Rdata', c('.rdb', '.rds', '.rdx'))),
+      package = pkg_name
+    )
     lzd <- utils::packageDescription(pkg_name)$LazyData
+    lzd <- if (is.null(lzd)) FALSE else as.logical(lzd)
     if (nzchar(rda) && file.exists(rda)) {
       # single rda file for data object in data/
       load(system.file(file.path('data', paste0(pdata_name, ".rda")),
         package = pkg_name), envir = pdata_env)
-    } else if (nzchar(lz_rd) && file.exists(lz_rd) &&
-                 !is.null(lzd) && tolower(lzd) == 'true'){
-      # undocumented import method from legacy code. Ever needed? Untested.
-      lazyLoad(filebase = system.file(file.path('data', 'Rdata'),
-                 package = pkg_name), envir = pdata_env)
+    } else if (all(nzchar(lz_rd)) && all(file.exists(lz_rd)) && lzd){
+      # when LazyLoad: true in DESCRIPTION
+      # and therefore the installed package directory has no data/*.rda files
+      utils::data(list = pdata_name, package = pkg_name, envir = pdata_env)
     } else {
       stop(
         sprintf(
