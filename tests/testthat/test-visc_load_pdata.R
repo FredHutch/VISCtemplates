@@ -89,7 +89,6 @@ test_that("visc_load_pdata works", {
     desc_path <- file.path(td, "Visc777", "DESCRIPTION")
     new_desc <- c(readLines(desc_path), 'LazyData: true')
     writeLines(new_desc, desc_path)
-    readLines(desc_path)
     # do install
     suppressMessages({
       pb_res <- DataPackageR::package_build(file.path(td, "Visc777"),
