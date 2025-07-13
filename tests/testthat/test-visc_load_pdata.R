@@ -78,10 +78,12 @@ test_that("visc_load_pdata works", {
     )
     expect_error(
       suppressMessages({
-        visc_load_pdata(Visc777_cars,
-                        'datapackage',
-                        '3ccb5b0aaa74fe7cfc0d3ca6ab0b5cf3'
-        )
+        suppressWarnings({
+          visc_load_pdata(Visc777_cars,
+                          'datapackage',
+                          '3ccb5b0aaa74fe7cfc0d3ca6ab0b5cf3'
+          )
+        })
       }),
       "Unable to find data object.*"
     )
