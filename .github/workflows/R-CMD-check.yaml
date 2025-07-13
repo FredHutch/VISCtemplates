@@ -52,7 +52,7 @@ jobs:
           threeparttablex environ trimspaces
 
       - name: Setup recent R
-      - uses: r-lib/actions/setup-r@v2
+        uses: r-lib/actions/setup-r@v2
         if: ${{ matrix.config.r != '4.0.4' }}
         with:
           r-version: ${{ matrix.config.r }}
@@ -60,7 +60,7 @@ jobs:
           use-public-rspm: true
 
       - name: Setup R 4.0.4
-      - uses: r-lib/actions/setup-r@v2
+        uses: r-lib/actions/setup-r@v2
         if: ${{ matrix.config.r == '4.0.4' }}
         with:
           r-version: ${{ matrix.config.r }}
