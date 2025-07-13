@@ -33,7 +33,7 @@ visc_load_pdata <- function(.data,
                             criteria = NULL){
 
   pdata_name <- deparse(substitute(.data))
-  pkg_name <- stringr::str_split(pdata_name, pattern = "_")[[1]][1]
+  pkg_name <- strsplit(pdata_name, "_")[[1]][1]
 
   # r/o picnic
   if (is.null(criteria)) {
