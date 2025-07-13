@@ -64,7 +64,6 @@ jobs:
         if: ${{ matrix.config.r == '4.0.4' }}
         with:
           r-version: ${{ matrix.config.r }}
-          cran: 'https://packagemanager.posit.co/cran/__linux__/noble/2022-07-01'
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
