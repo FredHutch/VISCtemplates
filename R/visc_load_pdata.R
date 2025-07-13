@@ -50,7 +50,7 @@ visc_load_pdata <- function(.data,
 
   }
 
-  pdata_env <- new.env()
+  pdata_env <- new.env(parent = emptyenv())
   if(tolower(proj_or_datapackage) %in% c("proj", "repo")){
     # data package project / source folder method
     load(DataPackageR::project_data_path(paste0(pdata_name, ".rda")),
