@@ -19,7 +19,7 @@ create_visc_project <- function(path, interactive = TRUE){
   # get "VDCNNN" if it exists
   # this is a variable that is inserted into templates
   if (grepl("Analysis", repo_name, ignore.case = TRUE)) {
-    study_name <- gsub("Analysis", "", repo_name)
+    study_name <- sub("Analysis", "", repo_name)
   } else {
     study_name <- repo_name
   }
