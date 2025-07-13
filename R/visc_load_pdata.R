@@ -62,7 +62,7 @@ visc_load_pdata <- function(.data,
       stop(paste0("Data package '", pkg_name, "' is not installed"))
     }
     utils::data(list = pdata_name, package = pkg_name, envir = pdata_env)
-    if (! pdata_name %in% ls(pdata_env)){
+    if (! exists(pdata_name, pdata_env)){
       stop(
         sprintf(
           "Unable to find data object '%s' in package '%s'",
