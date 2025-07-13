@@ -73,9 +73,8 @@ visc_load_pdata <- function(.data,
     }
   }
 
-
-  pdata <- get(pdata_name, envir = pdata_env)
   message("Loading ", pdata_name, " from ", proj_or_datapackage)
+  pdata <- get(pdata_name, envir = pdata_env)
 
   if(!is.null(criteria)){
     if(nchar(criteria) == 32){
