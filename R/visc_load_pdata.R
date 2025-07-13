@@ -61,23 +61,8 @@ visc_load_pdata <- function(.data,
     if (! pkg_name %in% rownames(utils::installed.packages())){
       stop(paste0("Data package '", pkg_name, "' is not installed"))
     }
-    rda <- system.file(file.path('data', paste0(pdata_name, ".rda")),
-                       package = pkg_name)
-    lz_rd <- system.file(
-      file.path('data', paste0('Rdata', c('.rdb', '.rds', '.rdx'))),
-      package = pkg_name
-    )
-    lzd <- utils::packageDescription(pkg_name)$LazyData
-    lzd <- if (is.null(lzd)) FALSE else as.logical(lzd)
-    if (nzchar(rda) && file.exists(rda)) {
-      # single rda file for data object in data/
-      load(system.file(file.path('data', paste0(pdata_name, ".rda")),
-        package = pkg_name), envir = pdata_env)
-    } else if (all(nzchar(lz_rd)) && all(file.exists(lz_rd)) && lzd){
-      # when LazyLoad: true in DESCRIPTION
-      # and therefore the installed package directory has no data/*.rda files
-      utils::data(list = pdata_name, package = pkg_name, envir = pdata_env)
-    } else {
+    utils::data(list = pdata_name, package = pkg_name, envir = pdata_env)
+    if (! pdata_name %in% ls(pdata_env)){
       stop(
         sprintf(
           "Unable to find data object '%s' in package '%s'",
