@@ -33,7 +33,7 @@ visc_load_pdata <- function(.data,
                             criteria = NULL){
 
   pdata_name <- deparse(substitute(.data))
-  pkg_name <- stringr::str_split(pdata_name, pattern = "_")[[1]][1]
+  pkg_name <- strsplit(pdata_name, "_")[[1]][1]
 
   # r/o picnic
   if (is.null(criteria)) {
@@ -50,7 +50,7 @@ visc_load_pdata <- function(.data,
 
   }
 
-  pdata_env <- new.env()
+  pdata_env <- new.env(parent = emptyenv())
   if(tolower(proj_or_datapackage) %in% c("proj", "repo")){
     # data package project / source folder method
     load(DataPackageR::project_data_path(paste0(pdata_name, ".rda")),
@@ -61,20 +61,8 @@ visc_load_pdata <- function(.data,
     if (! pkg_name %in% rownames(utils::installed.packages())){
       stop(paste0("Data package '", pkg_name, "' is not installed"))
     }
-    rda <- system.file(file.path('data', paste0(pdata_name, ".rda")),
-                       package = pkg_name)
-    lz_rd <- system.file(file.path('data', 'Rdata'), package = pkg_name)
-    lzd <- utils::packageDescription(pkg_name)$LazyData
-    if (nzchar(rda) && file.exists(rda)) {
-      # single rda file for data object in data/
-      load(system.file(file.path('data', paste0(pdata_name, ".rda")),
-        package = pkg_name), envir = pdata_env)
-    } else if (nzchar(lz_rd) && file.exists(lz_rd) &&
-                 !is.null(lzd) && tolower(lzd) == 'true'){
-      # undocumented import method from legacy code. Ever needed? Untested.
-      lazyLoad(filebase = system.file(file.path('data', 'Rdata'),
-                 package = pkg_name), envir = pdata_env)
-    } else {
+    utils::data(list = pdata_name, package = pkg_name, envir = pdata_env)
+    if (! exists(pdata_name, pdata_env)){
       stop(
         sprintf(
           "Unable to find data object '%s' in package '%s'",
@@ -85,9 +73,8 @@ visc_load_pdata <- function(.data,
     }
   }
 
-
-  pdata <- get(pdata_name, envir = pdata_env)
   message("Loading ", pdata_name, " from ", proj_or_datapackage)
+  pdata <- get(pdata_name, envir = pdata_env)
 
   if(!is.null(criteria)){
     if(nchar(criteria) == 32){

@@ -33,7 +33,6 @@ Imports:
     bookdown,
     rmarkdown,
     rprojroot,
-    stringr,
     usethis,
     glue,
     utils,
