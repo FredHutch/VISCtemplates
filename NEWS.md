@@ -1,5 +1,8 @@
 # VISCtemplates (development version)
 
+Bug fixes
+* `visc_load_pdata()` now works in `datapackage` mode for installed datapackages that use `LazyData: true` in their DESCRIPTION file (#293)
+
 Improvements for package contributors and maintainers
 * Fix Codecov badge and URL (#287)
 * CI maintenance (#287)
