@@ -7,7 +7,8 @@
 visc_load_pdata(.data, proj_or_datapackage = "datapackage", criteria = NULL)
 }
 \arguments{
-\item{.data}{pdata name e.g. PKGNAME_ASSAY}
+\item{.data}{pdata name as a string e.g. "PKGNAME_ASSAY". Using an
+unquoted name e.g. PKGNAME_ASSAY is deprecated and throws a warning.}
 
 \item{proj_or_datapackage}{whether to load the data from the current project
 repo or an installed datapackage}
@@ -19,26 +20,26 @@ pdata object
 }
 \description{
 Allows for loading a pdata object either from active project
-repo (during review) or from the libarary installed location. This
-facilitates task switching when transitioning from adhoc review to
+repo (during review) or from the library installed location. This
+facilitates task switching when transitioning from ad hoc review to
 production reporting.
 }
 \examples{
 \dontrun{
 # default behavior: loads a pdata from the currently installed package, no criteria checking
-visc_load_pdata(Hassell750_ics)
+visc_load_pdata("Hassell750_ics")
 
 ## add a check against hash
-visc_load_pdata(Hassell750_ics, criteria = "4f054442a6549bffcd947af4b0da9155")
+visc_load_pdata("Hassell750_ics", criteria = "4f054442a6549bffcd947af4b0da9155")
 ## add a check against dataversion
-visc_load_pdata(Hassell750_ics, criteria = "0.1.68")
+visc_load_pdata("Hassell750_ics", criteria = "0.1.68")
 
 
 # load a pdata from the active project repo, not installed
-visc_load_pdata(Hassell750_ics, proj_or_datapackage = "proj")
+visc_load_pdata("Hassell750_ics", proj_or_datapackage = "proj")
 
 ## add check against hash
-visc_load_pdata(Hassell750_ics, proj_or_datapackage = "proj",
+visc_load_pdata("Hassell750_ics", proj_or_datapackage = "proj",
   criteria = "09ab8a5a3831e854d21144d89557ccb1")
 ## skips criteria check if looking at datapackage
 }

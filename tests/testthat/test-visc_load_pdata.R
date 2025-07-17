@@ -15,10 +15,22 @@ test_that("visc_load_pdata works", {
   })
   expect_equal(basename(pb_res), "Visc777_1.0.tar.gz")
   # test with local source "project" datapackage
+  # right hash, deprecation warning for unquoted pdata name
+  expect_warning(
+    expect_no_error(
+      suppressMessages({
+        proj_loaded_pdata <- visc_load_pdata(Visc777_cars,
+                                             'proj',
+                                             '3ccb5b0aaa74fe7cfc0d3ca6ab0b5cf3'
+        )
+      })
+    ),
+    "deprecated"
+  )
   # right hash
   expect_no_error(
     suppressMessages({
-      proj_loaded_pdata <- visc_load_pdata(Visc777_cars,
+      proj_loaded_pdata <- visc_load_pdata('Visc777_cars',
                             'proj',
                             '3ccb5b0aaa74fe7cfc0d3ca6ab0b5cf3'
       )
@@ -28,7 +40,7 @@ test_that("visc_load_pdata works", {
   # wrong hash
   expect_error(
     suppressMessages({
-      visc_load_pdata(Visc777_cars,
+      visc_load_pdata('Visc777_cars',
                                            'proj',
                                            'fffb5b0aaa74fe7cfc0d3ca6ab0bffff'
       )
@@ -38,7 +50,7 @@ test_that("visc_load_pdata works", {
   # test with installed data package
   withr::with_temp_libpaths({
     # friendly error message when data package not yet installed
-    expect_error(visc_load_pdata(Visc777_cars,
+    expect_error(visc_load_pdata('Visc777_cars',
                     'datapackage',
                     '3ccb5b0aaa74fe7cfc0d3ca6ab0b5cf3'),
                  'Data package.*not installed'
@@ -56,7 +68,7 @@ test_that("visc_load_pdata works", {
     # right hash
     expect_no_error(
       suppressMessages({
-        pkg_loaded_pdata <- visc_load_pdata(Visc777_cars,
+        pkg_loaded_pdata <- visc_load_pdata('Visc777_cars',
                                             'datapackage',
                                             '3ccb5b0aaa74fe7cfc0d3ca6ab0b5cf3'
         )
@@ -65,7 +77,7 @@ test_that("visc_load_pdata works", {
     # wrong hash
     expect_error(
       suppressMessages({
-        visc_load_pdata(Visc777_cars,
+        visc_load_pdata('Visc777_cars',
                         'datapackage',
                         'fffb5b0aaa74fe7cfc0d3ca6ab0bffff'
         )
@@ -79,7 +91,7 @@ test_that("visc_load_pdata works", {
     expect_error(
       suppressMessages({
         suppressWarnings({
-          visc_load_pdata(Visc777_cars,
+          visc_load_pdata('Visc777_cars',
                           'datapackage',
                           '3ccb5b0aaa74fe7cfc0d3ca6ab0b5cf3'
           )
@@ -106,7 +118,7 @@ test_that("visc_load_pdata works", {
     # right hash
     expect_no_error(
       suppressMessages({
-        pkg_loaded_pdata <- visc_load_pdata(Visc777_cars,
+        pkg_loaded_pdata <- visc_load_pdata('Visc777_cars',
                                             'datapackage',
                                             '3ccb5b0aaa74fe7cfc0d3ca6ab0b5cf3'
         )
@@ -115,7 +127,7 @@ test_that("visc_load_pdata works", {
     # wrong hash
     expect_error(
       suppressMessages({
-        visc_load_pdata(Visc777_cars,
+        visc_load_pdata('Visc777_cars',
                         'datapackage',
                         'fffb5b0aaa74fe7cfc0d3ca6ab0bffff'
         )
