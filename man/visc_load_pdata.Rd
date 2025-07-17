@@ -7,7 +7,7 @@
 visc_load_pdata(.data, proj_or_datapackage = "datapackage", criteria = NULL)
 }
 \arguments{
-\item{.data}{pdata name e.g. PKGNAME_ASSAY}
+\item{.data}{pdata as name or character, e.g., PKGNAME_ASSAY or "PKGNAME_ASSAY"}
 
 \item{proj_or_datapackage}{whether to load the data from the current project
 repo or an installed datapackage}
@@ -19,8 +19,8 @@ pdata object
 }
 \description{
 Allows for loading a pdata object either from active project
-repo (during review) or from the libarary installed location. This
-facilitates task switching when transitioning from adhoc review to
+repo (during review) or from the library installed location. This
+facilitates task switching when transitioning from ad hoc review to
 production reporting.
 }
 \examples{
