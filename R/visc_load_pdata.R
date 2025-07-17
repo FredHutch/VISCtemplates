@@ -1,10 +1,9 @@
 #' @title Load a VISC pdata object and check version by datapackage or hash
 #' @description Allows for loading a pdata object either from active project
-#'   repo (during review) or from the library installed location. This
-#'   facilitates task switching when transitioning from ad hoc review to
+#'   repo (during review) or from the libarary installed location. This
+#'   facilitates task switching when transitioning from adhoc review to
 #'   production reporting.
-#' @param .data pdata name as a string e.g. "PKGNAME_ASSAY". Using an
-#'   unquoted name e.g. PKGNAME_ASSAY is deprecated and throws a warning.
+#' @param .data pdata name e.g. PKGNAME_ASSAY
 #' @param proj_or_datapackage whether to load the data from the current project
 #'   repo or an installed datapackage
 #' @param criteria 32 digit hash or data package version 0.1.X.
@@ -12,19 +11,19 @@
 #' @examples
 #' \dontrun{
 #' # default behavior: loads a pdata from the currently installed package, no criteria checking
-#' visc_load_pdata("Hassell750_ics")
+#' visc_load_pdata(Hassell750_ics)
 #'
 #' ## add a check against hash
-#' visc_load_pdata("Hassell750_ics", criteria = "4f054442a6549bffcd947af4b0da9155")
+#' visc_load_pdata(Hassell750_ics, criteria = "4f054442a6549bffcd947af4b0da9155")
 #' ## add a check against dataversion
-#' visc_load_pdata("Hassell750_ics", criteria = "0.1.68")
+#' visc_load_pdata(Hassell750_ics, criteria = "0.1.68")
 #'
 #'
 #' # load a pdata from the active project repo, not installed
-#' visc_load_pdata("Hassell750_ics", proj_or_datapackage = "proj")
+#' visc_load_pdata(Hassell750_ics, proj_or_datapackage = "proj")
 #'
 #' ## add check against hash
-#' visc_load_pdata("Hassell750_ics", proj_or_datapackage = "proj",
+#' visc_load_pdata(Hassell750_ics, proj_or_datapackage = "proj",
 #'   criteria = "09ab8a5a3831e854d21144d89557ccb1")
 #' ## skips criteria check if looking at datapackage
 #' }
@@ -33,22 +32,7 @@ visc_load_pdata <- function(.data,
                             proj_or_datapackage = "datapackage",
                             criteria = NULL){
 
-  if (is.name(substitute(.data))){
-    pdata_name <- deparse(substitute(.data))
-    warning(
-      sprintf(
-        paste('visc_load_pdata: Providing the `.data` argument as unquoted %s',
-              'is deprecated. Please use quoted "%s" going forward.'
-        ),
-        pdata_name, pdata_name
-      )
-    )
-  } else if (is.character(.data)){
-    pdata_name <- .data
-  } else {
-    stop('.data must be a character string or an unquoted object name')
-  }
-
+  pdata_name <- deparse(substitute(.data))
   pkg_name <- strsplit(pdata_name, "_")[[1]][1]
 
   # r/o picnic
