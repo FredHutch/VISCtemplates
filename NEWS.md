@@ -1,4 +1,4 @@
-# VISCtemplates (development version)
+# VISCtemplates 2.0.1
 
 Bug fixes
 * `visc_load_pdata()` now works in `datapackage` mode for installed datapackages that use `LazyData: true` in their DESCRIPTION file (#293)
