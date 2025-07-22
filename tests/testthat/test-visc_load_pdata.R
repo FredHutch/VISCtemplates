@@ -14,6 +14,27 @@ test_that("visc_load_pdata works", {
     pb_res <- DataPackageR::package_build(file.path(td, "Visc777"))
   })
   expect_equal(basename(pb_res), "Visc777_1.0.tar.gz")
+  # warn when criteria = NULL
+  expect_warning(
+    suppressMessages({
+      visc_load_pdata(Visc777_cars, 'proj')
+    }),
+    'No criteria provided'
+  )
+  # warn when criteria is dataVersion in 'proj' mode
+  expect_warning(
+    suppressMessages({
+      visc_load_pdata(Visc777_cars, 'proj', '0.1.3')
+    }),
+    'Criteria is from data version but source is repo'
+  )
+  # warn when criteria is unexpected
+  expect_warning(
+    suppressMessages({
+      visc_load_pdata(Visc777_cars, 'proj', 'yo')
+    }),
+    'Incorrect criteria syntax provided'
+  )
   # test with local source "project" datapackage
   # wrong `.data` class
   expect_error(
@@ -87,6 +108,15 @@ test_that("visc_load_pdata works", {
         pkg_loaded_pdata <- visc_load_pdata(Visc777_cars,
                                             'datapackage',
                                             '3ccb5b0aaa74fe7cfc0d3ca6ab0b5cf3'
+        )
+      })
+    )
+    # right hash, dataVersion mode
+    expect_no_error(
+      suppressMessages({
+        pkg_loaded_pdata <- visc_load_pdata(Visc777_cars,
+                                            'datapackage',
+                                            '0.1.0'
         )
       })
     )
