@@ -2,6 +2,7 @@
 
 Bug fixes
 * `visc_load_pdata()` now works in `datapackage` mode for installed datapackages that use `LazyData: true` in their DESCRIPTION file (#293)
+* `visc_load_pdata()` now also works with standard evaluation, accepting a character string as its first argument (#295)
 
 Improvements for package contributors and maintainers
 * Fix Codecov badge and URL (#287)

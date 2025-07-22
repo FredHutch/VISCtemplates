@@ -15,6 +15,34 @@ test_that("visc_load_pdata works", {
   })
   expect_equal(basename(pb_res), "Visc777_1.0.tar.gz")
   # test with local source "project" datapackage
+  # wrong `.data` class
+  expect_error(
+    suppressMessages({
+      proj_loaded_pdata <- visc_load_pdata(2L, 'proj')
+    }),
+    'must be an unquoted name or a character string'
+  )
+  # right hash, character string pdata argument
+  expect_no_error(
+    suppressMessages({
+      proj_loaded_pdata <- visc_load_pdata('Visc777_cars',
+                                           'proj',
+                                           '3ccb5b0aaa74fe7cfc0d3ca6ab0b5cf3'
+      )
+    })
+  )
+  # right hash, character string pdata argument, used in other code
+  expect_no_error(
+    suppressMessages({
+      res <- lapply(
+        rep('Visc777_cars', 2),
+        visc_load_pdata,
+        proj_or_datapackage = 'proj',
+        criteria = '3ccb5b0aaa74fe7cfc0d3ca6ab0b5cf3'
+      )
+    })
+  )
+  expect_length(res, 2)
   # right hash
   expect_no_error(
     suppressMessages({

@@ -1,9 +1,9 @@
 #' @title Load a VISC pdata object and check version by datapackage or hash
 #' @description Allows for loading a pdata object either from active project
-#'   repo (during review) or from the libarary installed location. This
-#'   facilitates task switching when transitioning from adhoc review to
+#'   repo (during review) or from the library installed location. This
+#'   facilitates task switching when transitioning from ad hoc review to
 #'   production reporting.
-#' @param .data pdata name e.g. PKGNAME_ASSAY
+#' @param .data pdata as name or character, e.g., PKGNAME_ASSAY or "PKGNAME_ASSAY"
 #' @param proj_or_datapackage whether to load the data from the current project
 #'   repo or an installed datapackage
 #' @param criteria 32 digit hash or data package version 0.1.X.
@@ -31,8 +31,12 @@
 visc_load_pdata <- function(.data,
                             proj_or_datapackage = "datapackage",
                             criteria = NULL){
+  pdata_name <- if (is.name(substitute(.data))){
+    deparse(substitute(.data))
+  } else if (is.character(.data)){
+    .data
+  } else stop('`.data` must be an unquoted name or a character string')
 
-  pdata_name <- deparse(substitute(.data))
   pkg_name <- strsplit(pdata_name, "_")[[1]][1]
 
   # r/o picnic
