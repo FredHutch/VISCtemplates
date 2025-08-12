@@ -1,0 +1,534 @@
+---
+title: "Math Notation in Figures"
+date: "`r Sys.Date()`"
+output:
+  bookdown::html_document2:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Math Notation in Figures}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<!-- figure-math-notation-guideline.md is generated from the R Markdown file, figure-math-notation-guideline.Rmd.    Please edit that file. -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+theme_set(theme_bw())
+```
+
+# Motivation
+
+The main purpose of the document is to provide some examples of `bquote` and `expression` to demonstrate how to include math symbols and notation in figures using ggplot2 covering each of the following use-cases: axes titles, legend titles, facet strip labels, legend labels, annotations, and axis ticks. 
+
+The main functions focused on here are: `bquote` and `expression`. Use of these functions can be challenging and prone to cryptic errors as their syntax is idiosyncratic and their help documentation provides fairly simple examples of one-time use cases. 
+
+**This document is not exhaustive, and there are many ways to solve the same problem.** 
+
+This is a good reference for [general `plotmath`](https://www.rdocumentation.org/packages/grDevices/versions/3.6.2/topics/plotmath).
+
+
+# How to use this vignette
+
+There are two sets of examples illustrating different programming approaches described in this vignette. The first "Comprehensive" approach focuses on data preparation and relatively simplified ggplot2 code to render special characters. The second "General" approach focuses on manipulating ggplot2 code more directly to render special characters. 
+
+When to refer to the \@ref(comprehensive-approach). approach: You are in control of your data processing--specifically generation of data objects--and you will need to make many (> 3) figures incorporating special characters. S
+
+
+When to refer to the \@ref(general-reference). You need to generate couple of figures that need special characters, you are making a quick figure, you're looking for some specific special character syntax.
+
+# Comprehensive approach {#comprehensive-approach}
+
+This document will try to provide examples of how to automate their use; for example, create fields in data.frames using bquote and have ggplot2 render them correctly.
+
+## Example data
+
+**Consider this the source data (e.g., pdata)**
+
+The following data is general mock simulated assay data meant to illustrate examples. The data comes from an 
+assay called "assay", the main output value is stored under `readout` with corresponding `units` ($\mu$g/mL) with an LLoQ
+0.2 $\\mu$g/mL. Each simulated participant (`id`) has a few demographics variables are assigned to one of two groups (A or B). Creatinine is a laboratory measurement that sometimes is a covariate in certain contexts, it is included here because it has illustrative units ($\mu$mol/L).
+
+```{r initial-data}
+set.seed(2025)
+
+cvd_assay = tibble(
+  id = paste0("id-", 1:20),
+  group = rep(c("A", "B"), each = 10),
+  age_years = round(runif(20, 20, 60)),
+  creatinine_mumol_l = round(runif(20, 20, 60)),
+  bmi = runif(20, 17, 30),
+  lloq = 0.2,
+  readout = pmax(c(rnorm(10, 1), rnorm(10, 2)), lloq),
+  units = "mcg/mL"
+)
+
+```
+
+
+## Setting up
+
+**This is akin to additional processing code between `pdata` and `adata`**
+
+The strategy we'll employ is setting up labels in advance to (try to) avoid manual, direct
+coding to get special characters in the plots. The examples will show both approaches as needed though.
+
+The two approaches we're prepping:
+
+1. global variables that are directly coded
+  a. `expression` calls are not easily reproducible compared to `bquote`, but works fine in this scenario 
+2. creating a separate object (tibble, data frame) that links original variable names to desired, polished names for the figures utilizing `bquote` approaches.**This will utilize merging.**
+3. modifying the unit variable directly in the dataset for use in the plots. 
+  a. Using bquote syntax
+  b. Using unicode syntax. Unicode is a nice trick because it just puts the greek or special characters letters directly into variable value. **It does not for all special characters**: ex., works for $\mu$ (`\u03BC`) but not for  $\delta$.
+
+Below we setup those objects, variables, and modifications. Then make an adata.
+
+```{r}
+
+# setting up some global variables (common practice)
+lloq = 0.2
+
+lloqlabel = substitute(expression(NULL <= a), list(a = lloq))
+concentration_breaks = c(lloq, 0.3, 1, 3)
+concentration_labels = c(eval(lloqlabel), "3", "5", "7")
+
+concentration_title_exp = expression(paste("Concentration (", mu, "g/mL)"))
+concentration_title_bquote = bquote("Concentration ("*mu*"g/mL)")
+
+# note that this can be used to control the order of the variables too
+demo_labels = tribble(
+  ~level, ~plot_label,
+  "age_years", "Age[years]",
+  "bmi", "BMI~(kg/m^{2})", 
+  "creatinine_mumol_l", "Creatinine~(frac(mu*mol,L))"
+  ) 
+
+# putting special characters directly into the data
+cvd_assay$units_bquote = "*mu/mL"
+cvd_assay$units_unicode = "\u03BCg/mL"
+
+cvd_assay_analysis = cvd_assay %>%
+  mutate(
+    median_creatinine = median(creatinine_mumol_l),
+    creatinine_gt_median = creatinine_mumol_l > median_creatinine,
+    creatinine_gt_median_pl = factor(if_else(creatinine_gt_median,
+                                      paste("'>'~", median_creatinine, "~frac(mu*mol,L)"),
+                                      paste("phantom() <=~", median_creatinine, "~frac(mu*mol,L)"))
+    )
+    )
+
+cvd_assay_analysis_long = cvd_assay_analysis %>%
+  pivot_longer(cols = demo_labels$level,
+               names_to = "level",
+               values_to = "value") %>%
+  group_by(level) %>%
+  mutate(
+    cor = cor(value, readout, method = "spearman"),
+    cor_pvalue = cor.test(value, readout)$p.value
+  ) %>%
+  left_join(demo_labels, by = "level") 
+  
+# this is a bit custom for the example
+cor_results = cvd_assay_analysis_long %>%
+  distinct(level, plot_label, cor, cor_pvalue) %>%
+  mutate(
+    cor_label = paste0(
+      "rho==",
+      round(cor, 2), "~(p[value]==",
+      VISCfunctions::pretty_pvalues(cor_pvalue), ")"
+    )
+  )
+
+```
+
+## A plot illustrating everything
+
+```{r, include = F}
+
+main_plot = cvd_assay_analysis_long %>%
+  ggplot(aes(x = value, y = readout)) +
+  geom_point(aes(color = creatinine_gt_median_pl)) +
+  geom_text(data = cor_results, aes(label = cor_label),
+            x = -Inf, y = Inf, hjust = -0.1, vjust = 1.1, parse = T) +
+  scale_y_log10(breaks = concentration_breaks, labels = concentration_labels) +
+  scale_color_discrete(labels = scales::parse_format()) +
+  facet_wrap( ~ plot_label, labeller = label_parsed, 
+              strip.position = "bottom",
+              nrow = 2, scales = "free_x") +
+  labs(x = "Demographics", 
+       y = concentration_title_bquote,
+       color = "Creatinine status") +
+  theme(
+    strip.text = element_text(size = 10),
+    strip.placement = "outside",
+    strip.background = element_blank()
+  )
+
+main_plot
+
+```
+
+
+```{r, fig.height=7, fig.width=6}
+
+lemon::reposition_legend(main_plot, "center", panel = "panel-2-2")
+
+```
+
+## Axes titles
+
+### Direct specification
+
+```{r}
+
+cvd_assay %>%
+  ggplot(aes(x = group, y = readout)) +
+  geom_boxplot() +
+  scale_y_log10() +
+  labs(y = concentration_title_bquote)
+
+```
+
+### Using variables
+
+This one is weird, to correctly parse the bquote string, you must use the `label_parsed` function. Note that there is non-intutive indexing from this function.
+
+```{r}
+
+set.seed(2025)
+
+cvd_assay = tibble(
+  id = paste0("id-", 1:20),
+  group = rep(c("A", "B"), each = 10),
+  age_years = round(runif(20, 20, 60)),
+  creatinine_mumol_l = round(runif(20, 20, 60)),
+  bmi = runif(20, 17, 30),
+  lloq = 0.2,
+  readout = pmax(c(rnorm(10, 1), rnorm(10, 2)), lloq),
+  units = "mcg/mL"
+)
+
+for(i in demo_labels$level){
+  
+  nice_title = demo_labels$plot_label[demo_labels$level == i]
+  
+  print(
+    cvd_assay %>%
+          pivot_longer(cols = demo_labels$level, 
+                       names_to = "level",  
+                       values_to = "value") %>%
+          filter(level == i) %>%
+    ggplot(aes(x = group, y = value)) +
+    geom_boxplot() +
+    labs(y = label_parsed(nice_title)[[1]][[1]])
+    )
+}
+
+```
+
+A wrapper function could be used if this is repeated:
+
+```{r}
+bquote_parser = function(bquote_str) label_parsed(bquote_str)[[1]][[1]]
+```
+
+### As a variable with facet_*** (single plots)
+
+With faceting, `labeller = label_parsed` is doing the work. Some modifications are required in theme() as well as turning off the y title. This code is a bit more convoluted than above for generating one plot at a time.
+
+```{r}
+for(i in demo_labels$level){
+  
+  print(
+    cvd_assay %>%
+      pivot_longer(
+        cols = demo_labels$level,
+        names_to = "level",
+        values_to = "value"
+      ) %>%
+      filter(level == i) %>%
+      left_join(demo_labels, by = "level") %>%
+      ggplot(aes(x = group, y = value)) +
+      geom_boxplot() +
+      facet_wrap( ~ plot_label, labeller = label_parsed, strip.position = "left") +
+      labs(y = "") +
+      theme(
+        strip.text = element_text(size = 10),
+        strip.placement = "outside",
+        strip.background = element_blank()
+      )
+  )
+}
+
+```
+
+### As a variable, facetting several plots
+
+Adding back in the y-title just to illustrate how it can be used to complement the facetted plots.
+
+```{r, fig.width=5}
+cvd_assay %>%
+  pivot_longer(cols = demo_labels$level,
+               names_to = "level",
+               values_to = "value") %>%
+  left_join(demo_labels, by = "level") %>%
+  ggplot(aes(x = group, y = value)) +
+  geom_boxplot() +
+  facet_wrap( ~ plot_label, labeller = label_parsed, strip.position = "left") +
+  labs(y = "Demographics") +
+  theme(
+    strip.text = element_text(size = 10),
+    strip.placement = "outside",
+    strip.background = element_blank()
+  )
+
+```
+
+### sadfds
+
+
+- Documentation for `bquote` [lives here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/bquote).
+
+- Documentation for `expression` [lives here](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/expression).
+
+- Math symbols are case sensitive.
+
+  - `delta` = $\delta$
+  - `Delta` = $\Delta$
+  
+- A `*` between words indicates no space.
+
+- A `~` between words indicates a space.
+
+- Both play nicely with `plotmath`.
+
+`expression`:
+
+- Plays nicely with `paste`.
+
+- Not as flexible as `bquote`.
+
+# General reference
+
+This section provides a resource for a more general set of examples. In contrast to the comprehensive approach, these examples are focused on direct manipulation of ggplot2 code to meet a specific goal.
+
+We are indebted to former VISC member Chelsey Bennett for putting these materials together.
+
+**All examples use the `iris` dataset.**
+
+## Plot, Axes, and Legend Title
+
+Titles work the same for `bquote` and `expression`. 
+
+```{r echo = TRUE, fig.align='center'}
+
+iris %>%
+  ggplot() +
+  geom_point(aes(x = Sepal.Length, y = Sepal.Width, col = Species)) +
+  labs(x = bquote("Sepal Length ("*mu*"m)"), # math symbol
+       y = expression("Sepal Width ("*delta[3]^2*")"), # math symbol + math notation
+       title = bquote(atop("Sepal Length ("*mu*"m) vs.",
+                    "Sepal Width ("*delta[3]^2*")")), # math symbol + math notation + atop
+       col = expression(bolditalic("Species" ~ sigma)))
+
+```
+
+## Facet and Legend Labels
+
+- For facets, use `labeller = label_parsed` in the `facet_grid` or `facet_wrap` call.
+- For legends, use `labels = scales::parse_format()` in the call for the `scale_xxx_discrete` (where `xxx` is the `col`, `shape`, `size`, etc. used to differentiate levels).
+- `bquote` and `expression` are identical here. Choose your preference.
+
+
+```{r echo = TRUE, fig.align='center'}
+
+iris %>%
+  mutate(
+    Species = factor(
+      Species,
+      levels = c("setosa", "versicolor", "virginica"),
+      labels = c(bquote(alpha), expression(beta[3]^2), bquote(frac(alpha^2, beta[3])))
+    )
+  ) %>%
+  ggplot() +
+  geom_point(aes(x = Sepal.Length, y = Sepal.Width, col = Species)) + 
+  scale_colour_discrete(labels = scales::parse_format()) + # to render legend 
+  facet_wrap(~Species, labeller = label_parsed) # to render facets
+
+```
+
+## Annotations
+
+Guide to use figure annotations. 
+
+- `bquote` allows you to pass in values as variables to an expression, but `expression` does not.
+- `expression` requires `parse = TRUE` call in `annotate` or `geom_text`.
+- You can use either `annotate` or `geom_text`, but `annotate` works better with calling a single variable, whereas `geom_text` works better with calling a `tibble` or `data.frame`, especially when using facets.
+
+
+### `bquote`
+
+```{r echo = TRUE, fig.align='center'}
+
+corr = round(cor(iris$Petal.Length, iris$Petal.Width), 2)
+
+iris %>%
+  ggplot() +
+  geom_point(aes(x = Petal.Width, y = Petal.Length)) +
+  annotate(geom = "text", x = 1, y = 5.5,
+           label = bquote("Pearson Correlation Coefficient ("*rho*")" == .(corr))
+           )
+
+```
+
+Or formatted differently...
+
+```{r echo = TRUE, fig.align='center'}
+
+corr = round(cor(iris$Petal.Length, iris$Petal.Width), 2)
+
+iris %>%
+  ggplot() +
+  geom_point(aes(x = Petal.Width, y = Petal.Length)) +
+  annotate(geom = "text", x = 1, y = 5.5,
+           label = bquote(atop("Pearson Correlation Coefficient", "("*rho*")" == .(corr)))
+           )
+
+```
+
+Or with different values depending on the facet...
+
+```{r echo = TRUE, fig.align='center'}
+
+corr = iris %>%
+  group_by(Species) %>%
+  summarise(
+    rho = round(cor(Petal.Length, Petal.Width), 2),
+    labels = factor(
+      rho,
+      levels = rho,
+      labels = as.expression(bquote("Pearson Correlation Coefficient ("*rho*")" ==.(rho)))
+      ),
+    .groups = "keep"
+  )
+
+
+iris %>%
+  ggplot() +
+  geom_point(aes(x = Petal.Width, y = Petal.Length)) +
+  facet_wrap(~Species, nrow = 3) +
+  geom_text(data = corr, aes(x = 1, y = 6, label = labels), parse = TRUE)
+
+```
+
+### `expression`
+
+`expression` is not great for reproducibility because you cannot pass in values, but this works in a pinch. I recommend using `bquote` (example above).
+
+```{r echo = TRUE, fig.align='center'}
+
+corr = round(cor(iris$Petal.Length, iris$Petal.Width), 2)
+
+iris %>%
+  ggplot() +
+  geom_point(aes(x = Petal.Width, y = Petal.Length)) +
+  annotate(geom = "text", x = 1, y = 5.5,
+           label =  expression("Pearson Correlation Coefficient ("*rho*")" == 0.96),
+           parse = TRUE
+           )
+
+```
+
+
+## Axis Ticks
+
+- Axis ticks are similar to legend labels. 
+- `labels = scales::parse_format` needs to be called in the `scale_xxx_discrete`.
+- `bquote` and `expression` are identical here. Choose your preference.
+
+
+```{r echo = TRUE, fig.align='center'}
+
+iris %>%
+  mutate(
+    Species = factor(
+      Species,
+      levels = c("setosa", "versicolor", "virginica"),
+      labels = c(bquote(alpha), expression(beta[3]^2), bquote(frac(alpha^2, beta[3])))
+    )
+  ) %>%
+  ggplot() +
+  geom_boxplot(aes(x = Species, y = Petal.Length)) +
+  scale_x_discrete(labels = scales::parse_format())
+
+```
+
+
+### Fun y-axis trick
+
+Indicating values above (or below) a cutoff value in the axis tick.
+
+```{r echo = TRUE, fig.align='center'}
+
+cutoff = 1
+cutoffexp = substitute(expression(NULL <= a), list(a = cutoff))
+
+iris %>%
+  ggplot(aes(x = Species, y = Petal.Length)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(width = 0.25) +
+  scale_y_continuous(bquote("Petal Length ("*epsilon*")"),
+                   breaks = c(cutoff, 3, 5, 7),
+                   labels = c(eval(cutoffexp), "3", "5", "7"))
+
+```
+
+Or mixing math notation with above...
+
+```{r echo = TRUE, fig.align='center'}
+
+cutoff = 1
+cutoffexp = substitute(expression(mu <= a), list(a = cutoff))
+
+iris %>%
+  ggplot(aes(x = Species, y = Petal.Length)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(width = 0.25) +
+  scale_y_continuous(bquote("Petal Length ("*epsilon*")"),
+                   breaks = c(cutoff, 3, 5, 7),
+                   labels = c(eval(cutoffexp), "3", "5", "7"))
+
+```
+
+## Greek symbols in facet labels
+
+This is one way to create a figure with facet labels that have Greek symbols with different formatting than the example above.
+
+- Uses `bquote` and `labeller = label_parsed`.
+
+- Creates a factor variable with `bquote` labels.
+
+- Can easily be extended to `expression` if that is your preference by changing the `bquote` to `expression`.
+
+```{r echo = TRUE, fig.align='center'}
+
+diamonds %>%
+  dplyr::select(cut, depth, price) %>%
+  pivot_longer(cols = c("depth", "price"), names_to = "grp", values_to = "value") %>%
+  mutate(
+    grp2 = factor(grp, levels = c("depth", "price"),
+                  labels = c(bquote("depth ("*mu*"g/mL)"), bquote("price% ("*mu*"g x day/mL)"))) 
+    )%>%
+  ggplot(aes(x = cut, y = value)) +
+  geom_boxplot() +
+  labs(y = "") +
+  facet_wrap(~grp2, scales = "free_x", strip.position = "bottom", 
+             labeller = label_parsed) +
+  theme(strip.placement = "outside", strip.background = element_blank()) +
+  coord_flip()
+
+```
