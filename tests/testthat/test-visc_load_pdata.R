@@ -21,12 +21,12 @@ test_that("visc_load_pdata works", {
     }),
     'No criteria provided'
   )
-  # warn when criteria is dataVersion in 'proj' mode
+  # warn when criteria given as dataVersion (defunct, now ignores check)
   expect_warning(
     suppressMessages({
       visc_load_pdata(Visc777_cars, 'proj', '0.1.3')
     }),
-    'Criteria is from data version but source is repo'
+    'Ignoring criteria check'
   )
   # warn when criteria is unexpected
   expect_warning(
@@ -111,14 +111,15 @@ test_that("visc_load_pdata works", {
         )
       })
     )
-    # right hash, dataVersion mode
-    expect_no_error(
+    # right hash, dataVersion given (defunct, now ignores check)
+    expect_warning(
       suppressMessages({
         pkg_loaded_pdata <- visc_load_pdata(Visc777_cars,
                                             'datapackage',
                                             '0.1.0'
         )
-      })
+      }),
+      "Ignoring criteria check"
     )
     # wrong hash
     expect_error(

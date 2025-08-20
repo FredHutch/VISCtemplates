@@ -1,4 +1,4 @@
-#' @title Load a VISC pdata object and check version by datapackage or hash
+#' @title Load a VISC pdata object and check data hash
 #' @description Allows for loading a pdata object either from active project
 #'   repo (during review) or from the library installed location. This
 #'   facilitates task switching when transitioning from ad hoc review to
@@ -6,7 +6,7 @@
 #' @param .data pdata as name or character, e.g., PKGNAME_ASSAY or "PKGNAME_ASSAY"
 #' @param proj_or_datapackage whether to load the data from the current project
 #'   repo or an installed datapackage
-#' @param criteria 32 digit hash or data package version 0.1.X.
+#' @param criteria character, a 32-digit hexadecimal data hash with lowercase letters
 #' @return pdata object
 #' @examples
 #' \dontrun{
@@ -15,9 +15,6 @@
 #'
 #' ## add a check against hash
 #' visc_load_pdata(Hassell750_ics, criteria = "4f054442a6549bffcd947af4b0da9155")
-#' ## add a check against dataversion
-#' visc_load_pdata(Hassell750_ics, criteria = "0.1.68")
-#'
 #'
 #' # load a pdata from the active project repo, not installed
 #' visc_load_pdata(Hassell750_ics, proj_or_datapackage = "proj")
@@ -42,16 +39,9 @@ visc_load_pdata <- function(.data,
   # r/o picnic
   if (is.null(criteria)) {
     warning("No criteria provided. Ignoring data check")
-  } else if(tolower(proj_or_datapackage) %in% c("proj", "repo") &&
-            grepl(pattern = "0\\.1\\.\\d{1,2}", criteria)){
-    warning("Ignoring criteria check. Criteria is from data version but source is repo.",
-            "Did you mean to use the hash criteria?")
-    criteria <- NULL
-  } else if (nchar(criteria) != 32 &
-             !grepl(pattern = "0\\.1\\.\\d{1,2}", criteria)) {
+  } else if (!grepl("^[0-9a-f]{32}$", criteria)) {
     warning("Ignoring criteria check. Incorrect criteria syntax provided.")
     criteria <- NULL
-
   }
 
   pdata_env <- new.env(parent = emptyenv())
@@ -80,16 +70,10 @@ visc_load_pdata <- function(.data,
   message("Loading ", pdata_name, " from ", proj_or_datapackage)
   pdata <- get(pdata_name, envir = pdata_env)
 
-  if(!is.null(criteria)){
-    if(nchar(criteria) == 32){
-      pdata_digest <- digest::digest(pdata)
-      testthat::expect_equal(pdata_digest,
-                             criteria)
-      message("Hash: ", criteria, " matches!")
-    } else {
-      DataPackageR::assert_data_version(pkg_name, version_string = criteria)
-      message("Asserted data version: ", criteria)
-    }
+  if(! is.null(criteria)){
+    pdata_digest <- digest::digest(pdata)
+    testthat::expect_equal(pdata_digest, criteria)
+    message("Hash: ", criteria, " matches!")
   }
 
   return(pdata)
