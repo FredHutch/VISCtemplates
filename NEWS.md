@@ -1,7 +1,8 @@
 # VISCtemplates (development version)
 
-Other improvements
+Improvements for users
 * `visc_load_pdata()` no longer accepts a dataVersion (e.g. `0.1.2`) as its `criteria` argument. Use a 32-digit data hash, as has long been standard practice. (#297)
+* `visc_load_pdata()` gains a new optional `package` argument for loading pdata with a non-standard name. (#297)
 
 # VISCtemplates 2.0.1
 
