@@ -1,12 +1,19 @@
 #' @title Load a VISC pdata object and check data hash
 #' @description Allows for loading a pdata object either from active project
-#'   repo (during review) or from the library installed location. This
+#'   repo (e.g., during review) or from the library installed location. This
 #'   facilitates task switching when transitioning from ad hoc review to
 #'   production reporting.
-#' @param .data pdata as name or character, e.g., PKGNAME_ASSAY or "PKGNAME_ASSAY"
-#' @param proj_or_datapackage whether to load the data from the current project
-#'   repo or an installed datapackage
-#' @param criteria character, a 32-digit hexadecimal data hash with lowercase letters
+#' @param .data pdata as name or character, e.g., PKGNAME_ASSAY or
+#'   "PKGNAME_ASSAY"
+#' @param proj_or_datapackage whether to load the data from an installed
+#'   datapackage (`datapackage`, the default) or the current project repo
+#'   (`proj` or `repo`)
+#' @param criteria character, a 32-digit hexadecimal data hash with lowercase
+#'   letters
+#' @param package only used in `datapackage` mode. NULL (default; standard VISC
+#'   pdata naming) or character. If NULL, look for pdata named `.data` in
+#'   package <portion of `.data` before the first underscore>. If not NULL, look
+#'   for pdata named `.data` in package `package`.
 #' @return pdata object
 #' @examples
 #' \dontrun{
@@ -27,35 +34,40 @@
 #' @export
 visc_load_pdata <- function(.data,
                             proj_or_datapackage = "datapackage",
-                            criteria = NULL){
+                            criteria = NULL,
+                            package = NULL){
+
+  # switch for pdata given as name or character
   pdata_name <- if (is.name(substitute(.data))){
     deparse(substitute(.data))
   } else if (is.character(.data)){
     .data
   } else stop('`.data` must be an unquoted name or a character string')
 
-  pkg_name <- strsplit(pdata_name, "_")[[1]][1]
-
-  # r/o picnic
-  if (is.null(criteria)) {
-    warning("No criteria provided. Ignoring data check")
-  } else if (!grepl("^[0-9a-f]{32}$", criteria)) {
-    warning("Ignoring criteria check. Incorrect criteria syntax provided.")
-    criteria <- NULL
-  }
-
+  # data() loads pdata into this environment before returning
   pdata_env <- new.env(parent = emptyenv())
+
+  # switch for proj/repo mode vs. installed datapackage mode
   if(tolower(proj_or_datapackage) %in% c("proj", "repo")){
-    # data package project / source folder method
+    # project / source repo mode
     load(DataPackageR::project_data_path(paste0(pdata_name, ".rda")),
          envir = pdata_env)
-
   } else {
-    # installed datapackage method
+    # installed datapackage mode
+
+    # switch for standard/non-standard pdata naming
+    if (is.null(package)){
+      pkg_name <- strsplit(pdata_name, "_")[[1]][1]
+    } else {
+      pkg_name <- package
+    }
+
+    # check package is installed
     if (! pkg_name %in% rownames(utils::installed.packages())){
       stop(paste0("Data package '", pkg_name, "' is not installed"))
     }
     utils::data(list = pdata_name, package = pkg_name, envir = pdata_env)
+    # check data was in the package
     if (! exists(pdata_name, pdata_env)){
       stop(
         sprintf(
@@ -67,15 +79,22 @@ visc_load_pdata <- function(.data,
     }
   }
 
+  # extract pdata from temporary environment
   message("Loading ", pdata_name, " from ", proj_or_datapackage)
   pdata <- get(pdata_name, envir = pdata_env)
 
-  if(! is.null(criteria)){
+  # Check for a valid data hash, then verify against provided data hash
+  if (is.null(criteria)) {
+    warning("No criteria provided. Ignoring data check")
+    # if criteria is not a valid hash, skip check but load pdata anyway
+  } else if (!grepl("^[0-9a-f]{32}$", criteria)) {
+    warning("Ignoring criteria check. Incorrect criteria syntax provided.")
+    criteria <- NULL
+  } else {
     pdata_digest <- digest::digest(pdata)
     testthat::expect_equal(pdata_digest, criteria)
     message("Hash: ", criteria, " matches!")
   }
 
   return(pdata)
-
 }

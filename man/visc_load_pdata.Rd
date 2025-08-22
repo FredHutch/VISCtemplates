@@ -4,22 +4,35 @@
 \alias{visc_load_pdata}
 \title{Load a VISC pdata object and check data hash}
 \usage{
-visc_load_pdata(.data, proj_or_datapackage = "datapackage", criteria = NULL)
+visc_load_pdata(
+  .data,
+  proj_or_datapackage = "datapackage",
+  criteria = NULL,
+  package = NULL
+)
 }
 \arguments{
-\item{.data}{pdata as name or character, e.g., PKGNAME_ASSAY or "PKGNAME_ASSAY"}
+\item{.data}{pdata as name or character, e.g., PKGNAME_ASSAY or
+"PKGNAME_ASSAY"}
 
-\item{proj_or_datapackage}{whether to load the data from the current project
-repo or an installed datapackage}
+\item{proj_or_datapackage}{whether to load the data from an installed
+datapackage (\code{datapackage}, the default) or the current project repo
+(\code{proj} or \code{repo})}
 
-\item{criteria}{character, a 32-digit hexadecimal data hash with lowercase letters}
+\item{criteria}{character, a 32-digit hexadecimal data hash with lowercase
+letters}
+
+\item{package}{only used in \code{datapackage} mode. NULL (default; standard VISC
+pdata naming) or character. If NULL, look for pdata named \code{.data} in
+package <portion of \code{.data} before the first underscore>. If not NULL, look
+for pdata named \code{.data} in package \code{package}.}
 }
 \value{
 pdata object
 }
 \description{
 Allows for loading a pdata object either from active project
-repo (during review) or from the library installed location. This
+repo (e.g., during review) or from the library installed location. This
 facilitates task switching when transitioning from ad hoc review to
 production reporting.
 }

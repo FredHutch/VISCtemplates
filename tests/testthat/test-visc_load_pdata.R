@@ -183,3 +183,67 @@ test_that("visc_load_pdata works", {
     )
   })
 })
+
+test_that('visc_load_pdata works with non-standard pdata name', {
+  td <- withr::local_tempdir()
+  file <- system.file("extdata", "tests", "subsetCars.Rmd",
+                      package = "VISCtemplates"
+  )
+  DataPackageR::datapackage_skeleton(
+    name = "Visc777",
+    path = td,
+    code_files = file,
+    r_object_names = c("rogue_object", "Visc777_cars")
+  )
+  # test using project repo
+  suppressMessages({
+    DataPackageR::package_build(
+      file.path(td, "Visc777")
+    )
+  })
+  # Even for rogue object with non-standard naming, don't need to provide
+  # package override in proj/repo mode
+  expect_no_error(
+    suppressMessages(
+      rogue_object <- visc_load_pdata(
+        'rogue_object',
+        'proj',
+        '3ccb5b0aaa74fe7cfc0d3ca6ab0b5cf3'
+      )
+    )
+  )
+  # test using pdata from installed datapackage
+  withr::with_temp_libpaths({
+    suppressMessages({
+      DataPackageR::package_build(
+        file.path(td, "Visc777"), install = TRUE, quiet = TRUE
+      )
+    })
+    standard_object_path <- file.path(td, 'data', 'Visc777_cars.rda')
+    file.copy(
+      standard_object_path,
+      file.path(td, 'data', 'rogue_object.rda')
+    )
+    unlink(standard_object_path)
+    # right hash, rogue object handled
+    expect_no_error(
+      suppressMessages(
+        rogue_object <- visc_load_pdata(
+          'rogue_object',
+          'datapackage',
+          '3ccb5b0aaa74fe7cfc0d3ca6ab0b5cf3',
+          'Visc777'
+        )
+      )
+    )
+    # should be identical to rogue_object, based on test Rmd file
+    suppressMessages(
+      Visc777_cars <- visc_load_pdata(
+        'Visc777_cars',
+        'datapackage',
+        '3ccb5b0aaa74fe7cfc0d3ca6ab0b5cf3'
+      )
+    )
+    expect_identical(rogue_object, Visc777_cars)
+  })
+})
