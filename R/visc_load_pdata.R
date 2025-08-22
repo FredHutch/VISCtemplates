@@ -83,18 +83,21 @@ visc_load_pdata <- function(.data,
   message("Loading ", pdata_name, " from ", proj_or_datapackage)
   pdata <- get(pdata_name, envir = pdata_env)
 
-  # Check for a valid data hash, then verify against provided data hash
+  # if criteria missing, skip check. Warn, but return pdata anyway
   if (is.null(criteria)) {
     warning("No criteria provided. Ignoring data check")
-    # if criteria is not a valid hash, skip check but load pdata anyway
-  } else if (!grepl("^[0-9a-f]{32}$", criteria)) {
-    warning("Ignoring criteria check. Incorrect criteria syntax provided.")
-    criteria <- NULL
-  } else {
-    pdata_digest <- digest::digest(pdata)
-    testthat::expect_equal(pdata_digest, criteria)
-    message("Hash: ", criteria, " matches!")
+    return(pdata)
   }
 
+  # if criteria not a valid hash, skip check. Warn, but return pdata anyway
+  if (! grepl("^[0-9a-f]{32}$", criteria)) {
+    warning("Ignoring criteria check. Incorrect criteria syntax provided.")
+    return(pdata)
+  }
+
+  # return pdata if hash check is successful
+  pdata_digest <- digest::digest(pdata)
+  testthat::expect_equal(pdata_digest, criteria)
+  message("Hash: ", criteria, " matches!")
   return(pdata)
 }
