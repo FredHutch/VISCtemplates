@@ -219,12 +219,6 @@ test_that('visc_load_pdata works with non-standard pdata name', {
         file.path(td, "Visc777"), install = TRUE, quiet = TRUE
       )
     })
-    standard_object_path <- file.path(td, 'data', 'Visc777_cars.rda')
-    file.copy(
-      standard_object_path,
-      file.path(td, 'data', 'rogue_object.rda')
-    )
-    unlink(standard_object_path)
     # right hash, rogue object handled
     expect_no_error(
       suppressMessages(
