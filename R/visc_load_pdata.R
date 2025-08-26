@@ -73,16 +73,17 @@ visc_load_pdata <- function(.data,
       # load pdata_name from data package
       utils::data(list = pdata_name, package = pkg_name, envir = pdata_env)
     )
-    # check R object
-    if (! exists(pdata_name, pdata_env)){
-      stop(
-        sprintf(
-          "Data file `%s` exists but does not contain an R object named `%s`",
-          pdata_name,
-          pdata_name
-        )
+  }
+
+  # check R object name same as pdata file name
+  if (! exists(pdata_name, pdata_env)){
+    stop(
+      sprintf(
+        "Data file `%s` exists but does not contain an R object named `%s`",
+        pdata_name,
+        pdata_name
       )
-    }
+    )
   }
 
   # extract pdata from temporary environment
