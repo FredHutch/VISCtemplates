@@ -6,7 +6,7 @@
 \usage{
 visc_load_pdata(
   .data,
-  proj_or_datapackage = "datapackage",
+  proj_or_datapackage = c("datapackage", "proj", "repo"),
   criteria = NULL,
   package = NULL
 )

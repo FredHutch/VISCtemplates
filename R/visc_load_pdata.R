@@ -33,9 +33,10 @@
 #' }
 #' @export
 visc_load_pdata <- function(.data,
-                            proj_or_datapackage = "datapackage",
+                            proj_or_datapackage = c("datapackage", "proj", "repo"),
                             criteria = NULL,
                             package = NULL){
+  proj_or_datapackage <- match.arg(proj_or_datapackage)
 
   # switch for pdata given as name or character
   pdata_name <- if (is.name(substitute(.data))){
