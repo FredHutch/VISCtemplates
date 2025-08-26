@@ -1,6 +1,6 @@
 Package: VISCtemplates
 Title: Tools for writing reproducible reports at VISC
-Version: 2.0.2
+Version: 2.0.2.9000
 Authors@R: 
     person(given = "Jimmy",
            family = "Fulp",
