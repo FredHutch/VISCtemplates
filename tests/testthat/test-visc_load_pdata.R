@@ -138,16 +138,14 @@ test_that("visc_load_pdata works", {
       }),
       "data set .* not found"
     )
+    # errors out when data file exists but doesn't contain namesake R object
+    my_pi <- pi
+    save(my_pi, file = system.file(file.path('data', "Visc777_cars.rda"), package = 'Visc777'))
     expect_error(
       suppressMessages({
-        suppressWarnings({
-          visc_load_pdata(Visc777_cars,
-                          'datapackage',
-                          '3ccb5b0aaa74fe7cfc0d3ca6ab0b5cf3'
-          )
-        })
+        visc_load_pdata(Visc777_cars, 'datapackage')
       }),
-      "Unable to find data object.*"
+      "exists but does not contain an R object named"
     )
     # Reinstall package with LazyData: true in DESCRIPTION field
     desc_path <- file.path(td, "Visc777", "DESCRIPTION")
