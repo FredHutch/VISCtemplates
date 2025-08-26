@@ -67,14 +67,19 @@ visc_load_pdata <- function(.data,
     if (! pkg_name %in% rownames(utils::installed.packages())){
       stop(paste0("Data package '", pkg_name, "' is not installed"))
     }
-    utils::data(list = pdata_name, package = pkg_name, envir = pdata_env)
-    # check data was in the package
+    withr::with_options(
+      # create error from warning if pdata_name doesn't exist in package
+      list(warn = 2),
+      # load pdata_name from data package
+      utils::data(list = pdata_name, package = pkg_name, envir = pdata_env)
+    )
+    # check R object
     if (! exists(pdata_name, pdata_env)){
       stop(
         sprintf(
-          "Unable to find data object '%s' in package '%s'",
+          "Data file `%s` exists but does not contain an R object named `%s`",
           pdata_name,
-          pkg_name
+          pdata_name
         )
       )
     }
