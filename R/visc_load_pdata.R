@@ -49,7 +49,7 @@ visc_load_pdata <- function(.data,
   pdata_env <- new.env(parent = emptyenv())
 
   # switch for proj/repo mode vs. installed datapackage mode
-  if(tolower(proj_or_datapackage) %in% c("proj", "repo")){
+  if(proj_or_datapackage %in% c("proj", "repo")){
     # project / source repo mode
     load(DataPackageR::project_data_path(paste0(pdata_name, ".rda")),
          envir = pdata_env)
@@ -67,17 +67,23 @@ visc_load_pdata <- function(.data,
     if (! pkg_name %in% rownames(utils::installed.packages())){
       stop(paste0("Data package '", pkg_name, "' is not installed"))
     }
-    utils::data(list = pdata_name, package = pkg_name, envir = pdata_env)
-    # check data was in the package
-    if (! exists(pdata_name, pdata_env)){
-      stop(
-        sprintf(
-          "Unable to find data object '%s' in package '%s'",
-          pdata_name,
-          pkg_name
-        )
+    withr::with_options(
+      # create error from warning if pdata_name doesn't exist in package
+      list(warn = 2),
+      # load pdata_name from data package
+      utils::data(list = pdata_name, package = pkg_name, envir = pdata_env)
+    )
+  }
+
+  # check R object name same as pdata file name
+  if (! exists(pdata_name, pdata_env)){
+    stop(
+      sprintf(
+        "Data file `%s` exists but does not contain an R object named `%s`",
+        pdata_name,
+        pdata_name
       )
-    }
+    )
   }
 
   # extract pdata from temporary environment
