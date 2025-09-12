@@ -11,6 +11,9 @@ create_visc_project(path, interactive = TRUE, is_package = FALSE)
 
 \item{interactive}{TRUE by default. FALSE is for non-interactive unit testing
 only.}
+
+\item{is_package}{FALSE by default. Set to TRUE if your project is an R package
+and you want package-specific files (DESCRIPTION, NAMESPACE) to be initiated.}
 }
 \value{
 opens a new RStudio session with template project directory
