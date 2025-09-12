@@ -1,6 +1,6 @@
 ## Description
 
-Make sure to provide a brief summary of your changes in the pull request title above.
+Make sure to provide a brief summary of the purpose of the pull request in the title above.
 
 Here, describe your changes in detail. 
 Give a short background on the report, outline important questions or details for the reviewer, and add links to any supporting documents (e.g., protocol presentation). 
@@ -100,59 +100,80 @@ If necessary, provide explanations here for why any boxes from the checklist(s) 
 ## Checklist(s) for PR reviewer(s)
 
 Use one (or multiple) of the following checklists, depending on which type of PR this is.
+Specific reviewers may be tagged for specific checklist items, if appropriate.
 
 ### Documentation and completeness
 
-- [ ] Necessary context for the project/analysis has been documented, and appropriate README.md files appear to be updated
+- [ ] Necessary context for the project/analysis has been documented, and appropriate README.md files appear to be up-to-date
 - [ ] The latest versions of all relevant files appear to be pushed to the repo, and no unrelated or unnecessary files are included
+- [ ] Git history has clear commit messages
+- [ ] No Github PAT or credentials committed
 
 ### Code review
 
-- [ ] If requested, I have compiled the R Markdown file(s) (or run the relevant code) on my end with no errors
+- [ ] Order and structure of code is acceptable
+    - [ ] Data loading/exclusions/derivations appear early in script
+    - [ ] Reusable code is sourced at the top
+    - [ ] Derived variables created once, clearly commented, unused ones removed
+    - [ ] Hardcoded variables centralized and documented
+- [ ] Basic reproducibility 
+    - [ ] Random seeds are set using set.seed() (e.g. bootstrap, jitter)
+    - [ ] Session info tables or `sessionInfo()` are included
     - [ ] File paths are relative (except for trials and network drive paths) and portable across operating systems
-- [ ] Warnings are not suppressed. If a warning must be suppressed there is a clear explanation (i.e., comment).
-- [ ] There are no unused Rmd chunks or commented-out backup code
-- [ ]  Appropriate R packages are used (VISCtemplates and VISCfunctions are used where possible, no local package installations or apparently unused packages)
-- [ ]  Code appears logically correct
-    - [ ]  I have reviewed any joins and they appear correct
-    - [ ]  I have reviewed any filtering and it appears correct and in a logical order
-- [ ]  Code is readable and easy to understand, and generally follows the [VISC Coding Principles](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/Coding-Principles.md)
+    - [ ] Appropriate R packages are used (VISCtemplates and VISCfunctions are used where possible; no local package installations or apparently unused packages)
+    - [ ] `pdata` is loaded from the appropriate data package and matches the expected data hash
+    - [ ] Code runs/compiles fully without errors
+- [ ] Documentation
+    - [ ] Header comment block (name, date, purpose, inputs/outputs, dependencies) exists
+    - [ ] Warnings are not suppressed (Use find: “warning=F” or "warning = F"). If a warning must be suppressed there is a clear explanation (i.e., comment).
+    - [ ] There are no unused Rmd chunks or commented-out backup code
+- [ ] Code appears logically correct
+    - [ ]  Sample-level and assay-specific exclusions follow data specs
+    - [ ]  I have reviewed any joins and they appear correct (e.g., test for nrow, NAs, duplicates, subsets)
+    - [ ]  I have reviewed any filtering and it appears correct (e.g., test for nrow, NAs, duplicates, subsets)
+    - [ ]  For PT reports: the analysis code follows the statistical methods section
+- [ ]  Code is readable and generally follows the [VISC Coding Principles](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/Coding-Principles.md)
     - [ ] Lines are not excessively long
     - [ ] Assignment operator `<-` is used consistently (rather than `=`)
-    - [ ] Object names are meaningful, descriptive, and use only alphanumeric characters and underscores (no dots)
+    - [ ] Object names are meaningful and descriptive
+    - [ ] Object names are consistently formatted and use only alphanumeric characters and underscores (no dots)
     - [ ] Object names are unique (no overwriting of previous variables)
     - [ ] Hard coding and magic numbers are avoided
     - [ ] Rmd code chunk names are descriptive and use dashes (not underscores or spaces)
-    - [ ] Functions are organized and well-documented (with explanations of purpose, inputs, and ouput)
+    - [ ] Functions are used rather than repetitive code
+    - [ ] Functions are well-documented (with explanations of purpose, inputs, ouput, examples, etc.)
+    - [ ] Sufficient comments are provided to make the code (relatively) easy to understand
     - [ ] Comments are helpful and do not include unaddressed debt (e.g. `# TODO:` or `# FIXME`)
-- [ ] For PT reports: the analysis code follows the statistical methods section
 
-### Writing/report review
 
-- [ ] Both PDF and Word versions of the report are included and generally look acceptable
-- [ ] There are no obvious Markdown/pandoc/Latex errors 
+### Report PDF review
+
+- [ ] Report PDF is included and appears to have been rendered after any recent code changes
+- [ ] I do not see any obvious Markdown/pandoc/Latex errors
     - [ ] No broken references (?? or ???) in the text (Use find: “??”)
     - [ ] No stray warnings or R output in the text (Use find: “#”)
     - [ ] No blank pages 
     - [ ] Page x out of y is correct (sometimes y is wrong)  
-- [ ] The reproducibility tables look correct
-    - [ ] The reproducibility tables do not include `NA`, local installations, or unnescessary packages
+- [ ] Standard reproducibility tables are included and look acceptable
+    - [ ] The reproducibility tables do not include `NA`s
+    - [ ] No local installations
+    - [ ] No seemingly unnescessary packages
     - [ ] The most recent versions (note: not the development versions) of VISCtemplates and VISCfunctions are used
-- [ ] The sample type is accurate (e.g., serum, plasma, PBMC)
-- [ ] Objectives follow the SAP and study protocol
-- [ ] Results and summary of main results sections map to the objectives
-- [ ] No obvious spelling errors (including captions and footnotes)
-- [ ] The correct tense (generally past tense) is used throughout the report
-- [ ] Capitalization is correct and consistent
-- [ ] Acronyms and abbreviations are introduced the first time they are used
-- [ ] I have reviewed the results sections
-    - [ ] Everything mentioned in the Summary of Main Results is also in the Results section
-    - [ ] Statements in Results section are correct (including p-values) and supported by the correct figure and table references
-- [ ] I have reviewed the figures and tables
+- [ ] I have reviewed the text of the report
+    - [ ] The assay name and sample type (e.g., serum, plasma, PBMC) appears to be accurate
+    - [ ] There are no obvious spelling errors (including captions and footnotes)
+    - [ ] The correct tense (generally past tense) is used throughout the report
+    - [ ] Capitalization appears to be correct and consistent
+    - [ ] I do not see any acronyms/abbreviations that aren't defined the first time they are used
+    - [ ] Objectives agree with the SAP and study protocol
+    - [ ] Results and Summary sections are aligned with the objectives
+    - [ ] Statements in Results and Summary section appear correct (including p-values) and are supported by the correct figure and table references
     - [ ] Figures and tables are sorted in parallel with mentions in Results section
-    - [ ] Figures generally look right (refer to the [figure guidelines](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/figure-guidelines.md) as needed)
+- [ ] I have reviewed the figures and tables
+    - [ ] Figures generally look acceptable (refer to the [figure guidelines](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/figure-guidelines.md) as needed). For example:
         - [ ] The appropriate number of axis tick marks is present (at least 3) for each figure
         - [ ] Text is not cut off (facet labels, legends, titles)
-    - [ ] Tables generally look right
+    - [ ] Tables generally look acceptable. For example:
         - [ ] Text is not running off the page
         - [ ] Significance highlighting is as expected
+
