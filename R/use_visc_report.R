@@ -1,119 +1,3 @@
-#' Use a VISC README template
-#'
-#' @param study_name name of study in VDCNNN format
-#' @param save_as where to save README.Rmd. Defaults to top-level.
-#'
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' use_visc_readme("Gallo477")
-#' }
-use_visc_readme <- function(study_name, save_as = "README.Rmd") {
-  usethis::use_template(
-    template = "visc-project-readme.Rmd",
-    save_as = save_as,
-    data = list(study_name = study_name),
-    package = "VISCtemplates"
-  )
-  # knit the md from the Rmd on request of SRA team
-  rmarkdown::render(
-    usethis::proj_path('README.Rmd'),
-    quiet = TRUE
-  )
-  # remove Rmd at request of SRA team; they just manually edit the *.md
-  # so the Rmd file merely clutters their working directory
-  unlink(
-    usethis::proj_path(
-      paste0(
-        'README',
-        c('.Rmd', '.html')
-      )
-    )
-  )
-}
-
-#' Create a VISC docs directory with template files
-#'
-#' Creates the docs/ directory and presentations/ directory with templates
-#' for the project background, objectives, group colors, study schema, and
-#' project-level bib file.
-#'
-#' @param study_name name of study in VDCNNN format
-#'
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' use_visc_docs("Gallo477")
-#' }
-use_visc_docs <- function(study_name) {
-
-  usethis::use_directory("docs")
-  usethis::use_directory("docs/presentations")
-
-  # use template for background
-  use_project_background(study_name)
-
-  # use template for objectives
-  use_project_objectives(study_name)
-
-  # group colors template code
-  use_group_colors(study_name)
-
-  # study schema template
-  use_study_schema(study_name)
-
-  # project-level bib file
-  use_bib(study_name)
-}
-
-
-use_project_background <- function(study_name) {
-  usethis::use_template(
-    template = "visc-project-background.Rmd",
-    save_as = "docs/background.Rmd",
-    data = list(study_name = study_name),
-    package = "VISCtemplates"
-  )
-}
-
-use_project_objectives <- function(study_name) {
-  usethis::use_template(
-    template = "visc-project-objectives.Rmd",
-    save_as = "docs/objectives.Rmd",
-    data = list(study_name = study_name),
-    package = "VISCtemplates"
-  )
-}
-
-use_group_colors <- function(study_name) {
-  usethis::use_template(
-    template = "group_colors.R",
-    save_as = "R/group_colors.R",
-    data = list(study_name = study_name),
-    package = "VISCtemplates"
-  )
-}
-
-use_study_schema <- function(study_name) {
-  usethis::use_template(
-    template = "study_schema.R",
-    save_as = "R/study_schema.R",
-    data = list(study_name = study_name),
-    package = "VISCtemplates"
-  )
-}
-
-use_bib <- function(study_name) {
-  usethis::use_template(
-    template = "bibliography.bib",
-    save_as = "docs/bibliography.bib",
-    data = list(study_name = study_name),
-    package = "VISCtemplates"
-  )
-}
-
 #' Use a VISC Report Template
 #'
 #' This function creates a template R Markdown file for a VISC report.
@@ -134,12 +18,16 @@ use_bib <- function(study_name) {
 #'   report_type = "bama"
 #'   )
 #' }
-use_visc_report <- function(report_name = "PTreport",
+use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
                             path = ".",
                             report_type = c("empty", "generic", "bama", "nab", "adcc"),
                             interactive = TRUE) {
 
-  stopifnot(report_type %in% c("empty", "generic", "bama", "nab", "adcc"))
+  report_type <- match.arg(report_type)
+
+  if (dirname(report_name) != ".") {
+    stop("report_name cannot include a subdirectory. you can instead specify a subdirectory using the path argument of use_visc_report().")
+  }
 
   # suppress usethis output when non-interactive
   old_usethis_quiet <- getOption('usethis.quiet')
@@ -147,28 +35,75 @@ use_visc_report <- function(report_name = "PTreport",
   options(usethis.quiet = !interactive)
 
   if (report_type != 'empty') challenge_visc_report(report_name, interactive)
-  if (!dir.exists(path)) dir.create(path, recursive = TRUE)
-  use_template <- paste0(
+
+  # create assay level folder (specified in path) and readme, if don't yet exist
+  if (!dir.exists(path)) {
+    dir.create(path, recursive = TRUE)
+
+    usethis::use_template(
+      template = "README_assay_folder.md",
+      data = list(study_name = get_study_name(report_name), assay_name = get_assay_name(report_name)),
+      save_as = file.path(path, "README.md"),
+      package = "VISCtemplates"
+    )
+  }
+
+  # create report folder and main Rmd document
+  visc_report_type <- paste0(
     'visc', '_', if (report_type == 'empty') 'empty' else 'report'
   )
   rmarkdown::draft(
     file = file.path(path, report_name),
-    template = use_template,
-    package = "VISCtemplates",
+    template = system.file("templates", visc_report_type, package = "VISCtemplates"),
     edit = FALSE
   )
+
   usethis::ui_done(
-    glue::glue("Creating {{report_type}} VISC report at '{{file.path(path, report_name)}}'")
+    glue::glue("Created {{report_type}} VISC report at '{{file.path(path, report_name)}}'")
   )
-  if (report_type != 'empty') {
+
+  # create readme for report folder
+  usethis::use_template(
+    template = "README_report_folder.md",
+    data = list(),
+    save_as = file.path(path, report_name, "README.md"),
+    package = "VISCtemplates"
+  )
+
+  # add draft methods
+  if (report_type != 'empty'){
     use_visc_methods(path = file.path(path, report_name), assay = report_type,
                      interactive = interactive)
   }
 
+}
 
+# function to infer study name from report name
+get_study_name <- function(report_name) {
+  underscore_positions <- gregexpr('\\_', report_name)[[1]]
+  n_underscores <- length(underscore_positions[underscore_positions != -1])
+  if (n_underscores >= 2) {
+    study_name <- strsplit(report_name, '_')[[1]][1]
+  } else {
+    study_name <- "Study"
+  }
+  return(study_name)
+}
+
+# function to infer assay name from report name
+get_assay_name <- function(report_name) {
+  underscore_positions <- gregexpr('\\_', report_name)[[1]]
+  n_underscores <- length(underscore_positions[underscore_positions != -1])
+  if (n_underscores >= 2) {
+    assay_name <- strsplit(report_name, '_')[[1]][2]
+  } else {
+    assay_name <- "Assay"
+  }
+  return(assay_name)
 }
 
 challenge_visc_report <- function(report_name, interactive = TRUE) {
+
   if (!interactive) return(invisible(NULL))
 
   continue <- usethis::ui_yeah("

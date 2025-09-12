@@ -2,25 +2,38 @@
 % Please edit documentation in R/visc_load_pdata.R
 \name{visc_load_pdata}
 \alias{visc_load_pdata}
-\title{Load a VISC pdata object and check version by datapackage or hash}
+\title{Load a VISC pdata object and check data hash}
 \usage{
-visc_load_pdata(.data, proj_or_datapackage = "datapackage", criteria = NULL)
+visc_load_pdata(
+  .data,
+  proj_or_datapackage = c("datapackage", "proj", "repo"),
+  criteria = NULL,
+  package = NULL
+)
 }
 \arguments{
-\item{.data}{pdata name e.g. PKGNAME_ASSAY}
+\item{.data}{pdata as name or character, e.g., PKGNAME_ASSAY or
+"PKGNAME_ASSAY"}
 
-\item{proj_or_datapackage}{whether to load the data from the current project
-repo or an installed datapackage}
+\item{proj_or_datapackage}{whether to load the data from an installed
+datapackage (\code{datapackage}, the default) or the current project repo
+(\code{proj} or \code{repo})}
 
-\item{criteria}{32 digit hash or data package version 0.1.X.}
+\item{criteria}{character, a 32-digit hexadecimal data hash with lowercase
+letters}
+
+\item{package}{only used in \code{datapackage} mode. NULL (default; standard VISC
+pdata naming) or character. If NULL, look for pdata named \code{.data} in
+package <portion of \code{.data} before the first underscore>. If not NULL, look
+for pdata named \code{.data} in package \code{package}.}
 }
 \value{
 pdata object
 }
 \description{
 Allows for loading a pdata object either from active project
-repo (during review) or from the libarary installed location. This
-facilitates task switching when transitioning from adhoc review to
+repo (e.g., during review) or from the library installed location. This
+facilitates task switching when transitioning from ad hoc review to
 production reporting.
 }
 \examples{
@@ -30,9 +43,6 @@ visc_load_pdata(Hassell750_ics)
 
 ## add a check against hash
 visc_load_pdata(Hassell750_ics, criteria = "4f054442a6549bffcd947af4b0da9155")
-## add a check against dataversion
-visc_load_pdata(Hassell750_ics, criteria = "0.1.68")
-
 
 # load a pdata from the active project repo, not installed
 visc_load_pdata(Hassell750_ics, proj_or_datapackage = "proj")
