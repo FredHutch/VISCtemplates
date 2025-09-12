@@ -2,6 +2,7 @@
 
 Improvements for users
 * `visc_load_pdata()` gives more informative error message when serialized pdata file does not contain an R object of the same name (#303)
+* Updates to pull request template for analysis repos (#231)
 
 # VISCtemplates 2.0.2
 
