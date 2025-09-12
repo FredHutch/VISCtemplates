@@ -4,7 +4,7 @@
 \alias{create_visc_project}
 \title{Create a VISC project}
 \usage{
-create_visc_project(path, interactive = TRUE)
+create_visc_project(path, interactive = TRUE, is_package = FALSE)
 }
 \arguments{
 \item{path}{file path}
