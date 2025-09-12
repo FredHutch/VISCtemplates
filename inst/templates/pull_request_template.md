@@ -49,7 +49,7 @@ See also [code review guidelines](https://github.com/FredHutch/VISC-Documentatio
     - [ ] Object names (meaningful, descriptive, unique, alphanumeric characters and underscores only)
     - [ ] Rmd code chunk names (descriptive and use dashes, not underscores or spaces
 
-### Writing/report review (use for PRs with PDF and/or Word drafts of PT reports)
+### Report output review
 
 See also [writing review guidelines](https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing/writing_reviewing_guidelines.md)
 
@@ -65,25 +65,23 @@ See also [writing review guidelines](https://github.com/FredHutch/VISC-Documenta
     - [ ] The reproducibility tables do not include `NA`, local installations, or unnescessary packages
     - [ ] The most recent versions (note: not the development versions) of VISCtemplates and VISCfunctions are used
     - [ ] The data package git hash refers to the correct branch/version (i.e., is up-to-date)
-- [ ] The sample type is accurate (e.g., serum, plasma, PBMC)
-- [ ] Text has been spell-checked (including captions and footnotes)
-- [ ] The report text, including figure and table captions, follows VISC conventions (refer to the [writing guidelines](https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing) as needed)
+- [ ] I have double-checked that figures and tables look appropriate (refer to the [figure guidelines](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/figure-guidelines.md) as needed)
+    - [ ] Figures and tables are sorted in parallel with mentions in Results section
+    - [ ] Captions are descriptive, accurate, and succinct
+    - [ ] The appropriate number of axis tick marks is present (at least 3) for each figure
+    - [ ] Text is readable (in particular, large enough) and not cut off in figures (check facet labels, legends, titles)
+    - [ ] Tables do not run off the page
+    - [ ] Significance highlighting in tables is as expected
+- [ ] I have double-checked the report text (refer to the [writing guidelines](https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing) as needed)
+    - [ ] The sample type is accurate (e.g., serum, plasma, PBMC)
     - [ ] Objectives follow the SAP and study protocol
     - [ ] Results and summary of main results sections map to the objectives
-    - [ ] Everything mentioned in the Summary of Main Results is also in the Results section
+    - [ ] Acronyms and abbreviations are introduced the first time they are used
+    - [ ] Text has been spell-checked (including captions and footnotes)
     - [ ] The correct tense (generally past tense) is used throughout the report
     - [ ] Capitalization is correct and consistent
-    - [ ] Acronyms and abbreviations are introduced the first time they are used
-- [ ] I have reviewed the results sections carefully and confirmed that the statements in Results section are correct (including p-values) and supported by the correct figure and table references
+    - [ ] I have reviewed the results sections carefully and confirmed that the statements in Results section are correct (including p-values) and supported by the correct figure and table references
     - [ ] Code-based methods (i.e., in-line referencing) are used in inserting numeric values in the Results section (to minimize human error)
-- [ ] I have reviewed the figures and tables carefully
-    - [ ] Figures and tables are sorted in parallel with mentions in Results section
-    - [ ] Figures look right (refer to the [figure guidelines](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/figure-guidelines.md) as needed)
-        - [ ] The appropriate number of axis tick marks is present (at least 3) for each figure
-        - [ ] Text is not cut off (facet labels, legends, titles)
-    - [ ] Tables look right
-        - [ ] Text is not running off the page
-        - [ ] Significance highlighting is as expected
 
 ## Checklist(s) for PR reviewer(s)
 
