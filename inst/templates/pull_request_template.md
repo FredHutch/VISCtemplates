@@ -1,6 +1,6 @@
 ## Description
 
-Note: make sure to provide a descriptive pull request (PR) title above that indicates the overall purpose and type of code changes/additions the PR covers.
+Note: make sure to provide a brief and descriptive pull request (PR) title above.
 
 Here, describe the purpose and content of the PR in more detail.
 - Provide context and necessary background information, including links to any supporting documents (e.g., protocol presentation).
