@@ -8,7 +8,7 @@
 #'
 #' @return opens a new RStudio session with template project directory
 #' @export
-create_visc_project <- function(path, interactive = TRUE){
+create_visc_project <- function(path, interactive = TRUE, is_package = FALSE){
 
   challenge_directory(path, interactive)
 
@@ -29,12 +29,20 @@ create_visc_project <- function(path, interactive = TRUE){
   on.exit(options(usethis.quiet = old_usethis_quiet))
   options(usethis.quiet = ! interactive)
 
-  # create package
-  usethis::create_package(
-    path = path,
-    rstudio = TRUE,
-    open = interactive
-  )
+  # create project
+  if (is_package) {
+    usethis::create_package(
+      path = path,
+      rstudio = TRUE,
+      open = interactive
+    )
+  } else {
+    usethis::create_project(
+      path = path,
+      rstudio = TRUE,
+      open = interactive
+    )
+  }
 
   # must set active project otherwise it is <no active project>
   usethis::proj_set(path = path)
