@@ -1,16 +1,15 @@
 ## Description
 
-Make sure to provide a brief summary of the purpose of the pull request in the title above.
+Note: make sure to provide a descriptive pull request (PR) title above that indicates the overall purpose and type of code changes/additions the PR covers.
 
-Here, describe your changes in detail. 
-Give a short background on the report, outline important questions or details for the reviewer, and add links to any supporting documents (e.g., protocol presentation). 
-It's helpful to add links to the key files with the unique ID for the commit (a.k.a. the "SHA" or "hash").
+Here, describe the purpose and content of the PR in more detail.
+- Provide context and necessary background information, including links to any supporting documents (e.g., protocol presentation).
+- State the overall purpose of this PR.
+- Summarize the changes/additions in this PR, focusing on any important details that reviewers should know about.
+- Outline important questions for the reviewer (see "Checklist for PR Reviewer" below).
+- Mention any known outstanding issues, and if they will be addressed in future PRs.
 
-Make sure to include any known outstanding issues as well (and if they will be addressed in future PRs).
-
-## Reflection
-
-Describe any key challenges you faced in working on these changes. Were these challenges unique to this project, or do you think they apply to other VISC projects as well? If not unique, have any relevant GitHub issues in the [VISCtemplates](https://github.com/FredHutch/VISCtemplates) or [VISCfunctions](https://github.com/FredHutch/VISCfunctions) repos been created that would help for future projects?
+If you have time, reflect on any key challenges you faced in working on these changes. Were these challenges unique to this project, or do you think they apply to other VISC projects as well? Have any associated issues in the [VISCtemplates](https://github.com/FredHutch/VISCtemplates) or [VISCfunctions](https://github.com/FredHutch/VISCfunctions) repos been created to make things easier next time?
 
 ## Checklist(s) for PR Creator
 
