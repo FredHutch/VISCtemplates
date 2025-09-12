@@ -11,45 +11,43 @@ Here, describe the purpose and content of the PR in more detail.
 
 If you have time, reflect on any key challenges you faced in working on these changes. Were these challenges unique to this project, or do you think they apply to other VISC projects as well? Have any associated issues in the [VISCtemplates](https://github.com/FredHutch/VISCtemplates) or [VISCfunctions](https://github.com/FredHutch/VISCfunctions) repos been created to make things easier next time?
 
-## Checklist(s) for PR Creator
+## Checklist for PR Creator
 
-Use one (or multiple) of the following checklists, depending on which type of PR you are doing.
+The following checklist should be reviewed and completed before the pull request is marked as ready for review.
+(Note: you can create a draft pull request first, then complete the checklist, and then mark the PR as ready for review.)
 
-Note: checklists should be completed before a pull request is submitted for review. You can create a draft pull request before completing the checklist, then complete the checklist, and then mark the PR as ready for review.
+Any items that are not checked off the list should be noted as outstanding issues in the description above.
 
-### Documentation and completeness (use for all PRs)
+### Documentation and completeness
 
-- [ ] Necessary context for the project/analysis has been documented
-- [ ] Appropriate README.md files have been updated to reflect the latest changes
+- [ ] I have created and updated appropriate README.md files to reflect the latest changes
 - [ ] The latest versions of all relevant files have been pushed to the repo
     - [ ] Unrelated or unnecessary files aren't included (e.g., LaTeX .toc files)
 
-### Code review (use for PRs that include any code, such as in .R or .Rmd files)
+### Code review
 
 See also [code review guidelines](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/code-review-guideline.md)
 
-- [ ]  I have compiled the R Markdown file(s) (or run the relevant code) with no errors
-    - [ ]  Warnings are not suppressed. If a warning must be suppressed there is a clear explanation (i.e., comment).
-    - [ ]  Running time has been recorded or estimated: ___________
-- [ ]  I have reviewed the data processing and statistical analysis code for logical correctness
+- [ ] Commented-out backup code and unused chunks have been removed
+- [ ] Comments do not include unaddressed debt (e.g. `# TODO:` or `# FIXME`)
+- [ ] Warnings are not suppressed. If a warning must be suppressed there is a clear explanation (i.e., comment).
+- [ ] Functions have been organized and documented, with explanations of purpose, inputs, and ouput
+- [ ] Hard coding and magic numbers are avoided
+- [ ] I have used appropriate R packages where possible
+    - [ ] VISCtemplates and VISCfunctions are used as much as possible
+    - [ ] I have verified that there are no local package installations
+    - [ ] I have reviewed the set of loaded packages (Use find: "library") and removed any that are unnecessary
+- [ ] File paths are relative (except for trials and network drive paths) and portable across operating systems (use `file.path()`)  
+- [ ] I have reviewed the data processing and statistical analysis code for logical correctness
     - [ ]  I have double-checked any joins
     - [ ]  I have double-checked any filtering and it is in a logical order
     - [ ]  For PT reports: the analysis code follows and agrees with the statistical methods section
-- [ ]  Appropriate R packages are used
-    - [ ]  VISCtemplates and VISCfunctions are used whenever possible
-    - [ ]  No local package installations or unnescessary packages
-    - [ ]  If renv is used, I have run `renv::status()` and resolved any issues
-- [ ]  Code is readable and easy to understand, and follows the [VISC Coding Principles](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/Coding-Principles.md) document
-    - [ ] Lines are at most 100 characters long
-    - [ ] Consistent use of `<-` not `=` for assignment
-    - [ ] Object names are meaningful, descriptive, and use only alphanumeric characters and underscores (no dots)
-    - [ ] Object names are unique (no overwriting of previous variables)
-    - [ ] Rmd code chunk names are descriptive and use dashes (not underscores or spaces)
-    - [ ] Functions are organized and well-documented, with explanations of purpose, inputs, and ouput
-    - [ ] Comments do not include unaddressed debt (e.g. `# TODO:` or `# FIXME`)
-    - [ ] Commented-out backup code and unused chunks have been removed
-    - [ ] File paths are relative (except for trials and network drive paths) and portable across operating systems (use `file.path()`)
-    - [ ] Hard coding and magic numbers are avoided
+- [ ]  I have compiled the R Markdown file(s) (or run the relevant code) after and recent changes, with no errors
+    - [ ]  Running time has been recorded or estimated: ___________
+- [ ] I have reviewed the code for readability and style with the [VISC Coding Principles](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/Coding-Principles.md) in mind, including focusing on:
+    - [ ] Line lengths (not too long!)
+    - [ ] Object names (meaningful, descriptive, unique, alphanumeric characters and underscores only)
+    - [ ] Rmd code chunk names (descriptive and use dashes, not underscores or spaces
 
 ### Writing/report review (use for PRs with PDF and/or Word drafts of PT reports)
 
@@ -86,15 +84,6 @@ See also [writing review guidelines](https://github.com/FredHutch/VISC-Documenta
     - [ ] Tables look right
         - [ ] Text is not running off the page
         - [ ] Significance highlighting is as expected
-
-## Notes
-
-Add any additional notes here.
-
-If necessary, provide explanations here for why any boxes from the checklist(s) above are not checked.
-
-- Reason 1
-- Reason 2
 
 ## Checklist(s) for PR reviewer(s)
 
