@@ -13,3 +13,13 @@ test_that("create_visc_project works", {
     file.exists(file.path(temp_dir, 'README.html'))
   )
 })
+
+test_that("create_visc_project works in package mode", {
+  # creates ephemeral directory that will be deleted upon function exit
+  temp_dir <- withr::local_tempdir()
+  create_visc_project(temp_dir, interactive = FALSE, package = TRUE)
+  # check that DESCRIPTION got created
+  expect_true(
+    file.exists(file.path(temp_dir, 'DESCRIPTION'))
+  )
+})
