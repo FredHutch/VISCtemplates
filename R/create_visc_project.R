@@ -5,12 +5,12 @@
 #' @param path file path
 #' @param interactive TRUE by default. FALSE is for non-interactive unit testing
 #'   only.
-#' @param is_package FALSE by default. Set to TRUE if your project is an R package
+#' @param package FALSE by default. Set TRUE to create project as an R package
 #' and you want package-specific files (DESCRIPTION, NAMESPACE) to be initiated.
 #'
 #' @return opens a new RStudio session with template project directory
 #' @export
-create_visc_project <- function(path, interactive = TRUE, is_package = FALSE){
+create_visc_project <- function(path, interactive = TRUE, package = FALSE){
 
   challenge_directory(path, interactive)
 
@@ -32,19 +32,14 @@ create_visc_project <- function(path, interactive = TRUE, is_package = FALSE){
   options(usethis.quiet = ! interactive)
 
   # create project
-  if (is_package) {
-    usethis::create_package(
+  do.call(
+    if (package) usethis::create_package else usethis::create_project,
+    list(
       path = path,
       rstudio = TRUE,
       open = interactive
     )
-  } else {
-    usethis::create_project(
-      path = path,
-      rstudio = TRUE,
-      open = interactive
-    )
-  }
+  )
 
   # must set active project otherwise it is <no active project>
   usethis::proj_set(path = path)
