@@ -1,6 +1,7 @@
 # VISCtemplates (development version)
 
 Improvements for users
+* Change name of `methods` folder within each report subfolder to `child-docs` to be more general-purpose (#309)
 * `visc_load_pdata()` gives more informative error message when serialized pdata file does not contain an R object of the same name (#303)
 * Default behavior of `create_visc_project()` no longer includes creation of package-specific files DESCRIPTION and NAMESPACE (#306)
 
