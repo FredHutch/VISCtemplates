@@ -148,7 +148,7 @@ use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab", "ad
 
   pkg_ver <- utils::packageVersion("VISCtemplates")
 
-  usethis::use_directory(file.path(path, "methods"))
+  usethis::use_directory(file.path(path, "child-docs"))
 
   usethis::use_template(
     template = file.path(
@@ -156,7 +156,7 @@ use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab", "ad
       paste0(assay, "-statistical-methods.Rmd")
       ),
     data = list(pkg_ver = pkg_ver),
-    save_as = file.path(path, "methods", "statistical-methods.Rmd"),
+    save_as = file.path(path, "child-docs", "statistical-methods.Rmd"),
     package = "VISCtemplates"
   )
 
@@ -166,7 +166,7 @@ use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab", "ad
       paste0(assay, "-lab-methods.Rmd")
       ),
     data = list(pkg_ver = pkg_ver),
-    save_as = file.path(path, "methods", "lab-methods.Rmd"),
+    save_as = file.path(path, "child-docs", "lab-methods.Rmd"),
     package = "VISCtemplates"
   )
 
@@ -176,7 +176,7 @@ use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab", "ad
       paste0(assay, "-biological-endpoints.Rmd")
       ),
     data = list(pkg_ver = pkg_ver),
-    save_as = file.path(path, "methods", "biological-endpoints.Rmd"),
+    save_as = file.path(path, "child-docs", "biological-endpoints.Rmd"),
     package = "VISCtemplates"
   )
 
