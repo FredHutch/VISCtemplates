@@ -286,7 +286,7 @@ $if(dropcc)$
 $else$
 {\bf cc:} \> \tabfill{$for(cc)$$cc.name$$sep$, $endfor$}\\
 $endif$
-{\bf Contact:} \> \tabfill{$for(from)$$if(from.contact)$$from.name$, $from.email$$sep$; $endif$ $endfor$}\\
+{\bf Contact:} \> \tabfill{$for(from)$$if(from.contact)$$from.name$ ($from.email$)$sep$, $endif$ $endfor$}\\
 \end{tabbing}
 \end{flushleft}
 
