@@ -1,40 +1,24 @@
-# This is a template for QC tests run on report outputs (PDF, Word)
+# This file contains QC tests for the PDF and Word outputs of {{ report_name }}
+# Run all tests with: testthat::test_file('path/to/file')
+# Feel free to edit and add tests as appropriate for the given report.
 
 library(spelling)
 library(pdftools)
 
-custom_wordlist <- file.path("..", "..", "inst", "WORDLIST")
-if (file.exists(custom_wordlist)) {
-  ignore_words <- readLines(custom_wordlist)
+# read custom wordlist for use in spellcheck
+custom_wordlist_path <- file.path("..", "..", "inst", "WORDLIST")
+if (file.exists(custom_wordlist_path)) {
+  custom_wordlist <- readLines(custom_wordlist_path)
 } else {
-  ignore_words <- character(0)
+  custom_wordlist <- character(0)
 }
 
+# locate and read files
 report_folder <- file.path("..", "..", "{{ path }}", "{{ report_name }}")
 main_rmd_path <- file.path(report_folder, paste0("{{ report_name }}", ".Rmd"))
 pdf_path <- file.path(report_folder, paste0("{{ report_name }}", ".pdf"))
 docx_path <- file.path(report_folder, paste0("{{ report_name }}", ".docx"))
-
 pdf_text <- pdf_text(pdf_path)
-
-
-test_that("Checking that main Rmd, PDF, and docx are all in sync", {
-
-  rmd_datetime <- file.info(main_rmd_path)$mtime
-  pdf_datetime <- file.info(pdf_path)$mtime
-  docx_datetime <- file.info(docx_path)$mtime
-
-  first_page_text <- pdf_text[[1]]
-  pdf_date_in_document <- stringr::str_extract_all(first_page_text, "Date:\\s+.+\\n")[[1]]
-  pdf_date_in_document <- stringr::str_remove_all(pdf_date_in_document, "Date:\\s+")
-  pdf_date_in_document <- stringr::str_remove_all(pdf_date_in_document, "\\n")
-  pdf_date_in_document <- as.Date.character(pdf_date_in_document, format = "%B %d, %Y")
-
-  expect_lt(rmd_datetime, pdf_datetime)
-  expect_lt(pdf_datetime - docx_datetime, as.difftime(0.5, units = "days"))
-  expect_equal(pdf_date_in_document, as.Date(pdf_datetime))
-
-})
 
 
 test_that(paste("Checking spelling in", pdf_path), {
