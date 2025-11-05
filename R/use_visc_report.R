@@ -206,18 +206,18 @@ use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab", "ad
 #' }
 use_visc_report_tests <- function(report_name, path = ".", interactive = TRUE) {
 
-  usethis::use_testthat()
+  usethis::use_directory(file.path(path, report_name, "tests"))
 
   usethis::use_template(
     template = "report_code_tests_template.R",
-    save_as = paste0("tests/testthat/test-report-code-", report_name, ".R"),
+    save_as = file.path(path, report_name, "tests", "test_report_code.R"),
     data = list(report_name = report_name, path = path),
     package = "VISCtemplates"
   )
 
   usethis::use_template(
-    template = "report_output_tests_template.R",
-    save_as = paste0("tests/testthat/test-report-output-", report_name, ".R"),
+    template = "report_pdf_tests_template.R",
+    save_as = file.path(path, report_name, "tests", "test_report_pdf.R"),
     data = list(report_name = report_name, path = path),
     package = "VISCtemplates"
   )

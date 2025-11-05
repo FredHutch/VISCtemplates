@@ -1,4 +1,4 @@
-# This file contains QC tests for the PDF and Word outputs of {{ report_name }}
+# This file contains QC tests for the PDF output of {{ report_name }}
 # Run all tests with: testthat::test_file('path/to/file')
 # Feel free to edit and add tests as appropriate for the given report.
 
@@ -13,11 +13,9 @@ if (file.exists(custom_wordlist_path)) {
   custom_wordlist <- character(0)
 }
 
-# locate and read files
+# read pdf
 report_folder <- file.path("..", "..", "{{ path }}", "{{ report_name }}")
-main_rmd_path <- file.path(report_folder, paste0("{{ report_name }}", ".Rmd"))
 pdf_path <- file.path(report_folder, paste0("{{ report_name }}", ".pdf"))
-docx_path <- file.path(report_folder, paste0("{{ report_name }}", ".docx"))
 pdf_text <- pdf_text(pdf_path)
 
 
