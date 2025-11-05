@@ -1,12 +1,13 @@
 # This file contains QC tests for the PDF output of {{ report_name }}
-# Run all tests with: testthat::test_file('path/to/file')
+# Run all tests by navigating to the folder this file is in and running
+# testthat::test_file('test_report_code.R')
 # Feel free to edit and add tests as appropriate for the given report.
 
 library(spelling)
 library(pdftools)
 
 # read custom wordlist for use in spellcheck
-custom_wordlist_path <- file.path("..", "..", "inst", "WORDLIST")
+custom_wordlist_path <- file.path("..", "..", "..", "inst", "WORDLIST")
 if (file.exists(custom_wordlist_path)) {
   custom_wordlist <- readLines(custom_wordlist_path)
 } else {
@@ -14,7 +15,7 @@ if (file.exists(custom_wordlist_path)) {
 }
 
 # read pdf
-report_folder <- file.path("..", "..", "{{ path }}", "{{ report_name }}")
+report_folder <- file.path("..")
 pdf_path <- file.path(report_folder, paste0("{{ report_name }}", ".pdf"))
 pdf_text <- pdf_text(pdf_path)
 
