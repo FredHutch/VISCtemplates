@@ -1,5 +1,25 @@
 # VISCtemplates (development version)
 
+Improvements for users
+* `visc_load_pdata()` gives more informative error message when serialized pdata file does not contain an R object of the same name (#303)
+* Default behavior of `create_visc_project()` no longer includes creation of package-specific files DESCRIPTION and NAMESPACE (#306)
+
+# VISCtemplates 2.0.2
+
+Improvements for users
+* `visc_load_pdata()` no longer accepts a dataVersion (e.g. `0.1.2`) as its `criteria` argument. Use a 32-digit data hash, as has long been standard practice. (#297)
+* `visc_load_pdata()` gains a new optional `package` argument for loading pdata with a non-standard name. (#297)
+
+# VISCtemplates 2.0.1
+
+Bug fixes
+* `visc_load_pdata()` now works in `datapackage` mode for installed datapackages that use `LazyData: true` in their DESCRIPTION file (#293)
+* `visc_load_pdata()` now also works with standard evaluation, accepting a character string as its first argument (#295)
+
+Improvements for package contributors and maintainers
+* Fix Codecov badge and URL (#287)
+* CI maintenance (#287, #291, #294)
+
 # VISCtemplates 2.0.0
 
 Improvements for users
