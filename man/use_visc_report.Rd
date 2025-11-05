@@ -8,6 +8,7 @@ use_visc_report(
   report_name = "VDCnnn_assay_PTreport",
   path = ".",
   report_type = c("empty", "generic", "bama", "nab", "adcc"),
+  include_tests = TRUE,
   interactive = TRUE
 )
 }
