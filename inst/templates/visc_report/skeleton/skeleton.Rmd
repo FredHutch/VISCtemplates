@@ -130,7 +130,7 @@ remotes::install_git(
 # For this template use VISCfunction example data
 data('exampleData_ICS', package = 'VISCfunctions', envir = environment())
 
-ICS_adata <- exampleData_ICS %>% 
+ICS_adata <- exampleData_ICS |> 
   filter(Population == "IFNg" & Group != 3)
 ```
 
@@ -211,8 +211,8 @@ Objectives can be found on ATLAS, in the study protocol, or in the SAP.
 ```{r response-testing, warning=FALSE}
 
 # example of using VISCfunctions::pairwise_test_bin for analysis
-response_results <- ICS_adata %>% 
-  group_by(Stim, Visit) %>%
+response_results <- ICS_adata |> 
+  group_by(Stim, Visit) |>
   group_modify(
       ~pairwise_test_bin(
         x = .$response, 
@@ -224,15 +224,15 @@ response_results <- ICS_adata %>%
         latex_output = TRUE, 
         verbose = FALSE
         )
-    ) %>%  
+    ) |>  
   ungroup()
 ```
 
 ```{r magnitude-testing, warning=FALSE}
 
 # example of using VISCfunctions::pairwise_test_cont for analysis
-magnitude_results <- ICS_adata %>%
-  group_by(Stim, Visit, Population) %>%
+magnitude_results <- ICS_adata |>
+  group_by(Stim, Visit, Population) |>
   group_modify(
     ~pairwise_test_cont(
       x = .$PercentCellNet, 
@@ -244,7 +244,7 @@ magnitude_results <- ICS_adata %>%
       digits = 3, 
       verbose = FALSE
       )
-    ) %>% 
+    ) |> 
    ungroup()
 ```
 
@@ -279,14 +279,14 @@ See Figure `r insert_ref("fig:example-plot")` and Table `r insert_ref("tab:examp
 
 ```{r example-plot, fig.scap="Shorter caption for List of Figures.", fig.cap= "Longer caption that shows under the figure. Explain everything needed to understand the figure here."}
 
-plt_data <- ICS_adata %>%
+plt_data <- ICS_adata |>
   mutate(
     Group = factor(Group),
     response_and_group = case_when(response == 0 ~ 'Non-Responders',
                                    response == 1 ~ paste("Group", Group, '(Responders)'))
   )
 
-plt_data %>%
+plt_data |>
   ggplot(aes(x = Group,
              y = pmax(PercentCellNet, 0.005),
              shape = response_and_group,
@@ -296,7 +296,7 @@ plt_data %>%
   scale_color_visc() +
   scale_shape_visc() +
   geom_boxplot(
-    data = plt_data %>% filter(response == 1),
+    data = plt_data |> filter(response == 1),
     fill = NA, lwd = .5, outlier.colour = NA
     ) +
   scale_y_log10(
@@ -318,8 +318,8 @@ plt_data %>%
 
 ```{r example-tab, results="asis", warning=kable_warnings}
 
-magnitude_tab <- magnitude_results %>% 
-  select(-Population, -contains("Perfect")) %>%
+magnitude_tab <- magnitude_results |> 
+  select(-Population, -contains("Perfect")) |>
   rename("Median (Range)" = Median_Min_Max, 'Mean (SD)' = Mean_SD)
 
 caption_short <- "Short caption to show in List of Tables."
@@ -328,7 +328,7 @@ caption <- "Long caption to show above table. Explain everything needed to under
 
 if (output_type == 'latex') {
 
-  magnitude_tab %>%
+  magnitude_tab |>
     mutate(
       MagnitudeTest = pretty_pvalues(
         MagnitudeTest, output_type = output_type, sig_alpha = .1,
@@ -336,7 +336,7 @@ if (output_type == 'latex') {
         bold = if_else(pandoc_markup , TRUE, FALSE),
         italic = if_else(pandoc_markup , TRUE, FALSE)
       )
-    ) %>% 
+    ) |> 
     kable(
       format = output_type, 
       longtable = FALSE, 
@@ -345,30 +345,30 @@ if (output_type == 'latex') {
       escape = FALSE,
       caption.short = caption_short,
       caption = caption
-    ) %>%
+    ) |>
     kable_styling(
       font_size = 8,
       # Note scale_down will overwrite font_size specifications
       latex_options = c("hold_position", "scale_down", "repeat_header")
-    ) %>% 
+    ) |> 
     collapse_rows(
       columns = 1:2, 
       row_group_label_position = "identity",
       latex_hline = "full"
-    ) %>% 
+    ) |> 
     kableExtra::footnote("SD: standard deviation.", threeparttable = TRUE)
   
 } else {
   
   # flextable version of table for Word doc output
   
-  magnitude_tab %>%
-    mutate(MagnitudeTest = round_away_0(MagnitudeTest, 3)) %>%
-    flextable() %>%
-    bg(i = ~ MagnitudeTest < .1, j = "MagnitudeTest", bg = "yellow") %>%
-    set_caption(caption) %>%
-    fontsize(size = 7, part = "all") %>%
-    merge_v(j = 1:2) %>% # equivalent of collapse_rows
+  magnitude_tab |>
+    mutate(MagnitudeTest = round_away_0(MagnitudeTest, 3)) |>
+    flextable() |>
+    bg(i = ~ MagnitudeTest < .1, j = "MagnitudeTest", bg = "yellow") |>
+    set_caption(caption) |>
+    fontsize(size = 7, part = "all") |>
+    merge_v(j = 1:2) |> # equivalent of collapse_rows
     add_footer_lines("SD: standard deviation.")
   
 }
@@ -390,20 +390,20 @@ tbl_caption <- "Reproducibility software session information"
 if (output_type == 'latex') {
   
   # format nicely for PDF with kable and kableExtra
-  my_session_info$platform_table %>%
-    kable(booktabs = TRUE, linesep = "", caption = tbl_caption) %>% 
-    kable_styling() %>%
-    column_spec(1, width = "1in") %>%
+  my_session_info$platform_table |>
+    kable(booktabs = TRUE, linesep = "", caption = tbl_caption) |> 
+    kable_styling() |>
+    column_spec(1, width = "1in") |>
     column_spec(2, width = "5.5in")
   
 } else {
   
   # format nicely for Word with flextable
-  my_session_info$platform_table %>%
-    flextable() %>%
-    set_caption(tbl_caption) %>%
-    set_table_properties(layout = "fixed") %>% # to allow overriding automatic column width
-    flextable::width(1, 1, unit = "in") %>%
+  my_session_info$platform_table |>
+    flextable() |>
+    set_caption(tbl_caption) |>
+    set_table_properties(layout = "fixed") |> # to allow overriding automatic column width
+    flextable::width(1, 1, unit = "in") |>
     flextable::width(2, 5.5, unit = "in")
   
 }
@@ -416,8 +416,8 @@ tbl_caption <- "Reproducibility software package version information"
 if (output_type == 'latex') {
   
   # format nicely for PDF with kable and kableExtra
-  my_session_info$packages_table %>%
-    kable(booktabs = TRUE, linesep = "", caption = tbl_caption) %>% 
+  my_session_info$packages_table |>
+    kable(booktabs = TRUE, linesep = "", caption = tbl_caption) |> 
     kable_styling()
   
 } else {
@@ -425,8 +425,8 @@ if (output_type == 'latex') {
   cat(insert_break())
   
   # format nicely for Word with flextable
-  my_session_info$packages_table %>%
-    flextable() %>%
+  my_session_info$packages_table |>
+    flextable() |>
     set_caption(tbl_caption)
   
 }

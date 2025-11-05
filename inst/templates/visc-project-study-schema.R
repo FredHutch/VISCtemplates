@@ -17,12 +17,12 @@ study_schema <- function(caption = "{{ study_name }} study schema.") {
     "Group B", 10, "Dose B", "Dose B"
     )
 
-  schema_table %>%
+  schema_table |>
     knitr::kable(
       format = VISCtemplates::get_output_type(),
       caption = caption,
       booktabs = TRUE,
       linesep = ""
-    ) %>%
+    ) |>
     kableExtra::kable_styling(latex_options = c("hold_position"))
   }

@@ -172,8 +172,8 @@ set_kable_warnings <- function(output_type) {
 #'
 #' pandoc_markup <- set_markup_warnings(output_type = get_output_type())
 #'
-#' my_results %>%
-#'   kable() %>%
+#' my_results |>
+#'   kable() |>
 #'   cell_spec(pvalue, bold = ifelse(pandoc_markup, TRUE, FALSE))
 #'
 #' }
