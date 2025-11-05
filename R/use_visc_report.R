@@ -21,6 +21,7 @@
 use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
                             path = ".",
                             report_type = c("empty", "generic", "bama", "nab", "adcc"),
+                            include_tests = TRUE,
                             interactive = TRUE) {
 
   report_type <- match.arg(report_type)
@@ -76,8 +77,9 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
                      interactive = interactive)
   }
 
-  # add report QC tests
-  use_visc_report_test_suite(report_name, path)
+  if (include_tests) {
+    use_visc_report_tests(report_name, path)
+  }
 
 }
 
@@ -200,21 +202,21 @@ use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab", "ad
 #'
 #' @examples
 #' \dontrun{
-#' use_visc_report_test_suite(report_name = "VDCnnn_BAMA_PTreport", path = "BAMA")
+#' use_visc_report_tests(report_name = "VDCnnn_BAMA_PTreport", path = "BAMA")
 #' }
-use_visc_report_test_suite <- function(report_name, path = ".", interactive = TRUE) {
+use_visc_report_tests <- function(report_name, path = ".", interactive = TRUE) {
 
   usethis::use_testthat()
 
   usethis::use_template(
-    template = "report_code_qc_tests.R",
+    template = "report_code_tests_template.R",
     save_as = paste0("tests/testthat/test-report-code-", report_name, ".R"),
     data = list(report_name = report_name, path = path),
     package = "VISCtemplates"
   )
 
   usethis::use_template(
-    template = "report_output_qc_tests.R",
+    template = "report_output_tests_template.R",
     save_as = paste0("tests/testthat/test-report-output-", report_name, ".R"),
     data = list(report_name = report_name, path = path),
     package = "VISCtemplates"

@@ -3,11 +3,11 @@
 library(spelling)
 library(lintr)
 
-custom_wordlist <- file.path("..", "..", "inst", "WORDLIST")
-if (file.exists(custom_wordlist)) {
-  ignore_words <- readLines(custom_wordlist)
+custom_wordlist_path <- file.path("..", "..", "inst", "WORDLIST")
+if (file.exists(custom_wordlist_path)) {
+  custom_wordlist <- readLines(custom_wordlist_path)
 } else {
-  ignore_words <- character(0)
+  custom_wordlist <- character(0)
 }
 
 report_folder <- file.path("..", "..", "{{ path }}", "{{ report_name }}")
@@ -47,7 +47,7 @@ for (file_path in all_rmd_paths) {
 
   test_that(paste("Checking spelling in", file_path), {
 
-    spelling_errors <- spell_check_files(file_path, ignore = ignore_words, lang = "en_US")
+    spelling_errors <- spell_check_files(file_path, ignore = custom_wordlist, lang = "en_US")
     expect(
       nrow(spelling_errors) == 0,
       failure_message = paste(capture.output(print(spelling_errors)), collapse = "\n")
