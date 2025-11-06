@@ -8,3 +8,39 @@ ignore_unused_imports <- function() {
   VISCfunctions::get_session_info
   invisible(NULL)
 }
+
+
+#' Detect package names referenced with :: in text
+#'
+#' Scan an input character vector (or single string) for occurrences of
+#' <pkg>::<symbol> or <pkg>:::<symbol> and return the unique package names.
+#'
+#' @param text Character vector or single string to scan.
+#' @return Character vector of unique package names (may be length 0).
+#' @examples
+#' detect_namespaces_in_text("dplyr::filter(x)\nVISCfunctions::get_session_info()")
+#' @export
+#' @family utilities
+detect_namespaces_in_text <- function(text){
+  if (length(text) == 0) return(character(0))
+  txt <- paste(text, collapse = "\n")
+  # find occurrences like pkg:: or pkg:::
+  m <- gregexpr("([[:alpha:].][[:alnum:]._]*)::+", txt, perl = TRUE)
+  matches <- regmatches(txt, m)[[1]]
+  if (length(matches) == 0) return(character(0))
+  pkgs <- sub("::+$", "", matches)
+  unique(pkgs)
+}
+
+#' Detect package names referenced with :: in a file
+#'
+#' Read a file and return package names referenced with :: notation.
+#' @param path Path to a text file (for example an Rmd or R file).
+#' @return Character vector of unique package names (may be length 0).
+#' @export
+#' @family utilities
+detect_namespaces_in_file <- function(path){
+  if (!file.exists(path)) stop("file does not exist: ", path)
+  txt <- readLines(path, warn = FALSE)
+  detect_namespaces_in_text(txt)
+}
