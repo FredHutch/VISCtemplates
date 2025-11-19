@@ -130,7 +130,7 @@ Add some text here
 if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmarkdown))
 
 # ensure packages referenced with :: are loaded before calling get_session_info()
-pkgs_to_load <- detect_namespaces_in_file('report_name.Rmd')
+pkgs_to_load <- detect_namespaces_in_file(knitr::current_input())
 for (pkg in pkgs_to_load) {
   if (any(installed.packages()[,1] == pkg)) suppressWarnings(library(pkg, character.only = TRUE))
 }
