@@ -36,6 +36,7 @@ Imports:
     usethis,
     glue,
     utils,
+    remotes,
     VISCfunctions
 Encoding: UTF-8
 URL: https://github.com/FredHutch/VISCtemplates
@@ -49,7 +50,6 @@ Suggests:
     ggplot2,
     kableExtra,
     knitr,
-    remotes,
     testthat (>= 3.0.0),
     withr
 Remotes:
