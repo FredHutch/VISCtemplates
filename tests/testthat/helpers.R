@@ -53,7 +53,7 @@ test_knit_report <- function(report_type, outfile_ext){
       pdf = c('pdf', 'log', 'tex', 'md', 'Rmd', 'knit.md'),
       docx = c('docx', 'md', 'knit.md', 'Rmd')
     )[[outfile_ext]]
-    snapshot_dir <- file.path(getwd(), test_path('_snaps'))
+    snapshot_dir <- file.path(getwd(), test_path('_snaps', 'use_visc_report'))
     if (! dir.exists(snapshot_dir)){
       dir.create(snapshot_dir, showWarnings = FALSE, recursive = TRUE)
     }
