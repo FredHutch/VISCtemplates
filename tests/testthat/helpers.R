@@ -57,10 +57,16 @@ test_knit_report <- function(report_type, outfile_ext){
       for (ext in try_snapshot_ext){
         outfile_path <- paste0(outfile_sans_ext, '.', ext)
         if (file.exists(outfile_path)){
-          suppressWarnings({
-            # don't want to see warning about initial snapshots
-            expect_snapshot_file(outfile_path)
-          })
+          # testthat v. 3.3.0 errors out on CI when there is no initial snapshot
+          # https://github.com/r-lib/testthat/pull/2149
+          # Trick it into thinking we're not on CI when we're on CI
+          withr::with_envvar(
+            c(CI = NA),
+            # we also don't want warnings about initial snapshots
+            suppressWarnings({
+              expect_snapshot_file(outfile_path)
+            })
+          )
         }
       }
     })
