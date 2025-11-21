@@ -6,16 +6,19 @@ author: "Contact: First Name, Last Name (xxx@fredhutch.org)"
 date: "Word document compiled on `r format(Sys.Date(), '%A, %B %d, %Y')`"
 from:
  - name: FirstNameA LastNameA
-   email: foo@bar.com
+   email: xxx@fredhutch.org
    contact: true
  - name: FirstNameB LastNameB
-to:
+   email: yyy@zzz.com
+   contact: true
  - name: FirstNameC LastNameC
+to:
  - name: FirstNameD LastNameD
+ - name: FirstNameE LastNameE
 dropcc: false
 cc:
- - name: FirstNameE LastNameE
  - name: FirstNameF LastNameF
+ - name: FirstNameG LastNameG
 includesummary: true
 summary: 
   A short summary about your report. 
