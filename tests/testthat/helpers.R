@@ -53,16 +53,19 @@ test_knit_report <- function(report_type, outfile_ext){
       pdf = c('pdf', 'log', 'tex', 'md', 'Rmd', 'knit.md'),
       docx = c('docx', 'md', 'knit.md', 'Rmd')
     )[[outfile_ext]]
-    local({
-      for (ext in try_snapshot_ext){
-        outfile_path <- paste0(outfile_sans_ext, '.', ext)
-        if (file.exists(outfile_path)){
-          suppressWarnings({
-            # don't want to see warning about initial snapshots
-            expect_snapshot_file(outfile_path)
-          })
-        }
+    snapshot_dir <- file.path(getwd(), test_path('_snaps', 'use_visc_report'))
+    if (! dir.exists(snapshot_dir)){
+      dir.create(snapshot_dir, showWarnings = FALSE, recursive = TRUE)
+    }
+    for (ext in try_snapshot_ext){
+      outfile_path <- paste0(outfile_sans_ext, '.', ext)
+      if (file.exists(outfile_path)){
+        file.copy(outfile_path, snapshot_dir)
+        # avoid our custom snapshots from getting auto-deleted by testthat
+        announce_snapshot_file(
+          file.path(snapshot_dir, basename(outfile_path))
+        )
       }
-    })
+    }
   })
 }
