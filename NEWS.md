@@ -6,6 +6,9 @@ Improvements for users
 * `visc_load_pdata()` gives more informative error message when serialized pdata file does not contain an R object of the same name (#303)
 * Default behavior of `create_visc_project()` no longer includes creation of package-specific files DESCRIPTION and NAMESPACE (#306)
 
+Improvements for package contributors and maintainers
+* Repair unit tests to work with `testthat 3.3.0` (#317)
+
 # VISCtemplates 2.0.2
 
 Improvements for users
