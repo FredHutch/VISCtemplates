@@ -7,7 +7,7 @@
 install_git_workaround = function(...){
   if(! file.exists(..1)){
     stop(sprintf('File not found: "%s"', ..1))
-  }
+  } #nocov start
   # temporarily tweak working directory for remotes::install_git() bug
   current_dir = getwd()
   on.exit(setwd(current_dir))
@@ -22,4 +22,4 @@ install_git_workaround = function(...){
       a[setdiff(seq_along(a), 1L)]
     )
   )
-}
+} # nocov end
