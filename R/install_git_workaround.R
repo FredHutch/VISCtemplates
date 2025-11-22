@@ -15,11 +15,6 @@ install_git_workaround = function(...){
   a <- list(...)
   do.call(
     remotes::install_git,
-    c(
-      # tweak 1st argument for remotes::install_git() bug
-      lapply(a[1L], basename),
-      # rest of arguments, if present
-      a[setdiff(seq_along(a), 1L)]
-    )
+    c(lapply(a[1L], basename), a[-1L])
   )
 } # nocov end
