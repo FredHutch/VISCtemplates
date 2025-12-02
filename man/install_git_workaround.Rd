@@ -4,10 +4,12 @@
 \alias{install_git_workaround}
 \title{Wrapper to use \code{\link[remotes:install_git]{remotes::install_git()}} on network drive paths}
 \usage{
-install_git_workaround(...)
+install_git_workaround(repo_path, ...)
 }
 \arguments{
-\item{...}{Arguments passed to \code{\link[remotes:install_git]{remotes::install_git()}}}
+\item{repo_path}{Path to \code{.git} repo of (data)package to install}
+
+\item{...}{Additional arguments passed to \code{\link[remotes:install_git]{remotes::install_git()}}}
 }
 \value{
 Called for package installation side effect
