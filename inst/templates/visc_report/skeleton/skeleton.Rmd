@@ -198,17 +198,17 @@ Objectives can be found on ATLAS, in the study protocol, or in the SAP.
 
 # Biological Endpoints
 
-```{r biological-endpoints, child="methods/biological-endpoints.Rmd"}
+```{r biological-endpoints, child="child-docs/biological-endpoints.Rmd"}
 ```
 
 # Lab Methods
 
-```{r lab-methods, child="methods/lab-methods.Rmd"}
+```{r lab-methods, child="child-docs/lab-methods.Rmd"}
 ```
 
 # Statistical Methods
 
-```{r statistical-methods, child="methods/statistical-methods.Rmd"}
+```{r statistical-methods, child="child-docs/statistical-methods.Rmd"}
 ```
 
 ```{r response-testing, warning=FALSE}
