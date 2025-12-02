@@ -1,6 +1,7 @@
 # VISCtemplates (development version)
 
 Improvements for users
+* New function `install_git_workaround()` to avoid `remotes::install_git()` error on network drive paths (#315)
 * Change name of `methods` folder within each report subfolder to `child-docs` to be more general-purpose (#309)
 * Line breaks added between multiple contact personnel on title page of PDF report template (#308)
 * `visc_load_pdata()` gives more informative error message when serialized pdata file does not contain an R object of the same name (#303)
