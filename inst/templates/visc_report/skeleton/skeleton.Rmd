@@ -6,16 +6,19 @@ author: "Contact: First Name, Last Name (xxx@fredhutch.org)"
 date: "Word document compiled on `r format(Sys.Date(), '%A, %B %d, %Y')`"
 from:
  - name: FirstNameA LastNameA
-   email: foo@bar.com
+   email: xxx@fredhutch.org
    contact: true
  - name: FirstNameB LastNameB
-to:
+   email: yyy@zzz.com
+   contact: true
  - name: FirstNameC LastNameC
+to:
  - name: FirstNameD LastNameD
+ - name: FirstNameE LastNameE
 dropcc: false
 cc:
- - name: FirstNameE LastNameE
  - name: FirstNameF LastNameF
+ - name: FirstNameG LastNameG
 includesummary: true
 summary: 
   A short summary about your report. 
@@ -195,17 +198,17 @@ Objectives can be found on ATLAS, in the study protocol, or in the SAP.
 
 # Biological Endpoints
 
-```{r biological-endpoints, child="methods/biological-endpoints.Rmd"}
+```{r biological-endpoints, child="child-docs/biological-endpoints.Rmd"}
 ```
 
 # Lab Methods
 
-```{r lab-methods, child="methods/lab-methods.Rmd"}
+```{r lab-methods, child="child-docs/lab-methods.Rmd"}
 ```
 
 # Statistical Methods
 
-```{r statistical-methods, child="methods/statistical-methods.Rmd"}
+```{r statistical-methods, child="child-docs/statistical-methods.Rmd"}
 ```
 
 ```{r response-testing, warning=FALSE}

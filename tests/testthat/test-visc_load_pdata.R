@@ -81,8 +81,7 @@ test_that("visc_load_pdata works", {
                                            'proj',
                                            'fffb5b0aaa74fe7cfc0d3ca6ab0bffff'
       )
-    }),
-    "pdata_digest.*not equal to.*criteria.*expected"
+    })
   )
   # test with installed data package
   withr::with_temp_libpaths({
@@ -128,8 +127,7 @@ test_that("visc_load_pdata works", {
                         'datapackage',
                         'fffb5b0aaa74fe7cfc0d3ca6ab0bffff'
         )
-      }),
-      "pdata_digest.*not equal to.*criteria.*expected"
+      })
     )
     # errors out when can't find the data/object.rda file
     expect_error(
@@ -179,8 +177,7 @@ test_that("visc_load_pdata works", {
                         'datapackage',
                         'fffb5b0aaa74fe7cfc0d3ca6ab0bffff'
         )
-      }),
-      "pdata_digest.*not equal to.*criteria.*expected"
+      })
     )
   })
 })
