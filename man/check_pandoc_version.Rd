@@ -2,7 +2,7 @@
 % Please edit documentation in R/report_functions.R
 \name{check_pandoc_version}
 \alias{check_pandoc_version}
-\title{Check pandoc version}
+\title{Check pandoc version (deprecated)}
 \usage{
 check_pandoc_version()
 }
@@ -10,7 +10,7 @@ check_pandoc_version()
 stops R Markdown report from running if <2.0
 }
 \description{
-Check pandoc version
+Check pandoc version (deprecated)
 }
 \examples{
 \dontrun{check_pandoc_version()}

@@ -35,7 +35,7 @@ install_load_cran_packages <- function(packages) {
   invisible(NULL)
 }
 
-#' Check pandoc version
+#' Check pandoc version (deprecated)
 #'
 #' @return stops R Markdown report from running if <2.0
 #' @export
