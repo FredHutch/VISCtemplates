@@ -178,11 +178,9 @@ The new release number is bumped to 1.0.0 because this version implements the st
     + Functions defined in report are now exported functions from {VISCtemplates}. Use `insert_ref()` to insert a reference to a table or figure.
     + Vignette updated to reflect these changes. 
 
-
 # VISCtemplates 0.1.2
 
 * Minor fix to the VISC report template for compatibility with pandoc upgrade.
-
 
 # VISCtemplates 0.1.1
 
