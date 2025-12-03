@@ -62,10 +62,6 @@ output_type <- get_output_type()
 kable_warnings <- set_kable_warnings(output_type)
 pandoc_markup <- set_pandoc_markup(output_type)
 
-# where to install and look for packages (e.g., data packages) installed on SCHARP server
-my_data_package_lib <- "/Volumes/kmacphee/RLib/" # UPDATE WITH YOUR DATA PACKAGE LOCATION
-.libPaths(c(.libPaths(), my_data_package_lib))
-
 # knitr options
 opts_chunk$set(cache = FALSE,
                message = TRUE,
