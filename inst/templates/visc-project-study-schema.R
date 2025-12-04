@@ -7,8 +7,6 @@
 #'
 #' @return a kable table with the study schema
 #' @export
-#'
-#' @examples
 study_schema <- function(caption = "{{ study_name }} study schema.") {
 
   schema_table <- tibble::tribble(
