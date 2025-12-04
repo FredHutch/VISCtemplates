@@ -9,6 +9,7 @@ Improvements for users
 
 Improvements for package contributors and maintainers
 * Repair unit tests to work with `testthat 3.3.0` (#317)
+* Remove empty "examples" in template study schema to avoid minor issues (#319)
 
 # VISCtemplates 2.0.2
 
