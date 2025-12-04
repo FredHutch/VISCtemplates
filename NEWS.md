@@ -6,6 +6,7 @@ Improvements for users
 * Line breaks added between multiple contact personnel on title page of PDF report template (#308)
 * `visc_load_pdata()` gives more informative error message when serialized pdata file does not contain an R object of the same name (#303)
 * Default behavior of `create_visc_project()` no longer includes creation of package-specific files DESCRIPTION and NAMESPACE (#306)
+* Add option to drop SCHARP logo in PDF output (#312)
 
 Improvements for package contributors and maintainers
 * Repair unit tests to work with `testthat 3.3.0` (#317)
