@@ -6,31 +6,49 @@ Here, describe the purpose and content of the PR in more detail.
 - Provide context and necessary background information, including links to any supporting documents (e.g., protocol presentation).
 - State the overall purpose of this PR.
 - Summarize the changes/additions in this PR, focusing on any important details that reviewers should know about.
-- Outline important questions for the reviewer (see "Checklist for PR Reviewer" below).
+- Outline important questions for the reviewer to address.
 - Mention any known outstanding issues, and if they will be addressed in future PRs.
 
 If you have time, reflect on any key challenges you faced in working on these changes. Were these challenges unique to this project, or do you think they apply to other VISC projects as well? Have any associated issues in the [VISCtemplates](https://github.com/FredHutch/VISCtemplates) or [VISCfunctions](https://github.com/FredHutch/VISCfunctions) repos been created to make things easier next time?
 
 ## Checklist for PR Creator
 
-The following checklist should be reviewed and completed before the pull request is marked as ready for review.
-(Note: you can create a draft pull request first, then complete the checklist, and then mark the PR as ready for review.)
+- [ ] Project-level README is up-to-date
+- [ ] Assay-level README is up-to-date
+- [ ] Report-level README is up-to-date (if exists)
+- [ ] All relevant files are included and up-to-date (e.g., underlying Rmd files, report pdf/docx files, figure files)
+- [ ] Unrelated or unnecessary files are NOT included (e.g., LaTeX files such as .toc and .aux)
+- [ ] To the best of my ability, I have followed the [VISC Coding Principles](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/Coding-Principles.md), including:
+    - [ ] Functions are accompanied by comments indicating, at a minimum, what the function is supposed to do, what its inputs are, and what it will return.
+    - [ ] Hard coding and magic numbers (if any) have accompanying documentation
+    - [ ] No unnecessary R packages are loaded (search code for `library()` calls to review)
+    - [ ] The most recent releases of VISCfunctions and VISCtemplates are used (and not the development versions!)
+    
+- [ ] I have reviewed any report outputs (pdf, docx) for overall formatting and accuracy, including:
+    - [ ] Verifying that the report text (summary, results, methods, etc.) is accurate, including updating as needed based on any recent code changes
+    - [ ] Text has been spell-checked, including captions and footnotes
+    - [ ] Figures and tables look good (including font sizes, colors, readability, captions)
+    - [ ] No broken references in the text (Use find: “??”)
+    - [ ] No stray warnings or R output in the text (Use find: “#”)
+    - [ ] No blank pages 
+    - [ ] Page x out of y is correct (sometimes y is wrong)  
+    - [ ] Reproducibility tables look correct, including the data package git hash
 
-Any items that are not checked off the list should be noted as outstanding issues in the description above.
-
-### Documentation and completeness
-
-- [ ] I have created and updated appropriate README.md files to reflect the latest changes
-- [ ] The latest versions of all relevant files have been pushed to the repo
-    - [ ] Unrelated or unnecessary files aren't included (e.g., LaTeX .toc files)
+    
+    
+- [ ] To the best of my ability, I have followed the [VISC Figure Guidelines](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/figure-guidelines.md)
+- [ ] To the best of my ability, I have followed the [VISC Writing Guidelines](https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing), including:
+    
+    
+    
+    
 
 ### Code review
 
-See also [code review guidelines](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/code-review-guideline.md)
-
-- [ ] Commented-out backup code and unused chunks have been removed
+- [ ] I have Commented-out backup code and unused chunks have been removed
 - [ ] Comments do not include unaddressed debt (e.g. `# TODO:` or `# FIXME`)
 - [ ] Warnings are not suppressed. If a warning must be suppressed there is a clear explanation (i.e., comment).
+
 - [ ] Functions have been organized and documented, with explanations of purpose, inputs, and ouput
 - [ ] Hard coding and magic numbers are avoided
 - [ ] I have used appropriate R packages where possible
@@ -44,44 +62,7 @@ See also [code review guidelines](https://github.com/FredHutch/VISC-Documentatio
     - [ ]  For PT reports: the analysis code follows and agrees with the statistical methods section
 - [ ]  I have compiled the R Markdown file(s) (or run the relevant code) after and recent changes, with no errors
     - [ ]  Running time has been recorded or estimated: ___________
-- [ ] I have reviewed the code for readability and style with the [VISC Coding Principles](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/Coding-Principles.md) in mind, including focusing on:
-    - [ ] Line lengths (not too long!)
-    - [ ] Object names (meaningful, descriptive, unique, alphanumeric characters and underscores only)
-    - [ ] Rmd code chunk names (descriptive and use dashes, not underscores or spaces
 
-### Report output review
-
-See also [writing review guidelines](https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing/writing_reviewing_guidelines.md)
-
-- [ ] The latest version of the report has been compiled to both PDF and Word without errors
-    - [ ] I've opened and reviewed the compiled PDF document
-    - [ ] I've opened and reviewed the compiled Word document
-- [ ] There are no obvious Markdown/pandoc/Latex errors 
-    - [ ] No broken references (?? or ???) in the text (Use find: “??”)
-    - [ ] No stray warnings or R output in the text (Use find: “#”)
-    - [ ] No blank pages 
-    - [ ] Page x out of y is correct (sometimes y is wrong)  
-- [ ] The reproducibility tables look correct
-    - [ ] The reproducibility tables do not include `NA`, local installations, or unnescessary packages
-    - [ ] The most recent versions (note: not the development versions) of VISCtemplates and VISCfunctions are used
-    - [ ] The data package git hash refers to the correct branch/version (i.e., is up-to-date)
-- [ ] I have double-checked that figures and tables look appropriate (refer to the [figure guidelines](https://github.com/FredHutch/VISC-Documentation/blob/main/Programming/figure-guidelines.md) as needed)
-    - [ ] Figures and tables are sorted in parallel with mentions in Results section
-    - [ ] Captions are descriptive, accurate, and succinct
-    - [ ] The appropriate number of axis tick marks is present (at least 3) for each figure
-    - [ ] Text is readable (in particular, large enough) and not cut off in figures (check facet labels, legends, titles)
-    - [ ] Tables do not run off the page
-    - [ ] Significance highlighting in tables is as expected
-- [ ] I have double-checked the report text (refer to the [writing guidelines](https://github.com/FredHutch/VISC-Documentation/tree/main/Writing_Reviewing) as needed)
-    - [ ] The sample type is accurate (e.g., serum, plasma, PBMC)
-    - [ ] Objectives follow the SAP and study protocol
-    - [ ] Results and summary of main results sections map to the objectives
-    - [ ] Acronyms and abbreviations are introduced the first time they are used
-    - [ ] Text has been spell-checked (including captions and footnotes)
-    - [ ] The correct tense (generally past tense) is used throughout the report
-    - [ ] Capitalization is correct and consistent
-    - [ ] I have reviewed the results sections carefully and confirmed that the statements in Results section are correct (including p-values) and supported by the correct figure and table references
-    - [ ] Code-based methods (i.e., in-line referencing) are used in inserting numeric values in the Results section (to minimize human error)
 
 ## Checklist(s) for PR reviewer(s)
 
