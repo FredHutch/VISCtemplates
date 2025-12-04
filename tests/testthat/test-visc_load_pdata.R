@@ -97,7 +97,7 @@ test_that("visc_load_pdata works", {
     )
     # install
     utils::install.packages(
-      file.path(td, "Visc777"), repo = NULL, quiet = TRUE
+      file.path(td, "Visc777"), repo = NULL, type = 'source', quiet = TRUE
     )
     # test RDA style package data installation
     expect_equal(
@@ -154,7 +154,7 @@ test_that("visc_load_pdata works", {
     writeLines(new_desc, desc_path)
     # do install
     utils::install.packages(
-      file.path(td, "Visc777"), repo = NULL, quiet = TRUE
+      file.path(td, "Visc777"), repo = NULL, type = 'source', quiet = TRUE
     )
     # test LazyData style package data installation
     expect_true(
@@ -223,7 +223,7 @@ test_that('visc_load_pdata works with non-standard pdata name', {
   # test using pdata from installed datapackage
   withr::with_temp_libpaths({
     utils::install.packages(
-      file.path(td, "Visc777"), repo = NULL, quiet = TRUE
+      file.path(td, "Visc777"), repo = NULL, type = 'source', quiet = TRUE
     )
     # right hash, rogue object handled
     expect_no_error(
