@@ -248,7 +248,11 @@ $if(dropVISClogo)$
 $else$
 \fancyhead[C]{\includegraphics[height=0.8cm]{$logo_path_visc$}}
 $endif$
+$if(dropSCHARPlogo)$
+\fancyhead[R]{}
+$else$
 \fancyhead[R]{\includegraphics[height=0.8cm]{$logo_path_scharp$}}
+$endif$
 \fancyfoot[C]{Page \thepage{}~of~\pageref{LastPage}}
 \setlength{\headheight}{27pt}
 
