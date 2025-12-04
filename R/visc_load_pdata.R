@@ -51,7 +51,7 @@ visc_load_pdata <- function(.data,
   # switch for proj/repo mode vs. installed datapackage mode
   if(proj_or_datapackage %in% c("proj", "repo")){
     # project / source repo mode
-    load(DataPackageR::project_data_path(paste0(pdata_name, ".rda")),
+    load(rprojroot::find_package_root_file("data", paste0(pdata_name, ".rda")),
          envir = pdata_env)
   } else {
     # installed datapackage mode

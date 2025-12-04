@@ -28,7 +28,6 @@ License: GPL-3 + file LICENSE
 Depends: R (>= 3.0)
 Imports:
     fs,
-    DataPackageR,
     digest,
     bookdown,
     rmarkdown,
