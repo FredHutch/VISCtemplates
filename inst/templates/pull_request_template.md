@@ -63,7 +63,7 @@ Report output document review:
 -   [ ] Standard reproducibility tables are included and look acceptable
     -   [ ] The reproducibility tables do not include `NA`s
     -   [ ] No local installations
-    -   [ ] No seemingly unnescessary packages
+    -   [ ] No seemingly unnecessary packages
     -   [ ] The most recent versions (note: not the development versions) of VISCtemplates and VISCfunctions are used
 -   [ ] I have reviewed the text of the report and communicated any concerns, including those related to:
     -   [ ] Report header (title, to/from, etc.)
