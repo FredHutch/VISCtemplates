@@ -5,4 +5,5 @@ output: html_document
 
 ```{r}
 Visc777_cars = subset(cars, speed > 20)
+rogue_object <- Visc777_cars
 ```

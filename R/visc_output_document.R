@@ -15,11 +15,12 @@
 visc_pdf_document <- function(latex_engine = "pdflatex",
                               keep_tex = TRUE,
                               ...) {
-  template <- find_resource("visc_report", "template.tex")
 
-  logo_path_scharp <- find_resource("visc_report", "SCHARP_logo.png")
-  logo_path_fh <- find_resource("visc_report", "FredHutch_logo.png")
-  logo_path_visc <- find_resource("visc_report", "VISC_logo.jpg")
+  template <- system.file("templates", "report_latex_template.tex", package = "VISCtemplates")
+
+  logo_path_scharp <- find_logo("SCHARP_logo.png")
+  logo_path_fh <- find_logo("FredHutch_logo.png")
+  logo_path_visc <- find_logo("VISC_logo.jpg")
 
   # If no project-level bib file creating report specific bib
   if (!file.exists(
@@ -30,10 +31,6 @@ visc_pdf_document <- function(latex_engine = "pdflatex",
               to = "bibliography.bib",
               overwrite = FALSE)
   }
-
-  file.copy(from = find_resource("visc_report", "README_PT_Report.md"),
-            to = "README.md",
-            overwrite = FALSE)
 
   # switch for a breaking change in pandoc template, see notes in template.tex
   use_old_csl_refs <- tolower(rmarkdown::pandoc_version() < '3.1.7')
@@ -73,7 +70,7 @@ visc_word_document <- function(toc = TRUE,
                                keep_md = TRUE,
                                ...) {
 
-  word_style_path <- find_resource("visc_report", "word-styles-reference.docx")
+  word_style_path <- system.file("templates", "report_word_template.docx", package = "VISCtemplates")
 
   # If no project-level bib file creating report specific bib
   if (!file.exists(
@@ -85,10 +82,6 @@ visc_word_document <- function(toc = TRUE,
               overwrite = FALSE)
   }
 
-  file.copy(from = find_resource("visc_report", "README_PT_Report.md"),
-            to = "README.md",
-            overwrite = FALSE)
-
   bookdown::word_document2(
     toc = toc,
     fig_caption = fig_caption,
@@ -98,12 +91,14 @@ visc_word_document <- function(toc = TRUE,
     ...)
 }
 
-find_resource <- function(template, file = 'template.tex', package = "VISCtemplates") {
+
+find_logo <- function(filename) {
   res <- system.file(
-    "rmarkdown", "templates", template, "resources", file, package = package
+    "logos", filename, package = "VISCtemplates"
   )
   if (res == "") stop(
-    "Couldn't find template file ", template, "/resources/", file, call. = FALSE
+    "Couldn't find logo file ", filename, call. = FALSE
   )
   res
 }
+
