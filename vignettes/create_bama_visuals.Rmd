@@ -1,0 +1,190 @@
+---
+title: "BAMA Figures for VISC reports"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{BAMA Figures for VISC reports}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+eval_chunks = TRUE
+```
+
+## Step one: Load and Preprocess Data
+
+This binding antibody multiplex assay (BAMA) vignette relies on an example dataset `exampleData_BAMA` from the package `VISCfunctions`. It contains the minimal columns required to make the below tables and visuals:
+
+- `pubID` unique identifier
+- `visitno` visit identifier
+- `magnitude` a continuous numeric endpoint with higher values indicating higher reactogenicity to the given `antigen`. In the case of BAMA, the `magnitude` is often a blank and background subtracted net-MFI. For more information see *(link to reference on BAMA readout)*.
+- `response` a binary outcome based on `magnitude` where a "positive response" (`response = 1`) indicates some threshold for an increase in `magnitude` from the baseline timepoint was met. By definition a baseline timepoint is an `NA`. 
+- optional: `group` categorical variable for the participant's treatment group
+- optional: `antigen` descriptor of antigen used in BAMA assay corresponding to specific magnitude and response endpoints
+
+These data are wide on endpoint (`magnitude` and `response`). 
+
+```{r load-bama-data, eval=eval_chunks}
+library(VISCfunctions)
+
+tail(exampleData_BAMA)
+```
+```{r load-necessary-pckgs, eval=eval_chunks}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(ggbeeswarm)
+```
+
+
+### Summarize Response Rates
+
+describe what you'll need to make below tables & plots. Includes response rate summary table. May include magnitude breadth table. 
+
+```{r create-summary-datasets, eval=eval_chunks}
+# generate response rate summary table
+
+```
+
+```{r other-tab-visual-inputs, eval=eval_chunks}
+# group_colours <- c(`Group 1` = "lightblue", `Group 2` = "lightgreen") # do we want/need this?
+
+```
+
+## Step two: Create Standard Response-rate and Magnitude
+
+The standard magnitude and response rate plots include stacked response rates and magnitude boxplots.
+
+- Only post-baseline magnitudes and response-rates are included
+- Magnitude boxplots are only based on responders
+- Non-responders are overlaid with grey triangles
+- Colours are used for treatment groups and should be colour-blind friendly.
+- Plots are generated using the R-package `ggplot2`.
+
+#### Response-rate and Magnitude Tables
+
+insert code
+
+### Response-rate and Magnitude Plots
+
+```{r eval=F, echo = eval_chunks}
+
+# generate response rate plot first - will need object with rates measures
+
+# generate mag plot second
+bama_mag <- exampleData_BAMA %>% 
+  filter(visitno != 0) %>%
+  mutate(group = factor(paste0("Group ", group), 
+                        levels = c("Group 1", "Group 2")),
+         group_colour = case_when(group == "Group 1" ~ "lightblue",
+                                  group == "Group 2" ~ "lightgreen"))
+
+bama_responders <- filter(bama_mag, response == 1)
+bama_nonresponders <-  filter(bama_mag, response == 0)
+    
+bama_mag %>%
+  ggplot(aes(x = group, y = magnitude)) +
+  geom_boxplot(
+    data = bama_responders,
+    aes(colour = group_colour),
+    outlier.colour = NA,
+    show.legend = FALSE
+  ) +
+  geom_beeswarm(
+    data = bama_nonresponders,
+    aes(shape = as.factor(response), colour = "darkgrey"),
+    size = 1.5
+  ) +
+  geom_beeswarm(
+    data = bama_responders,
+    aes(color = group_colour, shape = as.factor(response)),
+    size = 2.5
+  ) +
+  facet_grid(antigen ~ visitno) +
+  # scale_color_manual(values = group_colours) +
+  # scale_shape_manual(
+  #   name = "",
+  #   values = c("0" = 2, "1" = 19),
+  #   labels = c("Non Responder", "Responder")
+  # ) +
+# i dont think these data are on log scale
+  # scale_y_log10(
+  #   expression("Net MFI"),
+  #   breaks = c(100, 1000, 10000, 22000),
+  #   labels = c(expression("" <= 100), "1000", "10000", expression("" >= 22000))
+  # ) +
+  scale_x_discrete(drop = F) +
+  labs(x = "Group", y = "Net MFI") +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(
+      size = 11,
+      angle = 90,
+      vjust = .5,
+      hjust = 1
+    ),
+    axis.title.y = element_text(size = 13),
+    axis.title.x = element_blank(),
+    axis.text.y = element_text(size = 11),
+    legend.position = "bottom",
+    legend.text = element_text(size = 12),
+    legend.box = "vertical",
+    legend.margin = margin(-1, 0, 0, 0),
+    legend.spacing = unit(0, units = "cm"),
+    strip.text.x = element_blank(),
+    strip.text.y = element_text(size = 8)
+  )
+
+```
+
+## Step three: Create report specific plots
+
+### Line plots
+
+#### Line plots Table
+
+do we have any table that goes with line plots?
+
+```{r linetable-code, eval=eval_chunks}
+# code for response rate and mag summary tables
+```
+
+#### Line plots Figure
+
+```{r lineplot-code, eval=eval_chunks}
+# code for response rate and mag plot
+```
+
+### Durability
+
+#### Durability Summary Table
+
+```{r dur-table-code, eval=eval_chunks}
+# code for response rate and mag summary tables
+```
+
+#### Durability Figure
+
+```{r dur-plot-code, eval=eval_chunks}
+# code for response rate and mag plot
+```
+
+### Magnitude Breadth
+
+#### Magnitude Breadth Table
+
+```{r MBtable-code, eval=eval_chunks}
+# code for response rate and mag summary tables
+```
+
+#### Magnitude Breadth Figure
+
+```{r MBplot-code, eval=eval_chunks}
+# code for response rate and mag plot
+```
+
