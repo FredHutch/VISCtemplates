@@ -1,10 +1,19 @@
 # This file contains QC tests for the code underlying {{ report_name }}
-# Run all tests by navigating to the folder this file is in and running
-# testthat::test_file('test_report_pdf.R')
+# Run all tests by navigating to the 'tests' folder this file is in and running
+# testthat::test_file('test_report_code.R')
 # Feel free to edit and add tests as appropriate for the given report.
 
 library(spelling)
 library(lintr)
+
+lint_printer <- function(lints) {
+  for (lint_item in lints) {
+    cat(sprintf("Line %d: %s [%s]\n",
+                lint_item$line_number,
+                lint_item$message,
+                lint_item$linter))
+  }
+}
 
 # read custom wordlist for use in spellcheck
 custom_wordlist_path <- file.path("..", "..", "..", "inst", "WORDLIST")
@@ -46,13 +55,15 @@ for (file_path in all_rmd_paths) {
   })
 
   test_that(paste("Checking for commented out code in", file_path), {
-    lints <- lint(file_path, linters = commented_code_linter())
-    expect_length(lints, 0)
+    commented_code_lints <- lint(file_path, linters = commented_code_linter())
+    lint_printer(commented_code_lints)
+    expect_length(commented_code_lints, 0)
   })
 
   test_that(paste("Checking for TODO, FIXME, and similar comments in", file_path), {
-    lints <- lint(file_path, linters = todo_comment_linter())
-    expect_length(lints, 0)
+    code_debt_lints <- lint(file_path, linters = todo_comment_linter())
+    lint_printer(code_debt_lints)
+    expect_length(code_debt_lints, 0)
   })
 
   test_that(paste("Checking spelling in", file_path), {
@@ -64,21 +75,24 @@ for (file_path in all_rmd_paths) {
   })
 
   test_that(paste("Checking line lengths in", file_path), {
-    lints <- lint(file_path, linters = line_length_linter(length = 100L))
-    expect_length(lints, 0)
+    line_length_lints <- lint(file_path, linters = line_length_linter(length = 100L))
+    lint_printer(line_length_lints)
+    expect_length(line_length_lints, 0)
   })
 
   test_that(paste("Checking for non-portable or non-relative file paths in", file_path), {
-    lints <- lint(file_path, linters = list(absolute_path_linter(),
-                                            nonportable_path_linter()))
-    expect_length(lints, 0)
+    file_path_lints <- lint(file_path, linters = list(absolute_path_linter(),
+                                                      nonportable_path_linter()))
+    lint_printer(file_path_lints)
+    expect_length(file_path_lints, 0)
   })
 
   test_that("Checking object names", {
-    lints <- lint(file_path, linters = list(object_length_linter(),
-                                            object_name_linter(),
-                                            object_overwrite_linter()))
-    expect_length(lints, 0)
+    object_name_lints <- lint(file_path, linters = list(object_length_linter(),
+                                                        object_name_linter(),
+                                                        object_overwrite_linter()))
+    lint_printer(object_name_lints)
+    expect_length(object_name_lints, 0)
   })
 
 

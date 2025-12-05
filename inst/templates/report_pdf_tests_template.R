@@ -1,6 +1,6 @@
 # This file contains QC tests for the PDF output of {{ report_name }}
-# Run all tests by navigating to the folder this file is in and running
-# testthat::test_file('test_report_code.R')
+# Run all tests by navigating to the 'tests' folder this file is in and running
+# testthat::test_file('test_report_pdf.R')
 # Feel free to edit and add tests as appropriate for the given report.
 
 library(spelling)

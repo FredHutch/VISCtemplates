@@ -52,7 +52,8 @@ kable_warnings <- set_kable_warnings(output_type)
 pandoc_markup <- set_pandoc_markup(output_type)
 
 # packages installed from CRAN
-packages_needed <- c("conflicted", "dplyr", "ggplot2", "knitr", "kableExtra", "flextable", "rprojroot")
+packages_needed <- c("conflicted", "dplyr", "ggplot2", "knitr", "kableExtra",
+                     "flextable", "rprojroot")
 install_load_cran_packages(packages_needed)
 
 # knitr options
@@ -77,12 +78,16 @@ options(knitr.table.format = output_type,
         kable_styling_latex_options = c("hold_position"))
 
 # table options for flextable
-set_flextable_defaults(na_str = "", # NA's will be blank
-                       font.size = 10,
-                       theme_fun = "theme_box",
-                       table.layout = "autofit", # automatically sets column width and row height, can be overridden for individual tables with set_table_properties(layout = "fixed")
-                       fonts_ignore = TRUE,
-                       digits = 3)
+set_flextable_defaults(
+  na_str = "", # NA's will be blank
+  font.size = 10,
+  theme_fun = "theme_box",
+  # note: table.layout automatically sets column width and row height, this setting
+  # can be overridden for individual tables with set_table_properties(layout = "fixed")
+  table.layout = "autofit", 
+  fonts_ignore = TRUE,
+  digits = 3
+)
 
 # Create a ggplot theme for consistency of figures
 visc_theme <- theme_bw() + 
@@ -180,9 +185,9 @@ if (output_type == 'latex') {
 
 `r insert_break()`
 
-# Acknowledgements
+# Acknowledgments
 
-Include your acknowledgements in this section.
+Include your acknowledgments in this section.
 
 `r insert_break()`
 
