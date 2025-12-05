@@ -18,7 +18,7 @@ if (file.exists(custom_wordlist_path)) {
 report_folder <- file.path("..")
 main_rmd_path <- file.path(report_folder, paste0("{{ report_name }}", ".Rmd"))
 other_rmd_paths <- list.files(
-  path = file.path(report_folder, "methods"), # update this to child-docs later?
+  path = file.path(report_folder, "child-docs"),
   pattern = "\\.Rmd$",
   full.names = TRUE
 )
@@ -26,7 +26,6 @@ all_rmd_paths <- c(main_rmd_path, other_rmd_paths)
 
 
 for (file_path in all_rmd_paths) {
-
 
   # warning=F should be used sparingly
   test_that(paste("Checking for warning=F in", file_path), {
@@ -56,7 +55,6 @@ for (file_path in all_rmd_paths) {
     expect_length(lints, 0)
   })
 
-  # compare spelling to default and custom word lists
   test_that(paste("Checking spelling in", file_path), {
     spelling_errors <- spell_check_files(file_path, ignore = custom_wordlist, lang = "en_US")
     expect(
@@ -76,7 +74,7 @@ for (file_path in all_rmd_paths) {
     expect_length(lints, 0)
   })
 
-  test_that("Object names are reasonable", {
+  test_that("Checking object names", {
     lints <- lint(file_path, linters = list(object_length_linter(),
                                             object_name_linter(),
                                             object_overwrite_linter()))
