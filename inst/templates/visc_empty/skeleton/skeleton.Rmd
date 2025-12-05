@@ -94,29 +94,12 @@ visc_theme <- theme_bw() +
         legend.margin = margin(unit = "cm"),
         panel.grid.minor = element_blank())
 theme_set(visc_theme)
-
 ```
 
 ```{r conflicted-preferences, message=FALSE}
 
 # filter() is used in both dplyr and stats, so need to set the preference to dplyr
 conflict_prefer("filter", "dplyr")
-```
-
-```{r word-pdf-options}
-
-output_type <- get_output_type()
-
-kable_warnings <- set_kable_warnings(output_type)
-pandoc_markup <- set_pandoc_markup(output_type)
-```
-
-```{r data-package, eval=FALSE}
-remotes::install_git(file.path(get_server_path(folder = "networks"), 
-                               'cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git'),
-                     ref = 'main', # may need to change this to a different branch/tag/SHA to reproduce a specific analysis - see reproducibility tables in previous reports if appropriate
-                     git = 'external', 
-                     lib = my_data_package_lib)
 ```
 
 ```{r read-data}
