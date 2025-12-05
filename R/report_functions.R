@@ -35,7 +35,7 @@ install_load_cran_packages <- function(packages) {
   invisible(NULL)
 }
 
-#' Check pandoc version (deprecated)
+#' Check pandoc version
 #'
 #' @return stops R Markdown report from running if <2.0
 #' @export
@@ -44,16 +44,8 @@ install_load_cran_packages <- function(packages) {
 #' \dontrun{check_pandoc_version()}
 #'
 check_pandoc_version <- function() {
-  if (numeric_version(rmarkdown::pandoc_version()) < numeric_version('2.0')){
+  if (numeric_version(rmarkdown::pandoc_version()) < numeric_version('2.0'))
     stop('pandoc version must be >= 2.0 (released 2017-10-29)')
-  } else {
-    warning(
-      paste(
-        'VISCtemplates supports all recent pandoc versions.',
-        'Using `check_pandoc_version()` is no longer necessary.'
-      )
-    )
-  }
 }
 
 #' Cross-reference a figure, table, or section
