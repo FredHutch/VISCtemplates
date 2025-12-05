@@ -9,6 +9,7 @@ Improvements for users
 * Default behavior of `create_visc_project()` no longer includes creation of package-specific files DESCRIPTION and NAMESPACE (#306)
 * Add option to drop SCHARP logo in PDF output (#312)
 * Add `visc_load_pdata()` examples to report template skeleton (#327)
+* Remove `install_load_cran_packages()` from report template skeleton in favor of using `library()` calls (#321)
 
 Improvements for package contributors and maintainers
 
