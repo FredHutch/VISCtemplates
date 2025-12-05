@@ -113,25 +113,50 @@ conflict_prefer("filter", "dplyr")
 ```
 
 ```{r data-package, eval=FALSE}
+
 # Notes on `install_git()`:
 #
-# 1) `install_git()` doesn't work with network drives on Macs: to `install_git`
-# on a Mac, temporarily change your working directory to the data package
-# network path. Note that in Rmd files, `setwd()` only impacts the current code
-# chunk.
+# 1) `install_git()` doesn't work well with network drives, so we use
+# `VISCtemplates::install_git_workaround()`. Note that in Rmd files, `setwd()`
+# only impacts the current code chunk.
 #
 # 2) may need to change `ref` to a different branch/tag/SHA to reproduce a
 # specific analysis - see reproducibility tables in previous reports if
 # appropriate
-remotes::install_git(
-  networks_path('cavd', 'Studies', 'cvdNNN', 'pdata', 'VDCNNN.git'),
+
+install_git_workaround(
+  networks_path('cavd', 'Studies', 'cvdNNN', 'pdata', 'cvdNNN.git'),
   ref = 'main',
   git = 'external'
 )
+
+```
+
+```{r data-loading, eval = FALSE}
+
+# Standard data object naming, e.g. package named `cvdNNN` and object name
+# starts with `cvdNNN_`. The package name is parsed automatically from object
+# name
+exampleData_ICS <- visc_load_pdata(
+  'cvdNNN_ics',
+  proj_or_datapackage = 'datapackage',
+  criteria = 'a70bc33ea70bc33ea70bc33ea70bc33e'
+)
+
+# Non-standard data object naming. e.g., package named `cvdNNN` object name
+# starts with `other`. Package and object names are parsed independently.
+exampleData_ICS <- visc_load_pdata(
+  'other_ics',
+  proj_or_datapackage = 'datapackage',
+  criteria = 'a70bc33ea70bc33ea70bc33ea70bc33e',
+  package = 'cvdNNN'
+)
+
 ```
 
 ```{r data-processing}
-# For this template use VISCfunction example data
+
+# For this template, load VISCfunctions example data
 data('exampleData_ICS', package = 'VISCfunctions', envir = environment())
 
 ICS_adata <- exampleData_ICS %>% 
