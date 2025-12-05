@@ -2,7 +2,6 @@
 
 export(check_pandoc_version)
 export(create_visc_project)
-export(detect_namespaces_in_file)
 export(detect_namespaces_in_text)
 export(get_output_type)
 export(insert_break)

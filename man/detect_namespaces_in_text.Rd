@@ -19,8 +19,4 @@ Scan an input character vector (or single string) for occurrences of
 \examples{
 detect_namespaces_in_text("dplyr::filter(x)\nVISCfunctions::get_session_info()")
 }
-\seealso{
-Other utilities: 
-\code{\link{detect_namespaces_in_file}()}
-}
 \concept{utilities}

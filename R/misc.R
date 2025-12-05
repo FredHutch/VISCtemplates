@@ -31,16 +31,3 @@ detect_namespaces_in_text <- function(text){
   pkgs <- sub("::+$", "", matches)
   unique(pkgs)
 }
-
-#' Detect package names referenced with :: in a file
-#'
-#' Read a file and return package names referenced with :: notation.
-#' @param path Path to a text file (for example an Rmd or R file).
-#' @return Character vector of unique package names (may be length 0).
-#' @export
-#' @family utilities
-detect_namespaces_in_file <- function(path){
-  if (!file.exists(path)) stop("file does not exist: ", path)
-  txt <- readLines(path, warn = FALSE)
-  detect_namespaces_in_text(txt)
-}
