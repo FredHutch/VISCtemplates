@@ -1,35 +1,46 @@
 # VISCtemplates (development version)
 
 Improvements for users
-* `check_pandoc_version()` is now deprecated and removed from templates (#318)
+
+* Remove `check_pandoc_version()` from report templates (#318)
 * New function `install_git_workaround()` to avoid `remotes::install_git()` error on network drive paths (#315)
 * Change name of `methods` folder within each report subfolder to `child-docs` to be more general-purpose (#309)
 * Line breaks added between multiple contact personnel on title page of PDF report template (#308)
 * `visc_load_pdata()` gives more informative error message when serialized pdata file does not contain an R object of the same name (#303)
 * Default behavior of `create_visc_project()` no longer includes creation of package-specific files DESCRIPTION and NAMESPACE (#306)
+* Add option to drop SCHARP logo in PDF output (#312)
+* Add `visc_load_pdata()` examples to report template skeleton (#327)
 
 Improvements for package contributors and maintainers
+
 * Repair unit tests to work with `testthat 3.3.0` (#317)
+* Remove empty "examples" in template study schema to avoid minor issues (#319)
+* Run test knits in a `callr` session to isolate Rmd library calls from main R process (#320)
+* Drop dependency on `DataPackageR` (#324)
 
 # VISCtemplates 2.0.2
 
 Improvements for users
+
 * `visc_load_pdata()` no longer accepts a dataVersion (e.g. `0.1.2`) as its `criteria` argument. Use a 32-digit data hash, as has long been standard practice. (#297)
 * `visc_load_pdata()` gains a new optional `package` argument for loading pdata with a non-standard name. (#297)
 
 # VISCtemplates 2.0.1
 
 Bug fixes
+
 * `visc_load_pdata()` now works in `datapackage` mode for installed datapackages that use `LazyData: true` in their DESCRIPTION file (#293)
 * `visc_load_pdata()` now also works with standard evaluation, accepting a character string as its first argument (#295)
 
 Improvements for package contributors and maintainers
+
 * Fix Codecov badge and URL (#287)
 * CI maintenance (#287, #291, #294)
 
 # VISCtemplates 2.0.0
 
 Improvements for users
+
 * Add new helper functions `networks_path()` and `trials_path()` (#271)
 * Added ADCC template (#109)
 * Improvements to Word document formatting (#212, #281)
@@ -45,6 +56,7 @@ and minimally structured `README.md` files are created at the report folder leve
 * Include pdata object name and data package name in `visc_load_pdata()` error message (#253)
 
 Bug fixes
+
 * Provide default CRAN mirror if missing in `install_load_cran_packages()`, e.g., in a child R session during knitting. Fixes 'trying to use CRAN without setting a mirror' error (#218)
 * Update `template.tex` so that `flextable` package can be used to create tables in PDF documents (#226)
 * Fix error when running `skeleton.Rmd` file interactively (#249)
@@ -52,6 +64,7 @@ Bug fixes
 * Fix formatting issue in assay folder `README` template (#266)
 
 Improvements for package contributors and maintainers
+
 * Update and clarify `CONTRIBUTING.md` (#269)
 * Auto-calculate unit test coverage on PRs and view results on Codecov (#250)
 * Reorganized and renamed files in `inst/` for clarity (#233)
@@ -62,20 +75,24 @@ Improvements for package contributors and maintainers
 # VISCtemplates 1.3.2
 
 Bug Fix
+
 * Fix issue with insert_break() not inserting page breaks at times (#216)
 
 Other improvements
+
 * Reconcile differences between empty report template and other report templates (#204)
 * Remove dependency on the full tidyverse, per best practices (#213)
 
 # VISCtemplates 1.3.1
 
 Bug Fix
+
 * Re-flip Fred Hutch and SCHARP header logos to fix regression from #196, restoring intended logo positions in #195 (#205)
 
 # VISCtemplates 1.3.0
 
 Bug Fixes
+
 * Fix major bug that broke PDF knitting on pandoc >= 3.1.7 (#159)
 * Fix bug with latex packages (specifically etex's \reserveinserts command) that broke PDF knitting (#160)
 * Fix bug that occurred when a report subdirectory did not already exist, and add unit test (#173)
@@ -83,6 +100,7 @@ Bug Fixes
   + Update documentation to instruct users to use latex command instead in new code
 
 Improvements to Report Templates
+
 * Update header logo for SCHARP/Fred Hutch branding compliance (#195)
 * Update templates and documentation for using correct syntax for multiple citations (#191)
 * Add section number to References section in PDF output (#176)
@@ -91,6 +109,7 @@ Improvements to Report Templates
 * Add Acknowledgments section to report templates (#153)
 
 Testing and Continuous Integration
+
 * Create unit tests to test knit all report templates to PDF and Word (#168, #182, #186, #187, #192)
   + Test locally via `devtools::test()`; files written to `testthat/_snaps`
   + On pull requests, test reports are written to file snapshots on GitHub Actions
@@ -100,12 +119,14 @@ Testing and Continuous Integration
   + But then remove it entirely once superseded by more thorough test knitting (#178)
 
 Documentation and UI Improvements
+
 * Fix bad URL in GitHub setup instructions (#185)
 * Add guidance for where to install data packages (#154)
 * Add friendly error message to visc_load_pdata() when data package is not installed (#152)
 * Specify existence of NAb template in README and vignettes (#189)
 
 Package Maintenance
+
 * Adjust filenames in R/ and tests/ to follow best practices (#175, #179)
 * Respect existing getOption('repos') instead of forcing CRAN installations (#163)
 * Adjust dependencies in DESCRIPTION (#164)
