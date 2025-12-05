@@ -95,14 +95,6 @@ visc_theme <- theme_bw() +
         panel.grid.minor = element_blank())
 theme_set(visc_theme)
 
-# Set group colors for this example.
-# If you have group colors already in your project:
-# source(rprojroot::find_rstudio_root_file("R", "group_colors.R"), local = TRUE)
-group_colors <- c(
-  `1` = "#D92321",
-  `2` = "#1749FF",
-  `4` = "#0AB7C9"
-)
 ```
 
 ```{r conflicted-preferences, message=FALSE}

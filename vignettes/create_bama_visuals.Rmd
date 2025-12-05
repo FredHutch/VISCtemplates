@@ -23,7 +23,7 @@ This binding antibody multiplex assay (BAMA) vignette relies on an example datas
 - `pubID` unique identifier
 - `visitno` visit identifier
 - `magnitude` a continuous numeric endpoint with higher values indicating higher reactogenicity to the given `antigen`. In the case of BAMA, the `magnitude` is often a blank and background subtracted net-MFI. For more information see *(link to reference on BAMA readout)*.
-- `response` a binary outcome based on `magnitude` where a "positive response" (`response = 1`) indicates some threshold for an increase in `magnitude` was met.
+- `response` a binary outcome based on `magnitude` where a "positive response" (`response = 1`) indicates some threshold for an increase in `magnitude` from the baseline timepoint was met. By definition a baseline timepoint is an `NA`. 
 - optional: `group` categorical variable for the participant's treatment group
 - optional: `antigen` descriptor of antigen used in BAMA assay corresponding to specific magnitude and response endpoints
 
@@ -48,6 +48,7 @@ describe what you'll need to make below tables & plots. Includes response rate s
 
 ```{r create-summary-datasets, eval=eval_chunks}
 # generate response rate summary table
+
 ```
 
 ```{r other-tab-visual-inputs, eval=eval_chunks}
