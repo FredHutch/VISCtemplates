@@ -5,6 +5,7 @@
 
 library(spelling)
 library(pdftools)
+library(dplyr)
 
 # read custom wordlist for use in spellcheck
 custom_wordlist_path <- file.path("..", "..", "..", "inst", "WORDLIST")
@@ -29,12 +30,12 @@ test_that(paste("Checking spelling in", pdf_path), {
   # Remove URLs from each page
   pdf_text_truncated <- stringr::str_remove_all(pdf_text_truncated, "https?://\\S+")
 
-  spelling_errors_raw <- spell_check_text(pdf_text_truncated, ignore = ignore_words, lang = "en_US")
+  spelling_errors_raw <- spell_check_text(pdf_text_truncated, ignore = custom_wordlist, lang = "en_US")
 
   # checking also after collapsing line breaks and hyphens
   text_combined <- paste(pdf_text_truncated, collapse = "\n")
   text_cleaned <- gsub("\\s*-\\s*\n\\s*", "", text_combined)
-  spelling_errors_cleaned <- spell_check_text(text_cleaned, ignore = ignore_words, lang = "en_US")
+  spelling_errors_cleaned <- spell_check_text(text_cleaned, ignore = custom_wordlist, lang = "en_US")
 
   spelling_errors_final <- spelling_errors_raw |>
     filter(word %in% spelling_errors_cleaned$word, nchar(word) > 2)

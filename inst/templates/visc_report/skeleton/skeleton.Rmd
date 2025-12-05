@@ -52,7 +52,8 @@ kable_warnings <- set_kable_warnings(output_type)
 pandoc_markup <- set_pandoc_markup(output_type)
 
 # packages installed from CRAN
-packages_needed <- c("conflicted", "ggplot2", "dplyr", "knitr", "kableExtra", "flextable", "rprojroot", "remotes")
+packages_needed <- c("conflicted", "ggplot2", "dplyr", "knitr", "kableExtra",
+                     "flextable", "rprojroot", "remotes")
 install_load_cran_packages(packages_needed)
 
 # where to install and look for packages (e.g., data packages) installed on SCHARP server
@@ -81,12 +82,16 @@ options(knitr.table.format = output_type,
         kable_styling_latex_options = c("hold_position"))
 
 # table options for flextable
-set_flextable_defaults(na_str = "", # NA's will be blank
-                       font.size = 10,
-                       theme_fun = "theme_box",
-                       table.layout = "autofit", # automatically sets column width and row height, can be overridden for individual tables with set_table_properties(layout = "fixed")
-                       fonts_ignore = TRUE,
-                       digits = 3)
+set_flextable_defaults(
+  na_str = "", # NA's will be blank
+  font.size = 10,
+  theme_fun = "theme_box",
+  # note: automatically sets column width and row height, but can be overridden
+  # for individual tables with set_table_properties(layout = "fixed")
+  table.layout = "autofit",
+  fonts_ignore = TRUE,
+  digits = 3
+)
 
 # Create a ggplot theme for consistency of figures
 visc_theme <- theme_bw() + 
@@ -208,7 +213,7 @@ Objectives can be found on ATLAS, in the study protocol, or in the SAP.
 ```{r statistical-methods, child="methods/statistical-methods.Rmd"}
 ```
 
-```{r response-testing, warning=FALSE}
+```{r response-testing}
 
 # example of using VISCfunctions::pairwise_test_bin for analysis
 response_results <- ICS_adata %>% 
@@ -228,7 +233,7 @@ response_results <- ICS_adata %>%
   ungroup()
 ```
 
-```{r magnitude-testing, warning=FALSE}
+```{r magnitude-testing}
 
 # example of using VISCfunctions::pairwise_test_cont for analysis
 magnitude_results <- ICS_adata %>%
@@ -324,7 +329,8 @@ magnitude_tab <- magnitude_results %>%
 
 caption_short <- "Short caption to show in List of Tables."
 
-caption <- "Long caption to show above table. Explain everything needed to understand the table here."
+caption <- paste("Long caption to show above table.",
+                 "Explain everything needed to understand the table here.")
 
 if (output_type == 'latex') {
 
@@ -434,7 +440,7 @@ if (output_type == 'latex') {
 
 `r insert_break()`
 
-# Acknowledgements
+# Acknowledgments
 
 [Contact the study PM to get an updated list of internal and external contributors, and then fill in the template below]
 
