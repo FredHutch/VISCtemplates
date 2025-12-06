@@ -2,11 +2,13 @@
 
 Note: make sure to provide a brief and descriptive pull request (PR) title above.
 
-Here, describe the overall purpose and content of this PR, including:
+Here, describe the overall purpose and content of this PR.
 
--   Providing context and necessary background information, including links to any supporting documents (e.g., protocol presentation).
--   Summarizing additions and changes to the repo, focusing on key details that reviewers should know about.
--   Mentioning any outstanding issues, and if they will be addressed in future PRs.
+-   Provide context and necessary background information, including links to any supporting documents. In particular, tell reviewers where to find:
+    -   The relevant SAP
+    -   The relevant report spec
+-   Summarize additions and changes to the repo, focusing on key details that reviewers should know about.
+-   Mention any outstanding issues, and if they will be addressed in future PRs.
 
 If you have time, reflect on any key challenges you faced in working on these changes. Were these challenges unique to this project, or do you think they apply to other VISC projects as well? Have any associated issues in the [VISCtemplates](https://github.com/FredHutch/VISCtemplates) or [VISCfunctions](https://github.com/FredHutch/VISCfunctions) repos been created to make things easier next time?
 
@@ -65,10 +67,9 @@ Report output document review:
     -   [ ] No local installations
     -   [ ] No seemingly unnecessary packages
     -   [ ] The most recent versions (note: not the development versions) of VISCtemplates and VISCfunctions are used
--   [ ] I have reviewed the text of the report and communicated any concerns, including those related to:
+-   [ ] I have reviewed the main content of the report and communicated any concerns, including those related to:
     -   [ ] Report header (title, to/from, etc.)
     -   [ ] Spelling and grammar (including acronyms and abbreviations)
     -   [ ] Report outline (i.e., order and structure of sections)
-    -   [ ] Agreement between the report and the corresponding SAP and study protocol
     -   [ ] Formatting of figures and tables (including captions)
     -   [ ] Clarity and accuracy of text sections (results, summary, methods, etc.)
