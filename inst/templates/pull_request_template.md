@@ -26,8 +26,9 @@ If you have time, reflect on any key challenges you faced in working on these ch
     -   [ ] There is no stale code or unaddressed code debt (e.g. `# TODO:` or `# FIXME`, commented-out backup code, unused code chunks)
     -   [ ] Warnings are generally not suppressed, and if a warning must be suppressed there is a clear explanation (i.e., comment)
     -   [ ] Hard coding and magic numbers are generally not used, and if necessary to include, are accompanied by a clear explanation (i.e., comment)
-
--   [ ] I have reviewed any report outputs (pdf, docx) for overall formatting and accuracy, including:
+       
+-   [ ] I have compiled the relevant Rmd files (to pdf/docx/html) based on the latest code, without errors
+-   [ ] I have reviewed the compiled files (pdf/docx/html) for overall formatting and accuracy, including:
 
     -   [ ] Text has been spell-checked, including captions and footnotes (Use: either `spelling` package or MS Word spell check applied to knitted docx file)
     -   [ ] Figures and tables look good (including font sizes, colors, readability, captions)
@@ -56,7 +57,7 @@ Code review: I have reviewed the code and communicated any concerns, including t
 -   [ ] "Don't repeat yourself" coding principle (e.g., functions are used rather than repetitive code)
 -   [ ] Code logic (i.e., overall the code appears to do what is intended without adverse side effects), including:
     -   [ ] Joins and filtering appear to be correct
-    -   [ ] Statistical analysis code matches what is described and intended
+    -   [ ] Statistical analysis code matches what is described in report methods and other text
 -   [ ] Code formatting (e.g., line lengths, object names, ...) and documentation (i.e., clarity and inclusion of appropriate level of detail)
 
 Report output document review:
