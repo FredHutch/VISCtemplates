@@ -166,7 +166,7 @@ if (output_type == 'latex') {
   
   # format nicely for PDF with kable and kableExtra
   my_session_info$packages_table %>%
-    kable(booktabs = TRUE, linesep = "", caption = tbl_caption) %>% 
+    kable(booktabs = TRUE, linesep = "", caption = tbl_caption, longtable = TRUE) %>% 
     kable_styling()
   
 } else {
