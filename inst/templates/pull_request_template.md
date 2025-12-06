@@ -29,7 +29,7 @@ If you have time, reflect on any key challenges you faced in working on these ch
 
 -   [ ] I have reviewed any report outputs (pdf, docx) for overall formatting and accuracy, including:
 
-    -   [ ] Text has been spell-checked, including captions and footnotes
+    -   [ ] Text has been spell-checked, including captions and footnotes (Use: either `spelling` package or MS Word spell check applied to knitted docx file)
     -   [ ] Figures and tables look good (including font sizes, colors, readability, captions)
     -   [ ] No broken references in the text (Use find: "??")
     -   [ ] No stray warnings or R output in the text (Use find: "\#")
@@ -64,7 +64,7 @@ Report output document review:
 -   [ ] I do not see any obvious markdown/pandoc/latex errors
 -   [ ] Standard reproducibility tables are included and look acceptable
     -   [ ] The reproducibility tables do not include `NA`s
-    -   [ ] No local installations
+    -   [ ] No local package installations (e.g., "C" or "H" drives); CRAN, GitHub, and SCHARP drives used instead
     -   [ ] No seemingly unnecessary packages
     -   [ ] The most recent versions (note: not the development versions) of VISCtemplates and VISCfunctions are used
 -   [ ] I have reviewed the main content of the report and communicated any concerns, including those related to:
