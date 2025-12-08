@@ -413,7 +413,7 @@ if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmark
 
 my_session_info <- VISCfunctions::get_session_info()
 
-tbl_caption <- "Reproducibility software session information"
+tbl_caption <- "Session reproducibility information"
 
 if (output_type == 'latex') {
   
@@ -441,7 +441,7 @@ if (output_type == 'latex') {
 
 ```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
 
-tbl_caption <- "Reproducibility software package version information"
+tbl_caption <- "Package reproducibility information"
 
 if (output_type == 'latex') {
   
