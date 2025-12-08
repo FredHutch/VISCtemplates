@@ -10,6 +10,7 @@ Improvements for users
 * Default behavior of `create_visc_project()` no longer includes creation of package-specific files DESCRIPTION and NAMESPACE (#306)
 * Add option to drop SCHARP logo in PDF output (#312)
 * Add `visc_load_pdata()` examples to report template skeleton (#327)
+* Reproducibility table formatting changes to coordinate with recent VISCfunctions update that lengthens reproducibility packages table to include packages that are loaded but not attached (#329)
 
 Improvements for package contributors and maintainers
 
