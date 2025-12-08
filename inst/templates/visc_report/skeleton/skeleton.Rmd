@@ -437,6 +437,8 @@ if (output_type == 'latex') {
 }
 ```
 
+`r insert_break()`
+
 ```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
 
 tbl_caption <- "Reproducibility software package version information"
@@ -449,8 +451,6 @@ if (output_type == 'latex') {
     kable_styling(latex_options = 'repeat_header')
   
 } else {
-  
-  cat(insert_break())
   
   # format nicely for Word with flextable
   my_session_info$packages_table %>%
