@@ -71,6 +71,13 @@ visc_load_pdata <- function(.data,
     if (! pkg_name %in% rownames(utils::installed.packages(lib.loc = lib.loc))){
       stop(paste0("Data package '", pkg_name, "' is not installed"))
     }
+    message(
+      sprintf(
+        'Loading pdata from installed datapackage %s in library %s',
+        pkg_name,
+        dirname(find.package(pkg_name, lib.loc = lib.loc))
+      )
+    )
     withr::with_options(
       # create error from warning if pdata_name doesn't exist in package
       list(warn = 2),

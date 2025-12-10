@@ -1,15 +1,16 @@
 #' Construct paths
 #'
-#' Requires one-time setup of the environment variable
-#' `VISCTEMPLATES_NETWORKS_PATH` or `VISCTEMPLATES_TRIALS_PATH` in your
-#' `.Renviron` file. To do this,
+#' Requires one-time setup of environment variables
+#' `VISCTEMPLATES_NETWORKS_PATH`, `VISCTEMPLATES_TRIALS_PATH`, and/or
+#' `VISCTEMPLATES_DATAPACKAGE_PATH` in your `.Renviron` file. To do this,
 #' \enumerate{
 #' \item Open your `.Renviron` file for editing in Rstudio
 #' with [usethis::edit_r_environ()]
-#' \item Add needed line(s) to `.Renviron` defining `VISCTEMPLATES_NETWORKS_PATH`
-#' and/or `VISCTEMPLATES_TRIALS_PATH` to reflect your operating system and your
-#' drive mappings. Only use the forward slash `/` as a path
-#' separator and do not use a trailing `/`. Typical settings:
+#' \item Add needed line(s) to `.Renviron` defining
+#' `VISCTEMPLATES_NETWORKS_PATH`, `VISCTEMPLATES_TRIALS_PATH`, and/or
+#' `VISCTEMPLATES_DATAPACKAGE_PATH` to reflect your operating system, drive
+#' mappings, and datapackage install location. Only use the forward slash `/` as
+#' a path separator and do not use a trailing `/`. Typical settings:
 #' \itemize{
 #' \item Windows
 #' \preformatted{
@@ -32,7 +33,7 @@
 #' }
 #'
 #' @param ... additional path components passed to [file.path()]; appended after
-#'   the networks or trials root path defined in your `.Renviron` file
+#'   the networks, trials, or datapackage root path defined in your `.Renviron` file
 #' @name paths
 #' @return Character; the concatenated path
 NULL
@@ -44,6 +45,10 @@ networks_path <- function(...) path_helper('networks', ...)
 #' @rdname paths
 #' @export
 trials_path <- function(...) path_helper('trials', ...)
+
+#' @rdname paths
+#' @export
+datapackage_path <- function(...) path_helper('datapackage', ...)
 
 #' Internal helper function for [networks_path()] and [trials_path()]
 #'
