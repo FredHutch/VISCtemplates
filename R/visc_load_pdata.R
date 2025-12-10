@@ -14,6 +14,9 @@
 #'   pdata naming) or character. If NULL, look for pdata named `.data` in
 #'   package <portion of `.data` before the first underscore>. If not NULL, look
 #'   for pdata named `.data` in package `package`.
+#' @param lib.loc library path from which to load the data package. Passed
+#'   internally to `utils::data()`. Default is `NULL`, which uses the first
+#'   element of `.libPaths()`
 #' @return pdata object
 #' @examples
 #' \dontrun{
@@ -35,7 +38,8 @@
 visc_load_pdata <- function(.data,
                             proj_or_datapackage = c("datapackage", "proj", "repo"),
                             criteria = NULL,
-                            package = NULL){
+                            package = NULL,
+                            lib.loc = NULL){
   proj_or_datapackage <- match.arg(proj_or_datapackage)
 
   # switch for pdata given as name or character
@@ -64,14 +68,19 @@ visc_load_pdata <- function(.data,
     }
 
     # check package is installed
-    if (! pkg_name %in% rownames(utils::installed.packages())){
+    if (! pkg_name %in% rownames(utils::installed.packages(lib.loc = lib.loc))){
       stop(paste0("Data package '", pkg_name, "' is not installed"))
     }
     withr::with_options(
       # create error from warning if pdata_name doesn't exist in package
       list(warn = 2),
       # load pdata_name from data package
-      utils::data(list = pdata_name, package = pkg_name, envir = pdata_env)
+      utils::data(
+        list = pdata_name,
+        package = pkg_name,
+        envir = pdata_env,
+        lib.loc = lib.loc
+      )
     )
   }
 
