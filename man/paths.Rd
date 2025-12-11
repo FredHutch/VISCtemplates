@@ -43,7 +43,7 @@ VISCTEMPLATES_DATAPACKAGE_PATH="H:/datapackages"
 \preformatted{
 VISCTEMPLATES_NETWORKS_PATH="/Volumes/networks"
 VISCTEMPLATES_TRIALS_PATH="/Volumes/trials"
-VISCTEMPLATES_DATAPACKAGE_PATH="/Volumes/kmacphee/RLib/"
+VISCTEMPLATES_DATAPACKAGE_PATH="/Volumes/kmacphee/RLib"
 }
 \item Linux
 \preformatted{
