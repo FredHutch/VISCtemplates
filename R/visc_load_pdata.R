@@ -68,7 +68,7 @@ visc_load_pdata <- function(.data,
     }
 
     # check package is installed
-    if (! pkg_name %in% rownames(utils::installed.packages(lib.loc = lib.loc))){
+    if (! pkg_name %in% .packages(all.available = TRUE, lib.loc = lib.loc)){
       stop(paste0("Data package '", pkg_name, "' is not installed"))
     }
     message(
