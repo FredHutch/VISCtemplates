@@ -55,8 +55,10 @@ visc_load_pdata <- function(.data,
   # switch for proj/repo mode vs. installed datapackage mode
   if(proj_or_datapackage %in% c("proj", "repo")){
     # project / source repo mode
-    load(rprojroot::find_package_root_file("data", paste0(pdata_name, ".rda")),
-         envir = pdata_env)
+    message("Loading ", pdata_name, " from current project/repo")
+    dp <- rprojroot::find_package_root_file("data", paste0(pdata_name, ".rda"))
+    load(dp, envir = pdata_env)
+    message("Found file ", dp)
   } else {
     # installed datapackage mode
 
@@ -73,9 +75,9 @@ visc_load_pdata <- function(.data,
     }
     message(
       sprintf(
-        'Loading pdata from installed datapackage %s in library %s',
-        pkg_name,
-        dirname(find.package(pkg_name, lib.loc = lib.loc))
+        'Loading %s from installed datapackage\nFound library %s',
+        pdata_name,
+        find.package(pkg_name, lib.loc = lib.loc)
       )
     )
     withr::with_options(
@@ -103,7 +105,6 @@ visc_load_pdata <- function(.data,
   }
 
   # extract pdata from temporary environment
-  message("Loading ", pdata_name, " from ", proj_or_datapackage)
   pdata <- get(pdata_name, envir = pdata_env)
 
   # if criteria missing, skip check. Warn, but return pdata anyway
@@ -121,6 +122,6 @@ visc_load_pdata <- function(.data,
   # return pdata if hash check is successful
   pdata_digest <- digest::digest(pdata)
   testthat::expect_equal(pdata_digest, criteria)
-  message("Hash: ", criteria, " matches!")
+  message("Data hash ", criteria, " matches!")
   return(pdata)
 }
