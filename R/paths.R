@@ -16,16 +16,20 @@
 #' \preformatted{
 #' VISCTEMPLATES_NETWORKS_PATH="N:"
 #' VISCTEMPLATES_TRIALS_PATH="T:"
+#' VISCTEMPLATES_DATAPACKAGE_PATH="H:/datapackages"
 #' }
 #' \item macOS
 #' \preformatted{
 #' VISCTEMPLATES_NETWORKS_PATH="/Volumes/networks"
 #' VISCTEMPLATES_TRIALS_PATH="/Volumes/trials"
+#' VISCTEMPLATES_DATAPACKAGE_PATH="/Volumes/kmacphee/RLib/"
 #' }
 #' \item Linux
 #' \preformatted{
 #' VISCTEMPLATES_NETWORKS_PATH="/networks"
-#' VISCTEMPLATES_TRIALS_PATH="/trials" }
+#' VISCTEMPLATES_TRIALS_PATH="/trials"
+#' VISCTEMPLATES_DATAPACKAGE_PATH="/home/username/datapackages"
+#' }
 #' }
 #' \item Save the file
 #' \item Restart your R session (in Rstudio: `Session` > `Restart R`)
