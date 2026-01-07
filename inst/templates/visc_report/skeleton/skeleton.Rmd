@@ -444,19 +444,24 @@ if (output_type == 'latex') {
 tbl_caption <- "Package reproducibility information"
 
 if (output_type == 'latex') {
-  
+
   # format nicely for PDF with kable and kableExtra
   my_session_info$packages_table %>%
-    kable(booktabs = TRUE, linesep = "", caption = tbl_caption, longtable = TRUE) %>%
-    kable_styling(latex_options = 'repeat_header')
-  
+    kable(
+      booktabs = TRUE, linesep = "", caption = tbl_caption, longtable = TRUE
+    ) %>%
+    kable_styling(
+      latex_options = 'repeat_header',
+      repeat_header_method = 'replace'
+    )
+
 } else {
-  
+
   # format nicely for Word with flextable
   my_session_info$packages_table %>%
     flextable() %>%
     set_caption(tbl_caption)
-  
+
 }
 ```
 
