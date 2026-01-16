@@ -6,16 +6,19 @@ author: "Contact: First Name, Last Name (xxx@fredhutch.org)"
 date: "Word document compiled on `r format(Sys.Date(), '%A, %B %d, %Y')`"
 from:
  - name: FirstNameA LastNameA
-   email: foo@bar.com
+   email: xxx@fredhutch.org
    contact: true
  - name: FirstNameB LastNameB
-to:
+   email: yyy@zzz.com
+   contact: true
  - name: FirstNameC LastNameC
+to:
  - name: FirstNameD LastNameD
+ - name: FirstNameE LastNameE
 dropcc: false
 cc:
- - name: FirstNameE LastNameE
  - name: FirstNameF LastNameF
+ - name: FirstNameG LastNameG
 includesummary: true
 summary: 
   A short summary about your report. 
@@ -24,6 +27,7 @@ lof: true
 lot: true
 toc: true
 dropVISClogo: false
+dropSCHARPlogo: false
 output: 
   VISCtemplates::visc_pdf_document: default
   VISCtemplates::visc_word_document: default
@@ -46,7 +50,6 @@ Location of input data:
 library(VISCtemplates)
 library(VISCfunctions)
 
-check_pandoc_version()
 output_type <- get_output_type()
 kable_warnings <- set_kable_warnings(output_type)
 pandoc_markup <- set_pandoc_markup(output_type)
@@ -131,7 +134,7 @@ if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmark
 
 my_session_info <- VISCfunctions::get_session_info()
 
-tbl_caption <- "Reproducibility software session information"
+tbl_caption <- "Session reproducibility information"
 
 if (output_type == 'latex') {
   
@@ -155,20 +158,25 @@ if (output_type == 'latex') {
 }
 ```
 
+`r insert_break()`
+
 ```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
 
-tbl_caption <- "Reproducibility software package version information"
+tbl_caption <- "Package reproducibility information"
 
 if (output_type == 'latex') {
   
   # format nicely for PDF with kable and kableExtra
   my_session_info$packages_table |>
-    kable(booktabs = TRUE, linesep = "", caption = tbl_caption) |> 
-    kable_styling()
-  
+    kable(
+      booktabs = TRUE, linesep = "", caption = tbl_caption, longtable = TRUE
+    ) |>
+    kable_styling(
+      latex_options = 'repeat_header',
+      repeat_header_method = 'replace'
+    )
+
 } else {
-  
-  cat(insert_break())
   
   # format nicely for Word with flextable
   my_session_info$packages_table |>

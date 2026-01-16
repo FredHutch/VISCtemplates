@@ -37,12 +37,22 @@ test_knit_report <- function(report_type, outfile_ext){
                       report_type = report_type,
                       interactive = FALSE
       )
-      expect_no_error(
-        rmarkdown::render(file.path(report_name, paste0(report_name, '.Rmd')),
-                          output_format = output_format,
-                          quiet = TRUE,
-                          clean = FALSE)
+      # test knit in a separate R session
+      rs <- callr::r_session$new()
+      on.exit(rs$close(), add = TRUE)
+      res <- rs$run_with_output(
+        function(...) rmarkdown::render(envir = globalenv(), ...),
+        args = list(
+          file.path(report_name, paste0(report_name, '.Rmd')),
+          output_format = output_format,
+          quiet = TRUE,
+          clean = FALSE
+        )
       )
+      # propagate full error stack from subprocess into main process
+      if (!is.null(res$error)) {
+        stop(paste(capture.output(res$error), collapse = '\n'))
+      }
     })
     outfile_sans_ext <- file.path(temp_dir, report_name, report_name)
     expect_true(
@@ -53,16 +63,19 @@ test_knit_report <- function(report_type, outfile_ext){
       pdf = c('pdf', 'log', 'tex', 'md', 'Rmd', 'knit.md'),
       docx = c('docx', 'md', 'knit.md', 'Rmd')
     )[[outfile_ext]]
-    local({
-      for (ext in try_snapshot_ext){
-        outfile_path <- paste0(outfile_sans_ext, '.', ext)
-        if (file.exists(outfile_path)){
-          suppressWarnings({
-            # don't want to see warning about initial snapshots
-            expect_snapshot_file(outfile_path)
-          })
-        }
+    snapshot_dir <- file.path(getwd(), test_path('_snaps', 'use_visc_report'))
+    if (! dir.exists(snapshot_dir)){
+      dir.create(snapshot_dir, showWarnings = FALSE, recursive = TRUE)
+    }
+    for (ext in try_snapshot_ext){
+      outfile_path <- paste0(outfile_sans_ext, '.', ext)
+      if (file.exists(outfile_path)){
+        file.copy(outfile_path, snapshot_dir)
+        # avoid our custom snapshots from getting auto-deleted by testthat
+        announce_snapshot_file(
+          file.path(snapshot_dir, basename(outfile_path))
+        )
       }
-    })
+    }
   })
 }
