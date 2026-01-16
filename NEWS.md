@@ -19,6 +19,7 @@ Improvements for package contributors and maintainers
 * Run test knits in a `callr` session to isolate Rmd library calls from main R process (#320)
 * Drop dependency on `DataPackageR` (#324)
 * VISCtemplates now depends on R >= 4.1.0 (#334)
+* Use base pipe `|>` in package and templates (#310)
 
 # VISCtemplates 2.0.2
 
