@@ -2,6 +2,7 @@
 
 export(check_pandoc_version)
 export(create_visc_project)
+export(datapackage_path)
 export(get_output_type)
 export(insert_break)
 export(insert_ref)
