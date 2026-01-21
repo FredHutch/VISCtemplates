@@ -2,6 +2,9 @@
 
 Improvements for users
 
+* New infrastructure to support installing and loading datapackages from a designated directory (#331)
+  - New function `datapackage_path()` to access `VISCTEMPLATES_DATAPACKAGE_PATH` environment variable
+  - New argument `lib.loc` for `visc_load_pdata()`
 * Remove `check_pandoc_version()` from report templates (#318)
 * New function `install_git_workaround()` to avoid `remotes::install_git()` error on network drive paths (#315)
 * Change name of `methods` folder within each report subfolder to `child-docs` to be more general-purpose (#309)
@@ -11,7 +14,7 @@ Improvements for users
 * Add option to drop SCHARP logo in PDF output (#312)
 * Add `visc_load_pdata()` examples to report template skeleton (#327)
 * Remove `install_load_cran_packages()` from report template skeleton in favor of using `library()` calls (#321)
-* Reproducibility table formatting changes to coordinate with recent VISCfunctions update that lengthens reproducibility packages table to include packages that are loaded but not attached (#329)
+* Reproducibility table formatting changes to coordinate with recent VISCfunctions update that lengthens reproducibility packages table to include packages that are loaded but not attached (#329, #332)
 
 Improvements for package contributors and maintainers
 
@@ -19,6 +22,8 @@ Improvements for package contributors and maintainers
 * Remove empty "examples" in template study schema to avoid minor issues (#319)
 * Run test knits in a `callr` session to isolate Rmd library calls from main R process (#320)
 * Drop dependency on `DataPackageR` (#324)
+* VISCtemplates now depends on R >= 4.1.0 (#334)
+* Use base pipe `|>` in package and templates (#310)
 
 # VISCtemplates 2.0.2
 
