@@ -139,20 +139,20 @@ tbl_caption <- "Session reproducibility information"
 if (output_type == 'latex') {
   
   # format nicely for PDF with kable and kableExtra
-  my_session_info$platform_table %>%
-    kable(booktabs = TRUE, linesep = "", caption = tbl_caption) %>% 
-    kable_styling() %>%
-    column_spec(1, width = "1in") %>%
+  my_session_info$platform_table |>
+    kable(booktabs = TRUE, linesep = "", caption = tbl_caption) |> 
+    kable_styling() |>
+    column_spec(1, width = "1in") |>
     column_spec(2, width = "5.5in")
   
 } else {
   
   # format nicely for Word with flextable
-  my_session_info$platform_table %>%
-    flextable() %>%
-    set_caption(tbl_caption) %>%
-    set_table_properties(layout = "fixed") %>% # to allow overriding automatic column width
-    flextable::width(1, 1, unit = "in") %>%
+  my_session_info$platform_table |>
+    flextable() |>
+    set_caption(tbl_caption) |>
+    set_table_properties(layout = "fixed") |> # to allow overriding automatic column width
+    flextable::width(1, 1, unit = "in") |>
     flextable::width(2, 5.5, unit = "in")
   
 }
@@ -167,10 +167,10 @@ tbl_caption <- "Package reproducibility information"
 if (output_type == 'latex') {
   
   # format nicely for PDF with kable and kableExtra
-  my_session_info$packages_table %>%
+  my_session_info$packages_table |>
     kable(
       booktabs = TRUE, linesep = "", caption = tbl_caption, longtable = TRUE
-    ) %>%
+    ) |>
     kable_styling(
       latex_options = 'repeat_header',
       repeat_header_method = 'replace'
@@ -179,8 +179,8 @@ if (output_type == 'latex') {
 } else {
   
   # format nicely for Word with flextable
-  my_session_info$packages_table %>%
-    flextable() %>%
+  my_session_info$packages_table |>
+    flextable() |>
     set_caption(tbl_caption)
   
 }
