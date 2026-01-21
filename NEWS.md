@@ -5,9 +5,9 @@ Improvements for users
 * New infrastructure to support installing and loading datapackages from a designated directory (#331)
   - New function `datapackage_path()` to access `VISCTEMPLATES_DATAPACKAGE_PATH` environment variable
   - New argument `lib.loc` for `visc_load_pdata()`
-* Remove `check_pandoc_version()` from report templates (#318)
 * New function `install_git_workaround()` to avoid `remotes::install_git()` error on network drive paths (#315)
 * Change name of `methods` folder within each report subfolder to `child-docs` to be more general-purpose (#309)
+* Remove `check_pandoc_version()` from report templates (#318)
 * Line breaks added between multiple contact personnel on title page of PDF report template (#308)
 * `visc_load_pdata()` gives more informative error message when serialized pdata file does not contain an R object of the same name (#303)
 * Default behavior of `create_visc_project()` no longer includes creation of package-specific files DESCRIPTION and NAMESPACE (#306)
