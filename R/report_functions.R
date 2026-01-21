@@ -7,7 +7,7 @@
 #'
 #' @examples
 #' \dontrun{load_install_cran_packages(c("tidyr", "dplyr"))}
-install_load_cran_packages <- function(packages) {
+install_load_cran_packages <- function(packages) { #nocov start
   installed_packages <- rownames(utils::installed.packages())
   lapply(packages, FUN = function(package) {
     if (! package %in% installed_packages) {
@@ -33,7 +33,7 @@ install_load_cran_packages <- function(packages) {
     library(package, character.only = TRUE)
   })
   invisible(NULL)
-}
+} # nocov end
 
 #' Check pandoc version
 #'

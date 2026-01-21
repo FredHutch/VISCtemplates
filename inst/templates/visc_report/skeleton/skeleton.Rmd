@@ -46,21 +46,21 @@ Location of input data:
 
 ```{r package-loading-and-options, include=FALSE}
 
-# packages installed from GitHub
+# load packages
 library(VISCtemplates)
 library(VISCfunctions)
+library(conflicted)
+library(ggplot2)
+library(dplyr)
+library(knitr)
+library(kableExtra)
+library(flextable)
+library(rprojroot)
+library(remotes)
 
 output_type <- get_output_type()
 kable_warnings <- set_kable_warnings(output_type)
 pandoc_markup <- set_pandoc_markup(output_type)
-
-# packages installed from CRAN
-packages_needed <- c("conflicted", "ggplot2", "dplyr", "knitr", "kableExtra", "flextable", "rprojroot", "remotes")
-install_load_cran_packages(packages_needed)
-
-# where to install and look for packages (e.g., data packages) installed on SCHARP server
-my_data_package_lib <- "/Volumes/kmacphee/RLib/" # UPDATE WITH YOUR DATA PACKAGE LOCATION
-.libPaths(c(.libPaths(), my_data_package_lib))
 
 # knitr options
 opts_chunk$set(cache = FALSE,
@@ -129,6 +129,18 @@ install_git_workaround(
   git = 'external'
 )
 
+# install datapackage from SCHARP server to your designated datapackage_path()
+install_git_workaround(
+  networks_path("cavd/Studies/cvd920/pdata/Caskey920.git"),
+  ref = "main",
+  git = "external"
+  # `force` required if you've already installed the package w/ same hash
+  # (even if installed to a different directory), because
+  # `remotes::install_git` checks hash before passing `lib` to install.packages
+  force = TRUE,
+  lib = datapackage_path()
+)
+
 ```
 
 ```{r data-loading, eval = FALSE}
@@ -149,6 +161,14 @@ exampleData_ICS <- visc_load_pdata(
   proj_or_datapackage = 'datapackage',
   criteria = 'a70bc33ea70bc33ea70bc33ea70bc33e',
   package = 'cvdNNN'
+)
+
+# load pdata from datapackage installed to your designated datapackage_path()
+pdata <- visc_load_pdata(
+  "Caskey920_nab",
+  "datapackage",
+  "34b189faa034f29dbb0692d4676ab56f",
+  lib.loc = datapackage_path()
 )
 
 ```

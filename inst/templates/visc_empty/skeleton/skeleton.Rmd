@@ -46,17 +46,20 @@ Location of input data:
 
 ```{r package-loading-and-options, include=FALSE}
 
-# packages installed from GitHub
+# load packages
 library(VISCtemplates)
 library(VISCfunctions)
+library(conflicted)
+library(dplyr)
+library(ggplot2)
+library(knitr)
+library(kableExtra)
+library(flextable)
+library(rprojroot)
 
 output_type <- get_output_type()
 kable_warnings <- set_kable_warnings(output_type)
 pandoc_markup <- set_pandoc_markup(output_type)
-
-# packages installed from CRAN
-packages_needed <- c("conflicted", "dplyr", "ggplot2", "knitr", "kableExtra", "flextable", "rprojroot")
-install_load_cran_packages(packages_needed)
 
 # knitr options
 opts_chunk$set(cache = FALSE,
