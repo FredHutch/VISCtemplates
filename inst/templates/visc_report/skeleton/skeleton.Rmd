@@ -133,7 +133,7 @@ install_git_workaround(
 install_git_workaround(
   networks_path("cavd/Studies/cvd920/pdata/Caskey920.git"),
   ref = "main",
-  git = "external"
+  git = "external",
   # `force` required if you've already installed the package w/ same hash
   # (even if installed to a different directory), because
   # `remotes::install_git` checks hash before passing `lib` to install.packages
