@@ -2,7 +2,7 @@
 
 Bugfixes
 
-* Add missing comma in skeleton report to separate `visc_load_pdata()` arguments (#336)
+* Add missing comma in skeleton report to separate `install_git_workaround` arguments (#336)
 
 # VISCtemplates 2.1.0
 
