@@ -1,5 +1,9 @@
 # VISCtemplates (development version)
 
+Bugfixes
+
+* Add missing comma in skeleton report to separate `install_git_workaround` arguments (#336)
+
 # VISCtemplates 2.1.0
 
 Improvements for users
