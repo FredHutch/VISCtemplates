@@ -1,6 +1,8 @@
 ---
 title: "Example VISC B-cell data analysis"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    toc: true
 vignette: >
   %\VignetteIndexEntry{Analysis of B-cell assays at VISC}
   %\VignetteEngine{knitr::rmarkdown}
@@ -11,8 +13,9 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width = 7,
-  fig.height = 5
+  fig.width = 11,
+  fig.height = 8,
+  out.width = '100%'
 )
 ```
 
@@ -20,6 +23,7 @@ knitr::opts_chunk$set(
 library(VISCtemplates)
 library(VISCfunctions)
 library(tidyverse)
+library(patchwork)
 ```
 
 This vignette covers best practices at VISC for the analysis of B-cell data
@@ -175,9 +179,10 @@ chisq.test(matrix(c(1067986, 11694634, 285533, 3439404), 2, 2, byrow = TRUE))
 
 # Graphical analysis
 
-```{r}
+For each endpoint, a graph like the following is created:
 
-library(patchwork)
+```{r}
+theme_set(theme_bw())
 
 plot_bcrseq_responses <- function(endpoint_name) {
   
@@ -191,9 +196,8 @@ plot_bcrseq_responses <- function(endpoint_name) {
     ggplot(aes(dose_label, response_rate)) +
     facet_wrap(~visit_label, nrow = 1) +
     geom_point(aes(color = treatment)) +
-    theme_bw() +
     theme(legend.position = "none") +
-    scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+    scale_y_continuous("Response Rate", labels = scales::percent, limits = c(0, 1)) +
     xlab(NULL)
   
   plt_magnitude <- plt_df |> 
@@ -201,9 +205,8 @@ plot_bcrseq_responses <- function(endpoint_name) {
     facet_wrap(~visit_label, nrow = 1) +
     geom_boxplot(fill = NA) +
     geom_point(aes(color = treatment)) +
-    theme_bw() +
     theme(legend.position = "none") +
-    scale_y_sqrt(endpoint_name) +
+    scale_y_sqrt(str_wrap(endpoint_name, 25)) +
     xlab(NULL)
   
   plt_kinetics <- plt_df |> 
@@ -211,8 +214,7 @@ plot_bcrseq_responses <- function(endpoint_name) {
     facet_wrap(~dose_label, nrow = 1) +
     geom_line(alpha = 0.2) +
     geom_point(aes(color = treatment), alpha = 0.5) +
-    scale_y_sqrt(endpoint_name) +
-    theme_bw() +
+    scale_y_sqrt(str_wrap(endpoint_name, 25)) +
     theme(legend.position = "bottom") +
     xlab(NULL)
   
@@ -223,16 +225,22 @@ plot_bcrseq_responses <- function(endpoint_name) {
 plot_bcrseq_responses("Percent of IgG+ B cells detected as VRC01-class")
 ```
 
-
 # Statistical comparisons
 
 ## Comparisons between groups (for each study visit)
 
+```{r}
 
 
+
+
+```
 
 ## Comparisons between study visits (for each group)
 
+```{r}
 
 
 
+
+```
