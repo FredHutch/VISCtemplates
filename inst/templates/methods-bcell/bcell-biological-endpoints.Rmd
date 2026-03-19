@@ -1,0 +1,115 @@
+---
+title: "{{ study_name}} Biological Endpoints"
+output: github_document
+---
+
+## Terminology, abbreviations, and definitions of bnAb-class B cells
+
+The following shorthand is used throughout this report:
+
+- "IgG B cells" to mean IgG+ IgD- B cells as identified by flow cytometry,
+- "IgD B cells" to mean IgG- IgD+ B cells as identified by flow cytometry,
+- "Antigen-specific B cells" to mean ... B cells as identified
+by flow cytometry,
+- "Epitope-specific B cells" to mean ... B cells as identified by flow cytometry.
+
+```{r bnab-class-definitions, tac.cap='bnAb class definitions used in this report.', results='asis'}
+
+bnab_class_def_df <- data.frame(
+  Epitope = c('CD4bs', 'CD4bs', 'CD4bs'),
+  `bnab Class` = c('VRC01-class', 'IOMA-class', '8ANC131-class'),
+  `Heavy Chain Features` = c('VH1-2', 'VH1-2', 'VH1-46'),
+  `Light Chain Features` = c('5 AA CDR3', '7-9 AA CDR3', NA)) %>%
+  setNames(c('Epitope', 'bnAb Class', 'Heavy Chain Features', 'Light Chain Features'))
+
+knitr::kable(bnab_class_def_df)
+```
+
+## B-cell frequencies based on BCF data
+
+The B-cell flow cytometry (BCF) endpoints covered by this report are detailed in
+Table `r insert_ref("tab:flow-endpoints")`.
+Each endpoint is a B-cell frequency that is calculated on a per-sample basis,
+i.e., for each participant and study visit with data available.
+Endpoint magnitudes are analyzed for each B-cell frequency, and positive
+response calls and rates are computed and analyzed for B-cell frequencies out
+of total IgG B
+cells.^[Total IgG B cells were expected to be relatively stable over time,
+unlike antigen-specific and/or epitope-specific B cells, which were
+expected to be increase in frequency post-vaccination.]
+
+```{r flow-endpoints}
+
+df_example_flow_endpoints <- data.frame(
+  endpoint = c("Percent of IgG B cells that are antigen-specific",
+               "Percent of IgG B cells that are epitope-specific",
+               "Percent of antigen-specific IgG B cells that are epitope-specific"),
+  igx_type = rep("IgG", 3),
+  antigen_specificity = rep("ANTIGEN", 3),
+  epitope_specificity = c(NA, rep("EPITOPE", 2)),
+  bnab_class = rep(NA, 3),
+  percent_denominator = rep("IgG B cells", 3)
+)
+
+knitr::kable(df_example_flow_endpoints)
+```
+
+## B-cell frequencies based on BCRseq data
+
+The primary B-cell receptor sequencing (BCRseq) endpoints covered by this report
+are listed in Table `r insert_ref("tab:seq-endpoints")`.
+Each of these is a B-cell frequency that is calculated on a per-sample basis,
+i.e., for each participant and study visit with data available.
+
+```{r seq-endpoints}
+
+df_example_seq_endpoints <- data.frame(
+  endpoint = c("Percent of epitope-specific IgG B cells that are VRC01-class",
+               "Percent of epitope-specific IgG B cells that are IOMA-class"),
+  igx_type = rep("IgG", 2),
+  antigen_specificity = rep("ANTIGEN", 2),
+  epitope_specificity = rep("CD4bs", 2),
+  bnab_class = c("VRC01-class", "IOMA-class"),
+  percent_denominator = rep("Epitope-specific IgG B cells", 2)
+)
+
+knitr::kable(df_example_seq_endpoints)
+```
+
+## Additional endpoints based on BCRseq data
+
+This report also covers the following BCRseq endpoints, calculated for each
+sequenced B cell and/or aggregated at the sample (participant and visit) level:
+
+- Percent nucleotide-level somatic hypermutation in the V segment,
+- Number of amino acid insertions and deletions,
+- Presence of key VRC01-class residues,
+- Distribution of germline V genes,
+- CDR3 sequence length (number of amino acids),
+- Clonotype (i.e., B-cell cluster) sizes and key characteristics of top clonotypes.
+
+## B-cell frequencies based on combined BCF and BCRseq data
+
+This report also covers certain endpoints based on combined BCF and BCRseq data,
+which are detailed in Table `r insert_ref("tab:flow-seq-endpoints")`.
+Each of these is a B-cell frequency that is calculated on a per-sample basis,
+i.e., for each participant and study visit with data available.
+The endpoint magnitudes are analyzed for each B-cell frequency, and positive response calls and rates are computed and analyzed for B-cell frequencies out of total IgG B 
+cells.^[Total IgG B cells were expected to be relatively stable over time,
+unlike antigen-specific and/or epitope-specific B cells, which were
+expected to be increase in frequency post-vaccination.]
+
+```{r flow-seq-endpoints}
+
+df_example_flow_seq_endpoints <- data.frame(
+  endpoint = c("Percent of IgG B cells that are VRC01-class",
+               "Percent of antigen-specific IgG B cells that are VRC01-class"),
+  igx_type = rep("IgG", 2),
+  antigen_specificity = rep("ANTIGEN", 2),
+  epitope_specificity = rep("CD4bs", 2),
+  bnab_class = rep("VRC01-class", 2),
+  percent_denominator = c("IgG B cells", "Antigen-specific IgG B cells")
+)
+
+knitr::kable(df_example_flow_seq_endpoints)
+```

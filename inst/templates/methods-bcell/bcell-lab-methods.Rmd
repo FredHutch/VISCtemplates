@@ -1,0 +1,47 @@
+---
+title: "{{ study_name}} Lab Methods"
+output: github_document
+---
+
+The counts and frequencies of antigen-specific (i.e., ...) and epitope-specific
+(i.e., ...) B cells were measured by flow cytometry. 
+
+The classification of antigen-specific and epitope-specific B cells as
+... (e.g., VRC01-class) was done by B-cell receptor (BCR) sequencing and 
+bioinformatic analysis of the resulting sequences. 
+
+## Lab methods for B-cell flow cytometry (BCF)
+
+Samples were prepared for flow cytometry analysis using negative B-cell
+enrichment kits, customized fluorescent B-cell probes, and novel flow cytometry
+panels configured for use with the Vaccine Research Center (VRC) customized S6
+cell sorter. The counts of antigen-specific, epitope-specific and off-target
+B cells were determined from the flow cytometry analysis using FlowJo software.
+The gating hierarchy is shown in Table `r insert_ref("tab:gating-scheme")`.
+
+Selected cells of interest, including CD4bs+ and Apex+ B cells, were single-cell
+sorted into 96-well plates for subsequent BCR analysis. The gates from which 
+cells were sorted for BCR sequencing are highlighted in Table `r insert_ref("tab:gating-scheme")`.
+
+```{r gating-scheme, tab.cap='Gating hierachy for {{study_name}}. The sort gates used for BCR sequencing are highlighted in yellow.', results='asis'}
+
+df_example_gating_schema <- data.frame(
+  Gate = paste0('P', 1:5),
+  `Subset Description` = c('B cells',
+                           'IgG B cells',
+                           'Antigen-specific IgG B cells',
+                           'Epitope-specific IgG B cells',
+                           'Some Other Category of Sequenced B cells'),
+  `Gating Hierarchy` = c('L/S/Dump-/CD19+/CD20+',
+                         'L/S/Dump-/CD19+/CD20+/IgD-IgG+',
+                         'L/S/Dump-/CD19+/CD20+/IgD-IgG+/Antigen++',
+                         'L/S/Dump-/CD19+/CD20+/IgD-IgG+/Antigen++/KO-',
+                         'L/S/Dump-/CD19+/CD20+/...')
+)
+
+sort_rows <- c(4, 5)
+
+df_example_gating_schema |>
+  knitr::kable() |>
+  kableExtra::row_spec(sort_rows, background = "yellow")
+```

@@ -1,0 +1,172 @@
+---
+title: "Statistical Methods"
+output: github_document
+---
+
+## Calculation of B-cell frequencies
+
+The B-cell frequencies listed under [B-cell frequencies based on BCF data] and 
+[B-cell frequencies based on BCRseq data] were calculated directly as the ratio of
+cell counts from BCF and BCRseq data, respectively.
+
+However, the B-cell frequencies listed under [B-cell frequencies based on
+combined BCF and BCRseq data] could not be calculated directly, because
+not all epitope-specific B cells were sequenced.
+To estimate these frequencies, formulae such as the following were used:
+
+Percent of IgG B cells detected as VRC01-class $=$ 
+\[ 
+\frac{\text{Number of epitope-specific IgG B cells}}{\text{Number of IgG B cells}} 
+\times
+\frac{\text{Number of sequenced VRC01-class IgG B cells}}{\text{Number of sequenced epitope-specific IgG B cells}} 
+\times 100\% 
+\]
+
+Here the first fraction was obtained from the BCF data, and the
+second fraction was obtained from the BCRseq data.
+These percentages were set to 0 for samples in which no B cells that were
+epitope-specific were isolated by flow cytometry.
+
+It is important to note that these frequencies should be interpreted with caution
+when the denominators (i.e., the number of sequenced B cells) are
+small, as the sampling depth influences the variability of the estimate.
+We have therefore indicated visually in our graphical analysis, where appropriate,
+this sampling depth by the dot/marker size so that readers of this report can
+draw conclusions about how the sampling depth may be impacting the frequency estimates.
+distinguish visually between samples from each of the two studies.
+
+## Positive/detectable response calls and rates
+
+### Positive response calls for BCF endpoints
+
+For the endpoints listed in [B-cell frequencies based on BCF data], a certain amount of
+variation both across participants and across time points within the same
+participant was expected, but the amount of such variation was not known ahead of time.
+These endpoints were measured at baseline (pre-vaccination) in all treatment
+groups and study participants, and because participants were all HIV-negative at
+the time of study enrollment, no positive response was expected in any of these
+baseline samples. Thus, the distribution of such an endpoint at baseline and among placebo-recipients post-baseline could
+be considered to represent background levels of the relevant B-cell population.
+Response calls for these endpoints at post-baseline study visits were therefore
+carried out in the following steps:
+
+1. The endpoint's null distribution was estimated using a kernel density
+estimator (KDE) fit to the endpoint's measurements from all participants at
+baseline (i.e., pre-vaccination) and placebo-recipients at post-baseline time
+points. The R package `ks` was used for computation of
+the kernel density estimate, with a Gaussian kernel and the bandwidth of the
+estimator selected using the univariate plug-in selector of @wand1994multivariate. 
+
+2. The quantile $Q_\alpha$ of order $1-\alpha$ of the null distribution was
+deduced from the density estimate. Here $\alpha$ represents the probability that
+an observation from a true non-responder would exceed $Q_\alpha$. We set
+$\alpha=0.001$ to limit the risk of false positives (which could arise from
+variability in B-cell frequencies and/or uncertainty in the estimate of $Q_\alpha$).
+
+3. Finally, for each vaccine recipient and post-baseline visit, a positive
+response call was made if the endpoint was observed to be strictly greater than
+the estimate of $Q_\alpha$. Otherwise, a non-response was declared.
+
+### Detectable response calls for BCRseq endpoints
+
+Because no BCRseq data was available at the baseline (pre-vaccination)
+study visit, response calls for endpoints listed under
+[B-cell frequencies based on BCRseq data] and
+[B-cell frequencies based on combined BCF and BCRseq data]
+were defined as "detectable" if any B cells (i.e., $>0$) in the
+relevant category (e.g., VRC01-class) were observed, and "non-detectable"
+otherwise.
+
+### Estimation of response rates
+
+Response rates for a given endpoint were estimated by the empirical proportion of
+positive/detectable response calls, within each treatment group, study visit,
+and endpoint. To measure the precision of the estimated response rates,
+associated 95% confidence intervals were constructed using Wilson's score 
+method [@wilson1927probable].
+
+## Graphical analysis of B-cell frequencies and response rates
+
+For each of the B-cell frequencies listed in [Endpoints], graphical analysis of
+response rates and magnitudes was conducted as follows. Note that the response
+calls and rates were only computed and analyzed for B-cell frequencies out of
+IgG B cells, while magnitudes were analyzed for all endpoints.
+
+1. Response rates at each study visit were plotted as points, accompanied by 95
+percent Wilson confidence intervals shown as whiskers extending vertically in
+either direction.
+
+2. Endpoint magnitudes for each study participant and visit were displayed as
+scatter plots, with observations separated and colored by treatment group.
+For endpoints for which response calls were carried out, open diamonds were
+used to indicate baseline and placebo observations, open triangles were used to
+indicate non-responses post-vaccination, and filled circles were used to
+indicate positive/detectable responses. Where appropriate, an additional marker
+was also used to indicate samples collected after a missed vaccination.
+
+3. Boxplots of endpoint magnitudes were superimposed on the scatter plots, with
+the mid-line of the box indicating the median ($50^{th}$ percentile), and the
+lower and upper ends indicating the $25^{th}$ and $75^{th}$ percentiles,
+respectively. The whiskers of the box indicated the most extreme data points
+that were no more than 1.5 times the interquartile range (i.e., height of the
+box). The median was also shown in text above the boxplot.
+For endpoints for which response calls were carried out, the boxplots were
+built based on positive/detectable responders only, and no boxplot was
+constructed for baseline/placebo data or if the estimated response rate was zero. 
+
+3. Endpoint magnitudes were also plotted longitudinally as spaghetti plots,
+with one line per study participant. Here again as in (2), observations were
+separated and colored by treatment group, and shapes used to indicate response
+status if applicable.
+
+## Statistical comparisons and p-values
+
+Formal statistical comparisons (i.e., hypothesis tests) were conducted to assess 
+differences between study visits. All statistical tests were two-sided.
+Both unadjusted and adjusted p-values were reported, with p-value
+adjustment performed using the Benjamini-Hochberg procedure to control the
+false discovery rate. Test results were reported  in tables, with p-values less
+than 0.05 (adjusted and unadjusted) highlighted in yellow.
+
+### Comparisons of binary endpoints (i.e., response rates)
+
+Statistical comparisons between binary endpoints (i.e., positive/detectable
+response calls and rates) were made across study visits.
+To assess if the rates of positive/detectable responses differed between two study 
+visits within a given treatment group, a two-sided McNemar's test was used to 
+account for paired data.
+Because this test may have limited power with small sample sizes,
+response calls were required from at least 4 participants in the treatment 
+group, at both study visits (i.e., paired), in order to run the test.
+
+### Comparisons of continuous endpoints (e.g., B-cell frequencies)
+
+Statistical comparisons between continuous endpoints (e.g., B-cell frequencies,
+percent mutation) were made across study visits.
+When possible, continuous endpoints were compared both:
+
+1. Across all study participants, regardless of response status, and
+2. Within positive/detectable responders only.
+
+To assess if continuous endpoints differed between two study visits within a 
+given treatment group, a two-sided Wilcoxon signed-rank test was used to 
+account for paired data.
+Observations were required from at least 4 participants in the treatment
+group, at both study visits (i.e., paired), in order to run the test.
+
+## Analysis of BCRseq clusters (i.e., clonotypes)
+
+TBA
+
+## Analysis of somatic hypermutation
+
+TBA
+
+## Analysis of bnAb-class mutations
+
+TBA
+
+## Analysis of germline genes and CDR3 lengths
+
+TBA
+
