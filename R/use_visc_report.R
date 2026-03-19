@@ -4,7 +4,7 @@
 #'
 #' @param report_name name of the file (character)
 #' @param path path of the file within the active project
-#' @param report_type "empty", "generic", "bama", "nab", or "adcc"
+#' @param report_type "empty", "generic", "bama", "nab", "adcc", or "bcell"
 #' @param interactive TRUE by default. FALSE is for non-interactive unit testing
 #'   only.
 #'
@@ -20,7 +20,7 @@
 #' }
 use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
                             path = ".",
-                            report_type = c("empty", "generic", "bama", "nab", "adcc"),
+                            report_type = c("empty", "generic", "bama", "nab", "adcc", "bcell"),
                             interactive = TRUE) {
 
   report_type <- match.arg(report_type)
@@ -127,7 +127,7 @@ challenge_visc_report <- function(report_name, interactive = TRUE) {
 #'  used in PT reports: statistical-methods.Rmd, lab-methods.Rmd,
 #'  and biological-endpoints.Rmd
 #'
-#' @param assay "generic", "bama", "nab" or "adcc"
+#' @param assay "generic", "bama", "nab", "adcc", or "bcell"
 #' @param path path within the active project
 #' @param interactive TRUE by default. FALSE is for non-interactive unit testing
 #'   only.
@@ -138,7 +138,7 @@ challenge_visc_report <- function(report_name, interactive = TRUE) {
 #' \dontrun{
 #' use_visc_methods(path = "bama/BAMA-PT-Report", assay = "bama")
 #' }
-use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab", "adcc"),
+use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab", "adcc", "bcell"),
                              interactive = TRUE) {
 
   # suppress usethis output when non-interactive
