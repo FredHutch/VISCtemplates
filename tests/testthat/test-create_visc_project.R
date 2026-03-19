@@ -1,4 +1,4 @@
-test_that("create_visc_project works", {
+test_that("create_visc_project works as expected in default mode", {
   # creates ephemeral directory that will be deleted upon function exit
   temp_dir <- withr::local_tempdir()
   create_visc_project(temp_dir, interactive = FALSE)
@@ -11,5 +11,25 @@ test_that("create_visc_project works", {
   )
   expect_false(
     file.exists(file.path(temp_dir, 'README.html'))
+  )
+  # verify that package-specific files are not created
+  expect_false(
+    file.exists(file.path(temp_dir, 'DESCRIPTION'))
+  )
+  expect_false(
+    file.exists(file.path(temp_dir, 'NAMESPACE'))
+  )
+})
+
+test_that("create_visc_project works in pacakge mode", {
+  # creates ephemeral directory that will be deleted upon function exit
+  temp_dir <- withr::local_tempdir()
+  create_visc_project(temp_dir, interactive = FALSE, package = TRUE)
+  # check for package-specific files
+  expect_true(
+    file.exists(file.path(temp_dir, 'DESCRIPTION'))
+  )
+  expect_true(
+    file.exists(file.path(temp_dir, 'NAMESPACE'))
   )
 })
