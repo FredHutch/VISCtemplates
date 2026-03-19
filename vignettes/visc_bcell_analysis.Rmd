@@ -10,13 +10,13 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5
 )
 ```
 
 ```{r setup, message=FALSE}
-# remotes::install_github("FredHutch/VISCfunctions", ref = "fas_ex_data")
-
 library(VISCtemplates)
 library(VISCfunctions)
 library(tidyverse)
@@ -35,6 +35,21 @@ Here is a glimpse of the columns and example values in the dataset:
 ```{r load-example-data}
 df_analysis <- G001_Bcell_flow_seq_PBMC # from VISCfunctions
 glimpse(df_analysis)
+```
+
+We will convert various endpoints to factors for ease of plotting:
+
+```{r}
+df_analysis <- df_analysis |>
+  mutate(
+    pubid = factor(pubid),
+    group = factor(group),
+    dose_label = factor(case_when(is.na(dose) ~ "Placebo",
+                                  dose == 20 ~ "Low Dose",
+                                  dose == 100 ~ "High Dose")),
+    treatment = factor(treatment),
+    visit_label = factor(paste("Week", visit), levels = paste("Week", c(-4, 4, 8, 10, 16)))
+  )
 ```
 
 And here is a summary of the unique endpoints in the dataset:
@@ -58,7 +73,6 @@ often reported as well - especially counts from the BCR sequencing assay.
 If you have a placebo group, can use this to estimate non-vaccine-induced variation over time:
 
 ```{r}
-
 # use placebo participants to investigate non-vaccine-induced variation over time
 df_placebo <- df_analysis |>
   filter(endpoint == "Percent of IgG+ B cells that are epitope-specific (KO-GT8++)",
@@ -70,12 +84,12 @@ df_placebo <- df_analysis |>
   filter(visit != -4)
 
 df_placebo |>
-  select(pubid, visit, value_net) |>
-  pivot_wider(names_from = visit, values_from = value_net)
+  select(pubid, visit_label, value_net) |>
+  pivot_wider(names_from = visit_label, values_from = value_net)
 
 # check distribution of the differences
 df_placebo |>
-  ggplot(aes(visitno, value_net, group = pubid)) +
+  ggplot(aes(visit_label, value_net, group = pubid)) +
   geom_line() +
   geom_point()
 
@@ -104,7 +118,6 @@ If you don't have a placebo group, you can instead use variation across individu
 at baseline (rather than within-individual variation over time):
 
 ```{r}
-
 df_baseline <- df_analysis |>
   filter(endpoint == "Percent of IgG+ B cells that are epitope-specific (KO-GT8++)",
          visit == -4)
@@ -120,15 +133,17 @@ cutoff <- qnorm(p = 0.99,
 df_response <- df_analysis |>
   filter(endpoint == "Percent of IgG+ B cells that are epitope-specific (KO-GT8++)") |>
   group_by(pubid) |>
-  mutate(is_responder = endpoint_value > cutoff)
+  mutate(is_responder = endpoint_value > cutoff) |>
+  ungroup()
 
 df_response |>
-  ggplot(aes(visitno, endpoint_value, shape = is_responder, group = pubid)) +
+  ggplot(aes(visit_label, endpoint_value, shape = is_responder, group = pubid)) +
   geom_line(alpha = 0.5) +
   geom_point(alpha = 0.5) +
-  scale_y_log10() +
+  scale_y_log10("Percent of IgG+ B cells that are epitope-specific (KO-GT8++)") +
   facet_wrap(~treatment) +
-  geom_hline(yintercept = cutoff, color = "red")
+  geom_hline(yintercept = cutoff, color = "red") +
+  xlab(NULL)
 ```
 
 ## Response calls for BCRseq data
@@ -139,20 +154,18 @@ whether any VRC01-class sequences were observed after vaccination.
 ```{r}
 df_responses_bcrseq <- df_analysis |>
   filter(bcell_population == "VRC01-class", endpoint_value_type == "percent") |>
-  select(pubid, group, treatment, dose, visit, endpoint,
+  select(pubid, group, treatment, dose_label, visit_label, endpoint,
          bcell_population, percent_denominator, endpoint_value) |>
   distinct() |>
   mutate(response_call = endpoint_value > 0)
 
 df_responses_bcrseq
 
-
-
 df_analysis |>
   filter(endpoint_value_type == "count", source_assay == "sequencing", is.na(group) | visit == -4) |>
-  select(pubid, visit, endpoint, endpoint_value) |>
+  select(pubid, visit_label, endpoint, endpoint_value) |>
   pivot_wider(names_from = "endpoint", values_from = "endpoint_value") |>
-  arrange(visit) |>
+  arrange(visit_label) |>
   filter(!is.na(`Number of epitope-specific (KO-GT8++) IgG+ B cells that have BCR heavy and light chains sequenced`)) |>
   mutate(pct_vrc01_class_seq = 100 * `Number of epitope-specific (KO-GT8++) sequenced IgG BCRs that are VRC01-class` / `Number of epitope-specific (KO-GT8++) IgG+ B cells that have BCR heavy and light chains sequenced`) |>
   select(pct_vrc01_class_seq, `Number of epitope-specific (KO-GT8++) IgG+ B cells that have BCR heavy and light chains sequenced`)
@@ -169,37 +182,39 @@ library(patchwork)
 plot_bcrseq_responses <- function(endpoint_name) {
   
   plt_df <- df_responses_bcrseq |>
-    filter(endpoint == endpoint_name) |>
-    mutate(dose = if_else(is.na(dose), 0, dose))
+    filter(endpoint == endpoint_name)
   
   plt_response_rate <- df_responses_bcrseq |>
     filter(!is.na(response_call)) |>
-    group_by(treatment, dose, visit) |>
+    group_by(treatment, dose_label, visit_label) |>
     summarize(response_rate = sum(response_call) / n()) |>
-    ggplot(aes(as.factor(dose), response_rate)) +
-    facet_wrap(~visit, nrow = 1, labeller = label_both) +
+    ggplot(aes(dose_label, response_rate)) +
+    facet_wrap(~visit_label, nrow = 1) +
     geom_point(aes(color = treatment)) +
     theme_bw() +
     theme(legend.position = "none") +
-    scale_y_continuous(labels = scales::percent, limits = c(0, 1))
+    scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+    xlab(NULL)
   
   plt_magnitude <- plt_df |> 
-    ggplot(aes(as.factor(dose), endpoint_value)) +
-    facet_wrap(~visit, nrow = 1, labeller = label_both) +
+    ggplot(aes(dose_label, endpoint_value)) +
+    facet_wrap(~visit_label, nrow = 1) +
     geom_boxplot(fill = NA) +
     geom_point(aes(color = treatment)) +
     theme_bw() +
     theme(legend.position = "none") +
-    scale_y_sqrt(endpoint_name)
+    scale_y_sqrt(endpoint_name) +
+    xlab(NULL)
   
   plt_kinetics <- plt_df |> 
-    ggplot(aes(as.factor(visit), endpoint_value, group = pubid)) +
-    facet_wrap(~treatment, nrow = 1) +
+    ggplot(aes(visit_label, endpoint_value, group = pubid)) +
+    facet_wrap(~dose_label, nrow = 1) +
     geom_line(alpha = 0.2) +
     geom_point(aes(color = treatment), alpha = 0.5) +
     scale_y_sqrt(endpoint_name) +
     theme_bw() +
-    theme(legend.position = "bottom")
+    theme(legend.position = "bottom") +
+    xlab(NULL)
   
   plt_response_rate / plt_magnitude / plt_kinetics
   
@@ -207,7 +222,6 @@ plot_bcrseq_responses <- function(endpoint_name) {
 
 plot_bcrseq_responses("Percent of IgG+ B cells detected as VRC01-class")
 ```
-
 
 
 # Statistical comparisons
