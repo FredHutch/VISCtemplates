@@ -83,16 +83,12 @@ options(knitr.table.format = output_type,
         kable_styling_latex_options = c("hold_position"))
 
 # table options for flextable
-set_flextable_defaults(
-  na_str = "", # NA's will be blank
-  font.size = 10,
-  theme_fun = "theme_box",
-  # note: table.layout automatically sets column width and row height, this setting
-  # can be overridden for individual tables with set_table_properties(layout = "fixed")
-  table.layout = "autofit", 
-  fonts_ignore = TRUE,
-  digits = 3
-)
+set_flextable_defaults(na_str = "", # NA's will be blank
+                       font.size = 10,
+                       theme_fun = "theme_box",
+                       table.layout = "autofit", # automatically sets column width and row height, can be overridden for individual tables with set_table_properties(layout = "fixed")
+                       fonts_ignore = TRUE,
+                       digits = 3)
 
 # Create a ggplot theme for consistency of figures
 visc_theme <- theme_bw() + 
