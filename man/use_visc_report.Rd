@@ -19,6 +19,8 @@ use_visc_report(
 
 \item{report_type}{"empty", "generic", "bama", "nab", or "adcc"}
 
+\item{include_tests}{TRUE by default. set to FALSE to skip setting up tests to check report pdf and code.}
+
 \item{interactive}{TRUE by default. FALSE is for non-interactive unit testing
 only.}
 }

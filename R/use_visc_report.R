@@ -5,6 +5,7 @@
 #' @param report_name name of the file (character)
 #' @param path path of the file within the active project
 #' @param report_type "empty", "generic", "bama", "nab", or "adcc"
+#' @param include_tests TRUE by default. set to FALSE to skip setting up tests to check report pdf and code.
 #' @param interactive TRUE by default. FALSE is for non-interactive unit testing
 #'   only.
 #'
