@@ -7,7 +7,7 @@
 #'
 #' @examples
 #' \dontrun{load_install_cran_packages(c("tidyr", "dplyr"))}
-install_load_cran_packages <- function(packages) {
+install_load_cran_packages <- function(packages) { #nocov start
   installed_packages <- rownames(utils::installed.packages())
   lapply(packages, FUN = function(package) {
     if (! package %in% installed_packages) {
@@ -33,7 +33,7 @@ install_load_cran_packages <- function(packages) {
     library(package, character.only = TRUE)
   })
   invisible(NULL)
-}
+} # nocov end
 
 #' Check pandoc version
 #'
@@ -45,7 +45,7 @@ install_load_cran_packages <- function(packages) {
 #'
 check_pandoc_version <- function() {
   if (numeric_version(rmarkdown::pandoc_version()) < numeric_version('2.0'))
-    stop('pandoc must be at least version "2.0')
+    stop('pandoc version must be >= 2.0 (released 2017-10-29)')
 }
 
 #' Cross-reference a figure, table, or section
@@ -172,8 +172,8 @@ set_kable_warnings <- function(output_type) {
 #'
 #' pandoc_markup <- set_markup_warnings(output_type = get_output_type())
 #'
-#' my_results %>%
-#'   kable() %>%
+#' my_results |>
+#'   kable() |>
 #'   cell_spec(pvalue, bold = ifelse(pandoc_markup, TRUE, FALSE))
 #'
 #' }

@@ -9,14 +9,14 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-The data for the {{ study_name }} protocol can be found here: [insert path]. You can install the data package using devtools:
+The data for the {{ study_name }} protocol can be found here: [insert path]. You can install the data package using the `remotes::install_github` or `VISCtemplates::install_git_workaround`:
 
 ```{r install-example, eval=FALSE}
 # if on github:
-devtools::install_github(repo = "FredHutch/reponame.git")
+remotes::install_github(repo = "FredHutch/reponame.git")
 
 # if on network drives:
-devtools::install_git("path")
+VISCtemplates::install_git_workaround("path/reponame.git")
 ```
 
 ## SRAs and Study-Specific Training (SST)

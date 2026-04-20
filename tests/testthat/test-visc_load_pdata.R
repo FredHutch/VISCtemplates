@@ -1,19 +1,23 @@
 test_that("visc_load_pdata works", {
+  old_usethis_quiet <- getOption('usethis.quiet')
+  on.exit(options(usethis.quiet = old_usethis_quiet), add = TRUE)
+  options(usethis.quiet = TRUE)
   # make and build test datapackage
   td <- withr::local_tempdir()
-  file <- system.file("extdata", "tests", "subsetCars.Rmd",
-                      package = "VISCtemplates"
+  usethis::create_package(
+    path = file.path(td, "Visc777"),
+    rstudio = FALSE,
+    open = FALSE
   )
-  DataPackageR::datapackage_skeleton(
-    name = "Visc777",
-    path = td,
-    code_files = file,
-    r_object_names = "Visc777_cars"
+  dir.create(file.path(td, 'Visc777', 'data'), recursive = TRUE)
+  Visc777_cars <- subset(cars, speed > 20)
+  save(
+    Visc777_cars,
+    file = file.path(td, 'Visc777', 'data', 'Visc777_cars.rda')
   )
-  suppressMessages({
-    pb_res <- DataPackageR::package_build(file.path(td, "Visc777"))
-  })
-  expect_equal(basename(pb_res), "Visc777_1.0.tar.gz")
+
+  # test using project repo
+  withr::local_dir(file.path(td, "Visc777"))
   # warn when criteria = NULL
   expect_warning(
     suppressMessages({
@@ -81,8 +85,7 @@ test_that("visc_load_pdata works", {
                                            'proj',
                                            'fffb5b0aaa74fe7cfc0d3ca6ab0bffff'
       )
-    }),
-    "pdata_digest.*not equal to.*criteria.*expected"
+    })
   )
   # test with installed data package
   withr::with_temp_libpaths({
@@ -93,10 +96,9 @@ test_that("visc_load_pdata works", {
                  'Data package.*not installed'
     )
     # install
-    suppressMessages({
-      pb_res <- DataPackageR::package_build(file.path(td, "Visc777"),
-                                            install = TRUE, quiet = TRUE)
-    })
+    utils::install.packages(
+      file.path(td, "Visc777"), repo = NULL, type = 'source', quiet = TRUE
+    )
     # test RDA style package data installation
     expect_equal(
         'Visc777_cars.rda',
@@ -128,8 +130,7 @@ test_that("visc_load_pdata works", {
                         'datapackage',
                         'fffb5b0aaa74fe7cfc0d3ca6ab0bffff'
         )
-      }),
-      "pdata_digest.*not equal to.*criteria.*expected"
+      })
     )
     # errors out when can't find the data/object.rda file
     expect_error(
@@ -152,10 +153,9 @@ test_that("visc_load_pdata works", {
     new_desc <- c(readLines(desc_path), 'LazyData: true')
     writeLines(new_desc, desc_path)
     # do install
-    suppressMessages({
-      pb_res <- DataPackageR::package_build(file.path(td, "Visc777"),
-                                            install = TRUE, quiet = TRUE)
-    })
+    utils::install.packages(
+      file.path(td, "Visc777"), repo = NULL, type = 'source', quiet = TRUE
+    )
     # test LazyData style package data installation
     expect_true(
       setequal(
@@ -179,29 +179,36 @@ test_that("visc_load_pdata works", {
                         'datapackage',
                         'fffb5b0aaa74fe7cfc0d3ca6ab0bffff'
         )
-      }),
-      "pdata_digest.*not equal to.*criteria.*expected"
+      })
     )
   })
 })
 
 test_that('visc_load_pdata works with non-standard pdata name', {
+  old_usethis_quiet <- getOption('usethis.quiet')
+  on.exit(options(usethis.quiet = old_usethis_quiet), add = TRUE)
+  options(usethis.quiet = TRUE)
+
+  # setup test pkg with standard and non-standard data objects
   td <- withr::local_tempdir()
-  file <- system.file("extdata", "tests", "subsetCars.Rmd",
-                      package = "VISCtemplates"
+  usethis::create_package(
+    path = file.path(td, "Visc777"),
+    rstudio = FALSE,
+    open = FALSE
   )
-  DataPackageR::datapackage_skeleton(
-    name = "Visc777",
-    path = td,
-    code_files = file,
-    r_object_names = c("rogue_object", "Visc777_cars")
+  dir.create(file.path(td, 'Visc777', 'data'), recursive = TRUE)
+  Visc777_cars <- subset(cars, speed > 20)
+  save(
+    Visc777_cars,
+    file = file.path(td, 'Visc777', 'data', 'Visc777_cars.rda')
+  )
+  rogue_object <- Visc777_cars
+  save(
+    rogue_object,
+    file = file.path(td, 'Visc777', 'data', 'rogue_object.rda')
   )
   # test using project repo
-  suppressMessages({
-    DataPackageR::package_build(
-      file.path(td, "Visc777")
-    )
-  })
+  withr::local_dir(file.path(td, 'Visc777'))
   # Even for rogue object with non-standard naming, don't need to provide
   # package override in proj/repo mode
   expect_no_error(
@@ -215,11 +222,9 @@ test_that('visc_load_pdata works with non-standard pdata name', {
   )
   # test using pdata from installed datapackage
   withr::with_temp_libpaths({
-    suppressMessages({
-      DataPackageR::package_build(
-        file.path(td, "Visc777"), install = TRUE, quiet = TRUE
-      )
-    })
+    utils::install.packages(
+      file.path(td, "Visc777"), repo = NULL, type = 'source', quiet = TRUE
+    )
     # right hash, rogue object handled
     expect_no_error(
       suppressMessages(

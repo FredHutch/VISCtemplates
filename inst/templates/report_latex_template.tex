@@ -49,11 +49,6 @@
 \usepackage{soul} % Hyphenation for letterspacing, underlining, and more
 \usepackage{relsize} % Set the font size relative to the current font size
 
-% Add unicode checkmark for DataPackageR support. The green checkmark
-% that DataPackageR prints to the console during package_build() causes
-% an error with latex. This changes the unicode checkmark to a latex one.
-\DeclareUnicodeCharacter{2714}{\checkmark}
-
 % page settings
 \setlength{\footskip}{56pt}
 \pagestyle{fancy}
@@ -248,7 +243,11 @@ $if(dropVISClogo)$
 $else$
 \fancyhead[C]{\includegraphics[height=0.8cm]{$logo_path_visc$}}
 $endif$
+$if(dropSCHARPlogo)$
+\fancyhead[R]{}
+$else$
 \fancyhead[R]{\includegraphics[height=0.8cm]{$logo_path_scharp$}}
+$endif$
 \fancyfoot[C]{Page \thepage{}~of~\pageref{LastPage}}
 \setlength{\headheight}{27pt}
 
@@ -269,7 +268,8 @@ $endif$
   \advance\dimen@\@totalleftmargin
   \advance\dimen@-\dimen\@curtab
   \parbox[t]\dimen@{%
-    \leftskip=2em\hspace*{-2em}#1\ifhmode\strut\fi}%
+    \parindent=0pt % Ensure no paragraph indentation
+    #1\ifhmode\strut\fi}%
 }
 \makeatother
 
@@ -278,15 +278,16 @@ $endif$
 \begin{flushleft}
 \begin{tabbing}
 this line is to\= set up the tab stop \kill
-{\bf Date:} \> \insertdate\\
-{\bf To:} \>  \tabfill{$for(to)$$to.name$$sep$, $endfor$}\\
+{\bf Date:} \> \insertdate\\[0.5em]
+{\bf To:} \>  \tabfill{$for(to)$$to.name$$sep$, $endfor$}\\[0.1em]
 {\bf From:} \> \tabfill{$for(from)$$from.name$$sep$, $endfor$}\\
-{\bf RE:} \> \tabfill{$title$}\\
 $if(dropcc)$
+[0.5em]
 $else$
-{\bf cc:} \> \tabfill{$for(cc)$$cc.name$$sep$, $endfor$}\\
+[0.1em]{\bf CC:} \> \tabfill{$for(cc)$$cc.name$$sep$, $endfor$}\\[0.5em]
 $endif$
-{\bf Contact:} \> \tabfill{$for(from)$$if(from.contact)$$from.name$, $from.email$$endif$ $endfor$}\\
+{\bf RE:} \> \tabfill{$title$}\\[0.5em]
+{\bf Contact:} \> \tabfill{$for(from)$$if(from.contact)$$from.name$ ($from.email$)\\$endif$ $endfor$}\\[0.5em]
 \end{tabbing}
 \end{flushleft}
 
