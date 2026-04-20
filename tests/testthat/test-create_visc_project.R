@@ -21,7 +21,7 @@ test_that("create_visc_project works as expected in default mode", {
   )
 })
 
-test_that("create_visc_project works in pacakge mode", {
+test_that("create_visc_project works in package mode", {
   # creates ephemeral directory that will be deleted upon function exit
   temp_dir <- withr::local_tempdir()
   create_visc_project(temp_dir, interactive = FALSE, package = TRUE)
