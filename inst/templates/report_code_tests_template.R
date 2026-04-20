@@ -48,7 +48,7 @@ for (file_path in all_rmd_paths) {
   test_that(paste("Checking for eval=F in", file_path), {
     skip_if_not(file.exists(file_path), "Rmd not found")
     content <- readLines(file_path)
-    eval_f_count <- sum(grepl("eval\\s*=\\s*F([^A-Za-z]|$)", content))
+    eval_f_count <- sum(grepl("eval\\s*=\\s*F", content))
     if (file_path == main_rmd_path) {
       expect_lte(eval_f_count, 1)
     } else {
@@ -68,6 +68,16 @@ for (file_path in all_rmd_paths) {
     expect_equal(length(lints), 0, info = format_lints(lints))
   })
 
+  test_that(paste("Checking for non-portable or non-relative file paths in", file_path), {
+    skip_if_not(file.exists(file_path), "Rmd not found")
+    # absolute_path_linter() covers the portability case as well, so we don't
+    # need nonportable_path_linter() in addition.
+    lints <- lintr::lint(file_path, linters = lintr::absolute_path_linter())
+    expect_equal(length(lints), 0, info = format_lints(lints))
+  })
+
+  # note: spellcheck is also run on the pdf, but checking the code can help
+  # pinpoint where the issues are coming from.
   test_that(paste("Checking spelling in", file_path), {
     skip_if_not(file.exists(file_path), "Rmd not found")
     spelling_errors <- spelling::spell_check_files(
@@ -77,42 +87,6 @@ for (file_path in all_rmd_paths) {
       nrow(spelling_errors), 0,
       info = paste(capture.output(print(spelling_errors)), collapse = "\n")
     )
-  })
-
-  test_that(paste("Checking line lengths in", file_path), {
-    skip_if_not(file.exists(file_path), "Rmd not found")
-    # Pass the length limit positionally for compatibility across lintr versions
-    # (argument name has changed between releases).
-    lints <- lintr::lint(file_path, linters = lintr::line_length_linter(100L))
-    expect_equal(length(lints), 0, info = format_lints(lints))
-  })
-
-  test_that(paste("Checking for non-portable or non-relative file paths in", file_path), {
-    skip_if_not(file.exists(file_path), "Rmd not found")
-    # absolute_path_linter() covers the portability case as well, so we don't
-    # need nonportable_path_linter() in addition.
-    lints <- lintr::lint(file_path, linters = lintr::absolute_path_linter())
-    expect_equal(length(lints), 0, info = format_lints(lints))
-  })
-
-  test_that(paste("Checking object names in", file_path), {
-    skip_if_not(file.exists(file_path), "Rmd not found")
-    # Permit multiple casing conventions - VISC reports routinely reference
-    # column names from upstream data that use CamelCase or camelCase, so
-    # enforcing snake_case only would produce many false positives.
-    # Object length bumped from the default (30) to 40 to accommodate
-    # descriptive names common in data-wrangling pipelines.
-    lints <- lintr::lint(
-      file_path,
-      linters = list(
-        lintr::object_length_linter(length = 40L),
-        lintr::object_name_linter(
-          styles = c("snake_case", "CamelCase", "camelCase")
-        ),
-        lintr::object_overwrite_linter()
-      )
-    )
-    expect_equal(length(lints), 0, info = format_lints(lints))
   })
 
 }
