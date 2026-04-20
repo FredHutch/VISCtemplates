@@ -195,9 +195,9 @@ if (output_type == 'latex') {
 
 `r insert_break()`
 
-# Acknowledgments
+# Acknowledgements
 
-Include your acknowledgments in this section.
+Include your acknowledgements in this section.
 
 `r insert_break()`
 
