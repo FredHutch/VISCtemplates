@@ -82,29 +82,33 @@ write_fixture_pdf <- function(path, pages) {
   }
 }
 
-# Run a generated test file in a clean testthat reporter and return the
-# per-test pass/fail summary as a data frame.
+# Run a generated test file and return a per-test pass/fail summary.
+# We rely on test_file()'s return value (a testthat_results list) rather than
+# a reporter's internals. reporter = "silent" keeps console output quiet, and
+# stop_on_failure = FALSE ensures failing expectations inside the generated
+# file don't abort the enclosing test.
 run_generated_tests <- function(test_file) {
-  # SilentReporter + stop_reporter = FALSE so failing expectations don't
-  # propagate out and abort the enclosing test.
-  reporter <- testthat::SilentReporter$new()
-  withr::with_dir(
+  res <- withr::with_dir(
     dirname(test_file),
-    testthat::test_file(test_file, reporter = reporter, stop_on_failure = FALSE)
+    testthat::test_file(
+      test_file,
+      reporter = "silent",
+      stop_on_failure = FALSE
+    )
   )
-  results <- as.data.frame(reporter$get_results())
-  # testthat gives us one row per expectation; collapse to one per test_that()
-  # block, where "failed" means any expectation in that block failed.
-  if (nrow(results) == 0) {
+  # testthat_results has an as.data.frame method: one row per test_that()
+  # block with columns including `test` (description) and `failed` (count of
+  # failing expectations in that block).
+  df <- as.data.frame(res)
+  if (nrow(df) == 0) {
     return(data.frame(test = character(), failed = logical(),
                       stringsAsFactors = FALSE))
   }
-  agg <- stats::aggregate(
-    failed ~ test,
-    data = data.frame(test = results$test, failed = results$failed > 0),
-    FUN = any
+  data.frame(
+    test   = df$test,
+    failed = df$failed > 0,
+    stringsAsFactors = FALSE
   )
-  agg
 }
 
 # Convenience: did any test whose description matches `pattern` fail?
