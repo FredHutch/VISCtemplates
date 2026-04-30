@@ -59,6 +59,7 @@ library(rprojroot)
 library(remotes)
 
 output_type <- get_output_type()
+kable_warnings <- set_kable_warnings(output_type)
 pandoc_markup <- set_pandoc_markup(output_type)
 
 # knitr options
@@ -203,7 +204,7 @@ be used across PT reports for the protocol. -->
 
 <!-- Also include the study schema here. -->
 
-```{r study-schema, results="asis"}
+```{r study-schema, results="asis", warning=kable_warnings}
 source(rprojroot::find_rstudio_root_file("R", "study_schema.R"), local = TRUE)
 study_schema()
 ```
