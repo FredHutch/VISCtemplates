@@ -121,7 +121,16 @@ visc_load_pdata <- function(.data,
 
   # return pdata if hash check is successful
   pdata_digest <- digest::digest(pdata)
-  testthat::expect_equal(pdata_digest, criteria)
+  if (!identical(pdata_digest, criteria)) {
+    stop(
+      sprintf(
+        "Data hash mismatch: expected %s, got %s",
+        criteria,
+        pdata_digest
+      ),
+      call. = FALSE
+    )
+  }
   message("Data hash ", criteria, " matches!")
   return(pdata)
 }

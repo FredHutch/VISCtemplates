@@ -365,6 +365,9 @@ plt_data |>
 `r insert_break()`
 
 ```{r example-tab, results="asis", warning=kable_warnings}
+# Note: kable usage with Word outputs will result in many warnings being printed
+# in the output document. To avoid this, set warning=kable_warnings in chunk
+# options, or use flextable instead (examples in Reproducibility Software Information)
 
 magnitude_tab <- magnitude_results |> 
   select(-Population, -contains("Perfect")) |>
@@ -426,7 +429,7 @@ if (output_type == 'latex') {
 
 # Reproducibility Software Information
 
-```{r Software-Session-Information, results="asis", message=FALSE, warning=kable_warnings}
+```{r Software-Session-Information, results="asis", message=FALSE}
 
 # load in rmarkdown to capture version number
 if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmarkdown))
@@ -459,7 +462,7 @@ if (output_type == 'latex') {
 
 `r insert_break()`
 
-```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
+```{r Software-Package-Version-Information, results="asis"}
 
 tbl_caption <- "Package reproducibility information"
 

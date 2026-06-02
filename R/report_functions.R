@@ -70,8 +70,13 @@ check_pandoc_version <- function() {
 #' \dontrun{insert_ref("stats-methods", "Stats Methods")}
 insert_ref <- function(ref, section_name = NA) {
   output_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
-  if (is.null(output_type))
+  if (is.null(output_type)) {
+    warning(
+      "`insert_ref()` called outside a knit context; returning NULL. ",
+      "This function is designed to be used inside an R Markdown chunk."
+    )
     return(NULL)
+  }
 
   if (output_type == 'latex') {
     paste0('\\ref{', ref, '}')
@@ -92,9 +97,11 @@ insert_ref <- function(ref, section_name = NA) {
 #' @return Inserts a page break
 #' @export
 insert_break <- function() {
-  ifelse(knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex',
-         '\\clearpage',
-         '\\newpage')
+  if (identical(knitr::opts_knit$get('rmarkdown.pandoc.to'), 'latex')) {
+    '\\clearpage'
+  } else {
+    '\\newpage'
+  }
 }
 
 #' Insert references section header
@@ -107,9 +114,11 @@ insert_break <- function() {
 #' @return inserts the References section header
 #' @export
 insert_references_section_header <- function(){
-  ifelse(knitr::opts_knit$get('rmarkdown.pandoc.to') == 'latex',
-         '\\section{References}',
-         '# References')
+  if (identical(knitr::opts_knit$get('rmarkdown.pandoc.to'), 'latex')) {
+    '\\section{References}'
+  } else {
+    '# References'
+  }
 }
 
 #' Get output type for warnings and markup
@@ -128,8 +137,7 @@ get_output_type <- function() {
   current_output_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
 
   # if interactive, set to pandoc for easier visualization
-  ifelse(!is.null(current_output_type) && current_output_type == 'latex',
-         'latex', 'pandoc')
+  if (identical(current_output_type, 'latex')) 'latex' else 'pandoc'
 
 }
 
@@ -154,7 +162,7 @@ get_output_type <- function() {
 #'
 #' }
 set_kable_warnings <- function(output_type) {
-  ifelse(output_type == 'latex', TRUE, FALSE)
+  output_type == 'latex'
 }
 
 #' Set pandoc markup
@@ -178,5 +186,5 @@ set_kable_warnings <- function(output_type) {
 #'
 #' }
 set_pandoc_markup <- function(output_type) {
-  ifelse(output_type == 'pandoc', TRUE, FALSE)
+  output_type == 'pandoc'
 }
