@@ -71,7 +71,7 @@ check_pandoc_version <- function() {
 insert_ref <- function(ref, section_name = NA) {
   output_type <- knitr::opts_knit$get('rmarkdown.pandoc.to')
   if (is.null(output_type)) {
-    message(
+    warning(
       "`insert_ref()` called outside a knit context; returning NULL. ",
       "This function is designed to be used inside an R Markdown chunk."
     )
