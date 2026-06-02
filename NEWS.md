@@ -21,7 +21,7 @@ Improvements for users
 * Add `visc_load_pdata()` examples to report template skeleton (#327)
 * Remove `install_load_cran_packages()` from report template skeleton in favor of using `library()` calls (#321)
 * Reproducibility table formatting changes to coordinate with recent VISCfunctions update that lengthens reproducibility packages table to include packages that are loaded but not attached (#329, #332)
-* Drop use of kable_warnings in skeleton.Rmd files to simplify report templates (#339)
+* Drop unnecessary use of kable_warnings in skeleton.Rmd files to simplify report templates (#339)
 
 Improvements for package contributors and maintainers
 
