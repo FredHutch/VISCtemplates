@@ -100,6 +100,7 @@ theme_set(visc_theme)
 
 # source group_colors and response_shapes for use in figures
 source(rprojroot::find_rstudio_root_file("R", "colors-and-shapes.R"), local = TRUE)
+
 scale_color_visc <- function(..., values = report_colors) scale_color_manual(..., values = values)
 scale_fill_visc <- function(..., values = report_colors) scale_fill_manual(..., values = values)
 scale_shape_visc <- function(..., values = report_shapes) scale_shape_manual(..., values = values)
@@ -363,6 +364,56 @@ plt_data |>
 ```
 
 `r insert_break()`
+
+```{r example-plot-loop, results="asis", eval = T}
+
+for(i in c("GAG", "POL")){
+  
+  # NOTE the use of the limits argument in scales_...() to maintain consistent legends
+  
+  sub_plt_data <- filter(plt_data, Stim == i)
+  
+  ag_loop_pl <- sub_plt_data |>
+    ggplot(aes(x = Group,
+               y = pmax(PercentCellNet, 0.005),
+               shape = response_and_group,
+               color = response_and_group)) +
+    geom_point(position = position_jitter(width = .25, height = 0, seed = 3241),
+               size = 1) +
+    scale_color_visc(limits = unique(plt_data$response_and_group)) +
+    scale_shape_visc(limits = unique(plt_data$response_and_group)) +
+    geom_boxplot(
+      data = sub_plt_data |> filter(response == 1),
+      fill = NA, lwd = .5, outlier.colour = NA
+      ) +
+    scale_y_log10(
+      breaks = c(.005,.01,.05,.25,1,2, 4, 10),
+      labels = c(expression("" <= "0.005%"), 
+                 "0.01", "0.05", '0.25%', "1%", "2%", "4%", "10%")
+      ) +
+    facet_grid(Stim ~ Visit) +
+    labs(
+      y = expression("Background-Adjusted % Activation Marker+"),
+      shape = NULL,
+      color = NULL
+    ) +
+    theme(legend.direction = "vertical",
+          legend.spacing.x = unit(1.5, "cm"))
+    
+  insert_fig_subchunk(
+    fig = ag_loop_pl,
+    fig_chunk_name = paste0("fig-", tolower(i)),
+    fig_caption_short = paste0("Looped short caption for ", i),
+    fig_caption_long = paste0("Looped long caption for ", i)
+  )
+  
+}
+
+```
+
+
+`r insert_break()`
+
 
 ```{r example-tab, results="asis", warning=kable_warnings}
 # Note: kable usage with Word outputs will result in many warnings being printed
