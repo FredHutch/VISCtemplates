@@ -473,9 +473,12 @@ if (output_type == 'latex') {
     kable(
       booktabs = TRUE, linesep = "", caption = tbl_caption, longtable = TRUE
     ) |>
+    # NOTE: the options below should be applied to ALL longtables to avoid various formatting issues, including page numbering issues caused by repeated headers
     kable_styling(
       latex_options = 'repeat_header',
-      repeat_header_method = 'replace'
+      repeat_header_method = 'replace',
+      repeat_header_text = paste(tbl_caption, "(continued)"),
+      repeat_header_continued = TRUE
     )
 
 } else {
