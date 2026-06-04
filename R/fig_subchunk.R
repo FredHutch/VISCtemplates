@@ -34,8 +34,14 @@
 #'   fig_caption_long  = "Scatterplot of car weight against fuel efficiency (mpg)."
 #' )
 #' }
+# nocov start
 insert_fig_subchunk = function(fig, fig_chunk_name, fig_caption_short, fig_caption_long,
                                .interactive = interactive()) {
+
+  # check early for troubleshooting during interactive development
+  .check_chunk_name(fig_chunk_name)
+  .check_caption(fig_caption_short, "fig_caption_short")
+  .check_caption(fig_caption_long, "fig_caption_long")
 
   # when working interactively, this will print the figure instead
   if(.interactive) {
@@ -44,11 +50,89 @@ insert_fig_subchunk = function(fig, fig_chunk_name, fig_caption_short, fig_capti
   }
 
   fig_deparsed <- paste0(deparse(function(){fig}), collapse = '')
-  fig_sub_chunk <- paste0(
-    "\n```{r ", fig_chunk_name, ', ',
-    "fig.scap='", fig_caption_short, "', ",
-    "fig.cap='", fig_caption_long, "'}",
-    "\n(", fig_deparsed, ")()", "\n```\n")
-  cat(knitr::knit(text = knitr::knit_expand(text = fig_sub_chunk), quiet = TRUE))
 
+  fig_sub_chunk <- .build_fig_subchunk(
+    chunk_body        = fig_deparsed,
+    fig_chunk_name    = fig_chunk_name,
+    fig_caption_short = fig_caption_short,
+    fig_caption_long  = fig_caption_long
+  )
+
+  cat(knitr::knit(text = knitr::knit_expand(text = fig_sub_chunk), quiet = TRUE))
+}
+# nocov end
+
+#' Assembles the sub-chunk header and body into the fenced chunk text.
+#'
+#' @param chunk_body A character string used verbatim as the chunk body.
+#' @param fig_chunk_name Chunk label.
+#' @param fig_caption_short Short caption (fig.scap).
+#' @param fig_caption_long Long caption (fig.cap).
+#' @return A length-1 character string: the fenced knitr chunk.
+#' @keywords internal
+#' @noRd
+.build_fig_subchunk <- function(chunk_body, fig_chunk_name,
+                               fig_caption_short, fig_caption_long) {
+  paste0(
+    "\n```{r ", fig_chunk_name, ", ",
+    "fig.scap=", encodeString(as.character(fig_caption_short), quote = "'"), ", ",
+    "fig.cap=",  encodeString(as.character(fig_caption_long),  quote = "'"), "}",
+    "\n(", chunk_body, ")()",
+    "\n```\n"
+  )
+}
+
+#' internal helper for insert_fig_subchunk, catches caption input for latex
+#'
+#' @param x string input (caption strings)
+#' @param arg name of argument for error reporting
+#' @keywords internal
+#' @noRd
+.check_caption <- function(x, arg = "caption") {
+  x <- as.character(x)
+  if (length(x) == 0 || is.na(x[1])) return(invisible(x))
+  x1 <- x[1]
+
+  # control / non-printable chars are the fingerprint of a single-backslash
+  # LaTeX command in R source (e.g. "$\alpha$" -> \a became a control char).
+  # The user almost certainly meant a double backslash ("$\\alpha$").
+  if (grepl("[\x01-\x08\x0b\x0c\x0e-\x1f\x7f]", x1, perl = TRUE)) {
+    stop(sprintf(
+      "%s contains a control character, which usually means a LaTeX command was written with a single backslash (e.g. \"$\\alpha$\"). Use a double backslash in R strings: \"$\\\\alpha$\".",
+      arg
+    ), call. = FALSE)
+  }
+
+  # unbalanced math-mode delimiters
+  delims <- gregexpr("(?<!\\\\)\\$", x1, perl = TRUE)[[1]]
+  n <- if (length(delims) == 1 && delims[1] == -1) 0L else length(delims)
+  if (n %% 2 != 0) {
+    stop(sprintf(
+      "%s has an odd number of unescaped '$' (%d) - a math-mode delimiter is unclosed, which will break LaTeX rendering: %s",
+      arg, n, encodeString(x1, quote = '"')
+    ), call. = FALSE)
+  }
+
+  invisible(x)
+}
+
+
+#' internal helper for insert_fig_subchunk, checks chunk naming
+#'
+#' @param x string input (chunk name)
+#' @param arg name of argument for error reporting
+#' @keywords internal
+#' @noRd
+.check_chunk_name <- function(x, arg = "fig_chunk_name") {
+  if (length(x) != 1 || !is.character(x) || is.na(x) || !nzchar(x)) {
+    stop(sprintf("%s must be a single non-empty string.", arg), call. = FALSE)
+  }
+  # characters that corrupt the chunk header's "label, opt=val" parsing
+  if (grepl("[,\\s'\"`_]", x, perl = TRUE)) {
+    stop(sprintf(
+      "%s ('%s') contains spaces, commas, underscores, or quotes, which break the chunk header. Use letters, digits, hyphens, or periods.",
+      arg, x
+    ), call. = FALSE)
+  }
+  invisible(x)
 }

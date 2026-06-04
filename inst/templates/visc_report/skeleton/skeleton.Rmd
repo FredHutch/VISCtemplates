@@ -373,7 +373,7 @@ for(i in c("GAG", "POL")){
   
   sub_plt_data <- filter(plt_data, Stim == i)
   
-  ag_loop_pl <- sub_plt_data |>
+  sub_plt <- sub_plt_data |>
     ggplot(aes(x = Group,
                y = pmax(PercentCellNet, 0.005),
                shape = response_and_group,
@@ -401,10 +401,10 @@ for(i in c("GAG", "POL")){
           legend.spacing.x = unit(1.5, "cm"))
     
   insert_fig_subchunk(
-    fig = ag_loop_pl,
+    fig = sub_plt,
     fig_chunk_name = paste0("fig-", tolower(i)),
     fig_caption_short = paste0("Looped short caption for ", i),
-    fig_caption_long = paste0("Looped long caption for ", i)
+    fig_caption_long = paste0("Looped long caption for ", i, ". With it's special character examples: $\\alpha < 5 %$ or $\\alpha \\le 5$ %. ")
   )
   
 }

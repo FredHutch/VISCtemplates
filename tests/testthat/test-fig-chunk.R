@@ -57,3 +57,4 @@ test_that("default for .interactive is interactive()", {
   # getting interactive() to cooperate with check() and test() was a pain
   expect_equal(formals(insert_fig_subchunk)$.interactive, quote(interactive()))
 })
+
