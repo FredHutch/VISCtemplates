@@ -100,3 +100,9 @@ test_that(".check_chunk_name rejects invalid labels and accepts valid", {
   expect_silent(.check_chunk_name("fig.scatter.1"))
   expect_silent(.check_chunk_name("Figure3"))
 })
+
+
+test_that(".check_caption handles empty and NA captions", {
+  expect_invisible(.check_caption(character(0), "fig_caption_short"))
+  expect_invisible(.check_caption(NA_character_, "fig_caption_short"))
+})
