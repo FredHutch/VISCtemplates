@@ -14,7 +14,7 @@ insert_fig_subchunk_deparse(
 }
 \arguments{
 \item{fig}{A plot object (e.g. a ggplot or any object with a print method)
-to be rendered in the sub-chunk.}
+to be rendered in the sub-chunk. For base R plots, see ?insert_fig_subchunk_deparse}
 
 \item{fig_chunk_name}{A character string giving the knitr chunk label for
 the generated sub-chunk (e.g., "fig-cd4-env-infg"). Must be unique within the document.}
@@ -41,8 +41,7 @@ When run interactively it prints \code{fig} directly, and invisibly returns \cod
 \details{
 A historical implementation of \code{\link[=insert_fig_subchunk]{insert_fig_subchunk()}} that captures the
 figure by deparsing an expression rather than assigning a printable object.
-It is less robust (fragile under code instrumentation, awkward caption
-handling) but supports a wider range of figure types, including base R
+It is less robust (fragile under code instrumentation) but supports a wider range of figure types, including base R
 plots. Prefer \code{\link[=insert_fig_subchunk]{insert_fig_subchunk()}} for ggplot and other printable
 graphic objects; use this only when you must defer evaluation of a base R
 plotting call.

@@ -1,13 +1,15 @@
-#' knitr figure wrapper for ggplot2 type objects
+#' knitr figure wrapper for ggplot2-type objects
 #'
 #' Inserts a figure as a knitr sub-chunk so that chunk options (such as
 #' captions) can be set programmatically and looped runtime rather than being
 #' hard-coded per figure. This is useful when figures are generated
 #' inside a loop or function and you still want per-figure captions and
-#' cross-referencing. When run interactively, the figure(s) are simply printed.
+#' cross-referencing. When run interactively, the figure(s) are simply printed. This intended
+#' for ggplot, patchwork, cowplot, grid/grob, gtable, or lattice-type plots. For use of base R plots
+#' use this deprecated version: insert_fig_subchunk_deparse
 #'
 #' @param fig A plot object (e.g. a ggplot or any object with a print method)
-#'   to be rendered in the sub-chunk.
+#'   to be rendered in the sub-chunk. For base R plots, see ?insert_fig_subchunk_deparse
 #' @param fig_chunk_name A character string giving the knitr chunk label for
 #'   the generated sub-chunk (e.g., "fig-cd4-env-infg"). Must be unique within the document.
 #' @param fig_caption_short A character string used as the short figure caption
@@ -164,8 +166,7 @@ insert_fig_subchunk = function(fig, fig_chunk_name, fig_caption_short, fig_capti
 #'
 #' A historical implementation of [insert_fig_subchunk()] that captures the
 #' figure by deparsing an expression rather than assigning a printable object.
-#' It is less robust (fragile under code instrumentation, awkward caption
-#' handling) but supports a wider range of figure types, including base R
+#' It is less robust (fragile under code instrumentation) but supports a wider range of figure types, including base R
 #' plots. Prefer [insert_fig_subchunk()] for ggplot and other printable
 #' graphic objects; use this only when you must defer evaluation of a base R
 #' plotting call.

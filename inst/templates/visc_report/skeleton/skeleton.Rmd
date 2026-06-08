@@ -404,7 +404,7 @@ for(i in c("GAG", "POL")){
     fig = sub_plt,
     fig_chunk_name = paste0("fig-", tolower(i)),
     fig_caption_short = paste0("Looped short caption for ", i),
-    fig_caption_long = paste0("Looped long caption for ", i, ". With it's special character examples: $\\alpha < 5 %$ or $\\alpha \\le 5$ %. ")
+    fig_caption_long = paste0("Looped long caption for ", i, ". Special character example: $\\alpha < 5 %$ or $\\alpha \\le 5$ %. ")
   )
   
 }

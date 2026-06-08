@@ -2,7 +2,7 @@
 % Please edit documentation in R/fig_subchunk.R
 \name{insert_fig_subchunk}
 \alias{insert_fig_subchunk}
-\title{knitr figure wrapper for ggplot2 type objects}
+\title{knitr figure wrapper for ggplot2-type objects}
 \usage{
 insert_fig_subchunk(
   fig,
@@ -14,7 +14,7 @@ insert_fig_subchunk(
 }
 \arguments{
 \item{fig}{A plot object (e.g. a ggplot or any object with a print method)
-to be rendered in the sub-chunk.}
+to be rendered in the sub-chunk. For base R plots, see ?insert_fig_subchunk_deparse}
 
 \item{fig_chunk_name}{A character string giving the knitr chunk label for
 the generated sub-chunk (e.g., "fig-cd4-env-infg"). Must be unique within the document.}
@@ -40,7 +40,9 @@ Inserts a figure as a knitr sub-chunk so that chunk options (such as
 captions) can be set programmatically and looped runtime rather than being
 hard-coded per figure. This is useful when figures are generated
 inside a loop or function and you still want per-figure captions and
-cross-referencing. When run interactively, the figure(s) are simply printed.
+cross-referencing. When run interactively, the figure(s) are simply printed. This intended
+for ggplot, patchwork, cowplot, grid/grob, gtable, or lattice-type plots. For use of base R plots
+use this deprecated version: insert_fig_subchunk_deparse
 }
 \examples{
 \dontrun{
