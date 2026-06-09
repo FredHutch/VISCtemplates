@@ -34,7 +34,8 @@ Authors@R: c(
     person(given = "Alicia",
            family = "Sato",
            role = c("aut"),
-           email = "asato@fredhutch.org")
+           email = "asato@fredhutch.org",
+           comment = c(ORCID = "0000-0001-8371-8007"))
     )
 Description: The goal of VISCtemplates is to automate project setup provide a common easy-to-understand directory structure across analyses, provide consistency across reports in the same project/protocol, and provide consistency across reports analyzing data from the same assay.
 License: GPL-3 + file LICENSE
