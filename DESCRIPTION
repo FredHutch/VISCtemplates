@@ -14,15 +14,28 @@ Authors@R: c(
     person(given = "Bryan",
            family = "Mayer",
            role = c("aut"),
-           email = "bmayer@fredhutch.org"),
+           email = "bmayer@fredhutch.org", 
+           comment = c(ORCID = "0000-0003-2258-5276")),
     person(given = "Dave",
            family = "Slager",
            role = c("aut"),
-           email = "dslager@fredhutch.org"),
+           email = "dslager@fredhutch.org",
+           comment = c(ORCID = "0000-0003-2525-2039")),
     person(given = "Kellie",
            family = "MacPhee",
            role = c("aut", "cre"),
-           email = "kmacphee@fredhutch.org")
+           email = "kmacphee@fredhutch.org",
+           comment = c(ORCID = "0009-0008-0993-4009")),
+    person(given = "Gabrielle",
+           family = "Lemire",
+           role = c("aut"),
+           email = "glemire@fredhutch.org",
+           comment = c(ORCID = "0009-0008-3813-2523")),
+    person(given = "Alicia",
+           family = "Sato",
+           role = c("aut"),
+           email = "asato@fredhutch.org",
+           comment = c(ORCID = "0000-0001-8371-8007"))
     )
 Description: The goal of VISCtemplates is to automate project setup provide a common easy-to-understand directory structure across analyses, provide consistency across reports in the same project/protocol, and provide consistency across reports analyzing data from the same assay.
 License: GPL-3 + file LICENSE
