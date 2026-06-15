@@ -60,6 +60,21 @@ for each individual by visit and antigen using the trapezoidal integration with
 truncation at one in the case of negative net MFI values, or truncation at 22,000 
 for net MFI values greater than 22,000.
 
+#### Avidity
+
+BAMA avidity index (AI) are the ratio of the net MFI comparing two assay conditions:
+using a citrate buffer wash (CIT), which disrupts lower-affinity antibody–antigen 
+interactions, and a standard phosphate-buffered saline control (PBS). BAMA AI is 
+defined as follows:
+
+$$AI = 100 \times \frac{\text{Net MFI}_{\text{CIT}}}{\text{Net MFI}_{\text{PBS}}}$$
+
+<!-- Specify whether AI was analyzed as continuous or as a categorical variable.
+Note past analyses have used Low Net MFI when Net MFI was < 300, Low, Medium and High 
+AI as categories. Be sure to consider in any statistical analysis the conditional 
+nature of AI. AI is most likely not missing completely at random as it depends
+on BAMA readouts. -->
+
 #### Durability
 
 <!-- if you have durability time points -->
