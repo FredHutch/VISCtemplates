@@ -20,3 +20,13 @@ served as negative controls for non-specific binding.
 If the blank bead negative control exceeded 5,000 MFI, the sample was repeated. 
 If the repeated value exceeded 5,000 MFI, the sample was excluded from analysis 
 due to high background.
+
+### BAMA Avidity
+
+Antibody avidity reflects the overall binding strength of an antibody to its antigen 
+under denaturing conditions. The BAMA avidity index (AI) is computed by comparing 
+Net MFI (median fluorescence intensity minus background) from two parallel assay 
+conditions: a citrate buffer wash (CIT), which disrupts lower-affinity antibody–antigen 
+interactions, and a standard phosphate-buffered saline control (PBS).
+
+<!-- Reference paper for BAMA avidity? -->
