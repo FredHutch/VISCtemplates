@@ -60,6 +60,20 @@ for each individual by visit and antigen using the trapezoidal integration with
 truncation at one in the case of negative net MFI values, or truncation at 22,000 
 for net MFI values greater than 22,000.
 
+### Differential Binding
+
+<!-- Subtraction method. Using CD4bs as example. Do we want to remove antigen
+specific references? open to suggestions on how to CD4 binding site -> epitope binding 
+site? or just epitope specific region of the antigen? -->
+
+For differential binding to the CD4 binding site (CD4bs), defined as the difference in AUTC 
+for binding to eOD-GT8 ($\mathrm{AUTC}_\mathrm{Ref}$) and eOD-GT8-KO11 ($\mathrm{AUTC}_\mathrm{KO}$), 
+the positivity of response was defined as a positive response to the reference antigen plus an additional criterion:  
+
+4. $\Delta$AUTC $>$ 0, where $\Delta$AUTC was defined as $\mathrm{AUTC}_\mathrm{Ref}$ - $\mathrm{AUTC}_\mathrm{KO}$
+
+<!-- Ratio method. Insert here. -->
+
 #### Avidity
 
 BAMA avidity index (AI) are the ratio of the net MFI comparing two assay conditions:
