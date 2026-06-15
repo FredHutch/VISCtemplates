@@ -75,6 +75,35 @@ AI as categories. Be sure to consider in any statistical analysis the conditiona
 nature of AI. AI is most likely not missing completely at random as it depends
 on BAMA readouts. -->
 
+#### Relative Concentrations
+
+We will estimate the relative concentration of epitope-specific and/or vaccine-induced 
+binding antibodies in each sample (i.e., participant and study visit) using a novel 
+statistical method. This method integrated Net MFI data across all available dilutions 
+from all samples using a semiparametric model. A spline function will be built to 
+describe the relationship between the log-transformed MFI measured by the BAMA assay 
+and the concentration of binding antibodies in the samples. This spline function may 
+be specified as a quadratic B-spline. Monotonicity constraints may be applied to impose 
+the relationship between log-transformed MFI and antibody concentrations to be non-decreasing. 
+The method estimates relative antibody concentrations (i.e., estimates of the unobserved 
+antibody concentrations up to a common, unknown multiplicative factor shared by all samples). 
+Ratios of antibody concentrations will be deduced from these estimated relative concentrations. 
+For example, we will compute the percentage of epitope-specific antibodies that are antigen specific. 
+The percentage of epitope-specific antibodies is calculated as:  
+
+ $$ \text{Percent_{\epitope specific}} = 100 \times \frac{\text{Rel_Conc}_{\text{epitope-specific KO}}}{\text{Rel_Conc}_{\text{antigen-specific}}}$$
+
+where $\text{Rel_Conc}_{\text{antigen-specific}}$ and $\text{Rel_Conc}_{\text{epitope-KO}}$ 
+denote the relative concentration of vaccine-specific antibodies and vaccine-specific antibodies 
+that bind to the mutated knock-out (KO) epitope immunogen, respectively. The calculations assume that 
+
+ $$ \text{Conc(antigen-specific)} = \text{Conc(epitope-specific KO)} + \text{Conc(epitope-specific-specific)} $$
+
+where, for example, $\text{Conc(epitope-specific-specific)}$ refers to the concentration of antigen-specific 
+antibodies that bind to the epitope. 
+
+<!-- reference forthcoming -->
+
 #### Durability
 
 <!-- if you have durability time points -->
