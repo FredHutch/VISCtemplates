@@ -14,31 +14,31 @@ Please edit the *.Rmd file. -->
 
 Positive responses were defined based on background-adjusted MFI values 
 at the screening dilution level ([1:50]). 
-Antigen-specific positivity thresholds were computed as the 95th percentile 
+Antigen-specific positivity thresholds were computed as the maximum of 100 or the 95th percentile 
 of the baseline background-adjusted MFI minus background-adjusted blank (baseline net MFI) 
 by antigen. 
 Samples from post-enrollment visits were declared to have a positive binding 
 antibody response by BAMA if they met three criteria:
 
-* Net MFI values at the screening dilution were greater than the maximum of 100 or 
+>**A1.** Net MFI values at the screening dilution were greater than the maximum of 100 or 
 the 95th percentile of baseline samples (by antigen).
-* Net MFI values were greater than three times the baseline net MFI.
-* Background-adjusted MFI values were greater than three times the baseline 
+**A2.** Net MFI values were greater than three times the baseline net MFI.
+**A3.** Background-adjusted MFI values were greater than three times the baseline 
 background-adjusted MFI values.
 
 <!-- If you have differential binding antigens: -->
 For antigens used to examine differential binding [to the VRC01 or CD4 binding site (CD4bs)], 
 the following ratio-based positivity definition was used:
 
-$\mathrm{net MFI} \ge \text{antigen specific threshold}$, which was set at 100.
-
-$\mathrm{net MFI} / \mathrm{net MFI}_\mathrm{reference\ antigen} \ge 2.5$
-
-$\mathrm{MFI} / \mathrm{MFI}_\mathrm{reference\ antigen} \ge 2.5$
-
-$\mathrm{net MFI} > 3 \times \mathrm{net MFI}_\mathrm{baseline}$
-
-$\mathrm{MFI} > 3 \times \mathrm{MFI}_\mathrm{baseline}$
+>**B1.** The 3-part response criteria (A1-A3) is positive for the experimental antigen.  
+**B2.** The ratio of net MFI$_{\text{ experimental antigen}}$ to the net MFI$_{\text{ reference antigen}}$ 
+(where either antigen net MFI was truncated to 100 when net MFI < 100), was greater than or equal to 2.5 
+and net MFI$_{\text{ experimental antigen}}$ values were greater than or equal to 250.  
+**B3.** The ratio of background-adjusted MFI$_{\text{ experimental antigen}}$ to the background-adjusted 
+MFI$_{\text{ reference antigen}}$ (where either antigen background-adjusted MFI was truncated to 100 when 
+background-adjusted MFI < 100), was greater than or equal to 2.5 and background-adjusted MFI$_{\text{ 
+experimental antigen}}$ values were greater than or equal to 250.  
+  
 
 <!-- Either in an antigen summary table or in this section, include information 
 on antigen-specific positivity thresholds. -->
@@ -60,63 +60,6 @@ for each individual by visit and antigen using the trapezoidal integration with
 truncation at one in the case of negative net MFI values, or truncation at 22,000 
 for net MFI values greater than 22,000.
 
-### Differential Binding
-
-<!-- Subtraction method. Using CD4bs as example. Do we want to remove antigen
-specific references? open to suggestions on how to CD4 binding site -> epitope binding 
-site? or just epitope specific region of the antigen? -->
-
-For differential binding to the CD4 binding site (CD4bs), defined as the difference in AUTC 
-for binding to eOD-GT8 ($\mathrm{AUTC}_\mathrm{Ref}$) and eOD-GT8-KO11 ($\mathrm{AUTC}_\mathrm{KO}$), 
-the positivity of response was defined as a positive response to the reference antigen plus an additional criterion:  
-
-4. $\Delta$AUTC $>$ 0, where $\Delta$AUTC was defined as $\mathrm{AUTC}_\mathrm{Ref}$ - $\mathrm{AUTC}_\mathrm{KO}$
-
-<!-- Ratio method. Insert here. -->
-
-#### Avidity
-
-BAMA avidity index (AI) are the ratio of the net MFI comparing two assay conditions:
-using a citrate buffer wash (CIT), which disrupts lower-affinity antibody–antigen 
-interactions, and a standard phosphate-buffered saline control (PBS). BAMA AI is 
-defined as follows:
-
-$$AI = 100 \times \frac{\text{Net MFI}_{\text{CIT}}}{\text{Net MFI}_{\text{PBS}}}$$
-
-<!-- Specify whether AI was analyzed as continuous or as a categorical variable.
-Note past analyses have used Low Net MFI when Net MFI was < 300, Low, Medium and High 
-AI as categories. Be sure to consider in any statistical analysis the conditional 
-nature of AI. AI is most likely not missing completely at random as it depends
-on BAMA readouts. -->
-
-#### Relative Concentrations
-
-We will estimate the relative concentration of epitope-specific and/or vaccine-induced 
-binding antibodies in each sample (i.e., participant and study visit) using a novel 
-statistical method. This method integrated Net MFI data across all available dilutions 
-from all samples using a semiparametric model. A spline function will be built to 
-describe the relationship between the log-transformed MFI measured by the BAMA assay 
-and the concentration of binding antibodies in the samples. This spline function may 
-be specified as a quadratic B-spline. Monotonicity constraints may be applied to impose 
-the relationship between log-transformed MFI and antibody concentrations to be non-decreasing. 
-The method estimates relative antibody concentrations (i.e., estimates of the unobserved 
-antibody concentrations up to a common, unknown multiplicative factor shared by all samples). 
-Ratios of antibody concentrations will be deduced from these estimated relative concentrations. 
-For example, we will compute the percentage of epitope-specific antibodies that are antigen specific. 
-The percentage of epitope-specific antibodies is calculated as:  
-
- $$ \text{Percent_{\epitope specific}} = 100 \times \frac{\text{Rel_Conc}_{\text{epitope-specific KO}}}{\text{Rel_Conc}_{\text{antigen-specific}}}$$
-
-where $\text{Rel_Conc}_{\text{antigen-specific}}$ and $\text{Rel_Conc}_{\text{epitope-KO}}$ 
-denote the relative concentration of vaccine-specific antibodies and vaccine-specific antibodies 
-that bind to the mutated knock-out (KO) epitope immunogen, respectively. The calculations assume that 
-
- $$ \text{Conc(antigen-specific)} = \text{Conc(epitope-specific KO)} + \text{Conc(epitope-specific-specific)} $$
-
-where, for example, $\text{Conc(epitope-specific-specific)}$ refers to the concentration of antigen-specific 
-antibodies that bind to the epitope. 
-
-<!-- reference forthcoming -->
 
 #### Durability
 
@@ -141,6 +84,75 @@ starting with peak (week [xx]).
 Area under the curve (AUC) was estimated by animal/participant on the log$_{10}$ 
 scale using the trapezoidal method. 
 Net MFI values were truncated at 1 for AUC calculations.
+
+### Differential Binding
+
+<!-- Subtraction method. Using CD4bs as example. Do we want to remove antigen
+specific references? open to suggestions on how to CD4 binding site -> epitope binding 
+site? or just epitope specific region of the antigen? -->
+
+Differential binding to the experimental antigen was defined as the difference in AUTC between 
+binding to the experimental and reference antigens. A response was considered positive if it met 
+the criterion for a positive response to the experimental antigen and satisfied the following 
+additional condition:
+
+4. $\Delta$AUTC $>$ 0, where $\Delta$AUTC was defined as $\mathrm{AUTC}_\mathrm{experimental}$ - $\mathrm{AUTC}_\mathrm{reference}$
+
+Differential binding ratios were defined as the experimental antigen net MFI divided by the reference antigen net MFI. Differential 
+binding ratios were computed as
+
+$$ratio_w(\text{experimental, reference}) = \frac{\text{net MFI}_{\text{ experimental,} w}}{\text{net MFI}_{\text{ reference,} w}},$$ 
+where net MFI$_{\text{ reference,} w}$ and net MFI$_{\text{ experimental,} w}$ refer to the net MFIs measured at Study Week $w$ for 
+the reference and experimental antigens, respectively. In cases where the experimental or reference antigen net MFI were smaller than 
+100, these values were set to 100 for ratio calculations.
+
+#### Relative concentrations, relative concentration ratios, and percentages of epitope-specific antibodies
+
+The relative concentration of vaccine-induced epitope-specific binding antibodies in each sample (i.e., participant and study visit) 
+was estimated using a novel statistical method. This method integrated net MFI data across all available dilutions from all samples 
+using a flexible statistical model. A spline function was built to describe the relationship between the log-transformed MFI measured 
+by the BAMA assay and the relative concentration of binding antibodies in the samples. This spline function was specified as a quadratic 
+B spline with monotone constraints. These constraints imposed the relationship between log-transformed MFI and relative concentrations 
+to be monotone. The spline included a total of 12 equally spaced knots. The statistical model was fitted to the data using the Newton-Raphson 
+procedure. It provided estimates of relative antibody concentrations (i.e., estimates of the unknown concentrations proportional to a common, 
+unknown multiplicative factor shared by all samples). 
+
+Ratios of antibody concentrations were deduced from ratios of these estimated relative concentrations. While both relative concentration 
+ratios and differential binding ratios are designed to estimate antibody concentration ratios, discrepancies may arise between them, 
+particularly when the net MFIs either saturate (>22,000) or fall below the limit of detection (<100). In such cases, interpreting the 
+differential binding ratios becomes challenging. In contrast, ratios of relative concentrations are less sensitive to these issues because 
+they integrate data across a range of dilutions. 
+
+Percentage of epitope-specific antibodies were calculated based on the assumption that
+
+$$ \text{Rel}\:\text{Conc}_{(epitope-specific)} = \text{Rel}\:\text{Conc}_{(antigen-specific)} - \text{Rel}\:\text{Conc}_{(epitope\:KO)} $$
+
+where $\text{Rel}\:\text{Conc}_{(epitope-specific)}$ refers to the relative concentration of antigen-specific antibodies that bind to the 
+epitope and $\text{Rel}\:\text{Conc}_{(antigen-specific)}$ and $\text{Rel}\:\text{Conc}_{(epitope\:KO)}$ refer to the relative concentration 
+of vaccine-specific antibodies and the relative concentration of vaccine-specific antibodies binding to the mutated epitope KO immunogen, 
+respectively (i.e., the relative concentrations of antibodies measured using experimental versus reference antigen). The estimated relative 
+concentrations were therefore used to compute the percentage of epitope-specific antibodies as:
+ 
+$$\text{Percent}_{(epitope-specific)} = \left(1-\frac{\text{Rel}\:\text{Conc}_{(epitope\:KO)}}{\text{Rel}\:\text{Conc}_{(antigen-specific)} }\right)\times 100\%\: $$ 
+
+No response calls were performed based on the relative concentrations to identify samples with positive vaccine-induced binding antibody responses.
+
+<!-- reference forthcoming -->
+
+#### Avidity
+
+BAMA avidity index (AI) is the ratio of the net MFI comparing two assay conditions:
+using a citrate buffer wash (CIT), which disrupts lower-affinity antibody–antigen 
+interactions, and a standard phosphate-buffered saline control (PBS). BAMA AI is 
+defined as follows:
+
+$$AI = 100 \times \frac{\text{Net MFI}_{\text{CIT}}}{\text{Net MFI}_{\text{PBS}}}$$
+
+<!-- Specify whether AI was analyzed as continuous or as a categorical variable.
+Note past analyses have used Low Net MFI when Net MFI was < 300, Low, Medium and High 
+AI as categories. Be sure to consider in any statistical analysis the conditional 
+nature of AI. AI is most likely not missing completely at random as it depends
+on BAMA readouts. -->
 
 #### AUC-MB
 
@@ -252,5 +264,10 @@ Durability AUC tests included responders and non-responders
 (with truncated net MFI measurements).
 
 Corrections for multiple testing were not done for this analysis. 
-<!-- If there were p-value adjustments, specify the method (i.e. FDR) and what 
-grouping variables the adjustment will be made over (i.e. adjusting over antigens) -->
+
+<!-- OR -->
+
+When several statistical comparisons were performed for the same endpoint (as is reported in a single
+table), the p-values were adjusted for multiple testing by controlling the false discovery rate (FDR) using
+the Benjamini-Hochberg procedure (@Benjamini:95). Adjusted p-values below 0.05 were
+considered significant and highlighted as such in tables.
