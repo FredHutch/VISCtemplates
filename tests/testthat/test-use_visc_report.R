@@ -64,6 +64,29 @@ test_that("use_visc_report() throws error if subdirectory included in report_nam
   })
 })
 
+test_that("reproducibility appends reproducibility statistical methods content", {
+  temp_dir <- withr::local_tempdir()
+  create_visc_project(temp_dir, interactive = FALSE)
+  local({
+    withr::local_dir(temp_dir)
+    report_name <- "Caskey820_NAb_PT_Report"
+    report_type <- "nab"
+    path <- "NAb"
+    expect_no_warning(
+      use_visc_report(
+        report_name,
+        path = path,
+        report_type = report_type,
+        interactive = FALSE,
+        reproducibility = TRUE)
+      )
+    rmd_content <- readLines(
+      file.path("NAb", "Caskey820_NAb_PT_Report", "child-docs", "statistical-methods.Rmd")
+    )
+  expect_true(any(grepl("concordance correlation coefficient", rmd_content)))
+  })
+})
+
 # This will test knitting all template report types, both pdf and docx. What
 # happens with file snapshots varies a bit depending on the testing context:
 #
