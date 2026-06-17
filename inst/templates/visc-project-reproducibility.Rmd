@@ -1,7 +1,3 @@
----
-title: ""
-output: github_document
----
 
 ### Reproducibility Measures
 
