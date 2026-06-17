@@ -7,7 +7,8 @@
 use_visc_methods(
   path = ".",
   assay = c("generic", "bama", "nab", "adcc"),
-  interactive = TRUE
+  interactive = TRUE,
+  reproducibility
 )
 }
 \arguments{
@@ -17,6 +18,9 @@ use_visc_methods(
 
 \item{interactive}{TRUE by default. FALSE is for non-interactive unit testing
 only.}
+
+\item{reproducibility}{FALSE by default. TRUE adds reproducibility methods to
+the end of stat-methods}
 }
 \description{
 Creates a "methods" directory that contains 3 "child" R Markdown documents

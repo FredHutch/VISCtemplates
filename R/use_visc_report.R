@@ -134,6 +134,8 @@ challenge_visc_report <- function(report_name, interactive = TRUE) {
 #' @param path path within the active project
 #' @param interactive TRUE by default. FALSE is for non-interactive unit testing
 #'   only.
+#' @param reproducibility FALSE by default. TRUE adds reproducibility methods to
+#' the end of stat-methods
 #'
 #' @export
 #'
