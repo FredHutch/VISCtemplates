@@ -44,6 +44,8 @@ jobs:
 
       - name: Set up tinytex
         uses: r-lib/actions/setup-tinytex@v2
+      - name: Set tlmgr repo
+        run: tlmgr option repository https://mirror.ctan.org/systems/texlive/tlnet
 
       - name: Preinstall required latex packages
         run: >
