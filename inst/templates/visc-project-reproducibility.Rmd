@@ -13,6 +13,7 @@ Lin’s concordance correlation coefficient (CCC) [@1989Lin] was computed to mea
 ```{r CCC-interpret, eval=TRUE, results='hide'}
 library(dplyr)
 library(kableExtra)
+library(knitr)
 
 ccc_stat = c('<0.90','0.90-0.95','0.95-0.99','>0.99')
 ccc_strength=c('Poor','Moderate','Substantial','Almost Perfect' )
@@ -21,7 +22,7 @@ colnames(ds4) = c('CCC','Strength of Agreement' )
 
 ds4 %>%
   kable(
-    format = 'latex',
+    format = knitr::kable_format(),
     caption = "Interpretation of Lin's CCC. \\label{tab:refCCC}",
     align = "ll",
     row.names = FALSE,
@@ -45,7 +46,7 @@ colnames(ds3) = c('Kappa Statistic','Strength of Agreement' )
 
 ds3 %>%   
   kable(
-    format = 'latex',
+    format = knitr::kable_format(),
     caption = "Interpretation of Cohen’s kappa. \\label{tab:refKappa}",
     align = "ll",
     row.names = FALSE,
