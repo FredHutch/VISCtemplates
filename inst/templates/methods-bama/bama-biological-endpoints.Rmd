@@ -41,23 +41,8 @@ and the target site for antibody binding. -->
 
 ## BAMA Avidity
 
-[Antigen and/or isotype specific] binding antibody responses were measured on a Bio-Plex 
-(Bio-Rad) instrument (Bio-Plex 200 or Bio-Plex FM3D) using a standardized custom Luminex based assay.
-Antigen specific antibody responses were measured at the following dilutions: [dilution (antigen/isotype) 
-listed] and titrated [x-fold].
-
-<-- add reference -->
-<-- Tomaras, G. D. et al. Vaccine-induced plasma IgA specific for the C1 region of the HIV-1 envelope blocks binding and effector function of IgG. Proceedings of the National Academy of Sciences of the United States of America 110, 9019–9024 (2013). -->
-
-Briefly, antigens were bound to carboxylated fluorescent microspheres (MagPlex, Luminex). Antigen bound 
-microspheres were then incubated with human sera, along with standards and controls, for 30 minutes at 
-750 RPM and 22°C. Mouse anti-human IgG1 (BioLegend, clone 12G8G11) and Mouse anti-human IgG3 (BioLegend, 
-clone HP6047) followed by Goat Anti-Mouse IgG PE (Biolegend, catalog 405307) were used to detect IgG1 
-and IgG3 antibody responses. Assay plates were read on the Bio-Plex 200 or Bio-Plex FM3D (Bio-Rad) 
-system providing a readout of background subtracted mean fluorescence intensity (MFI).
-
-All samples, controls and standards were assayed in duplicate; negative controls and uncoupled microspheres 
-were included in each assay to ensure binding specificity. Positive and negative controls were included in 
-each assay to ensure assay consistency and reproducibility. Levey-Jennings charts were also utilized to track 
-antigen performance throughout the study.
-
+Antibody avidity is overall binding strength of an antibody to its antigen 
+under denaturing conditions. The BAMA avidity index (AI) is computed by comparing 
+Net MFI (median fluorescence intensity minus background) from two parallel assay 
+conditions: a citrate buffer wash (CIT), which disrupts lower-affinity antibody–antigen 
+interactions, and a standard phosphate-buffered saline control (PBS).
