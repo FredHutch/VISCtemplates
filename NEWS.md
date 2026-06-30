@@ -7,6 +7,7 @@ Bugfixes
 Improvements for users
 
 * Improvements to longtables: caption width and notes in template about how to avoid page numbering and formatting issues (#345)
+* Add Study Start up checklist to default README on landing page of analysis repositories (#355)
 
 # VISCtemplates 2.1.0
 
