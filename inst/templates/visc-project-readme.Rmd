@@ -32,6 +32,32 @@ VISCtemplates::install_git_workaround("path/reponame.git")
 |--------------------|-------------|------------|---------------|
 | [Assay](link)      | [0.0](link) | YYYY-MM-DD | Yes/No        |
 
+## Study Start Up Checklist
+
+The SRA or designee is responsible for the following:
+
+- [ ] Create TMF folder on network drive (SOP-0087 SCHARP Trial Master File)
+- [ ] Create subfolders based on `J:\QUALITY\Quality - all access\15. eTMF Information\[Study ID - folder structure to copy]\`
+  - [ ] Create `TMF/01_Trial_Management`
+  - [ ] Create `TMF/11_Statistics`
+- [ ] Download and fill out FRM-0086 Study Staff Roster
+  - [ ] Change Department to DA. Start date is study assignment. Start all staff as blinded until unblinding information is received. 
+  - [ ] Include: lead statistician, lead SRA, lead STP, PM, plus VISC leadership (VISC associate director, VISC program manager, statistical manager, VISC PI, and VISC CAVD co-PI).
+  - [ ] Save the study roster as a Word doc (no date in name) AND as a certified PDF with the date appended to the file name in: `TMF/01.02.01 Trial Team Details/Study Team Staff Roster`
+  - [ ] If blinding status changes or people join/leave the team, update the Word doc and save the new certified PDF with the new date appended in: `TMF/01.02.01 Trial Team Details/Study Team Staff Roster`
+- [ ] Save a certified PDF of study assignment documentation in `TMF/01.02.01 Trial Team Details/Trial Team Documentation`
+- [ ] Fill out FRM-0094 Statistical Team Roster and Study Blinding Access Control Form (SOP-0075 Study Blinding and Unblinding). It should match FRM-0086. Save a certified PDF copy to `11 Statistics\11.02 Randomization\11.02.06 End of Trial or Interim Unblinding - restricted\Statistical Team Roster and Study Blinding Access Control Doc`
+- [ ] Create the folder `cavdNNN_closed` and add permissions based on FRM-0094. This is the LDAP group (template in SOP-0075 Appendix B)
+  - [ ] On FRM-0094 specify creation of LDAP group `cavdNNN_closed` or `cavd_idNNN_closed` (all study team members, name depends on CAVD vs GHDC) and optionally `cavdNNN_rand` or `cavd_idNNN_rand` (only study team members who need access to unblinded treatment assignments) and list members of both.
+  - [ ] Can create LDAP group by changing permission to the folders in command line (see VISC-Documentation for instructions) or
+  - [ ] Can create LDAP group by emailing support@scharp.org
+  - [ ] Ensure all unblinding data is only accessible to those in the LDAP
+- [ ] Create analysis repository in github using VISCtemplates
+  - [ ] Add staff and corresponding permissions to repo according to FRM-0086
+- [ ] Sign, certify and save study specific individual (FRM-0116) or group (FRM-0117) training document to `01 Trial Management\01.04 Meetings\01.04.04 Trial Team Evidence of Training\Study Specific Training Affidavit\` (SOP-0002)
+  - [ ] Using naming convention "DDMMMYYYY_NETWORK####_FileName_v1.0.pdf" (SOP-0007)
+
+For details on documenting changes to the lead SRA, lead STP, or for more information see: https://github.com/FredHutch/VISC-Documentation/blob/main/Assay_Analyses/Cross-Assay-Instructions/Study_Startup/Study-Start-Up-SRA.md
 
 ## Analysis Notes
 
