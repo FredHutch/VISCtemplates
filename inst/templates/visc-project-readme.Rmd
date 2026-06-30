@@ -47,7 +47,7 @@ The SRA or designee is responsible for the following:
   - [ ] If blinding status changes or people join/leave the team, update the Word doc and save the new certified PDF with the new date appended in: `TMF/01.02.01 Trial Team Details/Study Team Staff Roster`
 - [ ] Save a certified PDF of study assignment documentation in `TMF/01.02.01 Trial Team Details/Trial Team Documentation`
 - [ ] Fill out FRM-0094 Statistical Team Roster and Study Blinding Access Control Form (SOP-0075 Study Blinding and Unblinding). It should match FRM-0086. Save a certified PDF copy to `11 Statistics\11.02 Randomization\11.02.06 End of Trial or Interim Unblinding - restricted\Statistical Team Roster and Study Blinding Access Control Doc`
-- [ ] Create the folder `cavdNNN_closed` and add permissions based on FRM-0094. This is the LDAP group (template in SOP-0075 Appendix B)
+- [ ] Create the folder `cavdNNN_closed` and add permissions based on FRM-0094. This is the LDAP group (template in SOP-0075 Appendix A)
   - [ ] On FRM-0094 specify creation of LDAP group `cavdNNN_closed` or `cavd_idNNN_closed` (all study team members, name depends on CAVD vs GHDC) and optionally `cavdNNN_rand` or `cavd_idNNN_rand` (only study team members who need access to unblinded treatment assignments) and list members of both.
   - [ ] Can create LDAP group by changing permission to the folders in command line (see VISC-Documentation for instructions) or
   - [ ] Can create LDAP group by emailing support@scharp.org
