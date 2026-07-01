@@ -4,6 +4,10 @@ Bugfixes
 
 * Add missing comma in skeleton report to separate `install_git_workaround` arguments (#336)
 
+Documentation
+
+* Update text around available report types in vignette on creating analysis project (#344)
+
 Improvements for users
 
 * Improvements to longtables: caption width and notes in template about how to avoid page numbering and formatting issues (#345)
