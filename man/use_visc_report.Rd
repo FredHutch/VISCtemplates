@@ -8,7 +8,8 @@ use_visc_report(
   report_name = "VDCnnn_assay_PTreport",
   path = ".",
   report_type = c("empty", "generic", "bama", "nab", "adcc"),
-  interactive = TRUE
+  interactive = TRUE,
+  reproducibility = FALSE
 )
 }
 \arguments{
@@ -19,7 +20,10 @@ use_visc_report(
 \item{report_type}{"empty", "generic", "bama", "nab", or "adcc"}
 
 \item{interactive}{TRUE by default. FALSE is for non-interactive unit testing
-only.}
+only}
+
+\item{reproducibility}{FALSE by default. TRUE adds reproducibility methods to
+the end of stat-methods}
 }
 \description{
 This function creates a template R Markdown file for a VISC report.

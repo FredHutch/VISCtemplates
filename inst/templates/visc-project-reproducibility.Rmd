@@ -1,0 +1,55 @@
+
+### Reproducibility Measures
+
+#### Lin's CCC
+
+Lin’s concordance correlation coefficient (CCC) [@1989Lin] was computed to measure the concordance for [endpoint. ex: responses or magnitudes such as AUTC] measured using [assay. ex: BAMA, ICS, etc] by the [first lab] and [second lab] labs. The CCC is the product of a bias correction factor (a measure of accuracy) and Pearson's correlation coefficient (a measure of precision). Pearson's correlation coefficient measures how far each observation deviated from the best fitted linear line. Accuracy is a bias correction factor which measures how far the best-fit line deviates from the $45^\circ$ line through the origin. A CCC of value 1 indicates a perfect agreement between measurements from the two labs, with no deviation from the $45^\circ$ line through the origin. A CCC of value -1 indicates a perfect reversed agreement, and 0 indicates no agreement. Confidence intervals (CIs) for CCC are computed based on asymptotic normality of a Z-transformation of the estimator.
+
+
+```{r CCC-interpret, eval=TRUE, results='hide'}
+library(dplyr)
+library(kableExtra)
+library(knitr)
+
+ccc_stat = c('<0.90','0.90-0.95','0.95-0.99','>0.99')
+ccc_strength=c('Poor','Moderate','Substantial','Almost Perfect' )
+ds4 = data.frame( ccc_stat, ccc_strength )
+colnames(ds4) = c('CCC','Strength of Agreement' )
+
+ds4 %>%
+  kable(
+    format = knitr::kable_format(),
+    caption = "Interpretation of Lin's CCC. \\label{tab:refCCC}",
+    align = "ll",
+    row.names = FALSE,
+    escape = TRUE,
+    #longtable = TRUE,
+    linesep = "",
+    booktabs=TRUE ) %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"),
+                font_size = 10)
+```
+
+#### Cohen's Kappa
+
+Cohen's Kappa [@1960Cohen; @1968Cohen] is computed as a measure of inter-rater reliability for comparison of response calls. The kappa coefficient can range from -1 to 1. A kappa value of 0 indicates the amount of agreement that can be expected from random chance, whereas a value of 1 indicates a perfect agreement between the two labs. @1977Landis provide guidelines for interpreting the strength of kappa statistics, as described in Table \@ref(tab:refKappa). 
+ 
+```{r cohen-interpret, eval=TRUE}
+kappa_stat = c('<0.00','0.00-0.20','0.21-0.40','0.41-0.60','0.61-0.80','0.81-1.00')
+kappa_strength=c('Poor','Slight','Fair','Moderate','Substantial','Almost Perfect' )
+ds3 = data.frame( kappa_stat, kappa_strength )
+colnames(ds3) = c('Kappa Statistic','Strength of Agreement' )
+
+ds3 %>%   
+  kable(
+    format = knitr::kable_format(),
+    caption = "Interpretation of Cohen’s kappa. \\label{tab:refKappa}",
+    align = "ll",
+    row.names = FALSE,
+    escape = TRUE,
+    #longtable = TRUE, 
+    linesep = "",
+    booktabs=TRUE ) %>%
+  kable_styling(latex_options = c("hold_position", "repeat_header"),
+                font_size = 10) 
+```

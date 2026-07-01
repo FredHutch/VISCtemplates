@@ -6,7 +6,9 @@
 #' @param path path of the file within the active project
 #' @param report_type "empty", "generic", "bama", "nab", or "adcc"
 #' @param interactive TRUE by default. FALSE is for non-interactive unit testing
-#'   only.
+#' only
+#' @param reproducibility FALSE by default. TRUE adds reproducibility methods to
+#' the end of stat-methods
 #'
 #' @export
 #'
@@ -21,7 +23,8 @@
 use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
                             path = ".",
                             report_type = c("empty", "generic", "bama", "nab", "adcc"),
-                            interactive = TRUE) {
+                            interactive = TRUE,
+                            reproducibility = FALSE) {
 
   report_type <- match.arg(report_type)
 
@@ -73,7 +76,7 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
   # add draft methods
   if (report_type != 'empty'){
     use_visc_methods(path = file.path(path, report_name), assay = report_type,
-                     interactive = interactive)
+                     interactive = interactive, reproducibility = reproducibility)
   }
 
 }
@@ -131,6 +134,8 @@ challenge_visc_report <- function(report_name, interactive = TRUE) {
 #' @param path path within the active project
 #' @param interactive TRUE by default. FALSE is for non-interactive unit testing
 #'   only.
+#' @param reproducibility FALSE by default. TRUE adds reproducibility methods to
+#' the end of stat-methods
 #'
 #' @export
 #'
@@ -139,8 +144,9 @@ challenge_visc_report <- function(report_name, interactive = TRUE) {
 #' use_visc_methods(path = "bama/BAMA-PT-Report", assay = "bama")
 #' }
 use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab", "adcc"),
-                             interactive = TRUE) {
+                             interactive = TRUE, reproducibility) {
 
+  assay <- match.arg(assay)
   # suppress usethis output when non-interactive
   old_usethis_quiet <- getOption('usethis.quiet')
   on.exit(options(usethis.quiet = old_usethis_quiet))
@@ -159,6 +165,18 @@ use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab", "ad
     save_as = file.path(path, "child-docs", "statistical-methods.Rmd"),
     package = "VISCtemplates"
   )
+  # After the file is written:
+  if (reproducibility) {
+    section_path <- system.file(
+      "templates", "visc-project-reproducibility.Rmd",
+      package = "VISCtemplates"
+    )
+    section_text <- readLines(section_path)
+    report_path  <- file.path(path, "child-docs", "statistical-methods.Rmd")
+
+    write(c("", section_text), file = report_path, append = TRUE)
+    usethis::ui_done(glue::glue("Added statistical methods section to
+                                '{{report_path}}'"))  }
 
   usethis::use_template(
     template = file.path(
