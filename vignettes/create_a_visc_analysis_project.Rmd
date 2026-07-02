@@ -92,20 +92,25 @@ Now you can begin editing the documentation.
 ### Step Four: Start Analysis Work
 
 The above setup steps are done on the `main` branch. When you're ready to begin work on the analysis, create a branch for the report.
+For example, if you are working on a BAMA report:
 
 ```{git eval=FALSE}
 git checkout -b bama-analysis
 ```
 
-Then start working from the PT report template. You can use the template from this package:
+Now initialize your report using the templates available in this package:
 
 ```{r eval=FALSE}
 use_visc_report(
   report_name = "BAMA-PT-Report", # the name of the report file
   path = "BAMA", # the path within the active directory, usually the name of the assay
-  report_type = "bama" # "empty", "generic", or "bama" 
+  report_type = "bama"
 )
 ```
+
+Refer to documentation for `use_visc_report` for the full list of available options for `report_type`,
+including `"generic"` for general-purpose use, `"empty"` for a bare-bones skeleton, and additional
+assay-specific templates for `"nab"` and `"adcc"`.
 
 See the "Using a VISC Report Template" vignette for more details on how to use a report template.
 
