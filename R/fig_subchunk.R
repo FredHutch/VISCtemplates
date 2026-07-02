@@ -46,13 +46,13 @@ insert_fig_subchunk = function(fig, fig_chunk_name, fig_caption_short, fig_capti
 
   # the assign() below only works for certain object types
   .is_printable_figure <- function(x) {
-    inherits(x, c("ggplot", "patchwork", "grob", "gtable", "trellis"))
+    inherits(x, c("ggplot", "patchwork", "grob", "ggmatrix", "gtable", "trellis"))
   }
 
   # inside insert_fig_subchunk, after the caption/label checks:
   if (!.is_printable_figure(fig)) {
     stop("`fig` is not a recognized printable graphic (ggplot, patchwork, ",
-         "cowplot, grid/grob, gtable, or lattice). For base R plotting calls ",
+         "cowplot, ggmatrix, grid/grob, gtable, or lattice). For base R plotting calls ",
          "or other deferred figures, use insert_fig_subchunk_deparse().",
          call. = FALSE)
   }
