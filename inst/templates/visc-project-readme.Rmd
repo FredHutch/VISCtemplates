@@ -7,8 +7,6 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 The data for the {{ study_name }} protocol can be found here: [insert path]. You can install the data package using the `remotes::install_github` or `VISCtemplates::install_git_workaround`:
 
 ```{r install-example, eval=FALSE}
@@ -18,13 +16,6 @@ remotes::install_github(repo = "FredHutch/reponame.git")
 # if on network drives:
 VISCtemplates::install_git_workaround("path/reponame.git")
 ```
-
-## SRAs and Study-Specific Training (SST)
-
-| **SRA**| **STT Completed** | **Date**   |
-|--------|-------------------|------------|
-| Name   | No                | YYYY-MM-DD |
-
 
 ## Final Distributed Report Table
 
@@ -40,9 +31,15 @@ The protocol presentation can be found [here](link).
 The lab study plan can be found [here](link).
 
 
+## Study Documentation
 
+### SRAs and Study-Specific Training (SST)
 
+| **SRA**| **STT Completed** | **Date**   |
+|--------|-------------------|------------|
+| Name   | No                | YYYY-MM-DD |
 
+### Study Start Up Documentation
 
-
-
+All start up study documentation was completed by [SRA or lead analyst] on [YYYY-MM-DD]. 
+[See checklist](Startup-Checklist.md).

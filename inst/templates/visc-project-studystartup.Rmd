@@ -1,4 +1,11 @@
-## Study Start Up Checklist
+---
+title: "{{ study_name }} Start Up Checklist"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 The SRA or designee is responsible for the following:
 

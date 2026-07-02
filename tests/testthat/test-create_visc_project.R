@@ -6,11 +6,17 @@ test_that("create_visc_project works as expected in default mode", {
   expect_true(
     file.exists(file.path(temp_dir, 'README.md'))
   )
+  expect_true(
+    file.exists(file.path(temp_dir, 'Startup-Checklist.md'))
+  )
   expect_false(
     file.exists(file.path(temp_dir, 'README.Rmd'))
   )
   expect_false(
     file.exists(file.path(temp_dir, 'README.html'))
+  )
+  expect_false(
+    file.exists(file.path(temp_dir, 'Startup-Checklist.Rmd'))
   )
   # verify that package-specific files are not created
   expect_false(

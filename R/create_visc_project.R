@@ -50,6 +50,9 @@ create_visc_project <- function(path, interactive = TRUE, package = FALSE){
   # use readme template
   use_visc_readme(study_name = study_name)
 
+  # use study startup checklist
+  use_visc_startup(study_name = study_name)
+
   # add protocol directories and templates
   use_visc_docs(study_name = study_name)
 
@@ -96,6 +99,38 @@ use_visc_readme <- function(study_name, save_as = "README.Rmd") {
     usethis::proj_path(
       paste0(
         'README',
+        c('.Rmd', '.html')
+      )
+    )
+  )
+}
+
+#' Use a VISC study startup checklist template for the project
+#'
+#' @param study_name name of study in VDCNNN format
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' use_visc_startup("Gallo477")
+#' }
+use_visc_startup <- function(study_name) {
+  usethis::use_template(
+    template = "visc-project-studystartup.Rmd",
+    save_as = "Startup-Checklist.Rmd",
+    data = list(study_name = study_name),
+    package = "VISCtemplates"
+  )
+  # knit the md from the Rmd on request of SRA team
+  rmarkdown::render(
+    usethis::proj_path('Startup-Checklist.Rmd'),
+    quiet = TRUE
+  )
+  unlink(
+    usethis::proj_path(
+      paste0(
+        'Startup-Checklist',
         c('.Rmd', '.html')
       )
     )
