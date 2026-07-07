@@ -71,12 +71,15 @@ insert_fig_subchunk = function(fig, fig_chunk_name, fig_caption_short, fig_capti
   # The generated chunk then just prints this object -- nothing about the
   # figure is serialized to source code, so the chunk body stays a fixed,
   # trivial expression that is robust to code instrumentation (e.g. covr).
+
   fig_var <- make.names(paste0(".fig_subchunk_obj_", fig_chunk_name))
-  assign(fig_var, fig, envir = knitr::knit_global())
+  fig_env <- new.env(parent = knitr::knit_global())
+  assign(fig_var, fig, envir = fig_env)
   on.exit(
-    suppressWarnings(rm(list = fig_var, envir = knitr::knit_global())),
+    rm(list = fig_var, envir = fig_env),
     add = TRUE
   )
+
   # End LLM
 
   fig_sub_chunk <- build_fig_subchunk(
@@ -86,7 +89,7 @@ insert_fig_subchunk = function(fig, fig_chunk_name, fig_caption_short, fig_capti
     fig_caption_long  = fig_caption_long
   )
 
-  cat(knitr::knit(text = knitr::knit_expand(text = fig_sub_chunk), quiet = TRUE))
+  cat(knitr::knit(text = knitr::knit_expand(text = fig_sub_chunk), quiet = TRUE, envir = fig_env))
 }
 
 #' Assembles the sub-chunk header and body into the fenced chunk text.

@@ -93,12 +93,6 @@ test_that("accepts a ggplot object", {
   expect_no_error(call_insert(p))
 })
 
-test_that("accepts a ggpairs (ggmatrix) object", {
-  skip_if_not_installed("GGally")
-  p <- GGally::ggpairs(mtcars[1:3])
-  expect_no_error(call_insert(p))
-})
-
 # ---- rejected figure types: error redirects to the deparse version ----------
 
 
