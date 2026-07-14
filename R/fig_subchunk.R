@@ -94,8 +94,8 @@ insert_fig_subchunk = function(fig, fig_chunk_name, fig_caption_short, fig_capti
 #'
 #' @param chunk_body A character string used verbatim as the chunk body.
 #' @param chunk_name Chunk label.
-#' @param type Chunk type, either `"tab"` or `"fig"`. Controls whether the
-#'   caption options are named `tab.scap`/`tab.cap` or `fig.scap`/`fig.cap`.
+#' @param type Chunk type, either `"fig"` or `"tab"`. Controls whether the
+#'   caption options are named `fig.scap`/`fig.cap` or `tab.scap`/`tab.cap`.
 #' @param caption_short Short caption (`tab.scap`/`fig.scap`). Optional.
 #' @param caption_long Long caption (`tab.cap`/`fig.cap`). Optional.
 #' @return A length-1 character string: the fenced knitr chunk.

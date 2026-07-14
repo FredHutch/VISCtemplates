@@ -57,22 +57,34 @@ ft_add_short_caption <- function(ft, short = NULL) {
   if (!knitr::is_latex_output()) {
     return(ft)  # HTML/Word: return as-is
   }
-
   tex <- as.character(knitr::knit_print(ft))
 
-  m <- regexec("\\\\caption\\{(.*?)\\}", tex)
-  full <- regmatches(tex, m)[[1]][2]
-
-  if (is.na(full)) {
+  # find the full caption, walking braces to handle nested `{...}` (e.g. \textbf{})
+  start <- regexpr("\\\\caption\\{", tex)
+  if (start == -1) {
     return(knitr::asis_output(tex))  # no caption set, nothing to shorten
   }
+  chars <- strsplit(tex, "")[[1]]
+  brace_pos <- start + attr(start, "match.length") - 1  # position of the opening "{"
+  depth <- 0
+  end_pos <- NA_integer_
+  for (i in seq(brace_pos, length(chars))) {
+    if (chars[i] == "{") depth <- depth + 1
+    else if (chars[i] == "}") {
+      depth <- depth - 1
+      if (depth == 0) { end_pos <- i; break }
+    }
+  }
+  if (is.na(end_pos)) {
+    return(knitr::asis_output(tex))  # unbalanced braces, bail out
+  }
+  full_caption <- paste(chars[(brace_pos + 1):(end_pos - 1)], collapse = "")
 
   if (is.null(short)) {
-    short <- regmatches(full, regexpr("^[^.]+\\.", full))
-    if (length(short) == 0) short <- full  # no sentence break found; fall back to full caption
+    short <- regmatches(full_caption, regexpr("^[^.]+\\.", full_caption))
+    if (length(short) == 0) short <- full_caption  # no sentence break found; fall back to full caption
   }
   short <- gsub("[\\[\\]]", "", short)  # avoid corrupting \caption[...] syntax
-
   tex <- sub("\\\\caption\\{", paste0("\\\\caption[", short, "]{"), tex)
   knitr::asis_output(tex)
 
@@ -145,7 +157,7 @@ insert_tab_subchunk <- function(tab,
 
   tab_deparsed <- paste0(deparse(function(){tab}), collapse = '')
   tab_sub_chunk <- build_subchunk(
-    chunk_body    = paste0(tab_deparsed),
+    chunk_body    = paste0("(", tab_deparsed, ")()"),
     chunk_name    = tab_chunk_name,
     type          = "tab",
     caption_short = tab_caption_short,
