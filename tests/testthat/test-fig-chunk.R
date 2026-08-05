@@ -13,22 +13,22 @@
 test_that("interactive: draws the figure and does not knit", {
   skip_if_not_installed("ggplot2")
   p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) + ggplot2::geom_point()
-
-  # real print runs, but draws to a discarded device
   pdf(NULL); on.exit(dev.off(), add = TRUE)
 
   knit_called <- FALSE
-  cat_called  <- FALSE
   local_mocked_bindings(
     knit = function(...) { knit_called <<- TRUE; "" },
     knit_expand = function(text, ...) text,
     .package = "knitr"
   )
-  local_mocked_bindings(cat = function(...) cat_called <<- TRUE, .package = "base")
 
-  expect_invisible(insert_fig_subchunk(p, "chunk1", "short", "long", .interactive = TRUE))
-  expect_false(knit_called)   # interactive path must not knit
-  expect_false(cat_called)    # ...nor cat
+  out <- capture.output(
+    expect_invisible(
+      insert_fig_subchunk(p, "chunk1", "short", "long", .interactive = TRUE)
+    )
+  )
+  expect_false(knit_called)
+  expect_length(out, 0)
 })
 
 test_that("non-interactive: assembles a chunk and cats the knitted result", {

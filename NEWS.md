@@ -11,6 +11,7 @@ Documentation
 Improvements for users
 
 * Improvements to longtables: caption width and notes in template about how to avoid page numbering and formatting issues (#345)
+* Added new `insert_fig_subchunk()` function to help facilitate looping of figure generation in reports (#343)
 * Add citations to bibliography.bib file referenced in reproducibility reports (#349)
 
 # VISCtemplates 2.1.0
