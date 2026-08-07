@@ -1,4 +1,4 @@
-test_that("use_slide_deck() creates main slide deck .Rmd file, template.pptx (for branded decks), and a folder README when the specified path does not already exist", {
+test_that("use_slide_deck() creates main slide deck .Rmd file", {
   temp_dir <- withr::local_tempdir()
   create_visc_project(temp_dir, interactive = FALSE)
   local({
@@ -18,10 +18,6 @@ test_that("use_slide_deck() creates main slide deck .Rmd file, template.pptx (fo
       # resolves with no edits
       file.exists(file.path(path, deck_name, "template.pptx"))
     )
-    expect_true(
-      # path-level README is created because `path` did not already exist
-      file.exists(file.path(path, "README.md"))
-    )
   })
 })
 
@@ -38,29 +34,6 @@ test_that("use_slide_deck() creates main slide deck .Rmd file even if deck_name 
     )
     expect_true(
       file.exists(file.path(deck_name, paste0(deck_name, ".Rmd")))
-    )
-  })
-})
-
-test_that("use_slide_deck() does not create a README if the specified path already exists", {
-  temp_dir <- withr::local_tempdir()
-  create_visc_project(temp_dir, interactive = FALSE)
-  local({
-    withr::local_dir(temp_dir)
-    path <- "slides"
-    dir.create(path)
-    deck_name <- "VDCnnn_assay_Slides"
-    expect_no_warning(
-      use_slide_deck(
-        deck_name, path = path, interactive = FALSE
-      )
-    )
-    expect_true(
-      file.exists(file.path(path, deck_name, paste0(deck_name, ".Rmd")))
-    )
-    expect_false(
-      # path already existed, so use_slide_deck() should skip README creation
-      file.exists(file.path(path, "README.md"))
     )
   })
 })

@@ -25,6 +25,11 @@ use_slide_deck <- function(deck_name = "VDCnnn_assay_slides",
   old <- options(usethis.quiet = !interactive)
   on.exit(options(old))
 
+  # create subdirectory, if doesn't yet exist
+  if (!dir.exists(path)) {
+    dir.create(path, recursive = TRUE)
+  }
+
   # note: rmarkdown::draft() copies the whole skeleton/ folder for this template
   rmarkdown::draft(
     file = file.path(path, deck_name),
