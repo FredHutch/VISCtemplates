@@ -40,8 +40,7 @@ use_slide_deck <- function(deck_name = "VDCnnn_assay_slides",
   # (including template.pptx for "branded"), so reference_doc just works.
   rmarkdown::draft(
     file = file.path(path, deck_name),
-    template = system.file("templates", "slides", "slides_template.Rmd", package = "VISCtemplates"),
-
+    template = system.file("templates", "slides", package = "VISCtemplates"),
     edit = FALSE
   )
 
