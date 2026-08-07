@@ -13,6 +13,7 @@ Improvements for users
 * Improvements to longtables: caption width and notes in template about how to avoid page numbering and formatting issues (#345)
 * Added new `insert_fig_subchunk()` function to help facilitate looping of figure generation in reports (#343)
 * Add citations to bibliography.bib file referenced in reproducibility reports (#349)
+* Updates to pull request template (#231)
 
 # VISCtemplates 2.1.0
 
@@ -28,7 +29,6 @@ Improvements for users
 * `visc_load_pdata()` gives more informative error message when serialized pdata file does not contain an R object of the same name (#303)
 * Default behavior of `create_visc_project()` no longer includes creation of package-specific files DESCRIPTION and NAMESPACE (#306)
 * Add option to drop SCHARP logo in PDF output (#312)
-* Updates to pull request template (#231)
 * Add `visc_load_pdata()` examples to report template skeleton (#327)
 * Remove `install_load_cran_packages()` from report template skeleton in favor of using `library()` calls (#321)
 * Reproducibility table formatting changes to coordinate with recent VISCfunctions update that lengthens reproducibility packages table to include packages that are loaded but not attached (#329, #332)
