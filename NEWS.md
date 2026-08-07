@@ -16,6 +16,10 @@ Improvements for users
 * Updates to pull request template (#231)
 * Drop unnecessary use of kable_warnings in skeleton.Rmd files to simplify report templates (#339)
 
+Improvements for package contributors and maintainers
+
+* Update package authors and ORCIDs (#346)
+
 # VISCtemplates 2.1.0
 
 Improvements for users
