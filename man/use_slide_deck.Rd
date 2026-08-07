@@ -2,7 +2,7 @@
 % Please edit documentation in R/use_slide_deck.R
 \name{use_slide_deck}
 \alias{use_slide_deck}
-\title{Use a Slide Deck Template}
+\title{Use a Slide Deck}
 \usage{
 use_slide_deck(
   deck_name = "VDCnnn_assay_slides",
@@ -18,13 +18,12 @@ use_slide_deck(
 \item{interactive}{TRUE by default; FALSE for non-interactive unit testing only}
 }
 \description{
-Creates a template R Markdown file for a slide presentation (PPTX/PDF),
-based on the layout in \code{slides_template.Rmd}.
+Creates a template R Markdown file for a slide presentation (PPTX)
 }
 \examples{
 \dontrun{
 use_slide_deck(
-  deck_name = "McElrath708_TeamMeeting_Slides",
+  deck_name = "VDCnnn_Assay_Slides",
   path = "slides"
 )
 }
