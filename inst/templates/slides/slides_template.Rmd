@@ -7,46 +7,10 @@ output:
   powerpoint_presentation:
     reference_doc: "`r system.file('templates', 'slides', 'Fred-Hutch-Gradient-Template.pptx', package = 'VISCtemplates')`"   # "Gradient" or "Light" or "Navy"
     slide_level: 2
-  beamer_presentation:              # PDF slides (LaTeX-based); remove if not needed
-    theme: "Madrid"
-    slide_level: 2
 ---
 
 <!--
-HOW THIS FILE WORKS
-====================
-1. PPTX output:
-   - `reference_doc` points to an existing .pptx file that defines your
-     look and feel (fonts, colors, logo placeholder, slide master/layouts).
-   - The easiest way to build that template: render this Rmd once WITHOUT
-     reference_doc to get a default deck, open it in PowerPoint, edit the
-     slide master / layouts to match your branding, save it as template.pptx,
-     then point reference_doc at it. rmarkdown will map heading levels and
-     content onto the layouts you defined (Title Slide, Title and Content,
-     Two Content, etc.) based on their names in the template.
-   - Put template.pptx in the same folder as this .Rmd (or use a full path).
-
-2. PDF output:
-   - `beamer_presentation` needs a LaTeX installation (e.g. TinyTeX:
-     `tinytex::install_tinytex()`). It does NOT use the PowerPoint template;
-     it has its own themes (Madrid, Berlin, Warsaw, etc.) and color themes
-     (`colortheme: "dolphin"`).
-   - If you specifically need a PDF that matches your PPTX template's look,
-     the practical route is: render the PPTX above, then convert it to PDF
-     with LibreOffice from the command line:
-       soffice --headless --convert-to pdf your_slides.pptx
-     LaTeX beamer and PowerPoint styling are different engines and can't
-     share a template directly.
-
-3. RENDERING
-   - Render just the PPTX:
-       rmarkdown::render("slides_template.Rmd", output_format = "powerpoint_presentation")
-   - Render just the PDF:
-       rmarkdown::render("slides_template.Rmd", output_format = "beamer_presentation")
-   - Render everything listed in the YAML:
-       rmarkdown::render("slides_template.Rmd", output_format = "all")
-
-4. SLIDE BREAKS
+NOTE ABOUT SLIDE BREAKS
    - A level-1 heading (#) starts a Section Header slide.
    - A level-2 heading (##) starts a new content slide (set via slide_level: 2 above).
    - A horizontal rule (---) also forces a new slide if you need one without a heading.
