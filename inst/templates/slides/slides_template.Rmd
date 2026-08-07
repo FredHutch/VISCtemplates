@@ -5,7 +5,7 @@ author: "Your Name"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 output:
   powerpoint_presentation:
-    reference_doc: template.pptx   # <- path to your custom PPT template
+    reference_doc: "`r system.file('templates', 'slides', 'Fred-Hutch-Gradient-Template.pptx', package = 'VISCtemplates')`"   # "Gradient" or "Light" or "Navy"
     slide_level: 2
   beamer_presentation:              # PDF slides (LaTeX-based); remove if not needed
     theme: "Madrid"
