@@ -4,8 +4,8 @@ subtitle: "A subtitle if you want one"
 author: "Your Name"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
 output:
-  powerpoint_presentation:
-    reference_doc: !r system.file("templates", "slides", "Fred-Hutch-Gradient-Template.pptx", package = "VISCtemplates") # can be Gradient, Light, or Navy
+ VISCtemplates::visc_pptx_document:
+    style: Gradient # can be Gradient, Light, or Navy
     slide_level: 2
 ---
 
