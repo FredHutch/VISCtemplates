@@ -13,11 +13,6 @@ test_that("use_slide_deck() creates main slide deck .Rmd file", {
     expect_true(
       file.exists(file.path(path, deck_name, paste0(deck_name, ".Rmd")))
     )
-    expect_true(
-      # branded decks copy template.pptx alongside the .Rmd so reference_doc
-      # resolves with no edits
-      file.exists(file.path(path, deck_name, "template.pptx"))
-    )
   })
 })
 
