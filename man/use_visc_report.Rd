@@ -8,6 +8,7 @@ use_visc_report(
   report_name = "VDCnnn_assay_PTreport",
   path = ".",
   report_type = c("empty", "generic", "bama", "nab", "adcc"),
+  include_tests = TRUE,
   interactive = TRUE
 )
 }
@@ -17,6 +18,8 @@ use_visc_report(
 \item{path}{path of the file within the active project}
 
 \item{report_type}{"empty", "generic", "bama", "nab", or "adcc"}
+
+\item{include_tests}{TRUE by default. set to FALSE to skip setting up tests to check report pdf and code.}
 
 \item{interactive}{TRUE by default. FALSE is for non-interactive unit testing
 only.}
