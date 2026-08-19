@@ -46,7 +46,7 @@ use_slide_deck <- function(deck_name = "VDCnnn_assay_slides",
 #' Wraps [rmarkdown::powerpoint_presentation()], defaulting `reference_doc`
 #' to one of the Fred Hutch branded PPTX templates bundled with VISCtemplates.
 #'
-#' @param style Character, one of c("Gradient", "Light", "Navy"). Selects
+#' @param style Character, one of c("Light", "Navy"). Selects
 #'   which Fred Hutch branded PPTX template to use as `reference_doc`.
 #' @param ... Additional arguments passed to
 #'   [rmarkdown::powerpoint_presentation()], e.g. `slide_level`.
