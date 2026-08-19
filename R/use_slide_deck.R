@@ -52,7 +52,7 @@ use_slide_deck <- function(deck_name = "VDCnnn_assay_slides",
 #'   [rmarkdown::powerpoint_presentation()], e.g. `slide_level`.
 #'
 #' @export
-visc_pptx_document <- function(style = c("Gradient", "Light", "Navy"), ...) {
+visc_pptx_document <- function(style = c("Light", "Navy"), ...) {
   style <- match.arg(style)
   reference_doc <- system.file(
     "templates", "slides",
