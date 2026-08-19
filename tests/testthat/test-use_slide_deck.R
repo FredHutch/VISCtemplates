@@ -70,3 +70,18 @@ test_that("use_slide_deck() throws error if subdirectory included in deck_name a
 local({
     test_render_slide_deck()
 })
+
+
+test_that("visc_pptx_document() returns a valid rmarkdown output format", {
+  result <- visc_pptx_document()
+  expect_s3_class(result, "rmarkdown_output_format")
+})
+
+test_that("visc_pptx_document() works with each style option", {
+  expect_s3_class(visc_pptx_document(style = "Light"), "rmarkdown_output_format")
+  expect_s3_class(visc_pptx_document(style = "Navy"), "rmarkdown_output_format")
+})
+
+test_that("visc_pptx_document() errors on invalid style", {
+  expect_error(visc_pptx_document(style = "Purple"))
+})
