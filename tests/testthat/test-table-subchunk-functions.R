@@ -184,6 +184,12 @@ test_that("insert_tab_subchunk prints (rather than knits) when .interactive = TR
   expect_true(any(grepl("x", out)) && any(grepl("y", out)))
 })
 
+test_that("insert_tab_subchunk works when .interactive = FALSE", {
+  tab <- data.frame(x = 1, y = 2)
+  out <- capture.output(insert_tab_subchunk(tab, "tab1", .interactive = FALSE))
+  expect_true(any(grepl("r", out)))
+})
+
 test_that("insert_tab_subchunk validates chunk_name/captions before rendering", {
   # Assumes check_chunk_name()/check_caption() throw on invalid input --
   # adjust the expectation if your validators behave differently.
