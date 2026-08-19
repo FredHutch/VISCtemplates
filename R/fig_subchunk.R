@@ -114,7 +114,7 @@ build_subchunk <- function(chunk_body,
   if (!is.null(caption_long)) {
     opts <- paste0(opts, ", ", type, ".cap=", encodeString(as.character(caption_long), quote = "'"))
   }
-  paste0("\n```{r ", opts, "}", "\n", chunk_body, "\n```\n")
+  paste0("\n\n```{r ", opts, "}", "\n\n", chunk_body, "\n\n```\n\n")
 }
 
 #' internal helper for insert_fig_subchunk, catches caption input for latex
