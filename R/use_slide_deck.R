@@ -60,10 +60,7 @@ visc_pptx_document <- function(style = c("Light", "Navy"), ...) {
     package = "VISCtemplates"
   )
   if (!nzchar(reference_doc)) {
-    stop(
-      "Could not find Fred Hutch '", style, "' PPTX template. ",
-      "Check that VISCtemplates is installed with its inst/templates/slides files intact."
-    )
+    stop("Could not find Fred Hutch '", style, "' PPTX template. Check that VISCtemplates is installed with its inst/templates/slides files intact.")
   }
   rmarkdown::powerpoint_presentation(reference_doc = reference_doc, ...)
 }
