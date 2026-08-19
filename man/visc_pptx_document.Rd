@@ -4,10 +4,10 @@
 \alias{visc_pptx_document}
 \title{Custom PowerPoint output format for VISC slide decks}
 \usage{
-visc_pptx_document(style = c("Gradient", "Light", "Navy"), ...)
+visc_pptx_document(style = c("Light", "Navy"), ...)
 }
 \arguments{
-\item{style}{Character, one of c("Gradient", "Light", "Navy"). Selects
+\item{style}{Character, one of c("Light", "Navy"). Selects
 which Fred Hutch branded PPTX template to use as \code{reference_doc}.}
 
 \item{...}{Additional arguments passed to
