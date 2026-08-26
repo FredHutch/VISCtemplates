@@ -38,3 +38,11 @@ sample size by antigen, positivity threshold, and whether a blank or a reference
 bead was used. For differential binding antigens, include a table of the 
 experimental and paired reference antigens, abbreviated antigen names if used, 
 and the target site for antibody binding. -->
+
+## BAMA Avidity
+
+Antibody avidity is overall binding strength of an antibody to its antigen 
+under denaturing conditions. The BAMA avidity index (AI) is computed by comparing 
+Net MFI (median fluorescence intensity minus background) from two parallel assay 
+conditions: a citrate buffer wash (CIT), which disrupts lower-affinity antibody–antigen 
+interactions, and a standard phosphate-buffered saline control (PBS).
