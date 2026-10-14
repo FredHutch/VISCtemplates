@@ -82,11 +82,12 @@ insert_fig_subchunk = function(fig, fig_chunk_name, fig_caption_short, fig_capti
 
   # End LLM
 
-  fig_sub_chunk <- build_fig_subchunk(
-    chunk_body        = paste0("print(", fig_var, ")"),
-    fig_chunk_name    = fig_chunk_name,
-    fig_caption_short = fig_caption_short,
-    fig_caption_long  = fig_caption_long
+  fig_sub_chunk <- build_subchunk(
+    chunk_body    = paste0("print(", fig_var, ")"),
+    chunk_name    = fig_chunk_name,
+    type          = "fig",
+    caption_short = fig_caption_short,
+    caption_long  = fig_caption_long
   )
 
   cat(knitr::knit(text = knitr::knit_expand(text = fig_sub_chunk), quiet = TRUE, envir = fig_env))
@@ -95,21 +96,28 @@ insert_fig_subchunk = function(fig, fig_chunk_name, fig_caption_short, fig_capti
 #' Assembles the sub-chunk header and body into the fenced chunk text.
 #'
 #' @param chunk_body A character string used verbatim as the chunk body.
-#' @param fig_chunk_name Chunk label.
-#' @param fig_caption_short Short caption (fig.scap).
-#' @param fig_caption_long Long caption (fig.cap).
+#' @param chunk_name Chunk label.
+#' @param type Chunk type, either `"fig"` or `"tab"`. Controls whether the
+#'   caption options are named `fig.scap`/`fig.cap` or `tab.scap`/`tab.cap`.
+#' @param caption_short Short caption (`tab.scap`/`fig.scap`). Optional.
+#' @param caption_long Long caption (`tab.cap`/`fig.cap`). Optional.
 #' @return A length-1 character string: the fenced knitr chunk.
 #' @keywords internal
 #' @noRd
-build_fig_subchunk <- function(chunk_body, fig_chunk_name,
-                               fig_caption_short, fig_caption_long) {
-  paste0(
-    "\n```{r ", fig_chunk_name, ", ",
-    "fig.scap=", encodeString(as.character(fig_caption_short), quote = "'"), ", ",
-    "fig.cap=",  encodeString(as.character(fig_caption_long),  quote = "'"), "}",
-    "\n", chunk_body,
-    "\n```\n"
-  )
+build_subchunk <- function(chunk_body,
+                           chunk_name,
+                           type = c("fig", "tab"),
+                           caption_short = NULL,
+                           caption_long = NULL) {
+  type <- match.arg(type)
+  opts <- chunk_name
+  if (!is.null(caption_short)) {
+    opts <- paste0(opts, ", ", type, ".scap=", encodeString(as.character(caption_short), quote = "'"))
+  }
+  if (!is.null(caption_long)) {
+    opts <- paste0(opts, ", ", type, ".cap=", encodeString(as.character(caption_long), quote = "'"))
+  }
+  paste0("\n\n```{r ", opts, "}", "\n\n", chunk_body, "\n\n```\n\n")
 }
 
 #' internal helper for insert_fig_subchunk, catches caption input for latex
