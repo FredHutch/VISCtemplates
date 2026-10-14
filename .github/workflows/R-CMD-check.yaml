@@ -67,6 +67,18 @@ jobs:
           r-version: ${{ matrix.config.r }}
           cran: 'https://packagemanager.posit.co/cran/__linux__/noble/2024-04-19'
 
+      - name: Install XQuartz (X11) on macOS
+        if: runner.os == 'macOS'
+        run: |
+          # Install XQuartz (provides /opt/X11/lib/libXrender.1.dylib)
+          brew install --cask xquartz
+
+          # Make /opt/X11/lib visible to child processes in subsequent steps
+          echo "DYLD_FALLBACK_LIBRARY_PATH=/opt/X11/lib:${DYLD_FALLBACK_LIBRARY_PATH:-}" >> $GITHUB_ENV
+
+          # Optional quick verification
+          ls -l /opt/X11/lib/libXrender* || true
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
