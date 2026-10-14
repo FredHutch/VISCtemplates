@@ -5,6 +5,7 @@
 #' @param report_name name of the file (character)
 #' @param path path of the file within the active project
 #' @param report_type "empty", "generic", "bama", "nab", or "adcc"
+#' @param include_tests TRUE by default. set to FALSE to skip setting up tests to check report pdf and code.
 #' @param interactive TRUE by default. FALSE is for non-interactive unit testing
 #'   only.
 #'
@@ -21,6 +22,7 @@
 use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
                             path = ".",
                             report_type = c("empty", "generic", "bama", "nab", "adcc"),
+                            include_tests = TRUE,
                             interactive = TRUE) {
 
   report_type <- match.arg(report_type)
@@ -74,6 +76,10 @@ use_visc_report <- function(report_name = "VDCnnn_assay_PTreport",
   if (report_type != 'empty'){
     use_visc_methods(path = file.path(path, report_name), assay = report_type,
                      interactive = interactive)
+  }
+
+  if (include_tests) {
+    use_visc_report_tests(report_name, path)
   }
 
 }
@@ -177,6 +183,43 @@ use_visc_methods <- function(path = ".", assay = c("generic", "bama", "nab", "ad
       ),
     data = list(pkg_ver = pkg_ver),
     save_as = file.path(path, "child-docs", "biological-endpoints.Rmd"),
+    package = "VISCtemplates"
+  )
+
+}
+
+
+#' Use PT report QC test template for a specfic report
+#'
+#' Creates two unit test files in tests/testthat/ that check code and outputs
+#' for path/report_name. Tests can be run with devtools::test().
+#'
+#' @param report_name name of the file (character)
+#' @param path path of the file within the active project
+#' @param interactive TRUE by default. FALSE is for non-interactive unit testing
+#'   only.
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' use_visc_report_tests(report_name = "VDCnnn_BAMA_PTreport", path = "BAMA")
+#' }
+use_visc_report_tests <- function(report_name, path = ".", interactive = TRUE) {
+
+  usethis::use_directory(file.path(path, report_name, "tests"))
+
+  usethis::use_template(
+    template = "report_code_tests_template.R",
+    save_as = file.path(path, report_name, "tests", "test_report_code.R"),
+    data = list(report_name = report_name, path = path),
+    package = "VISCtemplates"
+  )
+
+  usethis::use_template(
+    template = "report_pdf_tests_template.R",
+    save_as = file.path(path, report_name, "tests", "test_report_pdf.R"),
+    data = list(report_name = report_name, path = path),
     package = "VISCtemplates"
   )
 
