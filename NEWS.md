@@ -2,6 +2,8 @@
 
 Bugfixes
 
+* Fix rendering issue with ADCC template due to new Median_Quartiles column in table, and CI issue for macOS (#364)
+
 # VISCtemplates 2.2.0
 
 Bugfixes
