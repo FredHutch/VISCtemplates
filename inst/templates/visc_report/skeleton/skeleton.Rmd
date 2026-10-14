@@ -422,7 +422,7 @@ for(i in c("GAG", "POL")){
 
 magnitude_tab <- magnitude_results |> 
   select(-Population, -contains("Perfect")) |>
-  rename("Median (Range)" = Median_Min_Max, 'Mean (SD)' = Mean_SD)
+  rename("Median (Range)" = Median_Min_Max, 'Mean (SD)' = Mean_SD, 'Median (Quartiles)' = Median_Quartiles)
 
 caption_short <- "Short caption to show in List of Tables."
 
