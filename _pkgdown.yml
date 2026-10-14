@@ -2,3 +2,36 @@ url: https://fredhutch.github.io/VISCtemplates/
 template:
   bootstrap: 5
 
+reference:
+  - title: "Project Setup"
+    contents:
+      - create_visc_project
+      - use_visc_gitignore
+      - use_visc_docs
+      - use_visc_methods
+      - use_visc_pr_template
+      - use_visc_readme
+
+  - title: "Report Templates"
+    contents:
+      - use_visc_report
+      - visc_pdf_document
+      - visc_word_document
+      - insert_break
+      - insert_ref
+      - insert_references_section_header
+
+  - title: "Interacting with Data and Servers"
+    contents:
+    - install_git_workaround
+    - networks_path
+    - trials_path
+    - visc_load_pdata
+
+  - title: "Other"
+    contents:
+      - check_pandoc_version
+      - get_output_type
+      - install_load_cran_packages
+      - set_kable_warnings
+      - set_pandoc_markup
