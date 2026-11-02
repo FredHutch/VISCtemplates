@@ -2,7 +2,12 @@
 
 Bugfixes
 
-* Fix rendering issue with ADCC template due to new Median_Quartiles column in table, and CI issue for macOS (#364)
+* Fix rendering issue with ADCC template due to new Median_Quartiles column in table (#364)
+
+Improvements for package contributors and maintainers
+
+* Install XQuartz on macOS CI runner (#364)
+* Use Ubuntu 24.04 for R 4.1.0 and R 4.4.2 CI runners (#366)
 
 # VISCtemplates 2.2.0
 
