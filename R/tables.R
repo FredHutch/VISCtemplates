@@ -1,6 +1,6 @@
-#'
-#' This file contains functions related to table creation for reports.
-#'
+#
+# This file contains functions related to table creation for reports.
+#
 
 #' Set kable warnings based on output type
 #'
@@ -100,17 +100,22 @@ ft_add_short_caption <- function(ft, short = NULL) {
 #'
 #' Caption handling differs by table type: `kable` objects get their caption
 #' from the `tab.cap`/`tab.scap` chunk options (read by bookdown's kable
-#' hook). `flextable` objects ignore chunk options entirely, so their
-#' caption and Word bookmark must already be set on the object (e.g. via
-#' [flextable::set_caption()] and, for LaTeX short captions, `ft_add_short_caption()`)
-#' before calling this function.
+#' hook). `flextable` objects support caption-related chunk options such as
+#' `tab.cap` and `tab.id`, or captions can be set directly with
+#' [flextable::set_caption()]. When a caption is set on the object,
+#' caption-related chunk options are ignored. For LaTeX short captions,
+#' use `ft_add_short_caption()` before calling this function.
 #'
 #' @param tab A `kable` or `flextable` object to render. If `NULL`, the
 #'   function returns without producing any output (loops sometimes generate
-#'   `NULL` tables for skipped iterations). If this is a flextable object, caption should already be added.
+#'   `NULL` tables for skipped iterations). For flextable objects, captions
+#'   may be set on the object or supplied through supported chunk options.
 #' @param tab_chunk_name Character. Unique chunk label for the generated sub-chunk.
-#' @param tab_caption_short Character, optional. Short caption (will not have any effect for flextable objects).
-#' @param tab_caption_long Character, optional. Full caption (will not have any effect for flextable objects).
+#'   Use letters, digits, hyphens, or periods; underscores are not allowed.
+#' @param tab_caption_short Character, optional. Short caption (`tab.scap`);
+#'   not supported for flextable objects.
+#' @param tab_caption_long Character, optional. Full caption (`tab.cap`).
+#'   For flextable objects, ignored when a caption is already set on the object.
 #' @param .interactive Logical. If `TRUE` (the default when running
 #'   interactively), `tab` is printed directly instead of being knitted as a
 #'   sub-chunk, which is more convenient during interactive development.
@@ -124,7 +129,7 @@ ft_add_short_caption <- function(ft, short = NULL) {
 #' for (i in seq_along(my_tables)) {
 #'   insert_tab_subchunk(
 #'     tab               = my_tables[[i]],
-#'     tab_chunk_name    = paste0("tab_", i),
+#'     tab_chunk_name    = paste0("tab-", i),
 #'     tab_caption_short = short_captions[[i]],
 #'     tab_caption_long  = long_captions[[i]]
 #'   )
@@ -134,7 +139,7 @@ ft_add_short_caption <- function(ft, short = NULL) {
 #' my_flextable <- flextable::flextable(head(mtcars)) |>
 #'   flextable::set_caption("A caption. More detail follows.") |>
 #'   ft_add_short_caption(short = "Custom short caption")
-#' insert_tab_subchunk(tab = my_flextable, tab_chunk_name = "tab_ft1")
+#' insert_tab_subchunk(tab = my_flextable, tab_chunk_name = "tab-ft1")
 #' }
 insert_tab_subchunk <- function(tab,
                                 tab_chunk_name,
@@ -145,7 +150,7 @@ insert_tab_subchunk <- function(tab,
   if (is.null(tab)) return(invisible(NULL)) # sometimes get null tables when looping
 
   # check early for troubleshooting during interactive development
-  check_chunk_name(tab_chunk_name)
+  check_chunk_name(tab_chunk_name, arg = "tab_chunk_name")
   if (!is.null(tab_caption_short)) { check_caption(tab_caption_short, "tab_caption_short") }
   if (!is.null(tab_caption_long)) { check_caption(tab_caption_long, "tab_caption_long") }
 

@@ -15,13 +15,17 @@ insert_tab_subchunk(
 \arguments{
 \item{tab}{A \code{kable} or \code{flextable} object to render. If \code{NULL}, the
 function returns without producing any output (loops sometimes generate
-\code{NULL} tables for skipped iterations). If this is a flextable object, caption should already be added.}
+\code{NULL} tables for skipped iterations). For flextable objects, captions
+may be set on the object or supplied through supported chunk options.}
 
-\item{tab_chunk_name}{Character. Unique chunk label for the generated sub-chunk.}
+\item{tab_chunk_name}{Character. Unique chunk label for the generated sub-chunk.
+Use letters, digits, hyphens, or periods; underscores are not allowed.}
 
-\item{tab_caption_short}{Character, optional. Short caption (will not have any effect for flextable objects).}
+\item{tab_caption_short}{Character, optional. Short caption (\code{tab.scap});
+not supported for flextable objects.}
 
-\item{tab_caption_long}{Character, optional. Full caption (will not have any effect for flextable objects).}
+\item{tab_caption_long}{Character, optional. Full caption (\code{tab.cap}).
+For flextable objects, ignored when a caption is already set on the object.}
 
 \item{.interactive}{Logical. If \code{TRUE} (the default when running
 interactively), \code{tab} is printed directly instead of being knitted as a
@@ -41,17 +45,18 @@ otherwise only apply once per chunk.
 \details{
 Caption handling differs by table type: \code{kable} objects get their caption
 from the \code{tab.cap}/\code{tab.scap} chunk options (read by bookdown's kable
-hook). \code{flextable} objects ignore chunk options entirely, so their
-caption and Word bookmark must already be set on the object (e.g. via
-\code{\link[flextable:set_caption]{flextable::set_caption()}} and, for LaTeX short captions, \code{ft_add_short_caption()})
-before calling this function.
+hook). \code{flextable} objects support caption-related chunk options such as
+\code{tab.cap} and \code{tab.id}, or captions can be set directly with
+\code{\link[flextable:set_caption]{flextable::set_caption()}}. When a caption is set on the object,
+caption-related chunk options are ignored. For LaTeX short captions,
+use \code{ft_add_short_caption()} before calling this function.
 }
 \examples{
 \dontrun{
 for (i in seq_along(my_tables)) {
   insert_tab_subchunk(
     tab               = my_tables[[i]],
-    tab_chunk_name    = paste0("tab_", i),
+    tab_chunk_name    = paste0("tab-", i),
     tab_caption_short = short_captions[[i]],
     tab_caption_long  = long_captions[[i]]
   )
@@ -61,6 +66,6 @@ for (i in seq_along(my_tables)) {
 my_flextable <- flextable::flextable(head(mtcars)) |>
   flextable::set_caption("A caption. More detail follows.") |>
   ft_add_short_caption(short = "Custom short caption")
-insert_tab_subchunk(tab = my_flextable, tab_chunk_name = "tab_ft1")
+insert_tab_subchunk(tab = my_flextable, tab_chunk_name = "tab-ft1")
 }
 }

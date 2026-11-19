@@ -2,7 +2,7 @@
 % Please edit documentation in R/tables.R
 \name{set_kable_warnings}
 \alias{set_kable_warnings}
-\title{This file contains functions related to table creation for reports.}
+\title{Set kable warnings based on output type}
 \usage{
 set_kable_warnings(output_type)
 }
@@ -13,9 +13,6 @@ set_kable_warnings(output_type)
 logical
 }
 \description{
-Set kable warnings based on output type
-}
-\details{
 This can be used to set the \code{warning} option in R Markdown code chunks to
 remove warnings created by knitr::kable() when knitting to a Word document.
 }
