@@ -8,7 +8,8 @@ visc_load_pdata(
   .data,
   proj_or_datapackage = c("datapackage", "proj", "repo"),
   criteria = NULL,
-  package = NULL
+  package = NULL,
+  lib.loc = NULL
 )
 }
 \arguments{
@@ -26,6 +27,10 @@ letters}
 pdata naming) or character. If NULL, look for pdata named \code{.data} in
 package <portion of \code{.data} before the first underscore>. If not NULL, look
 for pdata named \code{.data} in package \code{package}.}
+
+\item{lib.loc}{library path from which to load the data package. Passed
+internally to \code{utils::data()}. Default is \code{NULL}, which uses the first
+element of \code{.libPaths()}}
 }
 \value{
 pdata object

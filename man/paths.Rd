@@ -4,45 +4,53 @@
 \alias{paths}
 \alias{networks_path}
 \alias{trials_path}
+\alias{datapackage_path}
 \title{Construct paths}
 \usage{
 networks_path(...)
 
 trials_path(...)
+
+datapackage_path(...)
 }
 \arguments{
 \item{...}{additional path components passed to \code{\link[=file.path]{file.path()}}; appended after
-the networks or trials root path defined in your \code{.Renviron} file}
+the networks, trials, or datapackage root path defined in your \code{.Renviron} file}
 }
 \value{
 Character; the concatenated path
 }
 \description{
-Requires one-time setup of the environment variable
-\code{VISCTEMPLATES_NETWORKS_PATH} or \code{VISCTEMPLATES_TRIALS_PATH} in your
-\code{.Renviron} file. To do this,
+Requires one-time setup of environment variables
+\code{VISCTEMPLATES_NETWORKS_PATH}, \code{VISCTEMPLATES_TRIALS_PATH}, and/or
+\code{VISCTEMPLATES_DATAPACKAGE_PATH} in your \code{.Renviron} file. To do this,
 \enumerate{
 \item Open your \code{.Renviron} file for editing in Rstudio
 with \code{\link[usethis:edit]{usethis::edit_r_environ()}}
-\item Add needed line(s) to \code{.Renviron} defining \code{VISCTEMPLATES_NETWORKS_PATH}
-and/or \code{VISCTEMPLATES_TRIALS_PATH} to reflect your operating system and your
-drive mappings. Only use the forward slash \code{/} as a path
-separator and do not use a trailing \code{/}. Typical settings:
+\item Add needed line(s) to \code{.Renviron} defining
+\code{VISCTEMPLATES_NETWORKS_PATH}, \code{VISCTEMPLATES_TRIALS_PATH}, and/or
+\code{VISCTEMPLATES_DATAPACKAGE_PATH} to reflect your operating system, drive
+mappings, and datapackage install location. Only use the forward slash \code{/} as
+a path separator and do not use a trailing \code{/}. Typical settings:
 \itemize{
 \item Windows
 \preformatted{
 VISCTEMPLATES_NETWORKS_PATH="N:"
 VISCTEMPLATES_TRIALS_PATH="T:"
+VISCTEMPLATES_DATAPACKAGE_PATH="H:/datapackages"
 }
 \item macOS
 \preformatted{
 VISCTEMPLATES_NETWORKS_PATH="/Volumes/networks"
 VISCTEMPLATES_TRIALS_PATH="/Volumes/trials"
+VISCTEMPLATES_DATAPACKAGE_PATH="/Volumes/kmacphee/RLib"
 }
 \item Linux
 \preformatted{
 VISCTEMPLATES_NETWORKS_PATH="/networks"
-VISCTEMPLATES_TRIALS_PATH="/trials" }
+VISCTEMPLATES_TRIALS_PATH="/trials"
+VISCTEMPLATES_DATAPACKAGE_PATH="/home/username/datapackages"
+}
 }
 \item Save the file
 \item Restart your R session (in Rstudio: \code{Session} > \verb{Restart R})

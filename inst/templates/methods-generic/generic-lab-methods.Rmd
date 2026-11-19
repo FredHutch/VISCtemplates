@@ -3,8 +3,8 @@ title: "{{ study_name}} Lab Methods"
 output: github_document
 ---
 
-<!-- background.md is generated from the RMARKDOWN file, background.Rmd.
-Please edit that file. -->
+<!-- The markdown (*.md) file is generated from the R Markdown (*.Rmd) file.
+Please edit the *.Rmd file. -->
 
 <!-- this file was adapted from VISCtemplates {{pkg_ver}}. -->
 

@@ -1,0 +1,86 @@
+---
+title: "Your Presentation Title"
+subtitle: "A subtitle if you want one"
+author: "Your Name"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:
+ VISCtemplates::visc_pptx_document:
+    style: Light # can be Light or Navy
+    slide_level: 2
+---
+
+<!--
+NOTE ABOUT SLIDE BREAKS
+   - A level-1 heading (#) starts a Section Header slide.
+   - A level-2 heading (##) starts a new content slide (set via slide_level: 2 above).
+   - A horizontal rule (---) also forces a new slide if you need one without a heading.
+-->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(ggplot2)
+```
+
+# Section One
+
+## Agenda
+
+- Point one
+- Point two
+- Point three
+
+## A Bulleted Content Slide
+
+- First idea
+  - Supporting detail
+- Second idea
+- Third idea with **bold** and *italics*
+
+## A Plot Slide
+
+```{r demo-plot, fig.width=7, fig.height=4}
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point(size = 2) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Weight (1000 lbs)", y = "Miles per gallon",
+       title = "Fuel Efficiency vs. Weight") +
+  theme_minimal(base_size = 14)
+```
+
+## A Table Slide
+
+```{r demo-table}
+knitr::kable(head(mtcars[, 1:5]), caption = "First rows of mtcars")
+```
+
+# Section Two
+
+## Two-Content Layout
+
+::: columns
+::: {.column width="50%"}
+**Left column**
+
+- Item A
+- Item B
+:::
+::: {.column width="50%"}
+**Right column**
+
+- Item C
+- Item D
+:::
+:::
+
+## Speaker Notes Example
+
+This slide has notes attached below — they show up in Presenter View
+in PowerPoint, and are stripped out of the beamer PDF.
+
+::: notes
+Remember to mention the Q3 numbers here and pause for questions.
+:::
+
+## Thank You
+
+Questions?

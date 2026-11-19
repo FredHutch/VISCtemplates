@@ -46,18 +46,20 @@ Location of input data:
 
 ```{r package-loading-and-options, include=FALSE}
 
-# packages installed from GitHub
+# load packages
 library(VISCtemplates)
 library(VISCfunctions)
+library(conflicted)
+library(dplyr)
+library(ggplot2)
+library(knitr)
+library(kableExtra)
+library(flextable)
+library(rprojroot)
 
-check_pandoc_version()
 output_type <- get_output_type()
 kable_warnings <- set_kable_warnings(output_type)
 pandoc_markup <- set_pandoc_markup(output_type)
-
-# packages installed from CRAN
-packages_needed <- c("conflicted", "dplyr", "ggplot2", "knitr", "kableExtra", "flextable", "rprojroot")
-install_load_cran_packages(packages_needed)
 
 # knitr options
 opts_chunk$set(cache = FALSE,
@@ -106,6 +108,16 @@ conflict_prefer("filter", "dplyr")
 
 # Read in your data in this chunk
 
+# Here is some sample data to create an example table and figure:
+set.seed(1)
+sample_df <- data.frame(
+  group = factor(rep(letters[1:3], each = 10)),
+  value = rnorm(30)
+)
+group_means_df <- setNames(
+  aggregate(value ~ group, sample_df, mean),
+  c("group", "group_mean")
+)
 ```
 
 ```{r data-processing}
@@ -124,59 +136,84 @@ Add some text here
 
 Add some text here
 
+```{r example-table, tab.cap="Example kable table", warning=kable_warnings}
+# Note: kable usage with Word outputs will result in many warnings being printed
+# in the output document. To avoid this, set warning=kable_warnings in chunk
+# options, or use flextable instead (examples in Reproducibility Software Information)
+kable(group_means_df, format = output_type, booktabs = TRUE) |>
+  kable_styling()
+```
+
+```{r example-figure, fig.cap="Example ggplot figure with VISC theme"}
+ggplot(data = sample_df, mapping = aes(x = group, y = value)) +
+  geom_point() +
+  geom_point(
+    mapping = aes(y = group_mean), data = group_means_df,
+    colour = 'red', size = 3
+  )
+```
+
 `r insert_break()`
 
 # Reproducibility Software Information
 
-```{r Software-Session-Information, results="asis", message=FALSE, warning=kable_warnings}
+```{r Software-Session-Information, results="asis", message=FALSE}
 
 # load in rmarkdown to capture version number
 if (any(installed.packages()[,1] == 'rmarkdown')) suppressWarnings(library(rmarkdown))
 
 my_session_info <- VISCfunctions::get_session_info()
 
-tbl_caption <- "Reproducibility software session information"
+tbl_caption <- "Session reproducibility information"
 
 if (output_type == 'latex') {
   
   # format nicely for PDF with kable and kableExtra
-  my_session_info$platform_table %>%
-    kable(booktabs = TRUE, linesep = "", caption = tbl_caption) %>% 
-    kable_styling() %>%
-    column_spec(1, width = "1in") %>%
+  my_session_info$platform_table |>
+    kable(booktabs = TRUE, linesep = "", caption = tbl_caption) |> 
+    kable_styling() |>
+    column_spec(1, width = "1in") |>
     column_spec(2, width = "5.5in")
   
 } else {
   
   # format nicely for Word with flextable
-  my_session_info$platform_table %>%
-    flextable() %>%
-    set_caption(tbl_caption) %>%
-    set_table_properties(layout = "fixed") %>% # to allow overriding automatic column width
-    flextable::width(1, 1, unit = "in") %>%
+  my_session_info$platform_table |>
+    flextable() |>
+    set_caption(tbl_caption) |>
+    set_table_properties(layout = "fixed") |> # to allow overriding automatic column width
+    flextable::width(1, 1, unit = "in") |>
     flextable::width(2, 5.5, unit = "in")
   
 }
 ```
 
-```{r Software-Package-Version-Information, results="asis", warning=kable_warnings}
+`r insert_break()`
 
-tbl_caption <- "Reproducibility software package version information"
+```{r Software-Package-Version-Information, results="asis"}
+
+tbl_caption <- "Package reproducibility information"
 
 if (output_type == 'latex') {
   
   # format nicely for PDF with kable and kableExtra
-  my_session_info$packages_table %>%
-    kable(booktabs = TRUE, linesep = "", caption = tbl_caption) %>% 
-    kable_styling()
-  
+  my_session_info$packages_table |>
+    kable(
+      booktabs = TRUE, linesep = "", caption = tbl_caption, longtable = TRUE
+    ) |>
+    # NOTE: the options below should be applied to ALL longtables to avoid various formatting issues, including page numbering issues caused by repeated headers
+    kable_styling(
+      latex_options = 'repeat_header',
+      repeat_header_method = 'replace',
+      repeat_header_text = paste(tbl_caption, "(continued)"),
+      repeat_header_continued = TRUE
+    )
+
 } else {
   
-  cat(insert_break())
-  
   # format nicely for Word with flextable
-  my_session_info$packages_table %>%
-    flextable() %>%
+  my_session_info$packages_table |>
+    flextable() |>
     set_caption(tbl_caption)
   
 }
