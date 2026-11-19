@@ -123,9 +123,10 @@ challenge_visc_report <- function(report_name, interactive = TRUE) {
 
 #' Use template files for methods sections in PT reports
 #'
-#' Creates a "methods" directory that contains 3 "child" R Markdown documents
+#' Creates a "child-docs" directory that contains 3 "child" R Markdown documents
 #'  used in PT reports: statistical-methods.Rmd, lab-methods.Rmd,
-#'  and biological-endpoints.Rmd
+#'  and biological-endpoints.Rmd. These report-specific files are separate from
+#'  shared study content in the project's docs/ directory.
 #'
 #' @param assay "generic", "bama", "nab" or "adcc"
 #' @param path path within the active project
