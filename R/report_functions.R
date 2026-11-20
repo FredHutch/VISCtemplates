@@ -6,7 +6,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{load_install_cran_packages(c("tidyr", "dplyr"))}
+#' \dontrun{install_load_cran_packages(c("tidyr", "dplyr"))}
 install_load_cran_packages <- function(packages) { #nocov start
   installed_packages <- rownames(utils::installed.packages())
   lapply(packages, FUN = function(package) {
@@ -176,15 +176,9 @@ set_kable_warnings <- function(output_type) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#'
-#' pandoc_markup <- set_markup_warnings(output_type = get_output_type())
-#'
-#' my_results |>
-#'   kable() |>
-#'   cell_spec(pvalue, bold = ifelse(pandoc_markup, TRUE, FALSE))
-#'
-#' }
+#' set_pandoc_markup("latex")
+#' set_pandoc_markup("pandoc")
+#' pandoc_markup <- set_pandoc_markup(output_type = get_output_type())
 set_pandoc_markup <- function(output_type) {
   output_type == 'pandoc'
 }

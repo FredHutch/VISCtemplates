@@ -19,9 +19,10 @@ use_visc_methods(
 only.}
 }
 \description{
-Creates a "methods" directory that contains 3 "child" R Markdown documents
+Creates a "child-docs" directory that contains 3 "child" R Markdown documents
 used in PT reports: statistical-methods.Rmd, lab-methods.Rmd,
-and biological-endpoints.Rmd
+and biological-endpoints.Rmd. These report-specific files are separate from
+shared study content in the project's docs/ directory.
 }
 \examples{
 \dontrun{
