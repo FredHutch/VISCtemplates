@@ -141,30 +141,6 @@ get_output_type <- function() {
 
 }
 
-#' Set kable warnings based on output type
-#'
-#' This can be used to set the `warning` option in R Markdown code chunks to
-#' remove warnings created by knitr::kable() when knitting to a Word document.
-#'
-#' @param output_type character string of document output type
-#'
-#' @return logical
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#'
-#' kable_warnings <- set_kable_warnings(output_type = get_output_type())
-#'
-#' ```{r chunk-label, warning=kable_warnings}
-#'
-#' ```
-#'
-#' }
-set_kable_warnings <- function(output_type) {
-  output_type == 'latex'
-}
-
 #' Set pandoc markup
 #'
 #' Use this for conditionally formatting output when knitting both

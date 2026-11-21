@@ -44,6 +44,7 @@ Imports:
     fs,
     digest,
     bookdown,
+    knitr,
     rmarkdown,
     rprojroot,
     usethis,
@@ -63,7 +64,6 @@ Suggests:
     flextable,
     ggplot2,
     kableExtra,
-    knitr,
     testthat (>= 3.0.0),
     withr
 Remotes:
