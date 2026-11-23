@@ -3,6 +3,7 @@
 Improvements for users
 
 * Add pkgdown website (#323)
+* Review and update misc. package documentation (#367)
 
 Bugfixes
 
