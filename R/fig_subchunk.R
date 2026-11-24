@@ -12,6 +12,8 @@
 #'   to be rendered in the sub-chunk. For base R plots, see ?insert_fig_subchunk_deparse
 #' @param fig_chunk_name A character string giving the knitr chunk label for
 #'   the generated sub-chunk (e.g., "fig-cd4-env-infg"). Must be unique within the document.
+#'   Use letters, digits, hyphens, or periods. Spaces, commas, underscores,
+#'   and quotes are rejected.
 #' @param fig_caption_short A character string used as the short figure caption
 #'   (passed to the `fig.scap` chunk option).
 #' @param fig_caption_long A character string used as the full figure caption
@@ -31,7 +33,7 @@
 #' p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
 #' insert_fig_subchunk(
 #'   fig               = p,
-#'   fig_chunk_name    = "mtcars_scatter",
+#'   fig_chunk_name    = "mtcars-scatter",
 #'   fig_caption_short = "Weight vs. MPG",
 #'   fig_caption_long  = "Scatterplot of car weight against fuel efficiency (mpg)."
 #' )
@@ -191,11 +193,9 @@ check_chunk_name <- function(x, arg = "fig_chunk_name") {
 #'
 #' @examples
 #' \dontrun{
-#' library(ggplot2)
-#' p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
 #' insert_fig_subchunk_deparse(
-#'   fig               = p,
-#'   fig_chunk_name    = "mtcars_scatter",
+#'   fig               = plot(mtcars$wt, mtcars$mpg),
+#'   fig_chunk_name    = "mtcars-scatter-base",
 #'   fig_caption_short = "Weight vs. MPG",
 #'   fig_caption_long  = "Scatterplot of car weight against fuel efficiency (mpg)."
 #' )
@@ -220,7 +220,7 @@ insert_fig_subchunk_deparse = function(fig, fig_chunk_name, fig_caption_short, f
   fig_sub_chunk <-   paste0(
     "\n```{r ", fig_chunk_name, ", ",
     "fig.scap=", encodeString(as.character(fig_caption_short), quote = "'"), ", ",
-    "fig.cap=",  encodeString(as.character(fig_caption_long),  quote = "'"), "}",
+    "fig.cap=",  encodeString(as.character(fig_caption_long), quote = "'"), "}",
     "\n(", fig_deparsed, ")()",
     "\n```\n"
   )

@@ -1,5 +1,10 @@
 # VISCtemplates (development version)
 
+Improvements for users
+
+* Add pkgdown website (#323)
+* Review and update misc. package documentation (#367)
+
 Bugfixes
 
 * Fix rendering issue with ADCC template due to new Median_Quartiles column in table (#364)

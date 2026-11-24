@@ -20,17 +20,18 @@ visc_load_pdata(
 datapackage (\code{datapackage}, the default) or the current project repo
 (\code{proj} or \code{repo})}
 
-\item{criteria}{character, a 32-digit hexadecimal data hash with lowercase
-letters}
+\item{criteria}{NULL (default) or a character string containing exactly 32
+lowercase hexadecimal characters: the expected hash of the loaded R
+object, computed with \code{\link[digest:digest]{digest::digest()}}. Not a package version or file hash.}
 
 \item{package}{only used in \code{datapackage} mode. NULL (default; standard VISC
 pdata naming) or character. If NULL, look for pdata named \code{.data} in
 package <portion of \code{.data} before the first underscore>. If not NULL, look
 for pdata named \code{.data} in package \code{package}.}
 
-\item{lib.loc}{library path from which to load the data package. Passed
-internally to \code{utils::data()}. Default is \code{NULL}, which uses the first
-element of \code{.libPaths()}}
+\item{lib.loc}{library path(s) to search in \code{datapackage} mode. Passed to
+package lookup and \code{\link[utils:data]{utils::data()}}. NULL uses the default library search
+locations; supply an explicit path to select a designated data library.}
 }
 \value{
 pdata object
@@ -41,20 +42,33 @@ repo (e.g., during review) or from the library installed location. This
 facilitates task switching when transitioning from ad hoc review to
 production reporting.
 }
+\details{
+A valid supplied hash is checked in both installed-datapackage and
+project/repository modes. If \code{criteria} is NULL, a warning is issued and the
+data are returned without checking. A malformed hash also causes a warning
+and skips checking; it does not stop loading. A valid hash that does not match
+the loaded object causes an error. A match returns the object.
+
+Establish the expected hash from an independently verified data object and
+record it in the analysis. Do not recompute the expected hash from newly
+loaded data on every report run: that would not detect an unexpected change.
+The hash identifies the R object under the digest settings used, not the
+datapackage version or the bytes of its source file.
+}
 \examples{
 \dontrun{
-# default behavior: loads a pdata from the currently installed package, no criteria checking
-visc_load_pdata(Hassell750_ics)
+# Requires an installed study datapackage. Missing criteria warns and skips checking.
+pdata <- visc_load_pdata("Hassell750_ics")
 
-## add a check against hash
-visc_load_pdata(Hassell750_ics, criteria = "4f054442a6549bffcd947af4b0da9155")
+# After independently verifying this data version, obtain and record its hash:
+digest::digest(pdata)
 
-# load a pdata from the active project repo, not installed
-visc_load_pdata(Hassell750_ics, proj_or_datapackage = "proj")
+# Illustrative valid syntax only; replace with the recorded, verified hash.
+expected_hash <- "0123456789abcdef0123456789abcdef"
+visc_load_pdata("Hassell750_ics", criteria = expected_hash)
 
-## add check against hash
-visc_load_pdata(Hassell750_ics, proj_or_datapackage = "proj",
-  criteria = "09ab8a5a3831e854d21144d89557ccb1")
-## skips criteria check if looking at datapackage
+# In the active data-package source repository, the same validation applies:
+visc_load_pdata("Hassell750_ics", proj_or_datapackage = "proj",
+  criteria = expected_hash)
 }
 }

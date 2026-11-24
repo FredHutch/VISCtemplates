@@ -16,5 +16,5 @@ packages will be loaded into environment
 Check for package, install if needed, and load
 }
 \examples{
-\dontrun{load_install_cran_packages(c("tidyr", "dplyr"))}
+\dontrun{install_load_cran_packages(c("tidyr", "dplyr"))}
 }

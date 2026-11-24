@@ -17,13 +17,7 @@ Use this for conditionally formatting output when knitting both
 PDF (Latex) and Word document reports.
 }
 \examples{
-\dontrun{
-
-pandoc_markup <- set_markup_warnings(output_type = get_output_type())
-
-my_results |>
-  kable() |>
-  cell_spec(pvalue, bold = ifelse(pandoc_markup, TRUE, FALSE))
-
-}
+set_pandoc_markup("latex")
+set_pandoc_markup("pandoc")
+pandoc_markup <- set_pandoc_markup(output_type = get_output_type())
 }

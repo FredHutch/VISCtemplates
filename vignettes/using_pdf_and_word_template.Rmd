@@ -16,14 +16,16 @@ There are a few different types of reports available:
 * **generic**: A PT report template that includes generic text that can be adapted to your statistical analysis.
 * **bama**: A PT report template for the BAMA assay.
 * **nab**: A PT report template for the NAb assay.
+* **adcc**: A PT report template for the ADCC assay.
 
-To use a VISC report template, run:
+To use a VISC report template, run this in your VISC analysis project:
 
 ```{r eval=FALSE}
+library(VISCtemplates)
 use_visc_report(
   report_name = "VDCnnn_BAMA_PTreport_interim_blinded", # the name of the report file
   path = "BAMA", # the path within the active directory, usually the name of the assay
-  report_type = "bama" # "empty", "generic", "bama", or "nab"
+  report_type = "bama" # "empty", "generic", "bama", "nab", or "adcc"
 )
 ```
 
@@ -33,9 +35,11 @@ example above, this structure looks like:
 
 ```
 |- BAMA/
+|  +- README.md                                     # created if BAMA/ is new
 |  +- VDCnnn_BAMA_PTreport_interim_blinded/              
+|     +- README.md                                  # report-level guide
 |     +- VDCnnn_BAMA_PTreport_interim_blinded.Rmd       # VISC report template
-|     +- methods/                                       # folder with "child" .Rmd documents
+|     +- child-docs/                                 # folder with "child" .Rmd documents
 |       +- biological-endpoints.Rmd
 |       +- lab-methods.Rmd
 |       +- statistical-methods.Rmd
@@ -44,22 +48,30 @@ example above, this structure looks like:
 The "child" R Markdown documents contain standardized language for the methods
 sections of PT reports. 
 Edit these as needed for the specifics of your analysis.
+These report-specific methods are separate from shared study content in `docs/`.
 
 You can use a VISC report template through the RStudio GUI 
 (`File > New File > Rmarkdown... > From Template`), 
 or with `rmarkdown::draft()`,
 but this does not automatically generate the "child" R Markdown documents, 
 so you will have to do that manually or with `use_visc_methods()` if you choose this option.
+Specify the assay explicitly, for example
+`use_visc_methods(path = "BAMA/VDCnnn_BAMA_PTreport_interim_blinded", assay = "bama")`.
 
 ## Knit to PDF or Word
 
 The VISC report R Markdown template knits to either a PDF or Word document. 
 
-* Use the Knit button select either the PDF (visc_pdf_document) or 
+* Use the Knit button to select either the PDF (visc_pdf_document) or 
 Word (visc_word_document) output.
-* Note the shortcut Ctrl-Shift-K will run the first output in the YAML, will be the last output run (starts off as PDF first).
-* If you want to run both reports in one command, either use `rmarkdown::render()` with `output_format = 'all'`, or install the loom package and create a RStudio Addin (<https://github.com/thebioengineer/loom>).
+* If you want to run both reports in one command, use `rmarkdown::render()` with `output_format = 'all'`.
 
+See the package README for Pandoc and LaTeX requirements. The report also uses
+these packages, which can be installed if needed:
+
+```{r eval=FALSE}
+install.packages(c("conflicted", "ggplot2", "dplyr", "knitr", "kableExtra", "flextable"))
+```
 
 ## Using the template 
 
@@ -70,20 +82,20 @@ There are some new functions and coding conventions that help with knitting the 
 * For page breaks use `insert_break()` function.
     
 ### Referencing
-`
+
 **Figure and table references**
 
 * For figure and table references use `insert_ref()` function.
     + For example: `` `r knitr::inline_expr("insert_ref('fig:response-rate-plot')")` ``.
-* Make sure chunk names only use dashes or referring will not work (no spaces or underscores).
-* Do not use figure or table labels in chunk headings or kable code (e.g., don't use `fig.cap = "My Figure Caption \\label{my_figure_label}"`. Rmarkdown will automatically assign the chunk name as the figure/table reference label.
+* Use chunk names with letters, digits, and dashes (no spaces or underscores).
+* Do not use figure or table labels in chunk headings or kable code (e.g., don't use `fig.cap = "My Figure Caption \\label{my_figure_label}"`). Rmarkdown will automatically assign the chunk name as the figure/table reference label.
 
 **Sections** 
 
 * For referencing sections, use `insert_ref()` but you must list both the section label and the desired section name
     + For example: `` `r knitr::inline_expr("insert_ref('referencing', 'Referencing')")` `` gives `r VISCtemplates::insert_ref('referencing', 'Referencing')`.
     + For example: `` `r knitr::inline_expr("insert_ref('page-breaks', 'Page breaks')")` `` gives `r VISCtemplates::insert_ref('page-breaks', 'Page breaks')`.
-* For PDF output the matching section number is display regardless of the section name listed.
+* For PDF output the matching section number is displayed regardless of the section name listed.
 * For Word output the section name listed is displayed.
 
 **References/Bibliography**
@@ -95,7 +107,7 @@ There are some new functions and coding conventions that help with knitting the 
 ### Tables
 
 * Only output one table per code chunk.
-* Make sure to have `format = output_type` in the `kableExtra::kable()` call 
+* Make sure to have `format = output_type` in the `knitr::kable()` call 
     + `output_type` is either "latex" or "pandoc" depending on current report output.
 * The table name will be chunk name plus "tab:".
     + For example, if chunk name is "descriptive-stats" then the table label will be "tab:descriptive-stats"
@@ -106,7 +118,7 @@ There are some new functions and coding conventions that help with knitting the 
 
 * Only output one figure per code chunk.
 * Figure name will be chunk name plus "fig:".
-    + i.e. if chunk name is "my-boxplot" then the table label will be "fig:my-boxplot".
+    + i.e. if chunk name is "my-boxplot" then the figure label will be "fig:my-boxplot".
     
 ### P values
 
@@ -118,4 +130,5 @@ There are some new functions and coding conventions that help with knitting the 
 
 ### Loading external data
 
-* When using the `data()` function to load external data (e.g. from another package), specify `environment = environment()`. This will ensure that the object is placed in your Rmd's environment, rather than your global environment, which is a safer practice. See the "Good practice" section in `?utils::data` for more info.
+* When using the `data()` function to load external data (e.g. from another package), specify `envir = environment()`. This will ensure that the object is placed in your Rmd's environment, rather than your global environment, which is a safer practice. See the "Good practice" section in `?utils::data` for more info.
+* For loading VISC datapackages and checking data hashes, see `?visc_load_pdata`.

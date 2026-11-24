@@ -17,7 +17,9 @@ insert_fig_subchunk(
 to be rendered in the sub-chunk. For base R plots, see ?insert_fig_subchunk_deparse}
 
 \item{fig_chunk_name}{A character string giving the knitr chunk label for
-the generated sub-chunk (e.g., "fig-cd4-env-infg"). Must be unique within the document.}
+the generated sub-chunk (e.g., "fig-cd4-env-infg"). Must be unique within the document.
+Use letters, digits, hyphens, or periods. Spaces, commas, underscores,
+and quotes are rejected.}
 
 \item{fig_caption_short}{A character string used as the short figure caption
 (passed to the \code{fig.scap} chunk option).}
@@ -50,7 +52,7 @@ library(ggplot2)
 p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
 insert_fig_subchunk(
   fig               = p,
-  fig_chunk_name    = "mtcars_scatter",
+  fig_chunk_name    = "mtcars-scatter",
   fig_caption_short = "Weight vs. MPG",
   fig_caption_long  = "Scatterplot of car weight against fuel efficiency (mpg)."
 )

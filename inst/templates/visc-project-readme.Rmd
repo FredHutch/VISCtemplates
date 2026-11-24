@@ -7,7 +7,7 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- Edit this project's README.md directly. Project creation removes the temporary README.Rmd after rendering. -->
 
 The data for the {{ study_name }} protocol can be found here: [insert path]. You can install the data package using the `remotes::install_github` or `VISCtemplates::install_git_workaround`:
 
@@ -21,7 +21,7 @@ VISCtemplates::install_git_workaround("path/reponame.git")
 
 ## SRAs and Study-Specific Training (SST)
 
-| **SRA**| **STT Completed** | **Date**   |
+| **SRA**| **SST Completed** | **Date**   |
 |--------|-------------------|------------|
 | Name   | No                | YYYY-MM-DD |
 
