@@ -126,17 +126,16 @@ interpreted as document content, and `echo = FALSE` to hide the calling code.
 Set the full caption with `caption` and, for the PDF List of Tables, a short
 caption with `caption.short`.
 
-```{r kable-example, eval=FALSE, results='asis', echo=FALSE}
-tab <- knitr::kable(
+```{r kable-example, eval=FALSE, results='asis'}
+knitr::kable(
   head(mtcars),
   format = output_type,
   caption = "Motor car data. The first six observations are shown.",
   caption.short = "Motor car data"
 )
-insert_tab_subchunk(tab, tab_chunk_name = "motor-car-data")
 ```
 
-#### A flextable with a short caption
+#### A flextable
 
 Set the full caption with `flextable::set_caption()`. Apply
 `ft_add_short_caption()` after all other flextable formatting to add a short
@@ -146,42 +145,14 @@ LaTeX-ready text for `short`, escaping special characters as needed
 a short caption from the full caption using a sentence-boundary heuristic;
 provide it explicitly when the caption contains abbreviations.
 
-```{r flextable-example, eval=FALSE, results='asis', echo=FALSE}
+```{r flextable-example, eval=FALSE, results='asis'}
 ft <- flextable::flextable(head(mtcars))
 ft <- flextable::autofit(ft)
 ft <- flextable::set_caption(
   ft, caption = "Motor car data. The first six observations are shown."
 )
 ft <- ft_add_short_caption(ft, short = "Motor car data")
-insert_tab_subchunk(ft, tab_chunk_name = "motor-car-flextable")
-```
-
-#### Many tables in a loop
-
-This example generates one table per cylinder group for each table type.
-Each call gets a distinct chunk name; the same approach works with a list
-of tables created earlier.
-
-```{r tables-loop, eval=FALSE, results='asis', echo=FALSE}
-car_groups <- split(mtcars, mtcars$cyl)
-for (group in names(car_groups)) {
-  short_caption <- paste("Cars with", group, "cylinders")
-  full_caption <- paste0(short_caption, ". All observations are shown.")
-
-  tab <- knitr::kable(
-    car_groups[[group]],
-    format = output_type,
-    caption = full_caption,
-    caption.short = short_caption
-  )
-  insert_tab_subchunk(tab, tab_chunk_name = paste0("cars-kable-", group))
-
-  ft <- flextable::flextable(car_groups[[group]])
-  ft <- flextable::autofit(ft)
-  ft <- flextable::set_caption(ft, caption = full_caption)
-  ft <- ft_add_short_caption(ft, short = short_caption)
-  insert_tab_subchunk(ft, tab_chunk_name = paste0("cars-flextable-", group))
-}
+ft
 ```
 
 ### Figures
@@ -193,37 +164,28 @@ for (group in names(car_groups)) {
   `fig_chunk_name = "my-boxplot"` gives `"fig:my-boxplot"`, which can be
   passed to `insert_ref()`. Use unique chunk names with hyphens rather than
   spaces or underscores.
-* `insert_fig_subchunk()` accepts ggplot objects and other supported printable
-  graphics, not base R plotting calls. Set `fig_caption_long` for the caption
-  displayed with the figure and `fig_caption_short` for the PDF List of Figures.
-* Optional `fig_height` and `fig_width` are in inches and apply during knitting,
-  not interactive printing. Omit them to use inherited knitr dimensions.
+  
+### Many tables/figures in a loop
 
-As with tables, use `results = 'asis'` and `echo = FALSE` on the calling
-chunk. These examples assume `library(VISCtemplates)` is loaded.
+This example generates one figure and one table per cylinder group in a
+single loop. Each figure and table gets a unique chunk name, allowing
+captions and references to be assigned separately.
 
-#### A single figure
+Use `results = 'asis'` so the generated output is interpreted as document
+content, and `echo = FALSE` to hide the calling code. This example assumes
+`library(VISCtemplates)` is loaded.
 
-```{r figure-example, eval=FALSE, results='asis', echo=FALSE}
-p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
-  ggplot2::geom_point()
-insert_fig_subchunk(
-  fig = p,
-  fig_chunk_name = "weight-vs-mpg",
-  fig_caption_short = "Weight and fuel efficiency",
-  fig_caption_long = "Car weight versus fuel efficiency (miles per gallon).",
-  fig_height = 4,
-  fig_width = 6
-)
-```
-
-#### Many figures in a loop
-
-```{r figures-loop, eval=FALSE, results='asis', echo=FALSE}
+```{r tables-figures-loop, eval=FALSE, results='asis', echo=FALSE}
 car_groups <- split(mtcars, mtcars$cyl)
+
 for (group in names(car_groups)) {
-  p <- ggplot2::ggplot(car_groups[[group]], ggplot2::aes(wt, mpg)) +
+  group_data <- car_groups[[group]]
+  group_label <- paste("Cars with", group, "cylinders")
+
+  # Insert one figure for this group.
+  p <- ggplot2::ggplot(group_data, ggplot2::aes(wt, mpg)) +
     ggplot2::geom_point()
+
   insert_fig_subchunk(
     fig = p,
     fig_chunk_name = paste0("weight-vs-mpg-", group),
@@ -234,12 +196,44 @@ for (group in names(car_groups)) {
     fig_height = 4,
     fig_width = 6
   )
+
+  # Insert one table for this group.
+  ft <- flextable::flextable(group_data)
+  ft <- flextable::autofit(ft)
+  ft <- flextable::set_caption(
+    ft,
+    caption = paste0(group_label, ". All observations are shown.")
+  )
+  ft <- ft_add_short_caption(ft, short = group_label)
+
+  insert_tab_subchunk(
+    ft,
+    tab_chunk_name = paste0("car-data-", group)
+  )
 }
 ```
 
+To use a `kable()` table instead, replace the flextable creation and
+insertion code inside the loop with:
+
+```{r loop-kable-alternative, eval=FALSE}
+tab <- knitr::kable(
+  group_data,
+  format = output_type,
+  caption = paste0(group_label, ". All observations are shown."),
+  caption.short = group_label
+)
+insert_tab_subchunk(tab, tab_chunk_name = paste0("car-data-", group))
+```
+
+`insert_fig_subchunk()` accepts ggplot objects and other supported printable
+graphics, not base R plotting calls. The optional `fig_height` and
+`fig_width` arguments specify dimensions in inches during knitting; omit
+them to use inherited knitr dimensions.
+
 When run interactively, the subchunk helpers print the object directly
 instead of generating a chunk. Knit the report to check captions,
-reference labels, and PDF figure dimensions.
+reference labels, and figure dimensions.
 
 ### P values
 
