@@ -3,7 +3,9 @@ test_that("captions and label generate correct chunk specification, caption orde
   out <- build_subchunk("print(x)", "myChunk", "fig", "Short", "Long")
   expect_match(out, "```\\{r myChunk, fig\\.scap='Short', fig\\.cap='Long'\\}")
   expect_match(out, "print\\(x\\)", fixed = FALSE)
-
+  expect_match(out, "fig\\.scap='Short'")
+  expect_match(out, "fig\\.cap='Long'")
+  expect_false(grepl("fig\\.cap='Short'", out))
 })
 
 # helper: pull the chunk header line and confirm its options parse as valid R
