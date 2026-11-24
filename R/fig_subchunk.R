@@ -21,6 +21,11 @@
 #'   code interactively); when `FALSE`, the figure is emitted as a knitr
 #'   sub-chunk. Defaults to [base::interactive()], so it normally reflects the
 #'   current session. Recommended to leave at default.
+#' @param fig_height,fig_width Optional figure height and width in inches,
+#'   each a single finite positive number. `NULL` (default) leaves the
+#'   corresponding knitr option unspecified, allowing normal inheritance.
+#'   Passed as `fig.height` and `fig.width` during knitting; these dimensions
+#'   do not resize figures printed interactively.
 #' @returns When run non-interactively it writes the knitted sub-chunk output via `cat()`;
 #'   When run interactively it prints `fig` directly, and invisibly returns `NULL`.
 #' @export
@@ -31,18 +36,23 @@
 #' p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
 #' insert_fig_subchunk(
 #'   fig               = p,
-#'   fig_chunk_name    = "mtcars_scatter",
+#'   fig_chunk_name    = "mtcars-scatter",
 #'   fig_caption_short = "Weight vs. MPG",
-#'   fig_caption_long  = "Scatterplot of car weight against fuel efficiency (mpg)."
+#'   fig_caption_long  = "Scatterplot of car weight against fuel efficiency (mpg).",
+#'   fig_height        = 4,
+#'   fig_width         = 6
 #' )
 #' }
 insert_fig_subchunk = function(fig, fig_chunk_name, fig_caption_short, fig_caption_long,
-                               .interactive = interactive()) {
+                               .interactive = interactive(),
+                               fig_height = NULL, fig_width = NULL) {
 
   # check early for troubleshooting during interactive development
   check_chunk_name(fig_chunk_name)
   check_caption(fig_caption_short, "fig_caption_short")
   check_caption(fig_caption_long, "fig_caption_long")
+  check_figure_dimension(fig_height, "fig_height")
+  check_figure_dimension(fig_width, "fig_width")
 
   # the assign() below only works for certain object types
   .is_printable_figure <- function(x) {
@@ -84,7 +94,9 @@ insert_fig_subchunk = function(fig, fig_chunk_name, fig_caption_short, fig_capti
     chunk_name    = fig_chunk_name,
     type          = "fig",
     caption_short = fig_caption_short,
-    caption_long  = fig_caption_long
+    caption_long  = fig_caption_long,
+    fig_height   = fig_height,
+    fig_width    = fig_width
   )
 
   cat(knitr::knit(text = knitr::knit_expand(text = fig_sub_chunk), quiet = TRUE))
@@ -98,6 +110,7 @@ insert_fig_subchunk = function(fig, fig_chunk_name, fig_caption_short, fig_capti
 #'   caption options are named `fig.scap`/`fig.cap` or `tab.scap`/`tab.cap`.
 #' @param caption_short Short caption (`tab.scap`/`fig.scap`). Optional.
 #' @param caption_long Long caption (`tab.cap`/`fig.cap`). Optional.
+#' @param fig_height,fig_width Optional figure dimensions in inches.
 #' @return A length-1 character string: the fenced knitr chunk.
 #' @keywords internal
 #' @noRd
@@ -105,14 +118,24 @@ build_subchunk <- function(chunk_body,
                            chunk_name,
                            type = c("fig", "tab"),
                            caption_short = NULL,
-                           caption_long = NULL) {
+                           caption_long = NULL,
+                           fig_height = NULL,
+                           fig_width = NULL) {
   type <- match.arg(type)
+  check_figure_dimension(fig_height, "fig_height")
+  check_figure_dimension(fig_width, "fig_width")
   opts <- chunk_name
   if (!is.null(caption_short)) {
     opts <- paste0(opts, ", ", type, ".scap=", encodeString(as.character(caption_short), quote = "'"))
   }
   if (!is.null(caption_long)) {
     opts <- paste0(opts, ", ", type, ".cap=", encodeString(as.character(caption_long), quote = "'"))
+  }
+  if (!is.null(fig_height)) {
+    opts <- paste0(opts, ", fig.height=", format(fig_height, decimal.mark = ".", trim = TRUE))
+  }
+  if (!is.null(fig_width)) {
+    opts <- paste0(opts, ", fig.width=", format(fig_width, decimal.mark = ".", trim = TRUE))
   }
   paste0("\n\n```{r ", opts, "}", "\n\n", chunk_body, "\n\n```\n\n")
 }

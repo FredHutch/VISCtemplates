@@ -9,7 +9,9 @@ insert_fig_subchunk(
   fig_chunk_name,
   fig_caption_short,
   fig_caption_long,
-  .interactive = interactive()
+  .interactive = interactive(),
+  fig_height = NULL,
+  fig_width = NULL
 )
 }
 \arguments{
@@ -30,6 +32,12 @@ the generated sub-chunk (e.g., "fig-cd4-env-infg"). Must be unique within the do
 code interactively); when \code{FALSE}, the figure is emitted as a knitr
 sub-chunk. Defaults to \code{\link[base:interactive]{base::interactive()}}, so it normally reflects the
 current session. Recommended to leave at default.}
+
+\item{fig_height, fig_width}{Optional figure height and width in inches,
+each a single finite positive number. \code{NULL} (default) leaves the
+corresponding knitr option unspecified, allowing normal inheritance.
+Passed as \code{fig.height} and \code{fig.width} during knitting; these dimensions
+do not resize figures printed interactively.}
 }
 \value{
 When run non-interactively it writes the knitted sub-chunk output via \code{cat()};
@@ -50,9 +58,11 @@ library(ggplot2)
 p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
 insert_fig_subchunk(
   fig               = p,
-  fig_chunk_name    = "mtcars_scatter",
+  fig_chunk_name    = "mtcars-scatter",
   fig_caption_short = "Weight vs. MPG",
-  fig_caption_long  = "Scatterplot of car weight against fuel efficiency (mpg)."
+  fig_caption_long  = "Scatterplot of car weight against fuel efficiency (mpg).",
+  fig_height        = 4,
+  fig_width         = 6
 )
 }
 }
