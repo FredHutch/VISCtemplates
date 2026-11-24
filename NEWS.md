@@ -2,6 +2,17 @@
 
 Bugfixes
 
+* Fix rendering issue with ADCC template due to new Median_Quartiles column in table (#364)
+
+Improvements for package contributors and maintainers
+
+* Install XQuartz on macOS CI runner (#364)
+* Use Ubuntu 24.04 for R 4.1.0 and R 4.4.2 CI runners (#366)
+
+# VISCtemplates 2.2.0
+
+Bugfixes
+
 * Add missing comma in skeleton report to separate `install_git_workaround` arguments (#336)
 
 Documentation
@@ -11,7 +22,14 @@ Documentation
 Improvements for users
 
 * Improvements to longtables: caption width and notes in template about how to avoid page numbering and formatting issues (#345)
+* Added new `insert_fig_subchunk()` function to help facilitate looping of figure generation in reports (#343)
 * Add citations to bibliography.bib file referenced in reproducibility reports (#349)
+* Updates to pull request template (#231)
+* Drop unnecessary use of kable_warnings in skeleton.Rmd files to simplify report templates (#339)
+
+Improvements for package contributors and maintainers
+
+* Update package authors and ORCIDs (#346)
 
 # VISCtemplates 2.1.0
 
@@ -27,11 +45,9 @@ Improvements for users
 * `visc_load_pdata()` gives more informative error message when serialized pdata file does not contain an R object of the same name (#303)
 * Default behavior of `create_visc_project()` no longer includes creation of package-specific files DESCRIPTION and NAMESPACE (#306)
 * Add option to drop SCHARP logo in PDF output (#312)
-* Updates to pull request template (#231)
 * Add `visc_load_pdata()` examples to report template skeleton (#327)
 * Remove `install_load_cran_packages()` from report template skeleton in favor of using `library()` calls (#321)
 * Reproducibility table formatting changes to coordinate with recent VISCfunctions update that lengthens reproducibility packages table to include packages that are loaded but not attached (#329, #332)
-* Drop unnecessary use of kable_warnings in skeleton.Rmd files to simplify report templates (#339)
 
 Improvements for package contributors and maintainers
 

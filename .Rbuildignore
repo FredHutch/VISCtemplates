@@ -11,3 +11,6 @@ CONTRIBUTING.md
 ^\.github$
 ^tests/testthat/_snaps
 ^tests/testthat/_snaps/use_visc_report
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
