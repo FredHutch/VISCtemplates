@@ -19,6 +19,8 @@ reference:
       - visc_word_document
       - insert_break
       - insert_fig_subchunk
+      - insert_tab_subchunk
+      - ft_add_short_caption
       - insert_ref
       - insert_references_section_header
 
