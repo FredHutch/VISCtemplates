@@ -132,7 +132,7 @@ check_caption <- function(x, arg = "caption") {
   if (grepl("[\x01-\x08\x0b\x0c\x0e-\x1f\x7f]", x1, perl = TRUE)) {
     stop(sprintf(
       "%s contains a control character, which usually means a LaTeX command was written with a single backslash (e.g. \"$\\alpha$\"). Use a double backslash in R strings: \"$\\\\alpha$\".",
-      arg, x
+      arg
     ), call. = FALSE)
   }
 
