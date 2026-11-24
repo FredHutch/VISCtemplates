@@ -128,3 +128,22 @@ test_that("rejects a model object", {
 test_that("rejects an atomic vector", {
   expect_error(call_insert(1:10), "insert_fig_subchunk_deparse")
 })
+
+test_that("noninteractive figure insertion forwards dimensions", {
+  skip_if_not_installed("ggplot2")
+  p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) + ggplot2::geom_point()
+  local_mocked_bindings(
+    knit_expand = function(text, ...) text,
+    knit = function(text, ...) text,
+    .package = "knitr"
+  )
+  out <- paste(capture.output(
+    insert_fig_subchunk(
+      fig = p, fig_chunk_name = "figure-dimensions",
+      fig_caption_short = "Short", fig_caption_long = "Long",
+      .interactive = FALSE, fig_height = 4, fig_width = 6
+    )
+  ), collapse = "\n")
+  expect_match(out, "fig.height=4", fixed = TRUE)
+  expect_match(out, "fig.width=6", fixed = TRUE)
+})

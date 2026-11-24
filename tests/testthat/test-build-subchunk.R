@@ -89,3 +89,59 @@ test_that("check_caption handles empty and NA captions", {
   expect_invisible(check_caption(character(0), "fig_caption_short"))
   expect_invisible(check_caption(NA_character_, "fig_caption_short"))
 })
+
+test_that("figure dimensions are included only when supplied", {
+  cases <- list(
+    list(height = NULL, width = NULL),
+    list(height = 4, width = NULL),
+    list(height = NULL, width = 6),
+    list(height = 4.5, width = 6.25)
+  )
+  for (case in cases) {
+    out <- build_subchunk(
+      chunk_body = "print(x)", chunk_name = "dimension-test",
+      type = "fig", fig_height = case$height, fig_width = case$width
+    )
+    expect_parseable_chunk_options(out)
+    if (is.null(case$height)) {
+      expect_false(grepl("fig.height=", out, fixed = TRUE))
+    } else {
+      expect_match(out, paste0("fig.height=", case$height), fixed = TRUE)
+    }
+    if (is.null(case$width)) {
+      expect_false(grepl("fig.width=", out, fixed = TRUE))
+    } else {
+      expect_match(out, paste0("fig.width=", case$width), fixed = TRUE)
+    }
+  }
+})
+
+test_that("invalid figure dimensions are rejected", {
+  invalid <- list(0, -1, NA_real_, NaN, Inf, -Inf,
+                  "4", TRUE, numeric(0), c(4, 6))
+  for (value in invalid) {
+    expect_error(
+      build_subchunk("print(x)", "dimension-test", "fig", fig_height = value),
+      "fig_height must be NULL or a single finite positive number", fixed = TRUE
+    )
+    expect_error(
+      build_subchunk("print(x)", "dimension-test", "fig", fig_width = value),
+      "fig_width must be NULL or a single finite positive number", fixed = TRUE
+    )
+  }
+})
+
+test_that("table chunks use table caption options", {
+  out <- build_subchunk(
+    chunk_body = ".visc_table", chunk_name = "table-test", type = "tab",
+    caption_short = "Short", caption_long = "Long"
+  )
+  expect_match(out, "tab.scap='Short'", fixed = TRUE)
+  expect_match(out, "tab.cap='Long'", fixed = TRUE)
+  expect_false(grepl("fig.cap=", out, fixed = TRUE))
+  expect_parseable_chunk_options(out)
+})
+
+test_that("unsupported subchunk types are rejected", {
+  expect_error(build_subchunk("x", "test-chunk", type = "unsupported"), "arg")
+})

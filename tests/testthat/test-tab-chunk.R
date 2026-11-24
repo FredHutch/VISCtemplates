@@ -155,3 +155,127 @@ test_that("interactive insertion prints the table and returns invisibly", {
   expect_null(result$value)
   expect_false(result$visible)
 })
+
+test_that("noninteractive insertion knits the table in a child environment", {
+  tab <- knitr::kable(data.frame(value = "example-value"), format = "pipe")
+  received <- NULL
+  parent_env <- knitr::knit_global()
+  local_mocked_bindings(
+    knit_child = function(text, envir, options, quiet, ...) {
+      received <<- list(text = text, envir = envir, options = options, quiet = quiet)
+      c("rendered table", "second output line")
+    },
+    .package = "knitr"
+  )
+  out <- capture.output(
+    result <- withVisible(
+      insert_tab_subchunk(tab, tab_chunk_name = "table-child", .interactive = FALSE)
+    )
+  )
+  expect_identical(out, c("rendered table", "second output line"))
+  expect_null(result$value)
+  expect_false(result$visible)
+  expect_match(received$text, "```{r table-child}", fixed = TRUE)
+  expect_match(received$text, ".visc_table", fixed = TRUE)
+  expect_identical(get(".visc_table", envir = received$envir, inherits = FALSE), tab)
+  expect_identical(parent.env(received$envir), parent_env)
+  expect_identical(received$options, list(echo = FALSE))
+  expect_true(received$quiet)
+})
+
+# Deferred short-caption rendering -------------------------------------
+
+test_that("non-LaTeX rendering delegates without modifying the result", {
+  skip_if_not_installed("flextable")
+  ft <- flextable::flextable(data.frame(x = 1))
+  wrapped <- ft_add_short_caption(ft, short = "Short")
+  rendered <- knitr::asis_output(
+    "<table>example</table>",
+    meta = list(list(name = "example-dependency")), cacheable = FALSE
+  )
+  received <- NULL
+  local_mocked_bindings(
+    knit_print = function(x, ...) {
+      received <<- list(x = x, dots = list(...))
+      rendered
+    },
+    is_latex_output = function(...) FALSE,
+    .package = "knitr"
+  )
+  out <- knit_print.visc_short_caption(wrapped, options = list(label = "table-html"))
+  expect_identical(out, rendered)
+  expect_identical(received$x, ft)
+  expect_identical(received$dots$options, list(label = "table-html"))
+})
+
+test_that("LaTeX rendering inserts short captions and preserves attributes", {
+  skip_if_not_installed("flextable")
+  ft <- flextable::flextable(data.frame(x = 1))
+  tex <- "\\caption{First sentence. More detail.}"
+  cases <- list(
+    list(short = "Custom short caption", cacheable = TRUE,
+         expected = "\\caption[{Custom short caption}]{First sentence. More detail.}"),
+    list(short = NULL, cacheable = FALSE,
+         expected = "\\caption[{First sentence.}]{First sentence. More detail.}"),
+    list(short = "Response (50\\%)", cacheable = NA,
+         expected = "\\caption[{Response (50\\%)}]{First sentence. More detail.}")
+  )
+  local_mocked_bindings(
+    knit_print = function(x, ...) rendered,
+    is_latex_output = function(...) TRUE,
+    .package = "knitr"
+  )
+  for (case in cases) {
+    rendered <- knitr::asis_output(
+      tex, meta = list(list(name = "example-dependency")),
+      cacheable = case$cacheable
+    )
+    out <- knit_print.visc_short_caption(ft_add_short_caption(ft, short = case$short))
+    expect_s3_class(out, "knit_asis")
+    expect_identical(as.character(out), case$expected)
+    expect_identical(attr(out, "knit_meta"), attr(rendered, "knit_meta"))
+    expect_identical(attr(out, "knit_cacheable"), attr(rendered, "knit_cacheable"))
+  }
+})
+
+test_that("LaTeX rendering accepts a missing cacheability attribute", {
+  skip_if_not_installed("flextable")
+  ft <- flextable::flextable(data.frame(x = 1))
+  rendered <- knitr::asis_output("\\caption{Full caption.}")
+  attr(rendered, "knit_cacheable") <- NULL
+  local_mocked_bindings(
+    knit_print = function(x, ...) rendered,
+    is_latex_output = function(...) TRUE,
+    .package = "knitr"
+  )
+  out <- knit_print.visc_short_caption(ft_add_short_caption(ft, short = "Short"))
+  expect_identical(as.character(out), "\\caption[{Short}]{Full caption.}")
+  expect_identical(attr(out, "knit_cacheable"), NA)
+})
+
+# Parent-to-child knitting integration ---------------------------------
+
+test_that("tables inserted in a loop appear without exposing generated code", {
+  env <- new.env(parent = globalenv())
+  env$insert_table <- insert_tab_subchunk
+  env$tables <- list(
+    knitr::kable(data.frame(value = "first-table-marker"), format = "pipe"),
+    knitr::kable(data.frame(value = "second-table-marker"), format = "pipe")
+  )
+  text <- paste(
+    "```{r table-loop-parent, results='asis', echo=FALSE}",
+    "for (i in seq_along(tables)) {",
+    "  insert_table(",
+    "    tables[[i]],",
+    "    tab_chunk_name = paste0('loop-table-', i),",
+    "    .interactive = FALSE",
+    "  )",
+    "}",
+    "```", sep = "\n"
+  )
+  out <- knitr::knit(text = text, envir = env, quiet = TRUE)
+  expect_match(out, "first-table-marker", fixed = TRUE)
+  expect_match(out, "second-table-marker", fixed = TRUE)
+  expect_false(grepl(".visc_table", out, fixed = TRUE))
+  expect_false(grepl("insert_table(", out, fixed = TRUE))
+})
