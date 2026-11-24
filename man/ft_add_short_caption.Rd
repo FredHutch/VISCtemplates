@@ -2,35 +2,36 @@
 % Please edit documentation in R/tables.R
 \name{ft_add_short_caption}
 \alias{ft_add_short_caption}
-\title{Add a short caption to a flextable object for PDF output only}
+\title{Add a short caption to a flextable for PDF output}
 \usage{
 ft_add_short_caption(ft, short = NULL)
 }
 \arguments{
-\item{ft}{flextable object.}
+\item{ft}{A flextable object.}
 
-\item{short}{character. Short caption to use in the LaTeX
-\code{\\caption[short]{full}} construct. If \code{NULL} (default), the
-first sentence of the full caption is used.}
+\item{short}{A single non-missing character string containing
+LaTeX-ready short-caption text. Escape LaTeX-special characters
+as needed, for example \code{"Response (50\\\\\%)"}.
+If \code{NULL}, a short caption is derived from the rendered full
+caption using a sentence-boundary heuristic. This heuristic may
+split after abbreviations; supply \code{short} explicitly for complex captions.}
 }
 \value{
-For LaTeX output, a \code{knitr::asis_output} object containing
-the modified LaTeX so it renders correctly in the document chunk. For
-HTML/Word output, the original \code{ft} object, unchanged.
+A flextable with deferred short-caption information.
 }
 \description{
-In LaTeX/PDF output, flextable captions don't support a separate short
-caption for the list of tables. This function extracts the full caption
-from the rendered LaTeX, inserts a short caption (auto-derived from the
-first sentence if not supplied), and re-emits the LaTeX so it renders
-correctly in the document. For HTML/Word output, the flextable is
-returned unchanged.
+Records a short caption without immediately rendering the table.
+During knitting to PDF, the short caption is inserted into the
+rendered LaTeX caption. Other output formats render normally.
+}
+\details{
+Apply this function after other flextable formatting operations.
 }
 \examples{
 \dontrun{
 ft <- flextable::flextable(head(mtcars)) |>
-  flextable::set_caption("A caption. More detail follows.")
-ft_add_short_caption(ft)
-ft_add_short_caption(ft, short = "Custom short caption")
+  flextable::set_caption("A caption. More detail follows.") |>
+  ft_add_short_caption(short = "Custom short caption")
+ft
 }
 }

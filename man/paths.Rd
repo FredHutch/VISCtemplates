@@ -26,7 +26,7 @@ Requires one-time setup of environment variables
 \code{VISCTEMPLATES_DATAPACKAGE_PATH} in your \code{.Renviron} file. To do this,
 \enumerate{
 \item Open your \code{.Renviron} file for editing in Rstudio
-with \code{\link[usethis:edit]{usethis::edit_r_environ()}}
+with \code{\link[usethis:edit_r_environ]{usethis::edit_r_environ()}}
 \item Add needed line(s) to \code{.Renviron} defining
 \code{VISCTEMPLATES_NETWORKS_PATH}, \code{VISCTEMPLATES_TRIALS_PATH}, and/or
 \code{VISCTEMPLATES_DATAPACKAGE_PATH} to reflect your operating system, drive
