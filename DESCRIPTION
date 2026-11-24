@@ -44,6 +44,7 @@ Imports:
     fs,
     digest,
     bookdown,
+    knitr,
     rmarkdown,
     rprojroot,
     usethis,
@@ -54,7 +55,6 @@ Imports:
 Encoding: UTF-8
 URL: https://github.com/FredHutch/VISCtemplates, https://fredhutch.github.io/VISCtemplates/
 BugReports: https://github.com/FredHutch/VISCtemplates/issues
-RoxygenNote: 7.3.3
 Roxygen: list(markdown = TRUE)
 Suggests:
     callr,
@@ -63,10 +63,10 @@ Suggests:
     flextable,
     ggplot2,
     kableExtra,
-    knitr,
     testthat (>= 3.0.0),
     withr
 Remotes:
     FredHutch/VISCfunctions
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+Config/roxygen2/version: 8.1.1

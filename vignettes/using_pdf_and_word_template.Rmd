@@ -90,24 +90,151 @@ There are some new functions and coding conventions that help with knitting the 
 
 *  For referencing papers inline, simply use the @ symbol before bib file reference (e.g., "As specified in `@Huang:2013fl`, ...").
 *  For referencing papers in parentheses at the end of a sentence, use brackets and the @ symbol (e.g., `[@Huang:2013fl]`). The parentheses will be automatically included - do not add any extra.
-*  For multiple papers in the same citation, separate with a semicolon (e.g., ` [@Suissa1985; @Lyderson2009]`).
+*  For multiple papers in the same citation, separate with a semicolon (e.g., ` [@Suissa1985; @Lyderson2009]`). The parentheses will be automatically included - do not add any extra.
 
 ### Tables
 
-* Only output one table per code chunk.
-* Make sure to have `format = output_type` in the `kableExtra::kable()` call 
-    + `output_type` is either "latex" or "pandoc" depending on current report output.
-* The table name will be chunk name plus "tab:".
-    + For example, if chunk name is "descriptive-stats" then the table label will be "tab:descriptive-stats"
-* Note that Word output cannot support many kableExtra features, such as `kableExtra::kable_styling()`.
-   + Set `warning=kable_warnings` chunk option, otherwise Word output will have unwanted warnings.
+* For tables written directly in an R Markdown chunk, output only one table per chunk.
+  To generate many tables in a loop, use `insert_tab_subchunk()` as shown below;
+  it gives each table its own generated chunk.
+* `insert_tab_subchunk()` accepts both `knitr::kable()` and
+  `flextable::flextable()` tables. Set captions and formatting on the table
+  object before inserting it.
+* For `kable()` tables, use `format = output_type`, where the report template
+  defines `output_type` as `"latex"` for PDF or `"pandoc"` for Word.
+  Word cannot support many kableExtra features, such as
+  `kableExtra::kable_styling()`. Use `warning = kable_warnings` on chunks
+  using those features to avoid unwanted warnings in Word output.
+* Table labels use the chunk name prefixed with `"tab:"`. For example,
+  `tab_chunk_name = "descriptive-stats"` gives `"tab:descriptive-stats"`,
+  which can be passed to `insert_ref()`. Generated chunk names must be
+  unique throughout the document; use hyphens rather than spaces or underscores.
+* For table-specific settings, see the
+  [kable reference](https://pkg.yihui.org/knitr/manual#kable) and
+  [R Markdown Cookbook's kable guide](https://pkg.yihui.org/rmarkdown-cookbook/kable),
+  or the flextable guide to
+  [rendering and chunk options](https://ardata-fr.github.io/flextable-book/rendering.html)
+  and [captions](https://ardata-fr.github.io/flextable-book/captions-and-cross-references.html).
+
+The examples below are intended for a VISC PDF/Word report with
+`library(VISCtemplates)` loaded. They are not evaluated in this HTML vignette.
+Use `results = 'asis'` on the calling chunk so the generated output is
+interpreted as document content, and `echo = FALSE` to hide the calling code.
+
+#### A kable table
+
+Set the full caption with `caption` and, for the PDF List of Tables, a short
+caption with `caption.short`.
+
+```{r kable-example, eval=FALSE, results='asis'}
+knitr::kable(
+  head(mtcars),
+  format = output_type,
+  caption = "Motor car data. The first six observations are shown.",
+  caption.short = "Motor car data"
+)
+```
+
+#### A flextable
+
+Set the full caption with `flextable::set_caption()`. Apply
+`ft_add_short_caption()` after all other flextable formatting to add a short
+caption for the PDF List of Tables; Word output is unchanged. Supply
+LaTeX-ready text for `short`, escaping special characters as needed
+(e.g., `"Response (50\\%)"`). If `short` is omitted, the helper derives
+a short caption from the full caption using a sentence-boundary heuristic;
+provide it explicitly when the caption contains abbreviations.
+
+```{r flextable-example, eval=FALSE, results='asis'}
+ft <- flextable::flextable(head(mtcars))
+ft <- flextable::autofit(ft)
+ft <- flextable::set_caption(
+  ft, caption = "Motor car data. The first six observations are shown."
+)
+ft <- ft_add_short_caption(ft, short = "Motor car data")
+ft
+```
 
 ### Figures
 
-* Only output one figure per code chunk.
-* Figure name will be chunk name plus "fig:".
-    + i.e. if chunk name is "my-boxplot" then the table label will be "fig:my-boxplot".
-    
+* For figures written directly in an R Markdown chunk, output only one figure
+  per chunk. To generate figures in a loop, use `insert_fig_subchunk()`;
+  it gives each figure its own generated chunk, caption, and reference label.
+* Figure labels use the chunk name prefixed with `"fig:"`. For example,
+  `fig_chunk_name = "my-boxplot"` gives `"fig:my-boxplot"`, which can be
+  passed to `insert_ref()`. Use unique chunk names with hyphens rather than
+  spaces or underscores.
+  
+### Many tables/figures in a loop
+
+This example generates one figure and one table per cylinder group in a
+single loop. Each figure and table gets a unique chunk name, allowing
+captions and references to be assigned separately.
+
+Use `results = 'asis'` so the generated output is interpreted as document
+content, and `echo = FALSE` to hide the calling code. This example assumes
+`library(VISCtemplates)` is loaded.
+
+```{r tables-figures-loop, eval=FALSE, results='asis', echo=FALSE}
+car_groups <- split(mtcars, mtcars$cyl)
+
+for (group in names(car_groups)) {
+  group_data <- car_groups[[group]]
+  group_label <- paste("Cars with", group, "cylinders")
+
+  # Insert one figure for this group.
+  p <- ggplot2::ggplot(group_data, ggplot2::aes(wt, mpg)) +
+    ggplot2::geom_point()
+
+  insert_fig_subchunk(
+    fig = p,
+    fig_chunk_name = paste0("weight-vs-mpg-", group),
+    fig_caption_short = paste("Fuel efficiency:", group, "cylinders"),
+    fig_caption_long = paste(
+      "Car weight versus fuel efficiency for cars with", group, "cylinders."
+    ),
+    fig_height = 4,
+    fig_width = 6
+  )
+
+  # Insert one table for this group.
+  ft <- flextable::flextable(group_data)
+  ft <- flextable::autofit(ft)
+  ft <- flextable::set_caption(
+    ft,
+    caption = paste0(group_label, ". All observations are shown.")
+  )
+  ft <- ft_add_short_caption(ft, short = group_label)
+
+  insert_tab_subchunk(
+    ft,
+    tab_chunk_name = paste0("car-data-", group)
+  )
+}
+```
+
+To use a `kable()` table instead, replace the flextable creation and
+insertion code inside the loop with:
+
+```{r loop-kable-alternative, eval=FALSE}
+tab <- knitr::kable(
+  group_data,
+  format = output_type,
+  caption = paste0(group_label, ". All observations are shown."),
+  caption.short = group_label
+)
+insert_tab_subchunk(tab, tab_chunk_name = paste0("car-data-", group))
+```
+
+`insert_fig_subchunk()` accepts ggplot objects and other supported printable
+graphics, not base R plotting calls. The optional `fig_height` and
+`fig_width` arguments specify dimensions in inches during knitting; omit
+them to use inherited knitr dimensions.
+
+When run interactively, the subchunk helpers print the object directly
+instead of generating a chunk. Knit the report to check captions,
+reference labels, and figure dimensions.
+
 ### P values
 
 * When using `VISCfunctions::pretty_pvalues()` make sure to use `output_type = output_type`,  `bold  = pandoc_markup`, and `italic = pandoc_markup`. This will give the appropriate markup depending on PDF or Word output.
